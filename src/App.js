@@ -35,6 +35,7 @@ import Wishlist from "./components/Wishlist";
 import OrderDetail from "./components/OrderDetail";
 import OrderHistory from "./components/OrderHistory";
 import PaymentPage from "./components/PaymentPage";
+import Dashboard from"./components/Dashboard";
 
 function App() {
 
@@ -72,7 +73,7 @@ function App() {
             <Route path='/checkout' element={<Checkout />} />
             <Route path="/paymentpage" element={<PaymentPage />} />
             <Route path="/ordersuccess" element={<Home />} />
-
+            <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

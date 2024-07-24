@@ -1180,9 +1180,9 @@ const Header = () => {
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="user-profile.html">
-                                        <span class="list-text">User Dashboard</span>
-                                    </a>
+                                    <Link to="/dashboard">
+                                       <span className="list-text">User Dashboard</span>
+                                    </Link>
                                 </li>
                                 <li>
                                     <a href="contact-us.html">
