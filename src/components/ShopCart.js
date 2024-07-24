@@ -82,166 +82,125 @@ const ShopCart = () => {
   };
 
   return (
-    <>
+    <section className="product-cart product footer-padding">
+      <div className="container">
+        <div className="cart-section">
+          <table>
+            <tbody>
+              <tr className="table-row table-top-row">
+                <td className="table-wrapper wrapper-product">
+                  <h5 className="table-heading">PRODUCT</h5>
+                </td>
+                <td className="table-wrapper">
+                  <div className="table-wrapper-center">
+                    <h5 className="table-heading">PRICE</h5>
+                  </div>
+                </td>
+                <td className="table-wrapper">
+                  <div className="table-wrapper-center">
+                    <h5 className="table-heading">QUANTITY</h5>
+                  </div>
+                </td>
+                <td className="table-wrapper wrapper-total">
+                  <div className="table-wrapper-center">
+                    <h5 className="table-heading">TOTAL</h5>
+                  </div>
+                </td>
+                <td className="table-wrapper">
+                  <div className="table-wrapper-center">
+                    <h5 className="table-heading">ACTION</h5>
+                  </div>
+                </td>
+              </tr>
+              {cartItems.map(item => (
+                <tr className="table-row ticket-row" key={item.productid}>
+                  <td className="table-wrapper wrapper-product">
+                    <div className="wrapper">
+                      <div className="wrapper-img">
+                        <img src={item.image || dress1} alt="Product" />
+                      </div>
+                      <div className="wrapper-content">
+                        <h5 className="heading">{item.prod_name || 'Product Name - ' + item.productid}</h5>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="table-wrapper">
+                    <div className="table-wrapper-center">
+                      <h5 className="heading main-price">Rs. {item.price}</h5>
+                    </div>
+                  </td>
+                  <td className="table-wrapper">
+                    <div className="table-wrapper-center">
+                      <div className="quantity">
+                        <span className="minus" onClick={() => decrementQuantity(item.productid, item.quantity)}>-</span>
+                        <span className="number">{item.quantity}</span>
+                        <span className="plus" onClick={() => incrementQuantity(item.productid, item.quantity)}>+</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="table-wrapper wrapper-total">
+                    <div className="table-wrapper-center">
+                      <h5 className="heading total-price">Rs. {item.price * item.quantity}</h5>
+                    </div>
+                  </td>
+                  <td className="table-wrapper">
+                    <div className="table-wrapper-center" onClick={() => removeFromCart(item.productid)}>
+                      <span>
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.7 0.3C9.3 -0.1 8.7 -0.1 8.3 0.3L5 3.6L1.7 0.3C1.3 -0.1 0.7 -0.1 0.3 0.3C-0.1 0.7 -0.1 1.3 0.3 1.7L3.6 5L0.3 8.3C-0.1 8.7 -0.1 9.3 0.3 9.7C0.7 10.1 1.3 10.1 1.7 9.7L5 6.4L8.3 9.7C8.7 10.1 9.3 10.1 9.7 9.7C10.1 9.3 10.1 8.7 9.7 8.3L6.4 5L9.7 1.7C10.1 1.3 10.1 0.7 9.7 0.3Z" fill="#AAAAAA"></path>
+                        </svg>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="wishlist-btn cart-btn">
+          <button className="clean-btn" onClick={() => setCartItems([])}>Clear Cart</button>
+          <Link to="#" className="shop-btn update-btn">Update Cart</Link>
+          <Link to="/checkout" className="shop-btn">Proceed to Checkout</Link>
+        </div>
+        {message && <p>{message}</p>}
+      </div>
+
+    
       <div>
-        <div className="offcanvas-menu-overlay" />
-        <div className="offcanvas-menu-wrapper">
-          <div className="offcanvas__close">+</div>
-          <ul className="offcanvas__widget">
-            <li>
-              <span className="icon_search search-switch" />
-            </li>
-            <li>
-              <Link to="#">
-                <span className="icon_heart_alt" />
-                <div className="tip">2</div>
-              </Link>
-            </li>
-            <li>
-              <Link to="#">
-                <span className="icon_bag_alt" />
-                <div className="tip">2</div>
-              </Link>
-            </li>
-          </ul>
-          <div className="offcanvas__logo">
-            <Link to="index-2.html">
-              <img className="cart-logo" src="img/logo.png" alt="" />
+        {/* <div className="col-lg-6 col-md-6 col-sm-6">
+          <div className="cart__btn update__btn">
+            <Link to="#">
+              <span className="icon_loading" /> Update cart
             </Link>
           </div>
-          <div id="mobile-menu-wrap" />
-          <div className="offcanvas__auth">
-            <Link to="#">Login</Link>
-            <Link to="#">Register</Link>
-          </div>
-        </div>
+        </div> */}
       </div>
 
-      <div className="breadcrumb-option">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="breadcrumb__links">
-                <Link to="index-2.html">
-                  <i className="fa fa-home" /> Home
-                </Link>
-                <span>Shopping cart</span>
-              </div>
-            </div>
+      {/* <div class="row">
+        <div class="col-lg-6">
+          <div class="discount__content">
+            <h6>Discount codes</h6>
+            <form action="#">
+              <input type="text" placeholder="Enter your coupon code" />
+              <button type="submit" class="site-btn">Apply</button>
+            </form>
           </div>
         </div>
-      </div>
-
-      <section className="shop-cart spad">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="shop__cart__table">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Price</th>
-                      <th>Quantity</th>
-                      <th>Total</th>
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cartItems.map(item => (
-                      <tr key={item.productid}>
-                        <td className="cart__product__item">
-                          <img className="cart-img" src={dress1 || item.image} alt={item.name} />
-                          <div className="cart__product__item__title">
-                            <h6>{item.prod_name || 'Product Name - ' + item.productid}</h6>
-                          </div>
-                        </td>
-                        <td className="cart__price">Rs. {item.price}</td>
-                        <td className="cart__quantity">
-                          <div className="pro-qty">
-                            <span className="dec qtybtn" onClick={() => decrementQuantity(item.productid, item.quantity)}>-</span>
-                            <input type="text" value={item.quantity} readOnly />
-                            <span className="inc qtybtn" onClick={() => incrementQuantity(item.productid, item.quantity)}>+</span>
-                          </div>
-                        </td>
-                        <td className="cart__total">Rs. {item.price * item.quantity}</td>
-                        <td className="cart__close" onClick={() => removeFromCart(item.productid)}>
-                          <span className="icon_close" />
-                          Remove
-                        </td>
-                      </tr>
-                    ))}
-                    <tr>
-                      <td className="cart__product__item">
-
-                        <div className="cart__product__item__title">
-                          <h6>Cart Total</h6>
-                        </div>
-                      </td>
-                      <td className="cart__price">-</td>
-                      <td className="cart__quantity">
-                        &nbsp;
-                        </td>
-                      <td className="cart__total">Rs. {calculateTotal()}</td>
-                      <td>-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-6">
-              <div className="cart__btn">
-                <Link to="/home">Continue Shopping</Link>
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-6 col-sm-6">
+        <div class="col-lg-4 offset-lg-2">
+          <div class="cart__total__procced">
+            <h6>Cart total</h6>
+            <ul>
+              <li>Subtotal <span>$ 750.0</span></li>
+              <li>Total <span>Rs. {total || 123123}</span></li>
+            </ul>
             <Link to="/checkout" className="primary-btn">
-                  Proceed to Checkout
-                </Link>
-            </div>
-            {/* <div className="col-lg-6 col-md-6 col-sm-6">
-              <div className="cart__btn update__btn">
-                <Link to="#">
-                  <span className="icon_loading" /> Update cart
-                </Link>
-              </div>
-            </div> */}
+              Proceed to Checkout
+            </Link>
           </div>
-
-
-
-
-          {/* <div class="row">
-            <div class="col-lg-6">
-              <div class="discount__content">
-                <h6>Discount codes</h6>
-                <form action="#">
-                  <input type="text" placeholder="Enter your coupon code" />
-                  <button type="submit" class="site-btn">Apply</button>
-                </form>
-              </div>
-            </div>
-            <div class="col-lg-4 offset-lg-2">
-              <div class="cart__total__procced">
-                <h6>Cart total</h6>
-                <ul>
-                  <li>Subtotal <span>$ 750.0</span></li>
-                  <li>Total <span>Rs. {total || 123123}</span></li>
-                </ul>
-                <Link to="/checkout" className="primary-btn">
-                  Proceed to Checkout
-                </Link>
-              </div>
-            </div>
-          </div> */}
-
-
         </div>
-      </section>
-    </>
+      </div> */}
+
+    </section>
   );
 };
 
