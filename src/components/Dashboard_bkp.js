@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import DashboardRoutes from './DashboardRoutes';
 
-const Dashboard = () => {
+const Dashboard_Bkp = () => {
 
   return (
 
@@ -177,7 +177,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              {/* <div
+              <div
                 className="tab-pane fade"
                 id="v-pills-profile"
                 role="tabpanel"
@@ -430,11 +430,13 @@ const Dashboard = () => {
                     <a href="#" className="shop-btn" onclick="modalAction('.cart')">
                       Add Cart
                     </a>
+                    {/* cart-modal */}
                     <div className="modal-wrapper cart">
                       <div
                         onclick="modalAction('.cart')"
                         className="anywhere-away"
                       />
+                      {/* change this */}
                       <div className="login-section account-section modal-main">
                         <div className="review-form">
                           <div className="review-content">
@@ -503,6 +505,7 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
+                      {/* change this */}
                     </div>
                     <a
                       href="#"
@@ -511,11 +514,13 @@ const Dashboard = () => {
                     >
                       Add Bank
                     </a>
+                    {/* bank-modal */}
                     <div className="modal-wrapper bank">
                       <div
                         onclick="modalAction('.bank')"
                         className="anywhere-away"
                       />
+                      {/* change this */}
                       <div className="login-section account-section modal-main">
                         <div className="review-form">
                           <div className="review-content">
@@ -588,6 +593,7 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
+                      {/* change this */}
                     </div>
                   </div>
                 </div>
@@ -1095,11 +1101,13 @@ const Dashboard = () => {
                       >
                         Add New Address
                       </a>
+                      {/* modal */}
                       <div className="modal-wrapper submit">
                         <div
                           onclick="modalAction('.submit')"
                           className="anywhere-away"
                         />
+                        {/* change this */}
                         <div className="login-section account-section modal-main">
                           <div className="review-form">
                             <div className="review-content">
@@ -1191,7 +1199,7 @@ const Dashboard = () => {
                                   type="number"
                                   id="usernumber"
                                   className="form-control"
-                                
+                                // placeholder={0000}
                                 />
                               </div>
                             </div>
@@ -1206,6 +1214,7 @@ const Dashboard = () => {
                             </div>
                           </div>
                         </div>
+                        {/* change this */}
                       </div>
                     </div>
                   </div>
@@ -2077,7 +2086,7 @@ const Dashboard = () => {
                     </table>
                   </div>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -2089,4 +2098,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Dashboard_Bkp;

@@ -203,9 +203,58 @@ const Home = () => {
         <div class="container">
             <div class="section-title">
                 <h3>Market Category</h3>
-                <a href="product-sidebar.html" class="view">View All</a>
+                {/* <a href="product-sidebar.html" class="view">View All</a> */}
             </div>
             <div class="category-section">
+                <div class="product-wrapper" data-aos="fade-right" data-aos-duration="100">
+                    <div class="wrapper-img">
+                        <img src="assets/images/homepage-one/category-img/c-img-1.webp" alt="img"/>
+                    </div>
+                    <div class="wrapper-info">
+                        <a href="product-sidebar.html" class="wrapper-details">Fruits</a>
+                    </div>
+                </div>
+                <div class="product-wrapper" data-aos="fade-right" data-aos-duration="200">
+                    <div class="wrapper-img">
+                        <img src="assets/images/homepage-one/category-img/c-img-2.webp" alt="img"/>
+                    </div>
+                    <div class="wrapper-info">
+                        <a href="product-sidebar.html" class="wrapper-details">Vegetable</a>
+                    </div>
+                </div>
+                <div class="product-wrapper" data-aos="fade-right" data-aos-duration="300">
+                    <div class="wrapper-img">
+                        <img src="assets/images/homepage-one/category-img/c-img-3.webp" alt="img"/>
+                    </div>
+                    <div class="wrapper-info">
+                        <a href="product-sidebar.html" class="wrapper-details">Juice</a>
+                    </div>
+                </div>
+                <div class="product-wrapper" data-aos="fade-right" data-aos-duration="400">
+                    <div class="wrapper-img">
+                        <img src="assets/images/homepage-one/category-img/c-img-4.webp" alt="img"/>
+                    </div>
+                    <div class="wrapper-info">
+                        <a href="product-sidebar.html" class="wrapper-details">Meat</a>
+                    </div>
+                </div>
+                <div class="product-wrapper" data-aos="fade-right" data-aos-duration="500">
+                    <div class="wrapper-img">
+                        <img src="assets/images/homepage-one/category-img/c-img-5.webp" alt="img"/>
+                    </div>
+                    <div class="wrapper-info">
+                        <a href="product-sidebar.html" class="wrapper-details">Cold Drinks</a>
+                    </div>
+                </div>
+                <div class="product-wrapper" data-aos="fade-right" data-aos-duration="600">
+                    <div class="wrapper-img">
+                        <img src="assets/images/homepage-one/category-img/c-img-6.webp" alt="img"/>
+                    </div>
+                    <div class="wrapper-info">
+                        <a href="product-sidebar.html" class="wrapper-details">Breads</a>
+                    </div>
+                </div>
+
                 <div class="product-wrapper" data-aos="fade-right" data-aos-duration="100">
                     <div class="wrapper-img">
                         <img src="assets/images/homepage-one/category-img/c-img-1.webp" alt="img"/>
@@ -340,7 +389,7 @@ const Home = () => {
 
 
 
-    <section class="product fresh">
+    {/* <section class="product fresh">
         <div class="container">
             <div class="section-title">
                 <h3>Fresh Vegetables</h3>
@@ -823,7 +872,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
 
 
 
@@ -831,7 +880,7 @@ const Home = () => {
 
 
 
-    <section class="product flash-sale">
+    {/* <section class="product flash-sale">
         <div class="container">
             <div class="flash-sale-section">
                 <div class="countdown-section">
@@ -879,7 +928,7 @@ const Home = () => {
             </div>
 
         </div>
-    </section>
+    </section> */}
 
 
 
@@ -888,7 +937,7 @@ const Home = () => {
 
 
 
-    <section class="product top-selling">
+    {/* <section class="product top-selling">
         <div class="container">
             <div class="section-title">
                 <h3>Top Selling Prodcuts</h3>
@@ -1652,7 +1701,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
 
 
 
@@ -1663,7 +1712,7 @@ const Home = () => {
 
 
 
-    <section class="product fresh juice-product">
+    {/* <section class="product fresh juice-product">
         <div class="container">
             <div class="section-title">
                 <h3>Drinks Juice</h3>
@@ -2146,7 +2195,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
 
 
 
@@ -2156,7 +2205,7 @@ const Home = () => {
 
 
 
-    <section class="product best-product">
+    {/* <section class="product best-product">
         <div class="container">
             <div class="best-product-section">
                 <div class="product-wrapper">
@@ -2181,7 +2230,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
 
 
 
@@ -2190,7 +2239,7 @@ const Home = () => {
 
 
 
-    <section class="product arrival">
+    {/* <section class="product arrival">
         <div class="container">
             <div class="section-title">
                 <h3>New Arrivals</h3>
@@ -3636,7 +3685,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
 
 
 
@@ -3644,7 +3693,7 @@ const Home = () => {
 
 
 
-    <section class="product popular-sale footer-padding">
+    {/* <section class="product popular-sale footer-padding">
         <div class="container">
             <div class="section-title">
                 <h3>Popular Sales</h3>
@@ -3841,7 +3890,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
 
 
 
