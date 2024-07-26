@@ -5,31 +5,28 @@ import { DataAppContext } from "../../DataContext";
 import axios from "axios";
 
 const Login = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { login_user } = useContext(DataAppContext);
   const [error, setError] = useState(null);
   const url = `${process.env.REACT_APP_API_URL}users/login`;
   // "http://localhost:4000/users/login"
-  
+
   const initialValues = {
     username: "",
-    password: ""
+    password: "",
   };
 
   const submitLogin = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post(
-        url,
-        values
-      );
+      const response = await axios.post(url, values);
 
       if (response.status === 202) {
         console.log(response.data);
         const token = response.data.token;
-        localStorage.setItem("jwttoken", token); 
-        localStorage.setItem("userid", response.data.userId); 
-        login_user(); 
-        navigate("/home"); 
+        localStorage.setItem("jwttoken", token);
+        localStorage.setItem("userid", response.data.userId);
+        login_user();
+        navigate("/home");
       }
     } catch (error) {
       console.error("Login failed:", error);
@@ -49,66 +46,79 @@ const Login = () => {
 
   return (
     <>
-    <div className="container">
-      <Formik initialValues={initialValues} onSubmit={submitLogin}>
-        {({ isSubmitting }) => (
-          <Form>
-            <div className="text-center mt-5">
-              <h3>--Login Here--</h3>
-            </div>
-            <div className="form-group row justify-content-center">
-              <label className="col-sm-3 col-form-label text-sm-right font-weight-bold mt-3">
-                Username
-              </label>
-              <div className="col-sm-6 mt-3">
-                <Field
-                  name="username"
-                  type="text"
-                  className="form-control"
-                  placeholder="Username"
-                  required
-                />
+      <section class="login product footer-padding">
+        <div class="container">
+          <Formik initialValues={initialValues} onSubmit={submitLogin}>
+            <div class="login-section">
+              <div class="row align-items-center">
+                <div class="col-lg-6">
+                  <div class="login-form">
+                    <div class="review-form  box-shadows">
+                      <div class="review-form-text">
+                        <h5 class="comment-title">Log In</h5>
+                        <img
+                          src="assets/images/homepage-one/vector-line.png"
+                          alt="img"
+                        />
+                      </div>
+                      <div class="review-inner-form ">
+                        <div class="review-form-name">
+                          <label for="email" class="form-label">
+                            Email Address**
+                          </label>
+                          <input
+                            type="email"
+                            id="email"
+                            class="form-control"
+                            placeholder="Email"
+                          />
+                        </div>
+                        <div class="review-form-name">
+                          <label for="password" class="form-label">
+                            Password*
+                          </label>
+                          <input
+                            type="password"
+                            id="password"
+                            class="form-control"
+                            placeholder="password"
+                          />
+                        </div>
+                        <div class="review-form-name checkbox">
+                          <div class="checkbox-item">
+                            <input type="checkbox" />
+                            <span class="address">Remember Me</span>
+                          </div>
+                          <div class="forget-pass">
+                            <p>Forgot password?</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="login-btn text-center">
+                        <a href="#" class="shop-btn">
+                          Log In
+                        </a>
+                        <span class="shop-account">
+                          Dont't have an account ?
+                          <a href="/register">Sign Up Free</a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="login-img">
+                    <img
+                      src="assets/images/homepage-one/account-img.webp"
+                      alt="img"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="form-group row justify-content-center">
-              <label className="col-sm-3 col-form-label text-sm-right font-weight-bold mt-3">
-                Password
-              </label>
-              <div className="col-sm-6 mt-3">
-                <Field
-                  name="password"
-                  type="password"
-                  className="form-control"
-                  placeholder="Password"
-                  required
-                />
-              </div>
-            </div>
-            <div className="text-center mt-3">
-              <button
-                type="submit"
-                className="btn btn-danger"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Logging in..." : "Log In"}
-              </button>
-            </div>
-            {error && (
-              <div className="text-center mt-3">
-                <p className="text-danger">{error}</p>
-              </div>
-            )}
-            <div className="text-center mt-3">
-              <Link to="/register" className="text-decoration-none">
-                <p className="text-success">
-                  Create an account?<span> Sign Up</span>
-                </p>
-              </Link>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+          </Formik>
+        </div>
+      </section>
     </>
   );
 };
