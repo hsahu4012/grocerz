@@ -192,7 +192,7 @@ const Header = () => {
                   </a>
                 </div>
                 <div class="header-favourite">
-                  <a href="wishlist.html" class="cart-item">
+                  <Link to="/wishlist" class="cart-item">
                     <span>
                       <svg
                         width="28"
@@ -212,10 +212,10 @@ const Header = () => {
                         />
                       </svg>
                     </span>
-                  </a>
+                  </Link>
                 </div>
                 <div class="header-cart">
-                  <a href="cart.html" class="cart-item">
+                  <Link to="/cart" class="cart-item">
                     <span>
                       <svg
                         width="24"
@@ -235,7 +235,7 @@ const Header = () => {
                         />
                       </svg>
                     </span>
-                  </a>
+                  </Link>
                   <div class="cart-submenu">
                     <div class="cart-wrapper-item">
                       <div class="wrapper">
