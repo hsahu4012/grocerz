@@ -361,7 +361,7 @@ const Header = () => {
                   </div>
                 </div>
                 <div class="header-user">
-                  <a href="user-profile.html">
+                  <Link to="/login">
                     <span>
                       <svg
                         width="20"
@@ -376,7 +376,7 @@ const Header = () => {
                         />
                       </svg>
                     </span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
