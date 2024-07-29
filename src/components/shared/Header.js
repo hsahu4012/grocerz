@@ -101,11 +101,12 @@ const Header = () => {
           <div class="container">
             <div class="header-center">
               <div class="logo">
-                <a href="index-2.html">
-                  <img src="assets/images/logos/logo.webp" alt="logo" />
-                </a>
+                <Link to="/home">
+                <h2>Grocji</h2>
+                  {/* <img src="assets/images/logos/logo.webp" alt="logo" /> */}
+                </Link>
               </div>
-              <div class="header-search-btn">
+              {/* <div class="header-search-btn">
                 <input type="text" placeholder="Search Product....." />
                 <div class="divider"></div>
                 <div id="allcat">
@@ -162,9 +163,9 @@ const Header = () => {
                 <a href="#" class="shop-btn">
                   Search
                 </a>
-              </div>
+              </div> */}
               <div class="header-cart-items">
-                <div class="header-compaire">
+                {/* <div class="header-compaire">
                   <a href="compaire.html" class="cart-item">
                     <span>
                       <svg
@@ -190,7 +191,7 @@ const Header = () => {
                       </svg>
                     </span>
                   </a>
-                </div>
+                </div> */}
                 <div class="header-favourite">
                   <Link to="/wishlist" class="cart-item">
                     <span>
@@ -236,7 +237,7 @@ const Header = () => {
                       </svg>
                     </span>
                   </Link>
-                  <div class="cart-submenu">
+                  {/* <div class="cart-submenu">
                     <div class="cart-wrapper-item">
                       <div class="wrapper">
                         <div class="wrapper-item">
@@ -358,7 +359,7 @@ const Header = () => {
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div class="header-user">
                   <Link to="/login">
@@ -1588,9 +1589,9 @@ const Header = () => {
                 <div class="header-nav-menu">
                   <ul class="menu-list">
                     <li>
-                      <a href="index-2.html">
+                      <Link to="/home">
                         <span class="list-text">Home</span>
-                      </a>
+                      </Link>
                     </li>
                     <li class="mega-menu">
                       <a href="product-sidebar.html">
@@ -1617,7 +1618,7 @@ const Header = () => {
                           </svg>
                         </span>
                       </a>
-                      <div class="shop-menu">
+                      {/* <div class="shop-menu">
                         <div class="menu-wrapper">
                           <div class="menu-list">
                             <h5 class="menu-title">Dresses</h5>
@@ -1668,7 +1669,7 @@ const Header = () => {
                             alt="img"
                           />
                         </div>
-                      </div>
+                      </div> */}
                     </li>
                     <li>
                       <a href="#">
@@ -1725,11 +1726,11 @@ const Header = () => {
                       <a href="blogs.html">
                         <span class="list-text">Blog</span>
                       </a>
-                      <ul class="header-sub-menu">
+                      {/* <ul class="header-sub-menu">
                         <li>
                           <a href="blogs-details.html">Blog-details</a>
                         </li>
-                      </ul>
+                      </ul> */}
                     </li>
                     <li>
                       <Link to="/dashboard">
@@ -1737,16 +1738,16 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <a href="contact-us.html">
+                      <Link to="/contact">
                         <span class="list-text">Contact</span>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
               </div>
-              <a href="/login" class="shop-btn">
+              {/* <a href="/login" class="shop-btn">
                 Seller Login
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

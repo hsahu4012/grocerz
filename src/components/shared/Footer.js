@@ -139,7 +139,7 @@ const Footer = () => {
                                         </div>
                                         <div class="details">
                                             <h4 class="footer-heading">Address:</h4>
-                                            <p>4517 Washington Ave. Manchester, Kentucky 39495</p>
+                                            <p>Gurgaon</p>
                                         </div>
                                     </div>
                                     <div class="phone address">
@@ -182,7 +182,7 @@ const Footer = () => {
                                         </div>
                                         <div class="details">
                                             <h4 class="footer-heading">Email:</h4>
-                                            <p>Demo@gmail.com</p>
+                                            <p>grocji@gmail.com</p>
                                         </div>
                                     </div>
                                 </div>
@@ -232,7 +232,7 @@ const Footer = () => {
                             </a>
                         </div>
                         <div class="copyright">
-                            <p>©2024 <a href="https://quomodosoft.com/" target="_blank" class="inner-text">Quomodosoft</a> All rights reserved</p>
+                            <p>©2024 All rights reserved</p>
                         </div>
                     </div>
                     <div class="footer-payment-mode">
