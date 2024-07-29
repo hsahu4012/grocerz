@@ -76,7 +76,7 @@ const DashboardRoutes = () => {
                     </span>
                     <span className="text">Payment Method</span>
                 </Link>
-                <Link to='/orders'
+                <Link to='/OrderHistory'
                     className="nav-link"
                     type="button"
                 >
