@@ -5,7 +5,7 @@ import cat2 from '../assets/img/categories/category-2.jpg';
 import cat3 from '../assets/img/categories/category-3.jpg';
 import cat4 from '../assets/img/categories/category-4.jpg';
 import cat5 from '../assets/img/categories/category-5.jpg';
-
+import { Link } from 'react-router-dom';
 const Home = () => {
 
     return (
@@ -211,7 +211,8 @@ const Home = () => {
                         <img src="assets/images/homepage-one/category-img/c-img-1.webp" alt="img"/>
                     </div>
                     <div class="wrapper-info">
-                        <a href="product-sidebar.html" class="wrapper-details">Fruits</a>
+                        <Link to= "/category/attar23346/Atta_&_other_flour/atta&65810">Fruits</Link>
+                        {/* <a href="/subcategory" class="wrapper-details">Fruits</a> */}
                     </div>
                 </div>
                 <div class="product-wrapper" data-aos="fade-right" data-aos-duration="200">
