@@ -7,6 +7,7 @@ const Header = () => {
   const { appstate, logout_user } = useContext(DataAppContext);
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+  const { loginstatus } = appstate;
 
   const formatcategoryName = (name) => {
     return name.replace(/\s+/g, "-").toLowerCase(); // Replace spaces with hyphens and convert to lowercase
@@ -25,6 +26,27 @@ const Header = () => {
     };
     fetchCategories();
   }, []);
+
+    const securePages = ["/cart", "/wishlist", "/OrderHistory", "/profile", "/checkout", "/address","/payment"];
+
+    const checkLoginAndRedirect = () => {
+        const token = localStorage.getItem("jwttoken");
+        if (!token) {
+            navigate("/login");
+        }
+    };
+
+    const checkPageAccess = () => {
+        const token = localStorage.getItem("jwttoken");
+        let currentPage = window.location.pathname;
+        if (securePages.includes(currentPage) && !token) {
+            navigate("/login");
+        }
+    };
+
+    useEffect(() => {
+        checkPageAccess();
+    }, [navigate]);
 
   const handleLogout = () => {
     logout_user();
@@ -1745,9 +1767,15 @@ const Header = () => {
                   </ul>
                 </div>
               </div>
-              {/* <a href="/login" class="shop-btn">
-                Seller Login
-              </a> */}
+              <div>
+                    {loginstatus ? (
+                        <button  class="shop-btn"  onClick={handleLogout}>Logout</button>
+                    ) : (
+                        <Link to="/login">
+                            <button  class="shop-btn">User Login</button>
+                        </Link>
+                    )}
+                </div>
             </div>
           </div>
         </div>
