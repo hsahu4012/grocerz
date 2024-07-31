@@ -49,7 +49,8 @@ const Login = () => {
       <section class="login product footer-padding">
         <div class="container">
           <Formik initialValues={initialValues} onSubmit={submitLogin}>
-            <div class="login-section">
+          {({ isSubmitting }) => (
+            <Form class="login-section">
               <div class="row align-items-center">
                 <div class="col-lg-6">
                   <div class="login-form">
@@ -63,23 +64,25 @@ const Login = () => {
                       </div>
                       <div class="review-inner-form ">
                         <div class="review-form-name">
-                          <label for="email" class="form-label">
-                            Email Address**
+                          <label for="username" class="form-label">
+                            Username**
                           </label>
-                          <input
-                            type="email"
-                            id="email"
+                          <Field
+                            type="text"
+                            id="username"
+                            name="username"
                             class="form-control"
-                            placeholder="Email"
+                            placeholder="Username"
                           />
                         </div>
                         <div class="review-form-name">
                           <label for="password" class="form-label">
                             Password*
                           </label>
-                          <input
+                          <Field
                             type="password"
                             id="password"
+                            name="password"
                             class="form-control"
                             placeholder="password"
                           />
@@ -94,13 +97,18 @@ const Login = () => {
                           </div>
                         </div>
                       </div>
+                      {error && <div class="error-message">{error}</div>}
                       <div class="login-btn text-center">
-                        <a href="#" class="shop-btn">
+                        <button
+                          type="submit"
+                          class="shop-btn"
+                          disabled={isSubmitting}
+                        >
                           Log In
-                        </a>
+                        </button>
                         <span class="shop-account">
                           Dont't have an account ?
-                          <a href="/register">Sign Up Free</a>
+                          <Link to="/register">Sign Up Free</Link>
                         </span>
                       </div>
                     </div>
@@ -115,7 +123,8 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Form>
+          )}
           </Formik>
         </div>
       </section>
