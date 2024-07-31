@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import DataApp from "./DataContext";
 import axios from "axios";
+import "./assets/css/style.css";
 
 
 import Checkout from './components/Checkout';
