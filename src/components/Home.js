@@ -211,7 +211,7 @@ const Home = () => {
                         <img src="assets/images/homepage-one/category-img/c-img-1.webp" alt="img"/>
                     </div>
                     <div class="wrapper-info">
-                        <Link to= "/category/attar23346/Atta_&_other_flour/atta&65810">Fruits</Link>
+                        <Link to= "/category/attar23346">Fruits</Link>
                         {/* <a href="/subcategory" class="wrapper-details">Fruits</a> */}
                     </div>
                 </div>
