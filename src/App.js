@@ -28,7 +28,7 @@ import Emailedit from './components/Editpages/Emailedit';
 import Mobilenoedit from './components/Editpages/mobilenoedit'
 import ChangePassword from './components/Editpages/ChangePassword';
 
-import SubCategory from "./components/SubCategory";
+// import Subcategory from "./components/Subcategory";
 import ShopCart from "./components/ShopCart";
 import Wishlist from "./components/Wishlist";
 
@@ -36,6 +36,7 @@ import OrderDetail from "./components/OrderDetail";
 import OrderHistory from "./components/OrderHistory";
 import PaymentPage from "./components/PaymentPage";
 import Dashboard from"./components/Dashboard";
+import Productlist from "./components/Productlist";
 
 function App() {
 
@@ -64,7 +65,7 @@ function App() {
             <Route path="/category/:categoryname/:categoryid" element={<Category />} />
             {/* <Route path="/productdetail" element={<ProductDetails />} /> */}
             {/* <Route path="/category/:categoryid" element={<CategoryBack />} /> */}
-            <Route path="/category/:categoryid/:subcategoryname/:subcategory_id" element={<SubCategory />} />
+            <Route path="/category/:category_id" element={<Productlist />} />
             <Route path="/product/:productid" element={<ProductDetails />} />
 
 
@@ -88,7 +89,7 @@ function App() {
             <Route path="/mobilenoedit" element={<Mobilenoedit />} />
             <Route path="/changepassword" element={<ChangePassword />} />
             <Route path="/orderdetail" element={<OrderDetail />} />
-            <Route path="orderhistory/orderdetail/:orderid" element={<OrderDetail />} />
+            <Route path="/orderhistory/orderdetail/:orderid" element={<OrderDetail />} />
             <Route path="/orderhistory" element={<OrderHistory />} />
 
 
