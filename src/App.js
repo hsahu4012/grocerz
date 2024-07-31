@@ -89,7 +89,7 @@ function App() {
             <Route path="/mobilenoedit" element={<Mobilenoedit />} />
             <Route path="/changepassword" element={<ChangePassword />} />
             <Route path="/orderdetail" element={<OrderDetail />} />
-            <Route path="orderhistory/orderdetail/:orderid" element={<OrderDetail />} />
+            <Route path="/orderhistory/orderdetail/:orderid" element={<OrderDetail />} />
             <Route path="/orderhistory" element={<OrderHistory />} />
 
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import temp_product_image from '../assets/products/p-img-29.webp';
 
 const Productlist = () => {
   const { category_id } = useParams();
@@ -137,27 +138,36 @@ const Productlist = () => {
               <div className="row">
                 {products.length > 0 ? (
                   products.map(product => (
-                    <div className="col-xl-4 col-sm-6 mb-4" key={product.productid}>
-                      <div className="product-wrapper" data-aos="fade-up">
-                        <div className="product-img">
-                          <img
-                            draggable="false"
-                            src={ '/template_do_not_change/assets/images/homepage-one/product-img/p-img-1.webp'}
-                            alt={product.name}
-                            className="product-img__img"
-                          />
-                        </div>
-                        <div className="product-content d-grid gap-2 col-6 mx-auto" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                          <p className="product-title" 
-                          style={{ margin: '5px 0', fontSize: '3 rem',fontWeight:'bold',color:'black' }}>{product.prod_name}</p>
-                          <p className="product-price" style={{ boxSizing:'inherit' }}>${product.price}</p>
-                          <button onClick={() => handleAddToCart(product.productid)} className="btn btn-primary"
-                           style={{ color:'black' }} type='button'>Add to Cart</button>
-                          <button onClick={() => addToWishlist(product.productid)} 
-                          className="btn btn-primary" style={{ color:'black' }} type='button'>Add to Wishlist</button>
+                    <>
+                      <div class="col-xl-4 col-sm-6">
+                        <div class="product-wrapper" data-aos="fade-up">
+                          <div class="product-img">
+                            <img src={temp_product_image} />
+
+                          </div>
+                          <div class="product-info">
+
+                            <div class="product-description">
+                              <div class="product-details">{product.prod_name}</div>
+                              <div class="price">
+                                <span class="price-cut">{product.price}</span>
+                                <span class="new-price">{product.price - product.discount}</span>
+                              </div>
+                            </div>
+                            <div class="product-cart-btn">
+                              
+                              <button onClick={() => handleAddToCart(product.productid)} class="product-btn"
+                                type='button'>Add to Cart</button>
+
+                              <button onClick={() => addToWishlist(product.productid)}
+                                class="product-btn" type='button'>Add to Wishlist</button>
+
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </>
+
                   ))
                 ) : (
                   <div className="col-lg-12">
