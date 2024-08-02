@@ -11,32 +11,32 @@ function Wishlist() {
 
   // for testing / development purpose
 
-  const dummyData = [
-    {
-      id: 1,
-      name: "KOSPET TANK T1 MIL-STD Waterproof Smartwatch",
-      price: 20.0,
-      image: "assets/images/homepage-one/product-img/p-img-5.webp",
-    },
-    {
-      id: 2,
-      name: "Fresh Mashroom",
-      price: 20.0,
-      image: "assets/images/homepage-one/product-img/p-img-6.webp",
-    },
-    {
-      id: 3,
-      name: "Fresh Baked Bread",
-      price: 20.0,
-      image: "assets/images/homepage-one/product-img/p-img-7.webp",
-    },
-    {
-      id: 4,
-      name: "Fresh Bananas",
-      price: 20.0,
-      image: "assets/images/homepage-one/product-img/p-img-8.webp",
-    },
-  ];
+  // const dummyData = [
+  //   {
+  //     id: 1,
+  //     name: "KOSPET TANK T1 MIL-STD Waterproof Smartwatch",
+  //     price: 20.0,
+  //     image: "assets/images/homepage-one/product-img/p-img-5.webp",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Fresh Mashroom",
+  //     price: 20.0,
+  //     image: "assets/images/homepage-one/product-img/p-img-6.webp",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Fresh Baked Bread",
+  //     price: 20.0,
+  //     image: "assets/images/homepage-one/product-img/p-img-7.webp",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Fresh Bananas",
+  //     price: 20.0,
+  //     image: "assets/images/homepage-one/product-img/p-img-8.webp",
+  //   },
+  // ];
   useEffect(() => {
     const fetchWishlistItems = async () => {
       const url = `${process.env.REACT_APP_API_URL}wishlist/allWishlistItems`;
@@ -48,11 +48,11 @@ function Wishlist() {
         } catch (error) {
           console.error("Error fetching wishlist items:", error);
           if (process.env.NODE_ENV === "development") {
-            setWishlistItems(dummyData);
+            //setWishlistItems(dummyData);
           }
         }
       } else if (process.env.NODE_ENV === "development") {
-        setWishlistItems(dummyData);
+        //setWishlistItems(dummyData);
       }
     };
     fetchWishlistItems();
