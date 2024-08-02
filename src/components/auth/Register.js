@@ -34,7 +34,7 @@ const Register = () => {
       });
 
       if (response.status === 201) {
-        setTimeout(() => navigate("/dashboard"), 2000);
+        setTimeout(() => navigate("/login"), 2000);
       }
     } catch (error) {
       console.error("Registration failed:", error);
