@@ -149,6 +149,10 @@ button {
   overflow: hidden;
   z-index: 1;
 }
+
+.shop-btn-red {
+  background-color: #fe0600;
+}
 .shop-btn::after {
   content: " ";
   width: 0%;
@@ -200,7 +204,7 @@ button {
 
 .product-wrapper {
   width: 100%;
-  /* height: 44.5rem; */
+  height: 54rem;
   padding: 0 0 2rem 0;
   border-radius: 4px;
   background-color: #ffffff;
@@ -322,7 +326,7 @@ button {
 
 .price {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;

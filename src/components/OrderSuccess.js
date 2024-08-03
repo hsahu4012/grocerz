@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import DashboardRoutes from './DashboardRoutes';
 
-const Dashboard = () => {
+const OrderSuccess = () => {
 
   return (
 
@@ -166,4 +166,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default OrderSuccess;

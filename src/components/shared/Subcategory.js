@@ -14,7 +14,7 @@ const Subcategory = () => {
 
   const subcategory = async (id) => {
     try {
-      const url = await fetch('http://localhost:4000/products/bySubCategoryId/:001');
+      const url = await fetch(`${process.env.REACT_APP_API_URL}products/bySubCategoryId/:001`);
       const response = await axios.get(url);
       //console.log(response.data);
       setSubcategory(response.data);

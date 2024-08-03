@@ -42,9 +42,9 @@ const AddressListData = () => {
                         {
                             addresses.map((item) => (
                                 <>
-                                    <div class="services__item">
+                                    <div class="services__item bg-secondary bg-opacity-10 mb-3">
                                         <i class="fa fa-car"></i>
-                                        <h6>Name - {item.name}</h6>
+                                        <h5>Name - {item.name}</h5>
                                         <p>{item.line1}&nbsp;{item.line2}&nbsp;{item.line3}</p>
                                         <p>{item.city}&nbsp;{item.state}&nbsp;{item.country}</p>
                                         <p>{item.pin}</p>

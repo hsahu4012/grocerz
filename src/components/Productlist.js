@@ -86,7 +86,7 @@ const Productlist = () => {
 
   return (
     <>
-      <div className="breadcrumb-option">
+      {/* <div className="breadcrumb-option">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
@@ -97,9 +97,9 @@ const Productlist = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <section className="shop spad">
+      <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
@@ -141,12 +141,12 @@ const Productlist = () => {
                     <>
                       <div class="col-xl-4 col-sm-6">
                         <div class="product-wrapper" data-aos="fade-up">
-                          <div class="product-img">
-                            <img src={temp_product_image} />
-
-                          </div>
+                          <Link to={`/product/${product.productid}`}>
+                            <div class="product-img">
+                              <img src={temp_product_image} />
+                            </div>
+                          </Link>
                           <div class="product-info">
-
                             <div class="product-description">
                               <div class="product-details">{product.prod_name}</div>
                               <div class="price">
@@ -155,13 +155,11 @@ const Productlist = () => {
                               </div>
                             </div>
                             <div class="product-cart-btn">
-                              
                               <button onClick={() => handleAddToCart(product.productid)} class="product-btn"
                                 type='button'>Add to Cart</button>
 
                               <button onClick={() => addToWishlist(product.productid)}
-                                class="product-btn" type='button'>Add to Wishlist</button>
-
+                                class="product-btn mt-2" type='button'>Add to Wishlist</button>
                             </div>
                           </div>
                         </div>

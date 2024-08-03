@@ -4,76 +4,28 @@ import { DataAppContext } from "../DataContext";
 import axios from "axios";
 import DashboardRoutes from "./DashboardRoutes";
 
-function Wishlist() {
+const Wishlist = () => {
+
   const { isUserLoggedIn } = useContext(DataAppContext);
   const [wishlistItems, setWishlistItems] = useState([]);
   const navigate = useNavigate();
+  const userid = localStorage.getItem('userid');
 
-  // for testing / development purpose
+  const fetchWishlistItems = async () => {
+    const url = `${process.env.REACT_APP_API_URL}wishlist/allWishlistItems`;
 
-  // const dummyData = [
-  //   {
-  //     id: 1,
-  //     name: "KOSPET TANK T1 MIL-STD Waterproof Smartwatch",
-  //     price: 20.0,
-  //     image: "assets/images/homepage-one/product-img/p-img-5.webp",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Fresh Mashroom",
-  //     price: 20.0,
-  //     image: "assets/images/homepage-one/product-img/p-img-6.webp",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Fresh Baked Bread",
-  //     price: 20.0,
-  //     image: "assets/images/homepage-one/product-img/p-img-7.webp",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Fresh Bananas",
-  //     price: 20.0,
-  //     image: "assets/images/homepage-one/product-img/p-img-8.webp",
-  //   },
-  // ];
-  useEffect(() => {
-    const fetchWishlistItems = async () => {
-      const url = `${process.env.REACT_APP_API_URL}wishlist/allWishlistItems`;
+    try {
+      const response = await axios.get(url);
+      setWishlistItems(response.data);
+    } catch (error) {
+      console.error("Error fetching wishlist items:", error);
 
-      if (isUserLoggedIn) {
-        try {
-          const response = await axios.get(url);
-          setWishlistItems(response.data);
-        } catch (error) {
-          console.error("Error fetching wishlist items:", error);
-          if (process.env.NODE_ENV === "development") {
-            //setWishlistItems(dummyData);
-          }
-        }
-      } else if (process.env.NODE_ENV === "development") {
-        //setWishlistItems(dummyData);
-      }
     };
+  }
+
+  useEffect(() => {
     fetchWishlistItems();
-  }, [isUserLoggedIn]);
-
-  // for production if you want to live the app
-
-  // useEffect(() => {
-  //   const fetchWishlistItems = async () => {
-  //     const url = `${process.env.REACT_APP_API_URL}wishlist/allWishlistItems`;
-  //     if (isUserLoggedIn) {
-  //       try {
-  //         const response = await axios.get(url);
-  //         setWishlistItems(response.data);
-  //       } catch (error) {
-  //         console.error("Error fetching wishlist items:", error);
-  //       }
-  //     }
-  //   };
-  //   fetchWishlistItems();
-  // }, [isUserLoggedIn]);
+  }, [userid]);
 
   const handleCleanWishlist = () => {
     setWishlistItems([]);
@@ -81,9 +33,10 @@ function Wishlist() {
 
   return (
     <>
+
       <section className="blog about-blog">
         <div className="container">
-          <div className="blog-bradcrum">
+          {/* <div className="blog-bradcrum">
             <span>
               <Link to="/">Home</Link>
             </span>
@@ -91,7 +44,7 @@ function Wishlist() {
             <span>
               <Link to="/wishlist">Wishlist</Link>
             </span>
-          </div>
+          </div> */}
           <div className="blog-heading about-heading">
             <h1 className="heading">User Wishlist</h1>
           </div>
@@ -120,17 +73,18 @@ function Wishlist() {
                                       <img src={item.image} alt={item.name} />
                                     </div>
                                     <div className="wrapper-content">
-                                      <h5 className="heading">{item.name}</h5>
+                                      <h5 className="heading">{item.productid}</h5>
                                     </div>
                                   </div>
                                 </td>
                                 <td className="table-wrapper">
                                   <div className="table-wrapper-center">
-                                    <h5 className="heading">${item.price}</h5>
+                                    <h5 className="heading">Rs. {item.price}</h5>
                                   </div>
                                 </td>
                                 <td className="table-wrapper">
                                   <div className="table-wrapper-center">
+                                    <button>Move to Cart</button>
                                     <span>{/* Action icons or buttons */}</span>
                                   </div>
                                 </td>
@@ -140,15 +94,9 @@ function Wishlist() {
                         </table>
                       </div>
                       <div className="wishlist-btn">
-                        <Link
-                          to="#"
-                          onClick={handleCleanWishlist}
-                          className="clean-btn"
-                        >
-                          Clean Wishlist
-                        </Link>
-                        <Link to="/cart" className="shop-btn">
-                          View Cards
+                        
+                        <Link onClick={handleCleanWishlist} className="shop-btn shop-btn-red">
+                        Clean Wishlist
                         </Link>
                       </div>
                     </div>
@@ -166,7 +114,7 @@ function Wishlist() {
                       <p className="content-title">
                         Empty! You don’t have any products in your wishlist.
                       </p>
-                      <Link to="/" className="shop-btn">
+                      <Link to="/home" className="shop-btn">
                         Back to Shop
                       </Link>
                     </div>
@@ -177,8 +125,9 @@ function Wishlist() {
           </div>
         </div>
       </section>
+
     </>
   );
-}
+};
 
 export default Wishlist;

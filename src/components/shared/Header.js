@@ -17,9 +17,7 @@ const Header = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4000/category/allCategory"
-        );
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}category/allCategory`);
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -28,7 +26,7 @@ const Header = () => {
     fetchCategories();
   }, []);
 
-    const securePages = ["/cart", "/wishlist", "/OrderHistory", "/profile", "/checkout", "/address","/payment"];
+    const securePages = ["/dashboard", "/cart", "/wishlist", "/OrderHistory", "/profile", "/checkout", "/address","/payment"];
 
     const checkLoginAndRedirect = () => {
         const token = localStorage.getItem("jwttoken");
@@ -1616,7 +1614,7 @@ const Header = () => {
                         <span class="list-text">Home</span>
                       </Link>
                     </li>
-                    <li class="mega-menu">
+                    {/* <li class="mega-menu">
                       <a href="product-sidebar.html">
                         <span class="list-text">Shop</span>
                         <span>
@@ -1641,7 +1639,7 @@ const Header = () => {
                           </svg>
                         </span>
                       </a>
-                      {/* <div class="shop-menu">
+                      <div class="shop-menu">
                         <div class="menu-wrapper">
                           <div class="menu-list">
                             <h5 class="menu-title">Dresses</h5>
@@ -1692,9 +1690,9 @@ const Header = () => {
                             alt="img"
                           />
                         </div>
-                      </div> */}
-                    </li>
-                    <li>
+                      </div>
+                    </li> */}
+                    {/* <li>
                       <a href="#">
                         <span class="list-text">Pages</span>
                         <span>
@@ -1739,22 +1737,22 @@ const Header = () => {
                           <a href="product-sidebar.html">Shop List View</a>
                         </li>
                       </ul>
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                       <a href="about.html">
                         <span class="list-text">About</span>
                       </a>
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                       <a href="blogs.html">
                         <span class="list-text">Blog</span>
                       </a>
-                      {/* <ul class="header-sub-menu">
+                      <ul class="header-sub-menu">
                         <li>
                           <a href="blogs-details.html">Blog-details</a>
                         </li>
-                      </ul> */}
-                    </li>
+                      </ul>
+                    </li> */}
                     <li>
                       <Link to="/dashboard">
                         <span className="list-text">User Dashboard</span>

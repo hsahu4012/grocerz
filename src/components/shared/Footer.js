@@ -10,17 +10,17 @@ const Footer = () => {
         return name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and convert to lowercase
     };
 
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/category/allCategory');
-                setCategories(response.data);
-            } catch (error) {
-                console.error("Error fetching categories:", error);
-            }
-        };
-        fetchCategories();
-    }, []);
+    // useEffect(() => {
+    //     const fetchCategories = async () => {
+    //         try {
+    //             const response = await axios.get('http://localhost:4000/category/allCategory');
+    //             setCategories(response.data);
+    //         } catch (error) {
+    //             console.error("Error fetching categories:", error);
+    //         }
+    //     };
+    //     fetchCategories();
+    // }, []);
     return (
         <>
             <section class="product footer">
@@ -69,13 +69,11 @@ const Footer = () => {
                                         <div class="logo">
                                             <img src={logo} alt="logo" className='logo-image'/>
                                         </div>
-                                        {/* <div class="footer-link order-link">
+                                        <div class="footer-link order-link">
                                             <ul>
-                                                <li><a href="order.html">Track Order</a></li>
-                                                <li><a href="cart.html">Delivery & Returns</a></li>
-                                                <li><a href="about.html">Warranty</a></li>
+                                                <li><a>Fresh & Fast | At Your Doorstep</a></li>
                                             </ul>
-                                        </div> */}
+                                        </div>
 
                                     </div>
                                 </div>
@@ -104,6 +102,7 @@ const Footer = () => {
                                                 <li><a href="privacy.html">Privacy Policy</a></li>
                                                 <li><a href="privacy.html">Refund & Return Policy</a></li>
                                                 <li><a href="terms.html">Terms & Conditions</a></li>
+                                                <li><a href="faq.html">FAQ</a></li>
                                             </ul>
                                         </div>
                                     </div>

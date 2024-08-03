@@ -9,7 +9,6 @@ const Login = () => {
   const { login_user } = useContext(DataAppContext);
   const [error, setError] = useState(null);
   const url = `${process.env.REACT_APP_API_URL}users/login`;
-  // "http://localhost:4000/users/login"
 
   const initialValues = {
     username: "",

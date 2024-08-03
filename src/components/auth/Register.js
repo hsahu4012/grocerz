@@ -7,7 +7,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const url = "http://localhost:4000/users/adduser";
+  const url = `${process.env.REACT_APP_API_URL}users/adduser`;  
 
   const initialValues = {
     name: "",

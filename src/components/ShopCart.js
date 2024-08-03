@@ -159,7 +159,7 @@ const ShopCart = () => {
         </div>
         <div className="wishlist-btn cart-btn">
           <button className="clean-btn" onClick={() => setCartItems([])}>Clear Cart</button>
-          <Link to="#" className="shop-btn update-btn">Update Cart</Link>
+          {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
           <Link to="/checkout" className="shop-btn">Proceed to Checkout</Link>
         </div>
         {message && <p>{message}</p>}

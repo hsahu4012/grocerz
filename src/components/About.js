@@ -4,56 +4,56 @@ import axios from 'axios';
 
 
 function About() {
-    
 
-    const wrapperStyle = {
-        backgroundColor: '#d4edda',
-        marginBottom: '20px', 
-        border: '1px solid #ccc', 
-        padding: '15px', 
-        borderRadius: '5px'
-       
-    };
-    const containerStyle = {
-        position: 'relative',
-        width: '100vw', 
-        height: 'auto', 
-        overflow: 'hidden',
-      };
-    
-      const videoStyle = {
-        width: '100%',  
-        height: 'auto', 
-        display: 'block', 
-      };
-    
-      const buttonStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        zIndex: 1,
-        display: 'inline-block',
-        textDecoration: 'none',
-      };
+
+  const wrapperStyle = {
+    backgroundColor: '#d4edda',
+    marginBottom: '20px',
+    border: '1px solid #ccc',
+    padding: '15px',
+    borderRadius: '5px'
+
+  };
+  // const containerStyle = {
+  //   position: 'relative',
+  //   width: '100vw',
+  //   height: 'auto',
+  //   overflow: 'hidden',
+  // };
+
+  // const videoStyle = {
+  //   width: '100%',
+  //   height: 'auto',
+  //   display: 'block',
+  // };
+
+  // const buttonStyle = {
+  //   position: 'absolute',
+  //   top: '50%',
+  //   left: '50%',
+  //   transform: 'translate(-50%, -50%)',
+  //   zIndex: 1,
+  //   display: 'inline-block',
+  //   textDecoration: 'none',
+  // };
   return (
     <>
-    <section className="blog about-blog">
-  <div className="container">
-    <div className="blog-bradcrum">
-      <span>
-        <a href="index-2.html">Home</a>
-      </span>
-      <span className="devider">/</span>
-      <span>
-        <a href="#">About Us</a>
-      </span>
-    </div>
-    <div className="blog-heading about-heading">
-      <h1 className="heading">About Us</h1>
-    </div>
-  </div>
-</section>
+      <section className="blog about-blog">
+        <div className="container">
+          {/* <div className="blog-bradcrum">
+            <span>
+              <a href="index-2.html">Home</a>
+            </span>
+            <span className="devider">/</span>
+            <span>
+              <a href="#">About Us</a>
+            </span>
+          </div> */}
+          <div className="blog-heading about-heading">
+            <h1 className="heading">About Us</h1>
+          </div>
+        </div>
+      </section>
 
       <section className="about-service product ">
         <div className="container">
@@ -378,8 +378,8 @@ function About() {
       </section>
       {/*------------- about-section-end--------------*/}
       <>
-  {/*------------- about-slider-section--------------*/}
-  {/*}
+        {/*------------- about-slider-section--------------*/}
+        {/*}
   <section className="about-feedback product">
     <div className="container p-0">
       <div className="section-title">
@@ -751,199 +751,199 @@ function About() {
           </div>
         </div>
       </div>*/}
-    <section className="about-feedback product" >
-    <div className="container p-0">
-      <div className="section-title">
-        <h3>Customers Feedback</h3>
-      </div>
-    </div>
-    <div className="testimonial-list">
-        <div className="testimonial-wrapper" style={wrapperStyle}>
-            <div className="ratings">
+        <section className="about-feedback product" >
+          <div className="container p-0">
+            <div className="section-title">
+              <h3>Customers Feedback</h3>
+            </div>
+          </div>
+          <div className="testimonial-list">
+            <div className="testimonial-wrapper" style={wrapperStyle}>
+              <div className="ratings">
                 <span>
-                    <svg
-                        width={99}
-                        height={21}
-                        viewBox="0 0 99 21"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M9.88976 0.5L12.1102 7.40983H19.2955L13.4824 11.6803L15.7028 18.5902L9.88976 14.3197L4.07671 18.5902L6.2971 11.6803L0.484039 7.40983H7.66937L9.88976 0.5Z"
-                            fill="#FFA800"
-                        />
-                        <path
-                    d="M29.671 0.5L31.8914 7.40983H39.0767L33.2637 11.6803L35.4841 18.5902L29.671 14.3197L23.858 18.5902L26.0783 11.6803L20.2653 7.40983H27.4506L29.671 0.5Z"
-                    fill="#FFA800"
-                  />
-                  <path
-                    d="M49.4484 0.5L51.6687 7.40983H58.8541L53.041 11.6803L55.2614 18.5902L49.4484 14.3197L43.6353 18.5902L45.8557 11.6803L40.0426 7.40983H47.228L49.4484 0.5Z"
-                    fill="#FFA800"
-                  />
-                  <path
-                    d="M69.2296 0.5L71.45 7.40983H78.6353L72.8223 11.6803L75.0427 18.5902L69.2296 14.3197L63.4166 18.5902L65.6369 11.6803L59.8239 7.40983H67.0092L69.2296 0.5Z"
-                    fill="#FFA800"
-                  />
-                  <path
-                    d="M89.007 0.5L91.2273 7.40983H98.4127L92.5996 11.6803L94.82 18.5902L89.007 14.3197L83.1939 18.5902L85.4143 11.6803L79.6012 7.40983H86.7866L89.007 0.5Z"
-                    fill="#FFA800"
-                  />
-                        
-                    </svg>
+                  <svg
+                    width={99}
+                    height={21}
+                    viewBox="0 0 99 21"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.88976 0.5L12.1102 7.40983H19.2955L13.4824 11.6803L15.7028 18.5902L9.88976 14.3197L4.07671 18.5902L6.2971 11.6803L0.484039 7.40983H7.66937L9.88976 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M29.671 0.5L31.8914 7.40983H39.0767L33.2637 11.6803L35.4841 18.5902L29.671 14.3197L23.858 18.5902L26.0783 11.6803L20.2653 7.40983H27.4506L29.671 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M49.4484 0.5L51.6687 7.40983H58.8541L53.041 11.6803L55.2614 18.5902L49.4484 14.3197L43.6353 18.5902L45.8557 11.6803L40.0426 7.40983H47.228L49.4484 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M69.2296 0.5L71.45 7.40983H78.6353L72.8223 11.6803L75.0427 18.5902L69.2296 14.3197L63.4166 18.5902L65.6369 11.6803L59.8239 7.40983H67.0092L69.2296 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M89.007 0.5L91.2273 7.40983H98.4127L92.5996 11.6803L94.82 18.5902L89.007 14.3197L83.1939 18.5902L85.4143 11.6803L79.6012 7.40983H86.7866L89.007 0.5Z"
+                      fill="#FFA800"
+                    />
+
+                  </svg>
                 </span>
                 <span className="text">(5.0)</span>
-            </div>
-            <p className="testimonial-details">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the redi 1500s, when an into the find unknown printer
-              took a galley of type and scrambled it to make a type inot the
-              specimen book. It has survived not only five centuries but also
-              the on leap into find it a electronic typesetting, remaining end
-              to make it.
-            </p>
-            <div className="divider" />
-            <div className="testimonial-info">
+              </div>
+              <p className="testimonial-details">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy text
+                ever since the redi 1500s, when an into the find unknown printer
+                took a galley of type and scrambled it to make a type inot the
+                specimen book. It has survived not only five centuries but also
+                the on leap into find it a electronic typesetting, remaining end
+                to make it.
+              </p>
+              <div className="divider" />
+              <div className="testimonial-info">
                 <div className="testimonial-img">
-                    <img
-                        src="assets/images/homepage-one/about/testimonial-img-1.webp"
-                        alt="img"
-                    />
+                  <img
+                    src="assets/images/homepage-one/about/testimonial-img-1.webp"
+                    alt="img"
+                  />
                 </div>
                 <div className="testimonial-info-details">
-                    <h5 className="testimonial-name">Md Abdur Rahman</h5>
-                    <p className="testimonial-title">
-                        CEO OF <span className="title-inner">DesginCraft</span>
-                    </p>
+                  <h5 className="testimonial-name">Md Abdur Rahman</h5>
+                  <p className="testimonial-title">
+                    CEO OF <span className="title-inner">DesginCraft</span>
+                  </p>
                 </div>
+              </div>
             </div>
-        </div>
 
-        
-        <div className="testimonial-wrapper" style={wrapperStyle}>
-            <div className="ratings">
+
+            <div className="testimonial-wrapper" style={wrapperStyle}>
+              <div className="ratings">
                 <span>
-                    <svg
-                        width={99}
-                        height={21}
-                        viewBox="0 0 99 21"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M9.88976 0.5L12.1102 7.40983H19.2955L13.4824 11.6803L15.7028 18.5902L9.88976 14.3197L4.07671 18.5902L6.2971 11.6803L0.484039 7.40983H7.66937L9.88976 0.5Z"
-                            fill="#FFA800"
-                        />
-                        <path
-                    d="M29.671 0.5L31.8914 7.40983H39.0767L33.2637 11.6803L35.4841 18.5902L29.671 14.3197L23.858 18.5902L26.0783 11.6803L20.2653 7.40983H27.4506L29.671 0.5Z"
-                    fill="#FFA800"
-                  />
-                  <path
-                    d="M49.4484 0.5L51.6687 7.40983H58.8541L53.041 11.6803L55.2614 18.5902L49.4484 14.3197L43.6353 18.5902L45.8557 11.6803L40.0426 7.40983H47.228L49.4484 0.5Z"
-                    fill="#FFA800"
-                  />
-                  <path
-                    d="M69.2296 0.5L71.45 7.40983H78.6353L72.8223 11.6803L75.0427 18.5902L69.2296 14.3197L63.4166 18.5902L65.6369 11.6803L59.8239 7.40983H67.0092L69.2296 0.5Z"
-                    fill="#FFA800"
-                  />
-                  <path
-                    d="M89.007 0.5L91.2273 7.40983H98.4127L92.5996 11.6803L94.82 18.5902L89.007 14.3197L83.1939 18.5902L85.4143 11.6803L79.6012 7.40983H86.7866L89.007 0.5Z"
-                    fill="#FFA800"
-                  />
-                    </svg>
+                  <svg
+                    width={99}
+                    height={21}
+                    viewBox="0 0 99 21"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.88976 0.5L12.1102 7.40983H19.2955L13.4824 11.6803L15.7028 18.5902L9.88976 14.3197L4.07671 18.5902L6.2971 11.6803L0.484039 7.40983H7.66937L9.88976 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M29.671 0.5L31.8914 7.40983H39.0767L33.2637 11.6803L35.4841 18.5902L29.671 14.3197L23.858 18.5902L26.0783 11.6803L20.2653 7.40983H27.4506L29.671 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M49.4484 0.5L51.6687 7.40983H58.8541L53.041 11.6803L55.2614 18.5902L49.4484 14.3197L43.6353 18.5902L45.8557 11.6803L40.0426 7.40983H47.228L49.4484 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M69.2296 0.5L71.45 7.40983H78.6353L72.8223 11.6803L75.0427 18.5902L69.2296 14.3197L63.4166 18.5902L65.6369 11.6803L59.8239 7.40983H67.0092L69.2296 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M89.007 0.5L91.2273 7.40983H98.4127L92.5996 11.6803L94.82 18.5902L89.007 14.3197L83.1939 18.5902L85.4143 11.6803L79.6012 7.40983H86.7866L89.007 0.5Z"
+                      fill="#FFA800"
+                    />
+                  </svg>
                 </span>
                 <span className="text">(4.7)</span>
-            </div>
-            <p className="testimonial-details">
-            Almost every imaginable design is possible and customizations are
-              allowed on every level. Some features could make use of better
-              controls. If you know how to operate your mouse, then you are all
-              set to use this pagebuilder. Lorem ipsum dolor sit, amet
-              consectetur adipisicing elit. Illo rerum accusamus asperiores hic
-              repellendus ipsum aliquid ab nihil nisi reprehenderit!. Lorem
-              ipsum dolor sit amet.
-            </p>
-            <div className="divider" />
-            <div className="testimonial-info">
+              </div>
+              <p className="testimonial-details">
+                Almost every imaginable design is possible and customizations are
+                allowed on every level. Some features could make use of better
+                controls. If you know how to operate your mouse, then you are all
+                set to use this pagebuilder. Lorem ipsum dolor sit, amet
+                consectetur adipisicing elit. Illo rerum accusamus asperiores hic
+                repellendus ipsum aliquid ab nihil nisi reprehenderit!. Lorem
+                ipsum dolor sit amet.
+              </p>
+              <div className="divider" />
+              <div className="testimonial-info">
                 <div className="testimonial-img">
-                    <img
-                        src="assets/images/homepage-one/about/testimonial-img-2.webp"
-                        alt="img"
-                    />
+                  <img
+                    src="assets/images/homepage-one/about/testimonial-img-2.webp"
+                    alt="img"
+                  />
                 </div>
                 <div className="testimonial-info-details">
-                    <h5 className="testimonial-name">Mohammad Sajjad Hossain</h5>
-                    <p className="testimonial-title">
-                        CFO OF <span className="title-inner">DesginX</span>
-                    </p>
+                  <h5 className="testimonial-name">Mohammad Sajjad Hossain</h5>
+                  <p className="testimonial-title">
+                    CFO OF <span className="title-inner">DesginX</span>
+                  </p>
                 </div>
+              </div>
             </div>
-        </div>
-        <div className="testimonial-wrapper" style={wrapperStyle}>
-            <div className="ratings">
+            <div className="testimonial-wrapper" style={wrapperStyle}>
+              <div className="ratings">
                 <span>
-                    <svg
-                        width={99}
-                        height={21}
-                        viewBox="0 0 99 21"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M9.88976 0.5L12.1102 7.40983H19.2955L13.4824 11.6803L15.7028 18.5902L9.88976 14.3197L4.07671 18.5902L6.2971 11.6803L0.484039 7.40983H7.66937L9.88976 0.5Z"
-                            fill="#FFA800"
-                        />
-                        <path
-                    d="M29.671 0.5L31.8914 7.40983H39.0767L33.2637 11.6803L35.4841 18.5902L29.671 14.3197L23.858 18.5902L26.0783 11.6803L20.2653 7.40983H27.4506L29.671 0.5Z"
-                    fill="#FFA800"
-                  />
-                  <path
-                    d="M49.4484 0.5L51.6687 7.40983H58.8541L53.041 11.6803L55.2614 18.5902L49.4484 14.3197L43.6353 18.5902L45.8557 11.6803L40.0426 7.40983H47.228L49.4484 0.5Z"
-                    fill="#FFA800"
-                  />
-                  <path
-                    d="M69.2296 0.5L71.45 7.40983H78.6353L72.8223 11.6803L75.0427 18.5902L69.2296 14.3197L63.4166 18.5902L65.6369 11.6803L59.8239 7.40983H67.0092L69.2296 0.5Z"
-                    fill="#FFA800"
-                  />
-                  <path
-                    d="M89.007 0.5L91.2273 7.40983H98.4127L92.5996 11.6803L94.82 18.5902L89.007 14.3197L83.1939 18.5902L85.4143 11.6803L79.6012 7.40983H86.7866L89.007 0.5Z"
-                    fill="#FFA800"
-                  />
-                    </svg>
+                  <svg
+                    width={99}
+                    height={21}
+                    viewBox="0 0 99 21"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.88976 0.5L12.1102 7.40983H19.2955L13.4824 11.6803L15.7028 18.5902L9.88976 14.3197L4.07671 18.5902L6.2971 11.6803L0.484039 7.40983H7.66937L9.88976 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M29.671 0.5L31.8914 7.40983H39.0767L33.2637 11.6803L35.4841 18.5902L29.671 14.3197L23.858 18.5902L26.0783 11.6803L20.2653 7.40983H27.4506L29.671 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M49.4484 0.5L51.6687 7.40983H58.8541L53.041 11.6803L55.2614 18.5902L49.4484 14.3197L43.6353 18.5902L45.8557 11.6803L40.0426 7.40983H47.228L49.4484 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M69.2296 0.5L71.45 7.40983H78.6353L72.8223 11.6803L75.0427 18.5902L69.2296 14.3197L63.4166 18.5902L65.6369 11.6803L59.8239 7.40983H67.0092L69.2296 0.5Z"
+                      fill="#FFA800"
+                    />
+                    <path
+                      d="M89.007 0.5L91.2273 7.40983H98.4127L92.5996 11.6803L94.82 18.5902L89.007 14.3197L83.1939 18.5902L85.4143 11.6803L79.6012 7.40983H86.7866L89.007 0.5Z"
+                      fill="#FFA800"
+                    />
+                  </svg>
                 </span>
                 <span className="text">(4.5)</span>
-            </div>
-            <p className="testimonial-details">
-            As a digital marketing agency our team works day in and day out on
-              websites of all kinds. Some of the most common errors we see are
-              websites not optimized for SEO because of old, boring, or out of
-              date website themes or designs.corporis similique consectetur
-              aspernatur illum incidunt exercitationem iusto hic possimus nihil,
-              ipsum at delectus. Quas ipsam a quidem tempora, aliquid adipisci
-              enim.
-            </p>
-            <div className="divider" />
-            <div className="testimonial-info">
+              </div>
+              <p className="testimonial-details">
+                As a digital marketing agency our team works day in and day out on
+                websites of all kinds. Some of the most common errors we see are
+                websites not optimized for SEO because of old, boring, or out of
+                date website themes or designs.corporis similique consectetur
+                aspernatur illum incidunt exercitationem iusto hic possimus nihil,
+                ipsum at delectus. Quas ipsam a quidem tempora, aliquid adipisci
+                enim.
+              </p>
+              <div className="divider" />
+              <div className="testimonial-info">
                 <div className="testimonial-img">
-                    <img
-                        src="assets/images/homepage-one/about/testimonial-img-3.webp"
-                        alt="img"
-                    />
+                  <img
+                    src="assets/images/homepage-one/about/testimonial-img-3.webp"
+                    alt="img"
+                  />
                 </div>
                 <div className="testimonial-info-details">
-                    <h5 className="testimonial-name">Stefhen Hoking</h5>
-                    <p className="testimonial-title">
-                        HR OF <span className="title-inner">Desgin360</span>
-                    </p>
+                  <h5 className="testimonial-name">Stefhen Hoking</h5>
+                  <p className="testimonial-title">
+                    HR OF <span className="title-inner">Desgin360</span>
+                  </p>
                 </div>
+              </div>
             </div>
-        </div>
 
-       
-    </div>
-</section>
 
-      {/*
+          </div>
+        </section>
+
+        {/*
       <div className="swiper-buttons">
         <div className="swiper-button-prev">
           <span>
@@ -984,10 +984,9 @@ function About() {
           </span>
         </div>
       </div>*/}
-    
-  {/*------------- about-slider-section-end--------------*/}
-  {/*------------- about-promotion-section--------------*/}
-  <div style={containerStyle}>
+
+
+        {/* <div style={containerStyle}>
       <a href="assets/images/homepage-one/about/advertrisement-vedio.mp4" target="_blank" style={buttonStyle} rel="noopener noreferrer">
         <span>
           <svg width="34" height="38" viewBox="0 0 34 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1000,12 +999,10 @@ function About() {
         </span>
       </a>
       <video src="assets/images/homepage-one/about/advertrisement-vedio.mp4" autoPlay loop muted style={videoStyle}></video>
-    </div>
- 
- 
-  {/*------------- about-promotion-end--------------*/}
-  {/*------------- latest-news-section--------------*/}
-  <section className="latest product footer-padding">
+    </div> */}
+
+
+        {/* <section className="latest product footer-padding">
     <div className="container">
       <div className="section-title text-center">
         <h4 className="about-details">My Latest News</h4>
@@ -1222,9 +1219,8 @@ function About() {
         </div>
       </div>
     </div>
-  </section>
-  {/*------------- latest-news-section-end--------------*/}
-</>
+  </section> */}
+      </>
 
     </>
   );

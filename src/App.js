@@ -38,21 +38,24 @@ import OrderHistory from "./components/OrderHistory";
 import PaymentPage from "./components/PaymentPage";
 import Dashboard from"./components/Dashboard";
 import Productlist from "./components/Productlist";
+import OrderSuccess from "./components/OrderSuccess";
+
+import About from "./components/About";
 
 function App() {
 
   //temp code to keep server live
-  const callApiQsList = async () => {
-    try {
-      const url = process.env.REACT_APP_API_URL + 'category/allCategory';
-      const response = await axios.get(url);
-    }
-    catch (error) { console.log(error); }
-  }
+  // const callApiQsList = async () => {
+  //   try {
+  //     const url = process.env.REACT_APP_API_URL + 'category/allCategory';
+  //     const response = await axios.get(url);
+  //   }
+  //   catch (error) { console.log(error); }
+  // }
 
-  useEffect(() => {
-    setInterval(() => callApiQsList(), 100000)
-  }, [])
+  // useEffect(() => {
+  //   setInterval(() => callApiQsList(), 100000)
+  // }, [])
   //temp code to keep server live
 
   return (
@@ -74,17 +77,18 @@ function App() {
             <Route path="/wishlist" element={< Wishlist />} />
             <Route path='/checkout' element={<Checkout />} />
             <Route path="/paymentpage" element={<PaymentPage />} />
-            <Route path="/ordersuccess" element={<Home />} />
+            <Route path="/ordersuccess" element={<OrderSuccess />} />
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
 
 
             <Route path="/loginandsecurity" element={<LoginAndSecurityPage />} />
-            <Route path='/addresslist' element={<AddressList />} />
-            <Route path='/address' element={<Address />} />
+            <Route path='/address' element={<AddressList />} />
+            <Route path='/addressnew' element={<Address />} />
             <Route path="/nameedit" element={<Nameedit />} />
             <Route path="/emailedit" element={<Emailedit />} />
             <Route path="/mobilenoedit" element={<Mobilenoedit />} />
