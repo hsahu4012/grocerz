@@ -8,15 +8,15 @@ const Dashboard = () => {
   return (
 
     <>    
-    <section class="blog about-blog">
-        <div class="container">
-            <div class="blog-bradcrum">
-                <span><a href="index-2.html">Home</a></span>
-                <span class="devider">/</span>
-                <span><a href="#">Dashboard</a></span>
+    <section className="blog about-blog">
+        <div className="container">
+            <div className="blog-bradcrum">
+                <span><Link to="/">Home</Link></span>
+                <span className="devider">/</span>
+                <span><Link to="/dashboard">Dashboard</Link></span>
             </div>
-            <div class="blog-heading about-heading">
-                <h1 class="heading">User Dashboard</h1>
+            <div className="blog-heading about-heading">
+              <h1 className="heading">User Dashboard</h1>
             </div>
         </div>
     </section>
