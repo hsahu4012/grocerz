@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import logo from '../../assets/images/logo.png';
+
 const Footer = () => {
     const [categories, setCategories] = useState([]);
 
@@ -65,15 +67,15 @@ const Footer = () => {
                                 <div class="col-lg-3 col-sm-6">
                                     <div class="footer-order">
                                         <div class="logo">
-                                            <img src="assets/images/logos/footer-logo.webp" alt="logo" />
+                                            <img src={logo} alt="logo" className='logo-image'/>
                                         </div>
-                                        <div class="footer-link order-link">
+                                        {/* <div class="footer-link order-link">
                                             <ul>
                                                 <li><a href="order.html">Track Order</a></li>
                                                 <li><a href="cart.html">Delivery & Returns</a></li>
                                                 <li><a href="about.html">Warranty</a></li>
                                             </ul>
-                                        </div>
+                                        </div> */}
 
                                     </div>
                                 </div>
@@ -84,10 +86,10 @@ const Footer = () => {
                                         </h4>
                                         <div class="footer-link about-link">
                                             <ul>
-                                                <li><a href="about.html">Rave’s Story</a></li>
-                                                <li><a href="about.html">Work With Us</a></li>
-                                                <li><a href="about.html">Coporate News</a></li>
-                                                <li><a href="about.html">Investors</a></li>
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="about.html">Contact</a></li>
+                                                <li><a href="about.html">Complains</a></li>
+                                                <li><a href="about.html">Career</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -99,10 +101,9 @@ const Footer = () => {
                                         </h4>
                                         <div class="footer-link useful-link">
                                             <ul>
-                                                <li><a href="about.html">Secure Payment</a></li>
                                                 <li><a href="privacy.html">Privacy Policy</a></li>
-                                                <li><a href="terms.html">Terms of Use</a></li>
-                                                <li><a href="product-sidebar.html">Archived Products</a></li>
+                                                <li><a href="privacy.html">Refund & Return Policy</a></li>
+                                                <li><a href="terms.html">Terms & Conditions</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -113,7 +114,7 @@ const Footer = () => {
                                             Contact Info
                                         </h4>
                                         <div class="footer-link contact-link">
-                                            <div class="address">
+                                            {/* <div class="address">
                                                 <div class="icon">
                                                     <span>
                                                         <svg width="44" height="45" viewBox="0 0 44 45" fill="none"
@@ -141,7 +142,7 @@ const Footer = () => {
                                                     <h4 class="footer-heading">Address:</h4>
                                                     <p>Gurgaon</p>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div class="phone address">
                                                 <div class="icon">
                                                     <span>
@@ -165,7 +166,7 @@ const Footer = () => {
                                                 </div>
                                                 <div class="details">
                                                     <h4 class="footer-heading">Phone:</h4>
-                                                    <p>+880171889547</p>
+                                                    <p>8757499345</p>
                                                 </div>
                                             </div>
                                             <div class="email address">
@@ -194,7 +195,7 @@ const Footer = () => {
                         <div class="footer-bottom-section">
                             <div class="footer-social">
                                 <div class="social-items">
-                                    <a href="#" class="social-icon instagram">
+                                    <a href="#" target="_blank" class="social-icon instagram">
                                         <span>
                                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -210,7 +211,7 @@ const Footer = () => {
                                             </svg>
                                         </span>
                                     </a>
-                                    <a href="#" class="social-icon facebook">
+                                    <a href="https://www.facebook.com/grocji"  target="_blank" class="social-icon facebook">
                                         <span>
                                             <svg width="10" height="16" viewBox="0 0 10 16" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -220,7 +221,7 @@ const Footer = () => {
                                             </svg>
                                         </span>
                                     </a>
-                                    <a href="#" class="social-icon youtube">
+                                    {/* <a href="#" class="social-icon youtube">
                                         <span>
                                             <svg width="16" height="12" viewBox="0 0 16 12" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -229,11 +230,11 @@ const Footer = () => {
                                                     fill="#ABABAB" />
                                             </svg>
                                         </span>
-                                    </a>
+                                    </a> */}
                                 </div>
-                                <div class="copyright">
+                                {/* <div class="copyright">
                                     <p>©2024 All rights reserved</p>
-                                </div>
+                                </div> */}
                             </div>
                             <div class="footer-payment-mode">
                                 <a href="#">

@@ -72,19 +72,19 @@ const Register = () => {
                             placeholder="confirm password"
                           />
                         </div>
-                        <div class="review-form-name checkbox">
+                        {/* <div class="review-form-name checkbox">
                           <div class="checkbox-item">
                             <input type="checkbox" />
                             <span class="address">Remember Me</span>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                       <div class="login-btn text-center">
                         <a href="#" class="shop-btn">
                           Sign Up
                         </a>
                         <span class="shop-account">
-                          have an account ?<a href="/login">Log In</a>
+                          Already have an account ?<Link href="/login">Log In</Link>
                         </span>
                       </div>
                     </div>

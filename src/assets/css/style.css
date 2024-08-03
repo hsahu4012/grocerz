@@ -525,7 +525,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 0px;
-  padding: 1.9rem 0 2.2rem 0;
+  padding: 0.5rem 0 0.5rem 0;
 }
 .header-center .header-search-btn {
   width: 51.6rem;
@@ -2228,7 +2228,7 @@ button {
 }
 
 .footer-center-section {
-  padding-top: 6rem;
+  padding-top: 1rem;
 }
 .footer-center-section .logo {
   margin-bottom: 6rem;

@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DataAppContext } from "../../DataContext";
 import axios from "axios";
+import logo from '../../assets/images/logo.png';
 
 const Header = () => {
   const { appstate, logout_user } = useContext(DataAppContext);
@@ -59,15 +60,15 @@ const Header = () => {
           <div class="container">
             <div class="header-top">
               <div class="header-profile">
-                <a href="user-profile.html">
+                <Link to="/dashboard">
                   <span>Account</span>
-                </a>
-                <a href="order.html">
+                </Link>
+                {/* <a href="order.html">
                   <span>Track Order</span>
-                </a>
-                <a href="faq.html">
+                </a> */}
+                <Link to="/contact">
                   <span>Support</span>
-                </a>
+                </Link>
               </div>
               <div class="header-contact d-none d-lg-block">
                 <div class="header-top-contact">
@@ -94,7 +95,7 @@ const Header = () => {
                         />
                       </svg>
                     </span>
-                    <span class="contact-text">+ 00645 4568</span>
+                    <span class="contact-text">8757499345</span>
                   </a>
                   <div class="divider"></div>
                   <a href="#" class="top-contact email">
@@ -112,7 +113,7 @@ const Header = () => {
                         />
                       </svg>
                     </span>
-                    <span class="contact-text"> Youremai@gmail.com</span>
+                    <span class="contact-text">grocji@gmail.com</span>
                   </a>
                 </div>
               </div>
@@ -124,8 +125,8 @@ const Header = () => {
             <div class="header-center">
               <div class="logo">
                 <Link to="/home">
-                <h2>Grocji</h2>
-                  {/* <img src="assets/images/logos/logo.webp" alt="logo" /> */}
+                {/* <h2>Grocji</h2> */}
+                  <img src={logo} alt="logo" className="logo-image" />
                 </Link>
               </div>
               {/* <div class="header-search-btn">

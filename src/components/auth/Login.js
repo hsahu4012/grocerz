@@ -87,7 +87,7 @@ const Login = () => {
                             placeholder="password"
                           />
                         </div>
-                        <div class="review-form-name checkbox">
+                        {/* <div class="review-form-name checkbox">
                           <div class="checkbox-item">
                             <input type="checkbox" />
                             <span class="address">Remember Me</span>
@@ -95,7 +95,7 @@ const Login = () => {
                           <div class="forget-pass">
                             <p>Forgot password?</p>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                       {error && <div class="error-message">{error}</div>}
                       <div class="login-btn text-center">
