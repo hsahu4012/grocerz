@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from 'react-router-dom';
 import axios from "axios";
-// import "../style.css";
 
 import dress1 from '../assets/img/product/women/dress1.jpg';
 
