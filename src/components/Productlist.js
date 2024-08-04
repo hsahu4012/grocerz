@@ -139,7 +139,7 @@ const Productlist = () => {
                 {products.length > 0 ? (
                   products.map(product => (
                     <>
-                      <div class="col-xl-4 col-sm-6">
+                      <div class="col-xl-3 col-sm-6 col-xs-6">
                         <div class="product-wrapper" data-aos="fade-up">
                           <Link to={`/product/${product.productid}`}>
                             <div class="product-img">

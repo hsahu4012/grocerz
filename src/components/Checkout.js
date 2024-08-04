@@ -191,7 +191,7 @@ function Checkout() {
                                                             <h5 class="wrapper-heading">Platform Fee</h5>
 
                                                         </div>
-                                                        <div class="price">
+                                                        <div class="price-checkout">
                                                             <h5 class="wrapper-heading">+$0</h5>
                                                             <h5 class="wrapper-heading">+$0</h5>
                                                             <h5 class="wrapper-heading">+$0</h5>
