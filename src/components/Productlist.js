@@ -40,7 +40,7 @@ const Productlist = () => {
   const fetchProducts = async (categoryId, subcategoryId) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}products/bySubCategory`, {
-          category: categoryId,
+        category: categoryId,
         subcategory: subcategoryId
       });
       console.log('Products response:', response.data);
@@ -60,8 +60,8 @@ const Productlist = () => {
     try {
       const quantity = 1;
       const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
-          userid,
-          productid,
+        userid,
+        productid,
         quantity
       });
       setMessage(response.data.message || 'Added to cart');
@@ -74,8 +74,8 @@ const Productlist = () => {
   const addToWishlist = async (productid) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}wishlist/addToWishlist`, {
-          userid,
-          productid,
+        userid,
+        productid,
       });
       setMessage(response.data.message || 'Added to wishlist');
     } catch (error) {
@@ -138,9 +138,9 @@ const Productlist = () => {
                       <div class="col-xl-3 col-sm-6 col-xs-6">
                         <div class="product-wrapper" data-aos="fade-up">
                           <Link to={`/product/${product.productid}`}>
-                          <div class="product-img">
-                            <img src={temp_product_image} />
-                        </div>
+                           <div class="product-img">
+                             <img src={temp_product_image} />
+                           </div>
                           </Link>
                           <div class="product-info">
                             <div class="product-description">
