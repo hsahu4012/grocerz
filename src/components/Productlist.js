@@ -109,21 +109,17 @@ const Productlist = () => {
                     <div className="sidebar-wrapper">
                       <h3 className="wrapper-heading">Subcategories</h3>
                       <div className="sidebar-item">
-                        <ul className="sidebar-list">
+                        <ul className="list-group sidebar-list">
                           {subcategories.map(subcategory => (
-                            <li key={subcategory.subcategory_id}>
-                              <input
-                                type="radio"
-                                id={`subcategory-${subcategory.subcategory_id}`}
-                                name="subcategory"
-                                checked={selectedSubcategory === subcategory.subcategory_id}
-                                onChange={() => {
-                                  setSelectedSubcategory(subcategory.subcategory_id);
-                                  setSubcategoryName(subcategory.subcategoryname);
-                                  fetchProducts(category_id, subcategory.subcategory_id);
-                                }}
-                              />
-                              <label htmlFor={`subcategory-${subcategory.subcategory_id}`}>{subcategory.subcategoryname}</label>
+                            <li key={subcategory.subcategory_id}
+                              className={`list-group-item ${selectedSubcategory === subcategory.subcategory_id? 'active': ''}`}
+                               onClick={() => {
+                                setSelectedSubcategory(subcategory.subcategory_id);
+                                setSubcategoryName(subcategory.subcategoryname);
+                                fetchProducts(category_id, subcategory.subcategory_id);
+                              }}
+                            >
+                             <label htmlFor={`subcategory-${subcategory.subcategory_id}`}>{subcategory.subcategoryname}</label>
                             </li>
                           ))}
                         </ul>
