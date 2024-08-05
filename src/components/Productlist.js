@@ -40,7 +40,7 @@ const Productlist = () => {
   const fetchProducts = async (categoryId, subcategoryId) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}products/bySubCategory`, {
-        category: categoryId,
+          category: categoryId,
         subcategory: subcategoryId
       });
       console.log('Products response:', response.data);
@@ -60,8 +60,8 @@ const Productlist = () => {
     try {
       const quantity = 1;
       const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
-        userid,
-        productid,
+          userid,
+          productid,
         quantity
       });
       setMessage(response.data.message || 'Added to cart');
@@ -74,8 +74,8 @@ const Productlist = () => {
   const addToWishlist = async (productid) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}wishlist/addToWishlist`, {
-        userid,
-        productid,
+          userid,
+          productid,
       });
       setMessage(response.data.message || 'Added to wishlist');
     } catch (error) {
@@ -109,21 +109,17 @@ const Productlist = () => {
                     <div className="sidebar-wrapper">
                       <h3 className="wrapper-heading">Subcategories</h3>
                       <div className="sidebar-item">
-                        <ul className="sidebar-list">
+                        <ul className="list-group sidebar-list">
                           {subcategories.map(subcategory => (
-                            <li key={subcategory.subcategory_id}>
-                              <input
-                                type="radio"
-                                id={`subcategory-${subcategory.subcategory_id}`}
-                                name="subcategory"
-                                checked={selectedSubcategory === subcategory.subcategory_id}
-                                onChange={() => {
-                                  setSelectedSubcategory(subcategory.subcategory_id);
-                                  setSubcategoryName(subcategory.subcategoryname);
-                                  fetchProducts(category_id, subcategory.subcategory_id);
-                                }}
-                              />
-                              <label htmlFor={`subcategory-${subcategory.subcategory_id}`}>{subcategory.subcategoryname}</label>
+                            <li key={subcategory.subcategory_id}
+                              className={`list-group-item ${selectedSubcategory === subcategory.subcategory_id? 'active': ''}`}
+                               onClick={() => {
+                                setSelectedSubcategory(subcategory.subcategory_id);
+                                setSubcategoryName(subcategory.subcategoryname);
+                                fetchProducts(category_id, subcategory.subcategory_id);
+                              }}
+                            >
+                             <label htmlFor={`subcategory-${subcategory.subcategory_id}`}>{subcategory.subcategoryname}</label>
                             </li>
                           ))}
                         </ul>
@@ -142,9 +138,9 @@ const Productlist = () => {
                       <div class="col-xl-3 col-sm-6 col-xs-6">
                         <div class="product-wrapper" data-aos="fade-up">
                           <Link to={`/product/${product.productid}`}>
-                            <div class="product-img">
-                              <img src={temp_product_image} />
-                            </div>
+                          <div class="product-img">
+                            <img src={temp_product_image} />
+                        </div>
                           </Link>
                           <div class="product-info">
                             <div class="product-description">
