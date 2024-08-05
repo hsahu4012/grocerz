@@ -138,9 +138,9 @@ const Productlist = () => {
                       <div class="col-xl-3 col-sm-6 col-xs-6">
                         <div class="product-wrapper" data-aos="fade-up">
                           <Link to={`/product/${product.productid}`}>
-                           <div class="product-img">
-                             <img src={temp_product_image} />
-                           </div>
+                            <div class="product-img">
+                              <img src={temp_product_image} />
+                            </div>
                           </Link>
                           <div class="product-info">
                             <div class="product-description">
