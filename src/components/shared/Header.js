@@ -213,6 +213,9 @@ const Header = () => {
                     </span>
                   </a>
                 </div> */}
+                <div>
+                  {(loginstatus &&
+                  <>
                 <div class="header-favourite">
                   <Link to="/wishlist" class="cart-item">
                     <span>
@@ -236,6 +239,12 @@ const Header = () => {
                     </span>
                   </Link>
                 </div>
+                </>
+                )}
+               </div>
+               <div>
+                  {(loginstatus &&
+                  <>
                 <div class="header-cart">
                   <Link to="/cart" class="cart-item">
                     <span>
@@ -258,8 +267,13 @@ const Header = () => {
                       </svg>
                     </span>
                   </Link>
-                  
                 </div>
+                </>
+                )}
+               </div>
+               <div>
+                {loginstatus && ( 
+                <>
                 <div class="header-user">
                   <Link to="/dashboard">
                     <span>
@@ -278,6 +292,9 @@ const Header = () => {
                     </span>
                   </Link>
                 </div>
+                </>
+                )}
+              </div>
               </div>
             </div>
           </div>
@@ -1692,9 +1709,12 @@ const Header = () => {
                     {loginstatus ? (
                         <button  class="shop-btn"  onClick={handleLogout}>Logout</button>
                     ) : (
-                        <Link to="/login">
-                            <button  class="shop-btn">User Login</button>
+                        <><Link to="/login">
+                          <button class="shop-btn me-5">Login</button>
                         </Link>
+                        <Link to="/register">
+                          <button class="shop-btn ms-5">Register</button>
+                        </Link></>
                     )}
                 </div>
             </div>
