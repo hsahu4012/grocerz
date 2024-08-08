@@ -2,20 +2,51 @@ import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import * as Yup from "yup";
+
+//import loaderGif from 'src/assets/images/loader.gif';
+import loaderGif from '../../assets/images/loader.gif';
+
+
+
 
 const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const url = `${process.env.REACT_APP_API_URL}users/adduser`;  
+  const url = `${process.env.REACT_APP_API_URL}users/adduser`;
+  
 
   const initialValues = {
     name: "",
     email: "",
+    mobile: "",
     password: "",
     confirmPassword: "",
   };
 
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(3, "Name must be at least 3 characters")
+      .required("Name is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    mobile: Yup.string()
+      .matches(/^[6-9]\d{9}$/, "Mobile number must be 10 digits starting with 6-9")
+      .required("Mobile number is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+      .matches(/[0-9]/, "Password must contain at least one number")
+      .matches(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character")
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], "Passwords must match")
+      .required("Confirm Password is required"),
+  });
+  
   const submitRegistration = async (values, { setSubmitting }) => {
     setError(null);
     setSuccessMessage(null);
@@ -27,13 +58,18 @@ const Register = () => {
     }
 
     try {
+
+      await new Promise((resolve) => setTimeout(resolve, 2000)); 
+
       const response = await axios.post(url, {
         name: values.name,
         email: values.email,
+        mobile: values.mobile,
         password: values.password,
       });
 
       if (response.status === 201) {
+        setSuccessMessage("Registration successful! Redirecting to login...");
         setTimeout(() => navigate("/login"), 2000);
       }
     } catch (error) {
@@ -50,10 +86,36 @@ const Register = () => {
 
   return (
     <>
+    <style>{`
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .loader {
+      width: 100px;
+      height: 100px;
+    }
+    .error-message {
+      color: red;
+      margin-top: 5px;
+    }
+    .success-message {
+      color: green;
+      margin-top: 5px;
+    }
+  `}</style>
       <section className="login product footer-padding">
         <div className="container">
-          <Formik initialValues={initialValues} onSubmit={submitRegistration}>
-            {({ isSubmitting }) => (
+          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitRegistration}>
+            {({ isSubmitting, errors, touched }) => (
               <Form className="login-section">
                 <div className="row align-items-center">
                   <div className="col-lg-6">
@@ -79,6 +141,9 @@ const Register = () => {
                               placeholder="Name"
                               required
                             />
+                            {errors.name && touched.name ? ( 
+                              <div className="error-message">{errors.name}</div>
+                            ) : null}
                           </div>
                           <div className="review-form-name">
                             <label htmlFor="email" className="form-label">
@@ -92,6 +157,26 @@ const Register = () => {
                               placeholder="Email"
                               required
                             />
+                            {errors.email && touched.email ? ( 
+                              <div className="error-message">{errors.email}</div>
+                            ) : null}
+                          </div>
+                          <div className="review-form-name">
+                            <label htmlFor="mobile" className="form-label">
+                              Mobile Number*
+                            </label>
+                            <Field
+                              type="text"
+                              id="mobile"
+                              name="mobile"
+                              className="form-control"
+                              placeholder="Mobile Number"
+                              required
+                            />
+                            {errors.mobile && touched.mobile ? ( 
+                              <div className="error-message">{errors.mobile}</div>
+                            ) : null}
+
                           </div>
                           <div className="review-form-name">
                             <label htmlFor="password" className="form-label">
@@ -105,6 +190,9 @@ const Register = () => {
                               placeholder="Password"
                               required
                             />
+                            {errors.password && touched.password ? ( 
+                              <div className="error-message">{errors.password}</div>
+                            ) : null}
                           </div>
                           <div className="review-form-name">
                             <label htmlFor="confirmPassword" className="form-label">
@@ -118,21 +206,35 @@ const Register = () => {
                               placeholder="Confirm Password"
                               required
                             />
+                            {errors.confirmPassword && touched.confirmPassword ? ( 
+                              <div className="error-message">{errors.confirmPassword}</div>
+                            ) : null}
                           </div>
                         </div>
                         {error && <div className="error-message">{error}</div>}
                         {successMessage && <div className="success-message">{successMessage}</div>}
                         <div className="login-btn text-center">
-                          <button
-                            type="submit"
-                            className="shop-btn"
-                            disabled={isSubmitting}
-                          >
-                            Sign Up
-                          </button>
-                          <span className="shop-account">
-                            Already have an account? <Link to="/login">Log In</Link>
-                          </span>
+                          {/*
+                        {isSubmitting ? ( /
+                            <div className="loader-container">  
+                            <img
+                                src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif"
+                                alt="Loading..."
+                                className="loader"
+                              />  
+                          </div>
+                          ) : (*/}
+                          <>
+                            <button
+                                type="submit"
+                                className="shop-btn"
+                                disabled={isSubmitting}
+                              >
+                                Sign Up
+                              </button><span className="shop-account">
+                                  Already have an account? <Link to="/login">Log In</Link>
+                                </span>
+                                </>
                         </div>
                       </div>
                     </div>
@@ -146,6 +248,17 @@ const Register = () => {
                     </div>
                   </div>
                 </div>
+                {isSubmitting && (
+                  <div className="loader-overlay">
+                    <img
+                      //src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif"
+                      //src=""
+                      src={loaderGif}
+                      alt="Loading..."
+                      className="loader"
+                    />
+                  </div>
+                )}
               </Form>
             )}
           </Formik>
