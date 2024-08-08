@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { DataAppContext } from "../DataContext";
 import axios from "axios";
 import DashboardRoutes from "./DashboardRoutes";
+import Loader from './loader/Loader';
 
 const Wishlist = () => {
 
@@ -10,8 +11,10 @@ const Wishlist = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
   const navigate = useNavigate();
   const userid = localStorage.getItem('userid');
+  const [loading, setLoading] = useState(false);
 
   const fetchWishlistItems = async () => {
+    setLoading(true);
     const url = `${process.env.REACT_APP_API_URL}wishlist/allWishlistItems`;
 
     try {
@@ -21,6 +24,7 @@ const Wishlist = () => {
       console.error("Error fetching wishlist items:", error);
 
     };
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -45,6 +49,7 @@ const Wishlist = () => {
               <Link to="/wishlist">Wishlist</Link>
             </span>
           </div> */}
+          {loading && <Loader />}
           <div className="blog-heading about-heading">
             <h1 className="heading">User Wishlist</h1>
           </div>

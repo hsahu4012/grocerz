@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from 'react-router-dom';
 import axios from "axios";
+import Loader from './loader/Loader';
 
 import dress1 from '../assets/img/product/women/dress1.jpg';
 
@@ -9,6 +10,7 @@ const ProductDetails = () => {
   const [selectedColor, setSelectedColor] = useState("red");
   const [activeTab, setActiveTab] = useState("description");
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const { productid } = useParams();
   const userid = localStorage.getItem('userid');
@@ -58,6 +60,7 @@ const ProductDetails = () => {
 
   //for quantity
   const handleQuantityChange = (e) => {
+    setLoading(true);
     // Parse the input value to ensure it's a number
     const newQuantity = parseInt(e.target.value);
 
@@ -69,11 +72,13 @@ const ProductDetails = () => {
       // Otherwise, set the quantity to the new value
       setQuantity(newQuantity);
     }
+    setLoading(false);
   };
 
   //for data and Api
   const handleAddToCart = async () => {
     // Implement API call to add to cart
+    setLoading(true);
     const data = {
       quantity: quantity,
       disc_price: product.disc_price,
@@ -97,12 +102,15 @@ const ProductDetails = () => {
       .catch((error) => {
         console.error("Error adding product to cart:", error);
       });
+      setLoading(false);
   };
 
   const fetchProductDetail = async () => {
+    setLoading(true);
     const response = await axios.get(`${process.env.REACT_APP_API_URL}products/productById/${productid}`)
     console.log('Product Details - ', response.data);
     setProduct(response.data);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -112,6 +120,7 @@ const ProductDetails = () => {
   return (
     <>
       <div class="product-info-section">
+      {loading && <Loader />}
         <div class="row ">
           <div class="col-md-6">
             <div class="product-info-img" data-aos="fade-right">

@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 // import "./style.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation} from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import DataApp from "./DataContext";
 import axios from "axios";
 import "./assets/css/style.css";
 
-
+import Loader from "./components/loader/Loader";
 import Checkout from './components/Checkout';
 import Header from "./components/shared/Header";
 import Footer from "./components/shared/Footer";
@@ -42,7 +42,7 @@ import OrderSuccess from "./components/OrderSuccess";
 
 import About from "./components/About";
 
-function App() {
+ function App() {
 
   //temp code to keep server live
   // const callApiQsList = async () => {
@@ -57,6 +57,22 @@ function App() {
   //   setInterval(() => callApiQsList(), 100000)
   // }, [])
   //temp code to keep server live
+  // const App = () => {
+  //   const [loading, setLoading] = useState(false);
+  
+  //   const location = useLocation();
+  
+  //   useEffect(() => {
+  //     const handleStart = () => setLoading(true);
+  //     const handleComplete = () => setLoading(false);
+  
+  //     handleStart(); // Start loading when the route changes
+  //     handleComplete(); // Stop loading after the route has changed
+  
+  //     return () => {
+  //       handleComplete();
+  //     };
+  //   }, [location]);
 
   return (
     <BrowserRouter>
@@ -64,7 +80,7 @@ function App() {
           <Header />
           {/* <Header /> */}
           <Routes>
-
+          <Route path="/loader" element={<Loader />} />
             <Route path="/home" element={<Home />} />
             <Route path="/category/:categoryname/:categoryid" element={<Category />} />
             {/* <Route path="/productdetail" element={<ProductDetails />} /> */}

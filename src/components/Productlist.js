@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import temp_product_image from '../assets/products/p-img-29.webp';
+import Loader from './loader/Loader';
 
 const Productlist = () => {
   const { category_id } = useParams();
@@ -11,6 +12,7 @@ const Productlist = () => {
   const [message, setMessage] = useState('');
   const [subcategoryName, setSubcategoryName] = useState('');
   const userid = localStorage.getItem('userid');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (category_id) {
@@ -19,6 +21,7 @@ const Productlist = () => {
   }, [category_id]);
 
   const fetchSubcategories = async (categoryId) => {
+    setLoading(true);
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}subCategory/categoryid/${categoryId}`);
       console.log('Subcategories response:', response.data);
@@ -35,9 +38,11 @@ const Productlist = () => {
     } catch (error) {
       console.error('Error fetching subcategories:', error);
     }
+    setLoading(false);
   };
 
   const fetchProducts = async (categoryId, subcategoryId) => {
+    setLoading(true);
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}products/bySubCategory`, {
         category: categoryId,
@@ -48,6 +53,7 @@ const Productlist = () => {
     } catch (error) {
       console.error('Error fetching products:', error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -57,6 +63,7 @@ const Productlist = () => {
   }, [selectedSubcategory]);
 
   const handleAddToCart = async (productid) => {
+    setLoading(true);
     try {
       const quantity = 1;
       const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
@@ -69,9 +76,11 @@ const Productlist = () => {
       setMessage('There was an error adding the product to the cart!');
       console.error('Error adding to cart:', error);
     }
+    setLoading(false);
   };
 
   const addToWishlist = async (productid) => {
+    setLoading(true);
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}wishlist/addToWishlist`, {
         userid,
@@ -82,6 +91,7 @@ const Productlist = () => {
       setMessage('There was an error adding the product to the wishlist!');
       console.error('Error adding to wishlist:', error);
     }
+    setLoading(false);
   };
 
   return (
@@ -101,6 +111,7 @@ const Productlist = () => {
 
       <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
+        {loading && <Loader />}
           <div className="row">
             <div className="col-lg-3">
               <div className="sidebar" data-aos="fade-right">

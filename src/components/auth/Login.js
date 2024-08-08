@@ -3,11 +3,13 @@ import { Formik, Field, Form } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { DataAppContext } from "../../DataContext";
 import axios from "axios";
+import Loader from '../loader/Loader';
 
 const Login = () => {
   const navigate = useNavigate();
   const { login_user } = useContext(DataAppContext);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const url = `${process.env.REACT_APP_API_URL}users/login`;
 
   const initialValues = {
@@ -16,6 +18,7 @@ const Login = () => {
   };
 
   const submitLogin = async (values, { setSubmitting }) => {
+    setLoading(true);
     try {
       const response = await axios.post(url, values);
 
@@ -39,6 +42,7 @@ const Login = () => {
         setError("Something went wrong. Please try again later.");
       }
     } finally {
+      setLoading(false);
       setSubmitting(false);
     }
   };
@@ -47,6 +51,7 @@ const Login = () => {
     <>
       <section class="login product footer-padding">
         <div class="container">
+        {loading && <Loader />}
           <Formik initialValues={initialValues} onSubmit={submitLogin}>
           {({ isSubmitting }) => (
             <Form class="login-section">
