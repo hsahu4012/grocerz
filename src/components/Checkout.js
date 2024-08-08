@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate} from "react-router-dom";
 import qr from '../assets/images/hashedbitqr.jpg';
 import axios from "axios";
+import Loader from './loader/Loader';
 
 import AddressListDataCheckout from "./AddressListDataCheckout";
 
@@ -9,11 +10,13 @@ import AddressListDataCheckout from "./AddressListDataCheckout";
 function Checkout() {
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const placeorder = () => {
         console.log('order start.....')
 
         const placeorder = async () => {
+            setLoading(true);
             try {
               const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart`);
               //setCartItems(response.data);
@@ -23,14 +26,16 @@ function Checkout() {
             } catch (error) {
               console.error("Error fetching cart items", error);
             }
+            setLoading(false);
           };
 
     }
     return (
         <>
             <section class="blog about-blog">
+            {loading && <Loader />}
                 <div class="container">
-                    
+                   
                     <div class="blog-heading about-heading">
                         <h1 class="heading">Checkout</h1>
                     </div>
