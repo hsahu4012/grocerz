@@ -51,6 +51,30 @@ const Header = () => {
     logout_user();
     navigate("/login");
   };
+
+  function getDeliverySlot(orderTime) {
+    const hours = orderTime.getHours();
+
+    if (hours < 9) {
+        return "9 AM - 12 PM";
+    } else if (hours >= 9 && hours < 12) {
+        return "12 PM - 3 PM";
+    } else if (hours >= 12 && hours < 15) {
+        return "3 PM - 6 PM";
+    } else if (hours >= 15 && hours < 18) {
+        return "6 PM - 9 PM";
+    } else if (hours >= 19) {
+        const nextDay = new Date(orderTime);
+        nextDay.setDate(nextDay.getDate() + 1);
+        return `Next Day: 9 AM - 11 PM`;
+    } else {
+        return "No Delivery Slot Available";
+    }
+}
+
+const orderTime = new Date();
+const deliverySlot = getDeliverySlot(orderTime);
+
   return (
     <>
       <header id="header" class="header">
@@ -67,6 +91,7 @@ const Header = () => {
                 <Link to="/contact">
                   <span>Support</span>
                 </Link>
+                <p className="delivery-slot">Delivery Slot {deliverySlot}</p>
               </div>
               <div class="header-contact">
                 <div class="header-top-contact">
@@ -121,7 +146,7 @@ const Header = () => {
         <div class="header-center-section d-none d-lg-flex">
           <div class="container">
             <div class="header-center">
-              <div class="logo">
+              <div class="logo ">
                 <Link to="/home">
                 {/* <h2>Grocji</h2> */}
                   <img src={logo} alt="logo" className="logo-image" />

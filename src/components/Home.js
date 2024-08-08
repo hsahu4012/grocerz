@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { marketCategory } from '../utils/category';
 
 const Home = () => {
 
-    const [category, setCategory] = useState([]);
+    const [category, setCategory] = useState(marketCategory);
 
-    const fetchCartItems = async () => {
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}category/allCategory`);
-            setCategory(response.data);
-        } catch (error) {
-            console.error("Error fetching cart items", error);
-        }
-    };
+    // const fetchCartItems = async () => {
+    //     try {
+    //         const response = await axios.get(`${process.env.REACT_APP_API_URL}category/allCategory`);
+    //         setCategory(response.data);
+    //     } catch (error) {
+    //         console.error("Error fetching cart items", error);
+    //     }
+    // };
 
-    useEffect(() => {
-        fetchCartItems();
-    }, []);
+    // useEffect(() => {
+    //     fetchCartItems();
+    // }, []);
 
 
 
@@ -232,10 +233,10 @@ const Home = () => {
 
                         {
                             category && category.map((item, index) => (
-                                <Link to={`/category/${item.category_id}`}>
+                                <Link to={`/category/${item.category_id}`} key={item.category_id}>
                                     <div class="product-wrapper" data-aos="fade-right" data-aos-duration="200">
                                         <div class="wrapper-img">
-                                            <img src="assets/images/homepage-one/category-img/c-img-2.webp" alt="img" />
+                                            <img src={item.image} alt={item.categoryname} width={150} height={150}/>
                                         </div>
                                         <div class="wrapper-info">
                                             <a class="wrapper-details">{item.categoryname}</a>
