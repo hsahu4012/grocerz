@@ -10,7 +10,7 @@ const Productlist = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [message, setMessage] = useState('');
   const [subcategoryName, setSubcategoryName] = useState('');
-  const userid = localStorage.getItem('userid');
+  const userid = localStorage.getItem('userid'); // Check if user is logged in
 
   useEffect(() => {
     if (category_id) {
@@ -86,7 +86,7 @@ const Productlist = () => {
 
   return (
     <>
-      {/* <div className="breadcrumb-option">
+      <div className="breadcrumb-option">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
@@ -97,9 +97,9 @@ const Productlist = () => {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
 
-      <section className="shop spad product product-sidebar footer-padding">
+      <section className="shop spad">
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
@@ -109,17 +109,21 @@ const Productlist = () => {
                     <div className="sidebar-wrapper">
                       <h3 className="wrapper-heading">Subcategories</h3>
                       <div className="sidebar-item">
-                        <ul className="list-group sidebar-list">
+                        <ul className="sidebar-list">
                           {subcategories.map(subcategory => (
-                            <li key={subcategory.subcategory_id}
-                              className={`list-group-item ${selectedSubcategory === subcategory.subcategory_id? 'active': ''}`}
-                               onClick={() => {
-                                setSelectedSubcategory(subcategory.subcategory_id);
-                                setSubcategoryName(subcategory.subcategoryname);
-                                fetchProducts(category_id, subcategory.subcategory_id);
-                              }}
-                            >
-                             <label htmlFor={`subcategory-${subcategory.subcategory_id}`}>{subcategory.subcategoryname}</label>
+                            <li key={subcategory.subcategory_id}>
+                              <input
+                                type="radio"
+                                id={`subcategory-${subcategory.subcategory_id}`}
+                                name="subcategory"
+                                checked={selectedSubcategory === subcategory.subcategory_id}
+                                onChange={() => {
+                                  setSelectedSubcategory(subcategory.subcategory_id);
+                                  setSubcategoryName(subcategory.subcategoryname);
+                                  fetchProducts(category_id, subcategory.subcategory_id);
+                                }}
+                              />
+                              <label htmlFor={`subcategory-${subcategory.subcategory_id}`}>{subcategory.subcategoryname}</label>
                             </li>
                           ))}
                         </ul>
@@ -134,34 +138,38 @@ const Productlist = () => {
               <div className="row">
                 {products.length > 0 ? (
                   products.map(product => (
-                    <>
-                      <div class="col-xl-3 col-sm-6 col-xs-6">
-                        <div class="product-wrapper" data-aos="fade-up">
-                          <Link to={`/product/${product.productid}`}>
-                            <div class="product-img">
-                              <img src={temp_product_image} />
-                            </div>
-                          </Link>
-                          <div class="product-info">
-                            <div class="product-description">
-                              <div class="product-details">{product.prod_name}</div>
-                              <div class="price">
-                                <span class="price-cut">{product.price}</span>
-                                <span class="new-price">{product.price - product.discount}</span>
-                              </div>
-                            </div>
-                            <div class="product-cart-btn">
-                              <button onClick={() => handleAddToCart(product.productid)} class="product-btn"
-                                type='button'>Add to Cart</button>
-
-                              <button onClick={() => addToWishlist(product.productid)}
-                                class="product-btn mt-2" type='button'>Add to Wishlist</button>
+                    <div className="col-xl-4 col-sm-6" key={product.productid}>
+                      <div className="product-wrapper" data-aos="fade-up">
+                        <div className="product-img">
+                          <img
+                            src={product.image ? `${process.env.REACT_APP_IMAGE_URL}${product.image}` : temp_product_image}
+                            alt={product.prod_name}
+                          />
+                        </div>
+                        <div className="product-info">
+                          <div className="product-description">
+                            <div className="product-details">{product.prod_name}</div>
+                            <div className="price">
+                              <span className="price-cut">${product.price}</span>
+                              <span className="new-price">${product.price - product.discount}</span>
                             </div>
                           </div>
+                          {product.stock_quantity < 1 && (
+                            <p className="out-of-stock">Out of Stock</p>
+                          )}
+                          {userid && product.stock_quantity > 0 && (
+                            <div className="product-cart-btn">
+                              <button onClick={() => handleAddToCart(product.productid)} className="product-btn" type="button">
+                                Add to Cart
+                              </button>
+                              <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">
+                                Add to Wishlist
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </>
-
+                    </div>
                   ))
                 ) : (
                   <div className="col-lg-12">
