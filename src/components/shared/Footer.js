@@ -99,7 +99,7 @@ const Footer = () => {
                                         </h4>
                                         <div class="footer-link useful-link">
                                             <ul>
-                                                <li><a href="privacy.html">Privacy Policy</a></li>
+                                                <li><Link to="/privacypolicy">Privacy Policy</Link></li>
                                                 <li><a href="privacy.html">Refund & Return Policy</a></li>
                                                 <li><a href="terms.html">Terms & Conditions</a></li>
                                                 <li><a href="faq.html">FAQ</a></li>

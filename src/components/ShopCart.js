@@ -2,27 +2,32 @@ import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import dress1 from '../assets/img/product/women/dress1.jpg';
+import Loader from './loader/Loader';
 
 const ShopCart = () => {
 
   const [cartItems, setCartItems] = useState([]);
   const [message, setMessage] = useState('');
   const userid = localStorage.getItem('userid');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchCartItems();
   }, [userid]);
 
   const fetchCartItems = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userid}`);
       setCartItems(response.data);
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
+    setLoading(false);
   };
 
   const calculateTotal = () => {
+    setLoading(true);
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
@@ -35,9 +40,11 @@ const ShopCart = () => {
       setMessage('There was an error removing product from the cart!');
       console.error('Error removing to cart:', error);
     }
+    setLoading(false);
   };
 
   const updateQuantity = async (productid, newQuantity) => {
+    setLoading(true);
     try {
       const response = await axios.put(`${process.env.REACT_APP_API_URL}cart/handleQuantity/${userid}/${productid}`, { quantity: newQuantity });
       if (response.status === 200) {
@@ -52,6 +59,7 @@ const ShopCart = () => {
     } catch (error) {
       console.error('Error updating quantity:', error);
     }
+    setLoading(false);
   };
 
   const incrementQuantity = (productid, currentQuantity) => {
@@ -67,6 +75,7 @@ const ShopCart = () => {
   };
 
   const addToCart = async (productid, quantity = 1) => {
+    setLoading(true);
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, { userid, productid, quantity });
       if (response.status === 200) {
@@ -79,10 +88,12 @@ const ShopCart = () => {
       setMessage('There was an error adding product to the cart!');
       console.error('Error adding to cart:', error);
     }
+    setLoading(false);
   };
 
   return (
     <section className="product-cart product footer-padding">
+      {loading && <Loader />}
       <div className="container">
         <div className="cart-section">
           <table>
