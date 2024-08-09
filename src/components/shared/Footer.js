@@ -235,9 +235,9 @@ const Footer = () => {
                                     <p>©2024 All rights reserved</p>
                                 </div> */}
                             </div>
-                            <div class="footer-payment-mode">
-                                <a href="#">
-                                    <img src="assets/images/homepage-one/payment-img.png" alt="img" />
+                            <div class="copyright">
+                                <a href="https://www.hashedbit.com" target='_blank'>
+                                Developed By - HashedBit Innovations
                                 </a>
                             </div>
                         </div>

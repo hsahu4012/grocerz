@@ -127,7 +127,7 @@ const ProductDetails = () => {
               <div class="swiper product-top">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide slider-top-img">
-                    <img src={dress1 || product.image} alt="img" />
+                    <img src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`} alt="img" />
                   </div>
                   <div class="swiper-slide slider-top-img">
                     <img src={dress1 || product.image} alt="img" />

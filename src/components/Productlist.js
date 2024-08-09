@@ -96,7 +96,7 @@ const Productlist = () => {
 
   return (
     <>
-      <div className="breadcrumb-option">
+      {/* <div className="breadcrumb-option">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
@@ -107,9 +107,9 @@ const Productlist = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <section className="shop spad">
+      <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
         {loading && <Loader />}
           <div className="row">
@@ -151,12 +151,14 @@ const Productlist = () => {
                   products.map(product => (
                     <div className="col-xl-4 col-sm-6" key={product.productid}>
                       <div className="product-wrapper" data-aos="fade-up">
+                      <Link to={`/product/${product.productid}`}>
                         <div className="product-img">
                           <img
                             src={product.image ? `${process.env.REACT_APP_IMAGE_URL}${product.image}` : temp_product_image}
                             alt={product.prod_name}
                           />
                         </div>
+                        </Link>
                         <div className="product-info">
                           <div className="product-description">
                             <div className="product-details">{product.prod_name}</div>
