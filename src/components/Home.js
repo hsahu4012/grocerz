@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { marketCategory } from '../utils/category';
+import homeImage from '../assets/groc.png';
 
 const Home = () => {
 
@@ -33,10 +34,10 @@ const Home = () => {
                                 <div class="swiper-slide hero-slide">
                                     <div class="hero-wrapper-slide wrapper-slide">
                                         <div class="wrapper-info">
-                                            <span class="wrapper-subtitle">Fresh Grocery</span>
-                                            <h1 class="wrapper-details">There's you can Buy your all of Grocery Products.
+                                            <span class="wrapper-subtitle">Fresh Grocery, Fruits & Sabji</span>
+                                            <h1 class="wrapper-details">There's you can Buy your all of Daily Need Products.
                                             </h1>
-                                            <a class="shop-btn">Shop Now
+                                            {/* <a class="shop-btn">Shop Now
                                                 <span>
                                                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
                                                         xmlns="http://www.w3.org/2000/svg">
@@ -46,10 +47,10 @@ const Home = () => {
                                                             transform="rotate(135 8 7.45703)" />
                                                     </svg>
                                                 </span>
-                                            </a>
+                                            </a> */}
                                         </div>
                                         <div class="wrapper-img">
-                                            <img src="assets/images/homepage-one/hero-img-1.webp" alt="img" />
+                                            <img src={homeImage} alt="img" />
                                         </div>
                                     </div>
                                 </div>
@@ -214,7 +215,7 @@ const Home = () => {
 
 
 
-            <section class="product-category product">
+            <section class="product-category product mt-5">
                 <div class="container">
                     <div class="section-title">
                         <h3>Market Category</h3>
@@ -248,12 +249,11 @@ const Home = () => {
 
                        
                     </div>
-                    <div class="healthy-section">
+                    {/* <div class="healthy-section">
                         <div class="row gy-4 gx-5 gy-lg-0">
                             <div class="col-lg-4 col-md-6">
                                 <div class="product-wrapper wrapper-one" data-aos="fade-up">
                                     <div class="wrapper-info">
-                                        {/* <span class="wrapper-subtitle">FRUITS</span> */}
                                         <h2 class="wrapper-details">Healthy & Fresh
                                             <br></br> Fruits & Vegetables
                                         </h2>
@@ -280,7 +280,6 @@ const Home = () => {
                                         <img src="assets/images/homepage-one/category-img/c-shop-img-2.webp" alt="img" />
                                     </div>
                                     <div class="wrapper-info">
-                                        {/* <span class="wrapper-subtitle">Vegetable</span> */}
                                         <h2 class="wrapper-details">
                                             Cereals
                                             <br></br>Oils
@@ -302,7 +301,6 @@ const Home = () => {
                             <div class="col-lg-4 col-md-6">
                                 <div class="product-wrapper wrapper-three" data-aos="fade-up">
                                     <div class="wrapper-info">
-                                        {/* <span class="wrapper-subtitle">Juices</span> */}
                                         <h4 class="wrapper-details">
                                             Groomimg
                                             <br></br> Cleaning
@@ -325,7 +323,7 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </section>
         </>

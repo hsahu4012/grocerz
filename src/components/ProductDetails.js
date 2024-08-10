@@ -76,16 +76,13 @@ const ProductDetails = () => {
   };
 
   //for data and Api
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (productid) => {
     // Implement API call to add to cart
     setLoading(true);
     const data = {
-      quantity: quantity,
-      disc_price: product.disc_price,
-      image: product.image,
-      name: product.name,
-      size: selectedSize,
-      color: selectedColor,
+      userid: userid,
+      productid: productid,
+      quantity: 1
     };
     console.log(data, `Add data now`);
     await axios
@@ -102,7 +99,7 @@ const ProductDetails = () => {
       .catch((error) => {
         console.error("Error adding product to cart:", error);
       });
-      setLoading(false);
+    setLoading(false);
   };
 
   const fetchProductDetail = async () => {
@@ -120,7 +117,7 @@ const ProductDetails = () => {
   return (
     <>
       <div class="product-info-section">
-      {loading && <Loader />}
+        {loading && <Loader />}
         <div class="row ">
           <div class="col-md-6">
             <div class="product-info-img" data-aos="fade-right">
@@ -139,7 +136,7 @@ const ProductDetails = () => {
           </div>
           <div class="col-md-6">
             <div class="product-info-content" data-aos="fade-left">
-              <span class="wrapper-subtitle">Vegetable</span>
+              {/* <span class="wrapper-subtitle">Vegetable</span> */}
               <h3 class="wrapper-heading">{product.prod_name}</h3>
               {/* <div class="ratings">
                                 <span>
@@ -165,16 +162,16 @@ const ProductDetails = () => {
                                 <span class="text">6 Reviews</span>
                             </div> */}
               <div class="price">
-                <span class="price-cut">$9.99</span>
-                <span class="new-price">$6.99</span>
+                <span class="price-cut">&#8377; &nbsp;9.99</span>
+                <span class="new-price">&#8377; &nbsp;6.99</span>
               </div>
               {/* <p class="content-paragraph">It is a long established fact that a reader will be distracted
                 by <span class="inner-text">the readable there content of a page.</span></p>
               <hr></hr> */}
               <div class="product-details">
-                <p class="category">Category : <span class="inner-text">Kitchen</span></p>
-                <p class="tags">Subcategory : <span class="inner-text">Beer, Foamer</span></p>
-                <p class="sku">Brand : <span class="inner-text">{product.brand}</span></p>
+                <p class="category">Category : <span class="inner-text">{product.categoryname}</span></p>
+                <p class="tags">Subcategory : <span class="inner-text">{product.subcategoryname}</span></p>
+                <p class="sku">Brand : <span class="inner-text">{product.brand_name}</span></p>
               </div>
               <hr></hr>
               <div class="product-availability">
@@ -184,7 +181,7 @@ const ProductDetails = () => {
 
               <div class="product-quantity">
                 <div class="quantity-wrapper">
-                  <div class="quantity">
+                  {/* <div class="quantity">
                     <span class="minus">
                       -
                     </span>
@@ -192,8 +189,8 @@ const ProductDetails = () => {
                     <span class="plus">
                       +
                     </span>
-                  </div>
-                  <div class="wishlist">
+                  </div> */}
+                  {/* <div class="wishlist">
                     <span>
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -203,7 +200,7 @@ const ProductDetails = () => {
                           stroke-linecap="square" />
                       </svg>
                     </span>
-                  </div>
+                  </div> */}
                 </div>
                 <a href="#" class="shop-btn">
                   <span>
@@ -214,7 +211,7 @@ const ProductDetails = () => {
                         fill="white" />
                     </svg>
                   </span>
-                  <span>Add to Cart</span>
+                  <span onClick={() => handleAddToCart(product.productid)}>Add to Cart</span>
                 </a>
               </div>
               <hr></hr>
@@ -252,7 +249,7 @@ const ProductDetails = () => {
                 <div class="product-intro-section">
                   <h5 class="intro-heading">Introduction</h5>
                   <p class="product-details">
-                  <div dangerouslySetInnerHTML={{ __html: product.prod_desc }} />
+                    <div dangerouslySetInnerHTML={{ __html: product.prod_desc }} />
                   </p>
                 </div>
                 {/* <div class="product-feature">

@@ -23,7 +23,7 @@ const Footer = () => {
     // }, []);
     return (
         <>
-            <section class="product footer">
+            <section class="product footer pt-5">
                 {/* <div class="footer-top-section">
                     <div class="container">
                         <div class="row">
@@ -84,10 +84,10 @@ const Footer = () => {
                                         </h4>
                                         <div class="footer-link about-link">
                                             <ul>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="about.html">Contact</a></li>
-                                                <li><a href="about.html">Complains</a></li>
-                                                <li><a href="about.html">Career</a></li>
+                                                <li><Link>About Us</Link></li>
+                                                <li><Link>Contact</Link></li>
+                                                <li><Link>Complains</Link></li>
+                                                <li><Link>Career</Link></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -99,10 +99,10 @@ const Footer = () => {
                                         </h4>
                                         <div class="footer-link useful-link">
                                             <ul>
-                                                <li><Link to="/privacypolicy">Privacy Policy</Link></li>
-                                                <li><a href="privacy.html">Refund & Return Policy</a></li>
-                                                <li><a href="terms.html">Terms & Conditions</a></li>
-                                                <li><a href="faq.html">FAQ</a></li>
+                                                <li><Link>Privacy Policy</Link></li>
+                                                <li><Link>Refund & Return Policy</Link></li>
+                                                <li><Link>Terms & Conditions</Link></li>
+                                                <li><Link>FAQ</Link></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -165,7 +165,7 @@ const Footer = () => {
                                                 </div>
                                                 <div class="details">
                                                     <h4 class="footer-heading">Phone:</h4>
-                                                    <p>8757499345</p>
+                                                    <p>8757499344, 8757499345</p>
                                                 </div>
                                             </div>
                                             <div class="email address">
@@ -194,7 +194,7 @@ const Footer = () => {
                         <div class="footer-bottom-section">
                             <div class="footer-social">
                                 <div class="social-items">
-                                    <a href="#" target="_blank" class="social-icon instagram">
+                                    {/* <a href="#" target="_blank" class="social-icon instagram">
                                         <span>
                                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -209,7 +209,7 @@ const Footer = () => {
                                                     fill="#ABABAB" />
                                             </svg>
                                         </span>
-                                    </a>
+                                    </a> */}
                                     <a href="https://www.facebook.com/grocji"  target="_blank" class="social-icon facebook">
                                         <span>
                                             <svg width="10" height="16" viewBox="0 0 10 16" fill="none"

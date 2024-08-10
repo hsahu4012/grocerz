@@ -36,11 +36,11 @@ const Contact = () => {
 
       <section class="blog about-blog">
         <div class="container">
-            <div class="blog-bradcrum">
+            {/* <div class="blog-bradcrum">
                 <span><a href="/">Home</a></span>
                 <span class="devider">/</span>
                 <span><a href="#">Contact</a></span>
-            </div>
+            </div> */}
             <div class="blog-heading about-heading">
                 <h1 class="heading">Contact</h1>
             </div>

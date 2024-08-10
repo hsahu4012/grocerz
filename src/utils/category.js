@@ -12,7 +12,7 @@ export const marketCategory=[
     },
     {
       "category_id":"teaco55536",
-      "categoryname": "Tea, Coffee & Drinks",
+      "categoryname": "Dairy, Tea & Drinks",
       "image": require("../assets/category/teacoffee.png")
     },
     {
@@ -28,7 +28,7 @@ export const marketCategory=[
     },
     {
       "category_id":"makeu93103",
-      "categoryname": "Cosmetics & Makeup",
+      "categoryname": "Cosmetics",
       "image": require("../assets/category/makeup.png")
     },
     {
@@ -72,13 +72,13 @@ export const marketCategory=[
     // },
     {
       "category_id":"fruit20420",
-      "categoryname": "Fruits and Vegetables",
+      "categoryname": "Fruits & Vegetables",
       "image": require("../assets/category/fruitsNveggies.png")
     },
     {
       "category_id":"dairy64076",
-      "categoryname": "Dairy & Eggs",
-      "image": require("../assets/category/dairyeggsbread.png")
+      "categoryname": "Pooja Samagri",
+      "image": require("../assets/category/pooja.jpg")
     },
     // {
     //   "category_id":"groom1229",

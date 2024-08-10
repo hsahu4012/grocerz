@@ -163,8 +163,8 @@ const Productlist = () => {
                           <div className="product-description">
                             <div className="product-details">{product.prod_name}</div>
                             <div className="price">
-                              <span className="price-cut">${product.price}</span>
-                              <span className="new-price">${product.price - product.discount}</span>
+                              <span className="price-cut">&#8377; &nbsp;{product.price}</span>
+                              <span className="new-price">&#8377; &nbsp;{product.price - product.discount}</span>
                             </div>
                           </div>
                           {product.stock_quantity < 1 && (
@@ -172,7 +172,7 @@ const Productlist = () => {
                           )}
                           {userid && product.stock_quantity > 0 && (
                             <div className="product-cart-btn">
-                              <button onClick={() => handleAddToCart(product.productid)} className="product-btn" type="button">
+                              <button onClick={() => handleAddToCart(product.productid)} className="product-btn mb-2" type="button">
                                 Add to Cart
                               </button>
                               <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">

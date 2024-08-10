@@ -102,7 +102,7 @@ const Header = () => {
                 <Link to="/contact">
                   <span>Support</span>
                 </Link>
-                <p className="delivery-slot">Delivery Slot {deliverySlot}</p>
+                <p className="delivery-slot">Next Delivery Slot {deliverySlot}</p>
               </div>
               <div class="header-contact">
                 <div class="header-top-contact">
@@ -2371,11 +2371,11 @@ const Header = () => {
                         </li>
                       </ul>
                     </li> */}
-                    <li>
+                    {/* <li>
                       <Link to="/dashboard">
                         <span className="list-text">User Dashboard</span>
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link to="/contact">
                         <span class="list-text">Contact</span>
@@ -2389,7 +2389,7 @@ const Header = () => {
                   <button class="shop-btn" onClick={handleLogout}>Logout</button>
                 ) : (
                   <><Link to="/login">
-                    <button class="shop-btn me-5">Login</button>
+                    <button class="shop-btn me-1">Login</button>
                   </Link>
                     <Link to="/register">
                       <button class="shop-btn ms-5">Register</button>
