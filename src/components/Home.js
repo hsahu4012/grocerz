@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { marketCategory } from '../utils/category';
@@ -20,8 +20,46 @@ const Home = () => {
     // useEffect(() => {
     //     fetchCartItems();
     // }, []);
+ const [time, setTime] = useState({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+    });
 
+    useEffect(() => {
+        const targetDate = new Date("2024-10-31T23:59:59").getTime();
 
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const timeDifference = targetDate - now;
+
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            if (timeDifference < 0) {
+                clearInterval(countdownInterval);
+                setTime({
+                    days: 0,
+                    hours: 0,
+                    minutes: 0,
+                    seconds: 0
+                });
+            } else {
+                setTime({
+                    days,
+                    hours,
+                    minutes,
+                    seconds
+                });
+            }
+        }, 1000);
+
+        return () => clearInterval(countdownInterval);
+    }, []);
+        
 
 
     return (
@@ -213,7 +251,53 @@ const Home = () => {
                 </div>
             </section>
 
-
+    <section class="product flash-sale">
+        <div class="container">
+            <div class="flash-sale-section">
+                <div class="countdown-section">
+                    <div class="countdown-items">
+                        <span id="day" class="number">{time.days}</span>
+                        <span class=" text">Days</span>
+                    </div>
+                    <div class="countdown-items">
+                        <span id="hour" class="number">{time.hours}</span>
+                        <span class="text">Hours</span>
+                    </div>
+                    <div class="countdown-items">
+                        <span id="minute" class="number">{time.minutes}</span>
+                        <span class="text">Minutes</span>
+                    </div>
+                    <div class="countdown-items">
+                        <span id="second" class="number">{time.seconds}</span>
+                        <span class="text">Seconds</span>
+                    </div>
+                </div>
+                <div class="flash-sale-content">
+                    <h2 class="wrapper-heading">WOO! Flash Sale </h2>
+                    <p class="wrapper-details">You get into the 2k+ best Products in br Flash offer with as in<br/>
+                        shaped sofa for sale.
+                    </p>
+                    <Link to="/productAbcde" class="shop-btn">Shop Now
+                        <span>
+                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="1.45312" y="0.914062" width="9.25346" height="2.05632"
+                                    transform="rotate(45 1.45312 0.914062)" />
+                                <rect x="8" y="7.45703" width="9.25346" height="2.05632"
+                                    transform="rotate(135 8 7.45703)" />
+                            </svg>
+                        </span>
+                    </Link>
+                </div>
+                <div class="discount-item">
+                    <h3 class="discount-primary">
+                        <span class="discount-text">26%</span>
+                        <span class="discount-inner-text">OFF</span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </section>
 
             <section class="product-category product mt-5">
                 <div class="container">
@@ -329,5 +413,4 @@ const Home = () => {
         </>
     )
 }
-
-export default Home
+export default Home;
