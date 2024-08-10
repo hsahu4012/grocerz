@@ -1,251 +1,235 @@
-import React, { useState } from "react";
-import { Link, useNavigate} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import qr from '../assets/images/hashedbitqr.jpg';
 import axios from "axios";
-import Loader from './loader/Loader';
-
-import AddressListDataCheckout from "./AddressListDataCheckout";
-
 
 function Checkout() {
-
+    const [cartItems, setCartItems] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [addresses, setAddresses] = useState([]);
+    const [selectedAddressId, setSelectedAddressId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [paymentMode, setPaymentMode] = useState("Cash on Delivery"); // State for payment mode
+    const userId = localStorage.getItem('userid'); // Assuming userId is stored in localStorage
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
 
-    const placeorder = () => {
-        console.log('order start.....')
-
-        const placeorder = async () => {
-            setLoading(true);
+    useEffect(() => {
+        // Fetch cart items and addresses on component mount
+        const fetchCartItems = async () => {
             try {
-              const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart`);
-              //setCartItems(response.data);
-              if(response.status === 200) {
-                navigate('/ordersuccess')
-              }
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userId}`);
+                const items = response.data;
+                setCartItems(items);
+                const total = items.reduce((acc, item) => acc + ((Number(item.price) * item.quantity) - Number(item.discount)), 0);
+                setTotalAmount(total);
             } catch (error) {
-              console.error("Error fetching cart items", error);
+                console.error("Error fetching cart items", error);
             }
-            setLoading(false);
-          };
+        };
 
-    }
+        const fetchAddresses = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}address/getByuserId/${userId}`);
+                setAddresses(response.data);
+                if (response.data.length > 0) {
+                    setSelectedAddressId(response.data[0].addressid);
+                }
+            } catch (error) {
+                console.error("Error fetching addresses", error);
+            }
+        };
+
+        fetchCartItems();
+        fetchAddresses();
+    }, [userId]);
+
+    const placeOrder = async () => {
+        console.log('Order start...');
+
+        try {
+            // Prepare data for checkout
+            const cartData = cartItems.map(item => ({
+                productid: item.productid,
+                quantity: item.quantity,
+                price_final: (Number(item.price) * item.quantity) - Number(item.discount)
+            }));
+
+            const orderData = {
+                cartData,
+                userid: userId,
+                addressId: selectedAddressId,
+                paymentMode: paymentMode,
+            };
+
+            // Make API call to place the order
+            const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}checkout/checkout`, orderData);
+
+            if (orderResponse.data.status === 'success') {
+                console.log('Order placed successfully.');
+                navigate('/ordersuccess', { state: { orderId: orderResponse.data.orderid } });
+            } else {
+                console.error("Error placing order", orderResponse.data.message);
+            }
+        } catch (error) {
+            console.error("Error placing order", error);
+        }
+    };
+
+    const modalAction = () => {
+        setIsModalOpen(!isModalOpen);
+    };
+
     return (
         <>
-            <section class="blog about-blog">
-            {loading && <Loader />}
-                <div class="container">
-                   
-                    <div class="blog-heading about-heading">
-                        <h1 class="heading">Checkout</h1>
+            <section className="blog about-blog">
+                <div className="container">
+                    <div className="blog-heading about-heading">
+                        <h1 className="heading">Checkout</h1>
                     </div>
                 </div>
             </section>
 
+            <section className="checkout product footer-padding">
+                <div className="container">
+                    <div className="checkout-section">
+                        <div className="row gy-5 gy-lg-0">
+                            <div className="col-lg-6">
+                                <div className="checkout-wrapper">
+                                    <div className="account-section billing-section box-shadows">
+                                        <div className="profile-section address-section addresses">
+                                            <div className="row gy-md-0 g-5">
+                                                {addresses.map((address) => (
+                                                    <div
+                                                        key={address.addressid}
+                                                        onClick={() => setSelectedAddressId(address.addressid)}
+                                                        style={{
+                                                            padding: '10px',
+                                                            border: '1px solid #ddd',
+                                                            marginBottom: '10px',
+                                                            cursor: 'pointer',
+                                                            backgroundColor: address.addressid === selectedAddressId ? '#f0f8ff' : 'white'
+                                                        }}
+                                                    >
+                                                        <h5>{address.name}</h5>
+                                                        <p>{address.street}, {address.line1}, {address.line2}, {address.line3}, {address.city}, {address.pin}, {address.country}, {address.contact}, {address.alternatecontact}, {address.landmark}</p>
+                                                    </div>
+                                                ))}
+                                                <div className="col-lg-6">
+                                                    <a href="#" className="shop-btn" onClick={modalAction}>Add New Address - Open in modal</a>
 
-            <section class="checkout product footer-padding">
-                <div class="container">
-                    <div class="checkout-section">
-                        <div class="row gy-5 gy-lg-0">
-                            <div class="col-lg-6">
-                                <div class="checkout-wrapper">
-                                    <div class="account-section billing-section box-shadows">
-
-
-
-
-                                        <div class="profile-section address-section addresses ">
-                                            <div class="row gy-md-0 g-5">
-
-                                                <AddressListDataCheckout />
-                                                
-                                                <div class="col-lg-6">
-                                                    <a href="#" class="shop-btn">Add New Address - Open in modal</a>
-
-
-                                                    <div class="modal-wrapper submit">
-                                                        <div class="anywhere-away"></div>
-
-
-                                                        <div class="login-section account-section modal-main">
-                                                            <div class="review-form">
-                                                                <div class="review-content">
-                                                                    <h5 class="comment-title">Add Your Address</h5>
-                                                                    <div class="close-btn">
-                                                                        <img src="assets/images/homepage-one/close-btn.png"
-                                                                            onclick="modalAction('.submit')" alt="close-btn" />
+                                                    <div className={`modal-wrapper submit ${isModalOpen ? 'open' : ''}`}>
+                                                        <div className="anywhere-away" onClick={modalAction}></div>
+                                                        <div className="login-section account-section modal-main">
+                                                            <div className="review-form">
+                                                                <div className="review-content">
+                                                                    <h5 className="comment-title">Add Your Address</h5>
+                                                                    <div className="close-btn">
+                                                                        <img src="assets/images/homepage-one/close-btn.png" onClick={modalAction} alt="close-btn" />
                                                                     </div>
                                                                 </div>
-                                                                <div class=" account-inner-form">
-                                                                    <div class="review-form-name">
-                                                                        <label for="firstname" class="form-label">First
-                                                                            Name*</label>
-                                                                        <input type="text" id="firstname" class="form-control"
-                                                                            placeholder="First Name" />
+                                                                <div className="account-inner-form">
+                                                                    <div className="review-form-name">
+                                                                        <label htmlFor="firstname" className="form-label">First Name*</label>
+                                                                        <input type="text" id="firstname" className="form-control" placeholder="First Name" />
                                                                     </div>
-                                                                    <div class="review-form-name">
-                                                                        <label for="lastname" class="form-label">Last Name*</label>
-                                                                        <input type="text" id="lastname" class="form-control"
-                                                                            placeholder="Last Name" />
+                                                                    <div className="review-form-name">
+                                                                        <label htmlFor="lastname" className="form-label">Last Name*</label>
+                                                                        <input type="text" id="lastname" className="form-control" placeholder="Last Name" />
                                                                     </div>
                                                                 </div>
-                                                                <div class=" account-inner-form">
-                                                                    <div class="review-form-name">
-                                                                        <label for="useremail" class="form-label">Email*</label>
-                                                                        <input type="email" id="useremail" class="form-control"
-                                                                            placeholder="user@gmail.com" />
+                                                                <div className="account-inner-form">
+                                                                    <div className="review-form-name">
+                                                                        <label htmlFor="useremail" className="form-label">Email*</label>
+                                                                        <input type="email" id="useremail" className="form-control" placeholder="user@gmail.com" />
                                                                     </div>
-                                                                    <div class="review-form-name">
-                                                                        <label for="userphone" class="form-label">Phone*</label>
-                                                                        <input type="tel" id="userphone" class="form-control"
-                                                                            placeholder="+880388**0899" />
+                                                                    <div className="review-form-name">
+                                                                        <label htmlFor="userphone" className="form-label">Phone*</label>
+                                                                        <input type="tel" id="userphone" className="form-control" placeholder="+880388**0899" />
                                                                     </div>
                                                                 </div>
-                                                                <div class="review-form-name address-form">
-                                                                    <label for="useraddress" class="form-label">Address*</label>
-                                                                    <input type="text" id="useraddress" class="form-control"
-                                                                        placeholder="Enter your Address" />
+                                                                <div className="review-form-name address-form">
+                                                                    <label htmlFor="useraddress" className="form-label">Address*</label>
+                                                                    <input type="text" id="useraddress" className="form-control" placeholder="Enter your Address" />
                                                                 </div>
-                                                                <div class=" account-inner-form city-inner-form">
-                                                                    <div class="review-form-name">
-                                                                        <label for="usercity" class="form-label">Town /
-                                                                            City*</label>
-                                                                        <select id="usercity" class="form-select">
+                                                                <div className="account-inner-form city-inner-form">
+                                                                    <div className="review-form-name">
+                                                                        <label htmlFor="usercity" className="form-label">Town / City*</label>
+                                                                        <select id="usercity" className="form-select">
                                                                             <option>Choose...</option>
-                                                                            <option>Newyork</option>
+                                                                            <option>New York</option>
                                                                             <option>Dhaka</option>
                                                                             <option selected>London</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="review-form-name">
-                                                                        <label for="usernumber" class="form-label">Postcode /
-                                                                            ZIP*</label>
-                                                                        <input type="number" id="usernumber" class="form-control"
-                                                                            placeholder="0000" />
+                                                                    <div className="review-form-name">
+                                                                        <label htmlFor="usernumber" className="form-label">Postcode / ZIP*</label>
+                                                                        <input type="number" id="usernumber" className="form-control" placeholder="0000" />
                                                                     </div>
                                                                 </div>
-                                                                <div class="login-btn text-center">
-                                                                    <a href="#" onclick="modalAction('.submit')"
-                                                                        class="shop-btn">Add Address</a>
+                                                                <div className="login-btn text-center">
+                                                                    <a href="#" onClick={modalAction} className="shop-btn">Add Address</a>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="checkout-wrapper">
-                                    <div class="account-section billing-section box-shadows">
-                                        <h5 class="wrapper-heading">Order Summary</h5>
-                                        <div class="order-summery ">
-                                            {/* <div class="subtotal product-total">
-                                                <h5 class="wrapper-heading">PRODUCT</h5>
-                                                <h5 class="wrapper-heading">TOTAL</h5>
-                                            </div>
-                                            <hr></hr>
-                                            <div class="subtotal product-total">
-                                                <ul class="product-list">
-                                                    <li>
-                                                        <div class="product-info">
-                                                            <h5 class="wrapper-heading">Apple Watch X1</h5>
-                                                            <p class="paragraph">64GB, Black, 44mm, Chain Belt</p>
-                                                        </div>
-                                                        <div class="price">
-                                                            <h5 class="wrapper-heading">$38</h5>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="product-info">
-                                                            <h5 class="wrapper-heading">Beats Wireless x1</h5>
-                                                            <p class="paragraph">64GB, Black, 44mm, Chain Belt</p>
-                                                        </div>
-                                                        <div class="price">
-                                                            <h5 class="wrapper-heading">$48</h5>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="product-info">
-                                                            <h5 class="wrapper-heading">Samsung Galaxy S10 x2</h5>
-                                                            <p class="paragraph">12GB RAM, 512GB, Dark Blue</p>
-                                                        </div>
-                                                        <div class="price">
-                                                            <h5 class="wrapper-heading">$279</h5>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <hr></hr> */}
-                                            <div class="subtotal product-total">
-                                                <h5 class="wrapper-heading">Total MRP</h5>
-                                                <h5 class="wrapper-heading">$365</h5>
-                                            </div>
-                                            <div class="subtotal product-total">
-                                                <ul class="product-list">
-                                                    <li>
-                                                        <div class="product-info">
-                                                            <p class="paragraph">Discount</p>
-                                                            <h5 class="wrapper-heading">Delivery Charges</h5>
-                                                            <h5 class="wrapper-heading">Packaging Charges</h5>
-                                                            <h5 class="wrapper-heading">Platform Fee</h5>
+                            <div className="col-lg-6">
+                                <div className="checkout-wrapper">
+                                    <div className="account-section billing-section box-shadows">
+                                        <h5 className="wrapper-heading">Order Summary</h5>
+                                        <div className="order-summery">
+                                            <div className="subtotal product-total">
+                                                <ul className="product-list">
+                                                    {cartItems.map((item) => {
+                                                        // Calculate total price for the item
+                                                        const itemTotal = (Number(item.price) * item.quantity) - Number(item.discount);
 
-                                                        </div>
-                                                        <div class="price-checkout">
-                                                            <h5 class="wrapper-heading">+$0</h5>
-                                                            <h5 class="wrapper-heading">+$0</h5>
-                                                            <h5 class="wrapper-heading">+$0</h5>
-                                                            <h5 class="wrapper-heading">+$0</h5>
+                                                        return (
+                                                            <li key={item.productid}>
+                                                                <div className="product-info">
+                                                                    <h5 className="wrapper-heading">Product Name: {item.prod_name}</h5>
+                                                                    <h5 className="wrapper-heading">Quantity: {item.quantity}</h5>
+                                                                    <p className="paragraph">Discount: {item.discount}</p>
+                                                                    <h6 className="price">Total Price: ₹{itemTotal}</h6>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    })}
+                                                </ul>
+                                            </div>
+                                            <div className="subtotal product-total">
+                                                <ul className="product-list">
+                                                    <li>
+                                                        <div className="total-price">
+                                                            <h5 className="wrapper-heading">Total Amount</h5>
+                                                            <p className="price">₹{totalAmount}</p>
                                                         </div>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <hr></hr>
-                                            <div class="subtotal total">
-                                                <h5 class="wrapper-heading">TOTAL</h5>
-                                                <h5 class="wrapper-heading price">$365</h5>
+                                            <div className="payment-mode">
+                                                <h5 className="wrapper-heading">Select Payment Mode:</h5>
+                                                <select value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)} className="form-select">
+                                                    <option value="Cash on Delivery">Cash on Delivery</option>
+                                                    <option value="Pay by Card">UPI - 9599171535@upi</option>
+                                                    <option value="Pay Online">Pay by QR</option>
+                                                </select>
                                             </div>
-                                            <h5>Payment Mode</h5>
-                                            <div class="subtotal payment-type">
-                                                {/* <div class="checkbox-item">
-                                                    <input type="radio" id="bank" name="bank" />
-                                                    <div class="bank">
-                                                        <h5 class="wrapper-heading">Direct Bank Transfer</h5>
-                                                        <p class="paragraph">Make your payment directly into our bank account.
-                                                            Please use
-                                                            <span class="inner-text">
-                                                                your Order ID as the payment reference.
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                </div> */}
-                                                <div class="checkbox-item">
-                                                    <input type="radio" id="cash" name="bank" />
-                                                    <div class="cash">
-                                                        <h5 class="wrapper-heading">Cash on Delivery</h5>
-                                                    </div>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="radio" id="credit" name="bank" />
-                                                    <div class="credit">
-                                                        <h5 class="wrapper-heading">UPI - 9599171535@upi</h5>
-                                                    </div>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="radio" id="credit" name="bank" />
-                                                    <div class="credit">
-                                                        <h5 class="wrapper-heading">QR - <img src={qr} alt="qr" style={{width: '200px'}}/></h5>
-                                                    </div>
-                                                </div>
+                                            <div className="checkout-footer">
+                                                <a href="#" className="shop-btn d-block" onClick={placeOrder}>Place Order</a>
                                             </div>
-                                            {/* <Link to="/paymentpage" class="shop-btn">Place Order Now</Link> */}
-                                            <button onClick={placeorder} class="shop-btn">Place Order Now</button>
+                                            <div className="payment-method">
+                                                <img src={qr} alt="QR Payment" style={{ height: '200px' }} />
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div className="col-lg-6">
+                                        <Link to="/cart" className="shop-btn">Back to Cart</Link>
                                     </div>
                                 </div>
                             </div>
@@ -253,10 +237,8 @@ function Checkout() {
                     </div>
                 </div>
             </section>
-
-
         </>
-    )
+    );
 }
 
 export default Checkout;
