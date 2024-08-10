@@ -162,8 +162,8 @@ const ProductDetails = () => {
                                 <span class="text">6 Reviews</span>
                             </div> */}
               <div class="price">
-                <span class="price-cut">&#8377; &nbsp;9.99</span>
-                <span class="new-price">&#8377; &nbsp;6.99</span>
+                <span class="price-cut">&#8377; &nbsp;{product.price}</span>
+                <span class="new-price">&#8377; &nbsp;{product.price - product.discount}</span>
               </div>
               {/* <p class="content-paragraph">It is a long established fact that a reader will be distracted
                 by <span class="inner-text">the readable there content of a page.</span></p>
@@ -202,7 +202,7 @@ const ProductDetails = () => {
                     </span>
                   </div> */}
                 </div>
-                <a href="#" class="shop-btn">
+                {userid &&<a href="#" class="shop-btn">
                   <span>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                       xmlns="http://www.w3.org/2000/svg">
@@ -211,8 +211,8 @@ const ProductDetails = () => {
                         fill="white" />
                     </svg>
                   </span>
-                  <span onClick={() => handleAddToCart(product.productid)}>Add to Cart</span>
-                </a>
+                   <span onClick={() => handleAddToCart(product.productid)}>Add to Cart</span>
+                </a>}
               </div>
               <hr></hr>
             </div>

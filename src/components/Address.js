@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import DashboardRoutes from './DashboardRoutes';
 
 const Address = () => {
+  
+  const userid = localStorage.getItem('userid');
   const [formData, setFormData] = useState({
-    userid: "",
+    userid: userid,
     addressid: "",
     name: "",
     line1: "",
@@ -68,7 +70,7 @@ const Address = () => {
       console.log("API response:", response.data);
       // Clear the form data
       setFormData({
-        userid: "",
+        userid: userid,
         addressid: "",
         name: "",
         line1: "",

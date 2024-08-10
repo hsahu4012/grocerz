@@ -251,7 +251,7 @@ const Home = () => {
                 </div>
             </section>
 
-    <section class="product flash-sale">
+    {/* <section class="product flash-sale">
         <div class="container">
             <div class="flash-sale-section">
                 <div class="countdown-section">
@@ -297,7 +297,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
 
             <section class="product-category product mt-5">
                 <div class="container">

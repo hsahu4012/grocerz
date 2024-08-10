@@ -28,7 +28,7 @@ const Login = () => {
         localStorage.setItem("jwttoken", token);
         localStorage.setItem("userid", response.data.userId);
         login_user();
-        navigate("/dashboard");
+        navigate("/home");
       }
     } catch (error) {
       console.error("Login failed:", error);

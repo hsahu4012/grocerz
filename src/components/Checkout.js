@@ -115,7 +115,8 @@ function Checkout() {
                                                     </div>
                                                 ))}
                                                 <div className="col-lg-6">
-                                                    <a href="#" className="shop-btn" onClick={modalAction}>Add New Address - Open in modal</a>
+                                                    {/* <a href="#" className="shop-btn" onClick={modalAction}>Open in Modal - Add New Address</a> */}
+                                                    <Link to="/addressnew" className="shop-btn">Add New Address</Link>
 
                                                     <div className={`modal-wrapper submit ${isModalOpen ? 'open' : ''}`}>
                                                         <div className="anywhere-away" onClick={modalAction}></div>
@@ -174,7 +175,7 @@ function Checkout() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -183,10 +184,9 @@ function Checkout() {
                                     <div className="account-section billing-section box-shadows">
                                         <h5 className="wrapper-heading">Order Summary</h5>
                                         <div className="order-summery">
-                                            <div className="subtotal product-total">
+                                            {/* <div className="subtotal product-total">
                                                 <ul className="product-list">
                                                     {cartItems.map((item) => {
-                                                        // Calculate total price for the item
                                                         const itemTotal = (Number(item.price) * item.quantity) - Number(item.discount);
 
                                                         return (
@@ -201,36 +201,69 @@ function Checkout() {
                                                         );
                                                     })}
                                                 </ul>
+                                            </div> */}
+                                            <div className="subtotal product-total">
+                                                <h5 class="wrapper-heading">Total Amount</h5>
+                                                <h5 class="wrapper-heading">&#8377;{totalAmount}</h5>
                                             </div>
                                             <div className="subtotal product-total">
-                                                <ul className="product-list">
-                                                    <li>
-                                                        <div className="total-price">
-                                                            <h5 className="wrapper-heading">Total Amount</h5>
-                                                            <p className="price">₹{totalAmount}</p>
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                                <h5 class="wrapper-heading">Delivery Charges</h5>
+                                                <h5 class="wrapper-heading">&#8377; 0</h5>
                                             </div>
+                                            <div className="subtotal product-total">
+                                                <h5 class="wrapper-heading">Packaging Charges</h5>
+                                                <h5 class="wrapper-heading">&#8377; 0</h5>
+                                            </div>
+                                            <div className="subtotal product-total">
+                                                <h5 class="wrapper-heading">Platform Fee</h5>
+                                                <h5 class="wrapper-heading">&#8377; 0</h5>
+                                            </div>
+
+                                            <div class="subtotal total"><h5 class="wrapper-heading">TOTAL</h5>
+                                            <h5 class="wrapper-heading price">&#8377;{totalAmount}</h5></div>
+                                            <h5>Payment Mode</h5>
+
+
+                                            <div class="subtotal payment-type">
+                                                <div>UPI ID - 9599171535@upi</div>
+                                                <div>QR - <img src="/static/media/hashedbitqr.6cccddbb20d59af97044.jpg" alt="qr" style={{width: '200px'}} /></div>
+                                                {/* <div class="checkbox-item">
+                                                    <input type="radio" id="cash" name="bank" />
+                                                    <div class="cash">
+                                                        <h5 class="wrapper-heading">Cash on Delivery</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="checkbox-item"><input type="radio" id="credit" name="bank" />
+                                                    <div class="credit">
+                                                        <h5 class="wrapper-heading">UPI - 9599171535@upi</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="checkbox-item"><input type="radio" id="credit" name="bank" />
+                                                    <div class="credit">
+                                                        <h5 class="wrapper-heading">QR - <img src="/static/media/hashedbitqr.6cccddbb20d59af97044.jpg" alt="qr" style={{width: '200px'}} /></h5>
+                                                    </div>
+                                                </div> */}
+                                            </div>
+
                                             <div className="payment-mode">
                                                 <h5 className="wrapper-heading">Select Payment Mode:</h5>
                                                 <select value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)} className="form-select">
                                                     <option value="cod">Cash on Delivery</option>
-                                                    <option value="upi">UPI - 9599171535@upi</option>
-                                                    <option value="qr">Pay by QR</option>
+                                                    <option value="upi">UPI</option>
+                                                    <option value="qr">QR</option>
                                                 </select>
                                             </div>
-                                            <div className="checkout-footer">
-                                                <a href="#" className="shop-btn d-block" onClick={placeOrder}>Place Order</a>
+                                            <div className="checkout-footer mt-4">
+                                                <button className="shop-btn d-block" onClick={placeOrder}>Place Order</button>
                                             </div>
-                                            <div className="payment-method">
+                                            {/* <div className="payment-method">
                                                 <img src={qr} alt="QR Payment" style={{ height: '200px' }} />
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
-                                    <div className="col-lg-6">
+                                    {/* <div className="col-lg-6">
                                         <Link to="/cart" className="shop-btn">Back to Cart</Link>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
