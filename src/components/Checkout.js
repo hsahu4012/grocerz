@@ -215,9 +215,9 @@ function Checkout() {
                                             <div className="payment-mode">
                                                 <h5 className="wrapper-heading">Select Payment Mode:</h5>
                                                 <select value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)} className="form-select">
-                                                    <option value="Cash on Delivery">Cash on Delivery</option>
-                                                    <option value="Pay by Card">UPI - 9599171535@upi</option>
-                                                    <option value="Pay Online">Pay by QR</option>
+                                                    <option value="cod">Cash on Delivery</option>
+                                                    <option value="upi">UPI - 9599171535@upi</option>
+                                                    <option value="qr">Pay by QR</option>
                                                 </select>
                                             </div>
                                             <div className="checkout-footer">
