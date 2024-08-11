@@ -163,7 +163,7 @@ const Productlist = () => {
                           <div className="product-description">
                             <div className="product-details">{product.prod_name}</div>
                             <div className="price">
-                              <span className="price-cut">&#8377; &nbsp;{product.price}</span>
+                              {(product.discount === 0) && <span className="price-cut">&#8377; &nbsp;{product.price}</span>}
                               <span className="new-price">&#8377; &nbsp;{product.price - product.discount}</span>
                             </div>
                           </div>

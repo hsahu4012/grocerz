@@ -39,7 +39,7 @@ const Dashboard = () => {
               >
                 <div className="user-profile">
                   <div className="user-title">
-                    <p className="paragraph">Hello, Sajjad</p>
+                    <p className="paragraph">Hello User </p>
                     <h5 className="heading">Welcome to your Profile </h5>
                   </div>
                   <div className="profile-section">
@@ -64,7 +64,7 @@ const Dashboard = () => {
                           </div>
                           <div className="wrapper-content">
                             <p className="paragraph">New Orders</p>
-                            <h3 className="heading">656</h3>
+                            <h3 className="heading">-</h3>
                           </div>
                         </div>
                       </div>
@@ -89,7 +89,7 @@ const Dashboard = () => {
                           </div>
                           <div className="wrapper-content">
                             <p className="paragraph">Delivery Completed</p>
-                            <h3 className="heading">99783</h3>
+                            <h3 className="heading">-</h3>
                           </div>
                         </div>
                       </div>
@@ -122,7 +122,7 @@ const Dashboard = () => {
                           </div>
                           <div className="wrapper-content">
                             <p className="paragraph">Support Tickets</p>
-                            <h3 className="heading">09</h3>
+                            <h3 className="heading">-</h3>
                           </div>
                         </div>
                       </div>
@@ -139,11 +139,11 @@ const Dashboard = () => {
                                 <p>Zip:</p>
                               </div>
                               <div className="info-details">
-                                <p>Sajjad</p>
-                                <p>demoemail@gmail.com</p>
-                                <p>023 434 54354</p>
-                                <p>Haydarabad, Rord 34</p>
-                                <p>3454</p>
+                                <p>-</p>
+                                <p>-</p>
+                                <p>-</p>
+                                <p>-</p>
+                                <p>-</p>
                               </div>
                             </div>
                           </div>

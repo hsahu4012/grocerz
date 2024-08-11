@@ -57,7 +57,7 @@ const DashboardRoutes = () => {
                     </span>
                     <span className="text">Profile</span>
                 </Link>
-                <Link
+                {/* <Link
                     className="nav-link"
                     to='/payment'
                     type="button"
@@ -75,7 +75,7 @@ const DashboardRoutes = () => {
                         </svg>
                     </span>
                     <span className="text">Payment Method</span>
-                </Link>
+                </Link> */}
                 <Link to='/OrderHistory'
                     className="nav-link"
                     type="button"
@@ -170,7 +170,7 @@ const DashboardRoutes = () => {
                     <span className="text">Address</span>
                 </Link>
 
-                <Link to='/checkout'
+                {/* <Link to='/checkout'
                     className="nav-link"
                     type="button"
                 >
@@ -194,10 +194,10 @@ const DashboardRoutes = () => {
                         </svg>
                     </span>
                     <span className="text">Checkout</span>
-                </Link>
+                </Link> */}
 
 
-                <Link to='/contact'
+                {/* <Link to='/contact'
                     className="nav-link"
                     type="button"
                 >
@@ -221,8 +221,8 @@ const DashboardRoutes = () => {
                         </svg>
                     </span>
                     <span className="text">Contact</span>
-                </Link>
-                <Link to='/reviews'
+                </Link> */}
+                {/* <Link to='/reviews'
                     className="nav-link"
                     type="button"
                 >
@@ -249,7 +249,7 @@ const DashboardRoutes = () => {
                         </svg>
                     </span>
                     <span className="text">Reviews</span>
-                </Link>
+                </Link> */}
                 <Link
                     className="nav-link"
                     type="button"
@@ -267,7 +267,7 @@ const DashboardRoutes = () => {
                     </span>
                     <span className="text">Change Password</span>
                 </Link>
-                <Link
+                {/* <Link
                     className="nav-link"
                     type="button"
                 >
@@ -285,8 +285,8 @@ const DashboardRoutes = () => {
                         </svg>
                     </span>
                     <span className="text">Support Ticket</span>
-                </Link>
-                <div className="nav-link">
+                </Link> */}
+                {/* <div className="nav-link">
                     <a href="login.html">
                         <span>
                             <svg
@@ -309,7 +309,7 @@ const DashboardRoutes = () => {
                         </span>
                         <span className="text">Logout</span>
                     </a>
-                </div>
+                </div> */}
             </div>
 
         </>

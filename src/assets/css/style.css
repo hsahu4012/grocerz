@@ -336,7 +336,7 @@ button {
   text-decoration: line-through;
 }
 .price .new-price {
-  color: #fe0600;
+  color: #34a853;
 }
 .price span {
   font-family: "Inter", sans-serif;
@@ -2432,7 +2432,7 @@ button {
 }
 .product-info-content .price .new-price {
   font-size: 2rem;
-  color: red;
+  color: #34a853;
 }
 .product-info-content .content-paragraph {
   line-height: 3rem;

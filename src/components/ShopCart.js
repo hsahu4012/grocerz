@@ -10,6 +10,11 @@ const ShopCart = () => {
   const [message, setMessage] = useState('');
   const userid = localStorage.getItem('userid');
   const [loading, setLoading] = useState(false);
+  const [totalCost, setTotalCost] = useState(0);
+
+  useEffect(() => {
+    calculateTotal();
+  }, [cartItems])
 
   useEffect(() => {
     fetchCartItems();
@@ -27,8 +32,11 @@ const ShopCart = () => {
   };
 
   const calculateTotal = () => {
-    setLoading(true);
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    console.log('totalling');
+    //setLoading(true);
+    let total = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    console.log('total', total);
+    setTotalCost(total);
   };
 
   const removeFromCart = async (productid) => {
@@ -168,8 +176,10 @@ const ShopCart = () => {
             </tbody>
           </table>
         </div>
+        
         <div className="wishlist-btn cart-btn">
           <button className="clean-btn" onClick={() => setCartItems([])}>Clear Cart</button>
+          <button className="shop-btn">Total - {totalCost}</button>
           {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
           <Link to="/checkout" className="shop-btn">Proceed to Checkout</Link>
         </div>

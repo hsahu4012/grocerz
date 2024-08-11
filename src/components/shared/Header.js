@@ -66,18 +66,18 @@ const Header = () => {
   function getDeliverySlot(orderTime) {
     const hours = orderTime.getHours();
 
-    if (hours < 9) {
-      return "9 AM - 12 PM";
-    } else if (hours >= 9 && hours < 12) {
+    if (hours < 11) {
+      return "10 AM - 12 PM";
+    } else if (hours >= 11 && hours < 14) {
       return "12 PM - 3 PM";
-    } else if (hours >= 12 && hours < 15) {
+    } else if (hours >= 14 && hours < 17) {
       return "3 PM - 6 PM";
-    } else if (hours >= 15 && hours < 18) {
+    } else if (hours >= 17 && hours < 20) {
       return "6 PM - 9 PM";
-    } else if (hours >= 19) {
+    } else if (hours >= 20) {
       const nextDay = new Date(orderTime);
       nextDay.setDate(nextDay.getDate() + 1);
-      return `Next Day: 9 AM - 11 PM`;
+      return `Next Day: 10 AM - 12 PM`;
     } else {
       return "No Delivery Slot Available";
     }
@@ -102,8 +102,9 @@ const Header = () => {
                 <Link to="/contact">
                   <span>Support</span>
                 </Link>
-                <p className="delivery-slot">Next Delivery Slot {deliverySlot}</p>
+                
               </div>
+              <div><p className="delivery-slot">Next Delivery Slot {deliverySlot}</p></div>
               <div class="header-contact">
                 <div class="header-top-contact">
                   <a href="#" class="top-contact phone">
@@ -129,7 +130,7 @@ const Header = () => {
                         />
                       </svg>
                     </span>
-                    <span class="contact-text">8757499345</span>
+                    <span class="contact-text">8757499344, 8757499345</span>
                   </a>
                   <div class="divider"></div>
                   <a href="#" class="top-contact email">

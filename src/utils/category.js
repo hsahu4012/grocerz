@@ -11,7 +11,7 @@ export const marketCategory=[
       "image": require("../assets/category/masaladryfruits.png")
     },
     {
-      "category_id":"teaco55536",
+      "category_id":"dairy64076",
       "categoryname": "Dairy, Tea & Drinks",
       "image": require("../assets/category/teacoffee.png")
     },
@@ -76,7 +76,7 @@ export const marketCategory=[
       "image": require("../assets/category/fruitsNveggies.png")
     },
     {
-      "category_id":"dairy64076",
+      "category_id":"pooja9554",
       "categoryname": "Pooja Samagri",
       "image": require("../assets/category/pooja.jpg")
     },

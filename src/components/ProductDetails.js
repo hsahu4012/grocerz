@@ -162,7 +162,7 @@ const ProductDetails = () => {
                                 <span class="text">6 Reviews</span>
                             </div> */}
               <div class="price">
-                <span class="price-cut">&#8377; &nbsp;{product.price}</span>
+              {(product.discount === 0) &&<span class="price-cut">&#8377; &nbsp;{product.price}</span>}
                 <span class="new-price">&#8377; &nbsp;{product.price - product.discount}</span>
               </div>
               {/* <p class="content-paragraph">It is a long established fact that a reader will be distracted
