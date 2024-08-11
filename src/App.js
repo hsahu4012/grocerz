@@ -39,6 +39,7 @@ import PaymentPage from "./components/PaymentPage";
 import Dashboard from"./components/Dashboard";
 import Productlist from "./components/Productlist";
 import OrderSuccess from "./components/OrderSuccess";
+import OrderDetailsPrint from "./components/OrderDetailsPrint";
 
 import About from "./components/About";
 
@@ -93,7 +94,7 @@ import About from "./components/About";
             <Route path="/wishlist" element={< Wishlist />} />
             <Route path='/checkout' element={<Checkout />} />
             <Route path="/paymentpage" element={<PaymentPage />} />
-            <Route path="/ordersuccess" element={<OrderSuccess />} />
+            <Route path="/ordersuccess" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/register" element={<Register />} />
@@ -112,6 +113,7 @@ import About from "./components/About";
             <Route path="/orderdetail" element={<OrderDetail />} />
             <Route path="/orderhistory/orderdetail/:orderid" element={<OrderDetail />} />
             <Route path="/orderhistory" element={<OrderHistory />} />
+            <Route path="/orderhistory/orderdetailsprint/:orderid/:usertype" element={<OrderDetailsPrint />} />
 
 
             <Route path="/" element={<Home />} />
