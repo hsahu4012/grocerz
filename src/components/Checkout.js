@@ -9,7 +9,7 @@ function Checkout() {
     const [addresses, setAddresses] = useState([]);
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [paymentMode, setPaymentMode] = useState("Cash on Delivery"); // State for payment mode
+    const [paymentMode, setPaymentMode] = useState("DUE - COD/QR/UPI"); // State for payment mode
     const userId = localStorage.getItem('userid'); // Assuming userId is stored in localStorage
     const navigate = useNavigate();
 
@@ -248,9 +248,9 @@ function Checkout() {
                                             <div className="payment-mode">
                                                 <h5 className="wrapper-heading">Select Payment Mode:</h5>
                                                 <select value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)} className="form-select">
-                                                    <option value="cod">Cash on Delivery</option>
-                                                    <option value="upi">UPI</option>
-                                                    <option value="qr">QR</option>
+                                                    <option value="DUE - COD/QR/UPI">Due - Cash on Delivery / UPI / QR</option>
+                                                    {/* <option value="upi">UPI</option>
+                                                    <option value="qr">QR</option> */}
                                                 </select>
                                             </div>
                                             <div className="checkout-footer mt-4">

@@ -10,6 +10,7 @@ const OrderHistory = () => {
 
 
   const userid = localStorage.getItem('userid');
+  const usertype = localStorage.getItem('usertype');
 
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
@@ -18,10 +19,9 @@ const OrderHistory = () => {
   };
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}orders/getByuserId/${userid}`);
+      const url = (usertype === 'admin') ? 'orders/allOrders' : 'orders/getByuserId/'+userid;
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}${url}`);
       setOrders(response.data);
-
-
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -57,10 +57,10 @@ const OrderHistory = () => {
                     <div key={index} className="card mt-3">
                       <div className="card-body">
                         <div className="row">
-                          <div className="col-md-3">
+                          {/* <div className="col-md-3">
                             <img src="https://picsum.photos/500/200" className="img-fluid" alt="dummy" />
-                          </div>
-                          <div className="col-md-9">
+                          </div> */}
+                          <div className="col-sm-12">
                             <h5 className="card-title">
                               <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
                                 ORD {order.order_id}. Total ₹{order.paymentamount}

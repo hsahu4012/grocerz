@@ -7,6 +7,7 @@ const OrderDetail = () => {
     const { orderid } = useParams();
     const [orderDetails, setOrderDetails] = useState([]);
     const navigate = useNavigate();
+    const usertype = localStorage.getItem('usertype');
 
     const fetchOrderDetails = async () => {
         try {
@@ -24,6 +25,10 @@ const OrderDetail = () => {
     const handleProductClick = (productid) => {
         navigate(`/product/${productid}`);
     };
+
+    const removeItemFromOrder = () => {
+        console.log('removing product from order')
+    }
 
     const order = orderDetails.length > 0 ? orderDetails[0] : null;
 
@@ -68,8 +73,12 @@ const OrderDetail = () => {
                                                 <div className="col-sm-12">
                                                     <div className='heading-custom-font-1'>Bill Details</div>
                                                     <ul className="list-group text-custom-font-1">
-                                                        <li className="list-group-item">Final Price - {order.price_final}</li>
-                                                        <li className="list-group-item">Payment Amount - {order.paymentamount}</li>
+                                                        {/* <li className="list-group-item">Final Price - {order.price_final}</li> */}
+                                                        <li className="list-group-item">Total Amount - {order.paymentamount}</li>
+                                                        <li className="list-group-item">Delivery Charge - 20</li>
+                                                        <li className="list-group-item">Promotional Discount - 20</li>
+                                                        <li className="list-group-item"><strong>Final Payment Amount - {order.paymentamount}</strong></li>
+                                                        {/* <li className="list-group-item">Payment Amount - {order.paymentamount}</li> */}
                                                         <li className="list-group-item">Payment Mode - {order.paymentmode}</li>
                                                     </ul>
                                                 </div>
@@ -78,6 +87,7 @@ const OrderDetail = () => {
 
                                             <div className="my-5">
                                                 <div className='heading-custom-font-1'>Items List</div>
+                                                {(usertype === 'admin') && <div className="shop-btn mx-1">Add Product to existing order</div>}
                                                 {orderDetails.map((item, index) => {
                                                     return (
                                                         <div className="card mb-1" key={index} style={{ cursor: 'pointer' }} onClick={() => handleProductClick(item.productid)}>
@@ -88,7 +98,8 @@ const OrderDetail = () => {
                                                                 <div className="col-md-9 d-flex justify-content-between align-items-center">
                                                                     <p><strong>{item.prod_name}</strong></p>
                                                                     <p><strong>Qty: {item.quantity}</strong></p>
-                                                                    <p><strong>&#8377;&nbsp;{item.price}</strong></p>
+                                                                    <p><strong>&#8377;&nbsp;{item.price_final}</strong></p>
+                                                                    {(usertype === 'admin') && <button onClick={removeItemFromOrder} className="shop-btn">Remove Product</button>}
                                                                 </div>
                                                             </div>
                                                         </div>

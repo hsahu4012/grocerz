@@ -27,6 +27,7 @@ const Login = () => {
         const token = response.data.token;
         localStorage.setItem("jwttoken", token);
         localStorage.setItem("userid", response.data.userId);
+        localStorage.setItem("usertype", response.data.userType);
         login_user();
         navigate("/home");
       }
@@ -69,14 +70,14 @@ const Login = () => {
                       <div class="review-inner-form ">
                         <div class="review-form-name">
                           <label for="username" class="form-label">
-                            Username**
+                            Username/Mobile/Email**
                           </label>
                           <Field
                             type="text"
                             id="username"
                             name="username"
                             class="form-control"
-                            placeholder="Username"
+                            placeholder="Username/Mobile/Email"
                           />
                         </div>
                         <div class="review-form-name">

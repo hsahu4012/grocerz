@@ -20,6 +20,12 @@ const Productlist = () => {
     }
   }, [category_id]);
 
+  const storeSelectedSubcategory = (firstSubcategoryId) => {
+    console.log('setting sub category id')
+    setSelectedSubcategory(firstSubcategoryId);
+    window.localStorage.setItem('selectedSubcategory', firstSubcategoryId);
+  }
+
   const fetchSubcategories = async (categoryId) => {
     setLoading(true);
     try {
@@ -27,13 +33,30 @@ const Productlist = () => {
       console.log('Subcategories response:', response.data);
       setSubcategories(response.data);
       if (response.data.length > 0) {
-        const firstSubcategoryId = response.data[0].subcategory_id;
-        setSelectedSubcategory(firstSubcategoryId);
-        fetchProducts(categoryId, firstSubcategoryId);
-        setSubcategoryName(response.data[0].subcategoryname);
+        let subcategories = response.data.map(item => item.subcategory_id);
+        let storedsubcategory = window.localStorage.getItem('selectedSubcategory');
+        //console.log('subcategories', subcategories)
+        //console.log('storedsubcategory', storedsubcategory)
+        if (subcategories.indexOf(storedsubcategory) > -1) {
+          //console.log('inside if', storedsubcategory)
+          storeSelectedSubcategory(storedsubcategory);
+          fetchProducts(categoryId, storedsubcategory);
+          //setSubcategoryName(response.data[0].subcategoryname);
+        }
+        else {
+          //console.log('inside else')
+          const firstSubcategoryId = response.data[0].subcategory_id;
+          storeSelectedSubcategory(firstSubcategoryId);
+          fetchProducts(categoryId, firstSubcategoryId);
+          //setSubcategoryName(response.data[0].subcategoryname);
+        }
+        // const firstSubcategoryId = response.data[0].subcategory_id;
+        // storeSelectedSubcategory(firstSubcategoryId);
+        // fetchProducts(categoryId, firstSubcategoryId);
+        //setSubcategoryName(response.data[0].subcategoryname);
       } else {
         setProducts([]);
-        setSubcategoryName('');
+        //setSubcategoryName('');
       }
     } catch (error) {
       console.error('Error fetching subcategories:', error);
@@ -61,6 +84,10 @@ const Productlist = () => {
       fetchProducts(category_id, selectedSubcategory);
     }
   }, [selectedSubcategory]);
+
+  useEffect(() => {
+    setSelectedSubcategory(window.localStorage.getItem('selectedSubcategory'));
+  }, [])
 
   const handleAddToCart = async (productid) => {
     setLoading(true);
@@ -111,7 +138,7 @@ const Productlist = () => {
 
       <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
-        {loading && <Loader />}
+          {loading && <Loader />}
           <div className="row">
             <div className="col-lg-3">
               <div className="sidebar" data-aos="fade-right">
@@ -129,8 +156,8 @@ const Productlist = () => {
                                 name="subcategory"
                                 checked={selectedSubcategory === subcategory.subcategory_id}
                                 onChange={() => {
-                                  setSelectedSubcategory(subcategory.subcategory_id);
-                                  setSubcategoryName(subcategory.subcategoryname);
+                                  storeSelectedSubcategory(subcategory.subcategory_id);
+                                  //setSubcategoryName(subcategory.subcategoryname);
                                   fetchProducts(category_id, subcategory.subcategory_id);
                                 }}
                               />
@@ -151,13 +178,13 @@ const Productlist = () => {
                   products.map(product => (
                     <div className="col-xl-4 col-sm-6" key={product.productid}>
                       <div className="product-wrapper" data-aos="fade-up">
-                      <Link to={`/product/${product.productid}`}>
-                        <div className="product-img">
-                          <img
-                            src={product.image ? `${process.env.REACT_APP_IMAGE_URL}${product.image}` : temp_product_image}
-                            alt={product.prod_name}
-                          />
-                        </div>
+                        <Link to={`/product/${product.productid}`}>
+                          <div className="product-img">
+                            <img
+                              src={product.image ? `${process.env.REACT_APP_IMAGE_URL}${product.image}` : temp_product_image}
+                              alt={product.prod_name}
+                            />
+                          </div>
                         </Link>
                         <div className="product-info">
                           <div className="product-description">
