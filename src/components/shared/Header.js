@@ -10,6 +10,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const { loginstatus } = appstate;
+  const [searchText, setSearchText] = useState("");
 
   const [category, setCategory] = useState(marketCategory);
 
@@ -61,6 +62,12 @@ const Header = () => {
   const handleLogout = () => {
     logout_user();
     navigate("/login");
+  };
+  const handleSearch = () => {
+    if (searchText.trim()) {
+      navigate(`/productsearchlist?q=${encodeURIComponent(searchText)}`);
+    }
+    setSearchText("")
   };
 
   function getDeliverySlot(orderTime) {
@@ -164,9 +171,9 @@ const Header = () => {
                   <img src={logo} alt="logo" className="logo-image" />
                 </Link>
               </div>
-              {/* <div class="header-search-btn">
-                <input type="text" placeholder="Search Product....." />
-                <div class="divider"></div>
+              <div class="header-search-btn1 ">
+                <input  value={searchText} onChange={(e)=>(setSearchText(e.target.value))} type="text" placeholder="Search Product....." className=""/>
+                {/* <div class="divider"></div>
                 <div id="allcat">
                   <button type="button" onclick="selectBoxHandler('allcat')">
                     <span class="item-text">All Categories</span>
@@ -217,11 +224,11 @@ const Header = () => {
                       </li>
                     </ul>
                   </div>
-                </div>
-                <a href="#" class="shop-btn">
+                </div> */}
+                <button onClick={handleSearch} class="search-btn">
                   Search
-                </a>
-              </div> */}
+                </button>
+              </div>
               <div class="header-cart-items">
                 {/* <div class="header-compaire">
                   <a href="compaire.html" class="cart-item">

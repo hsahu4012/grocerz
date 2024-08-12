@@ -42,6 +42,7 @@ import OrderSuccess from "./components/OrderSuccess";
 import OrderDetailsPrint from "./components/OrderDetailsPrint";
 
 import About from "./components/About";
+import ProductSearchList from "./components/ProductSearchList";
 
  function App() {
 
@@ -114,6 +115,7 @@ import About from "./components/About";
             <Route path="/orderhistory/orderdetail/:orderid" element={<OrderDetail />} />
             <Route path="/orderhistory" element={<OrderHistory />} />
             <Route path="/orderhistory/orderdetailsprint/:orderid/:usertype" element={<OrderDetailsPrint />} />
+            <Route path="/productsearchlist" element={<ProductSearchList />} />
 
 
             <Route path="/" element={<Home />} />
