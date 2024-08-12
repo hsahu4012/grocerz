@@ -70,11 +70,10 @@ const OrderDetailsPrint = () => {
                                                 <div className="col-sm-12">
                                                     <div className='heading-custom-font-1'>Bill Details</div>
                                                     <ul className="list-group text-custom-font-1">
-                                                        {/* <li className="list-group-item">Final Price - {order.price_final}</li> */}
                                                         <li className="list-group-item">Total Amount - {order.paymentamount}</li>
                                                         <li className="list-group-item">Delivery Charge - 20</li>
                                                         <li className="list-group-item">Promotional Discount - 20</li>
-                                                        <li className="list-group-item"><strong>Final Payment Amount - {order.paymentamount}</strong></li>
+                                                        <li className="list-group-item text-success"><strong>Final Payment Amount - {order.paymentamount}</strong></li>
                                                         <li className="list-group-item">Payment Mode - {order.paymentmode}</li>
                                                     </ul>
                                                 </div>

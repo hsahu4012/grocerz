@@ -178,7 +178,7 @@ const ShopCart = () => {
         </div>
         
         <div className="wishlist-btn cart-btn">
-          <button className="clean-btn" onClick={() => setCartItems([])}>Clear Cart</button>
+          <button className="clean-btn shop-btn" onClick={() => setCartItems([])}>Clear Cart</button>
           <button className="shop-btn">Total - {totalCost}</button>
           {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
           <Link to="/checkout" className="shop-btn">Proceed to Checkout</Link>

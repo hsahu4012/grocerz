@@ -3324,7 +3324,7 @@ hr {
   background: #ffffff;
 }
 .product-cart .cart-btn {
-  justify-content: flex-start;
+  justify-content: center;
 }
 @media (max-width: 576px) {
   .product-cart .cart-btn {
