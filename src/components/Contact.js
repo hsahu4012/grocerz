@@ -20,12 +20,20 @@ const Contact = () => {
       [name]: value,
     }));
   };
-
+// console.log(formData)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}contact/addContact`, {formData});
-      console.log('Server response:', response.data);
+      // console.log('Server response:', response.data);
+      setFormData({
+        name: "",
+        email: "",
+        mobile: "",
+        address: "",
+        subject: "",
+        message: "",
+      })
     } catch (error) {
       console.error('Error sending data:', error);
     }

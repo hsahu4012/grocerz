@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import temp_product_image from '../assets/products/p-img-29.webp';
 import Loader from './loader/Loader';
-
+import { ToastContainer, toast } from 'react-toastify';
 const Productlist = () => {
   const { category_id } = useParams();
   const [products, setProducts] = useState([]);
@@ -98,10 +98,14 @@ const Productlist = () => {
         productid,
         quantity
       });
-      setMessage(response.data.message || 'Added to cart');
+      if(response.status === 200){
+        toast.success("Product added to cart successfully");
+      } else {
+        toast.error("Failed to add product to cart");
+      }
     } catch (error) {
       setMessage('There was an error adding the product to the cart!');
-      console.error('Error adding to cart:', error);
+      // console.error('Error adding to cart:', error);
     }
     setLoading(false);
   };
@@ -113,7 +117,12 @@ const Productlist = () => {
         userid,
         productid,
       });
-      setMessage(response.data.message || 'Added to wishlist');
+      if(response.status === 200){
+        toast.success("Product added to wishlist successfully");
+      } else {
+        toast.error("Failed to add product to cart");
+      }
+      // setMessage(response.data.message || 'Added to wishlist');
     } catch (error) {
       setMessage('There was an error adding the product to the wishlist!');
       console.error('Error adding to wishlist:', error);
@@ -135,7 +144,7 @@ const Productlist = () => {
           </div>
         </div>
       </div> */}
-
+      <ToastContainer/>
       <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
           {loading && <Loader />}
