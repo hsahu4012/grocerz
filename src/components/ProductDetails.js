@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from 'react-router-dom';
 import axios from "axios";
 import Loader from './loader/Loader';
-
 import dress1 from '../assets/img/product/women/dress1.jpg';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ProductDetails = () => {
+  
   const [selectedSize, setSelectedSize] = useState("xs");
   const [selectedColor, setSelectedColor] = useState("red");
   const [activeTab, setActiveTab] = useState("description");
@@ -77,28 +78,22 @@ const ProductDetails = () => {
 
   //for data and Api
   const handleAddToCart = async (productid) => {
-    // Implement API call to add to cart
     setLoading(true);
-    const data = {
-      userid: userid,
-      productid: productid,
-      quantity: 1
-    };
-    console.log(data, `Add data now`);
-    await axios
-      .post(`${process.env.REACT_APP_API_URL}cart/addToCart`, data)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log("Product added to cart successfully");
-          // Reset quantity after successful addition to cart
-          setQuantity(1);
-        } else {
-          console.error("Failed to add product to cart");
-        }
-      })
-      .catch((error) => {
-        console.error("Error adding product to cart:", error);
+    try {
+      const quantity = 1;
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
+        userid,
+        productid,
+        quantity
       });
+      if(response.status === 200){
+        toast.success("Product added to cart successfully");
+      } else {
+        toast.error("Failed to add product to cart");
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
     setLoading(false);
   };
 
@@ -116,6 +111,7 @@ const ProductDetails = () => {
 
   return (
     <>
+    <ToastContainer/>
       <div class="product-info-section">
         {loading && <Loader />}
         <div class="row ">
@@ -124,10 +120,10 @@ const ProductDetails = () => {
               <div class="swiper product-top">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide slider-top-img">
-                    <img src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`} alt="img" />
+                    <img src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`} alt="ProductIMG" />
                   </div>
                   <div class="swiper-slide slider-top-img">
-                    <img src={dress1 || product.image} alt="img" />
+                    <img src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`} alt="ProductIMG" />
                   </div>
                 </div>
               </div>
@@ -135,7 +131,7 @@ const ProductDetails = () => {
             </div>
           </div>
           <div class="col-md-6">
-            <div class="product-info-content" data-aos="fade-left">
+            <div class="product-info-content" >
               {/* <span class="wrapper-subtitle">Vegetable</span> */}
               <h3 class="wrapper-heading">{product.prod_name}</h3>
               {/* <div class="ratings">
@@ -202,7 +198,7 @@ const ProductDetails = () => {
                     </span>
                   </div> */}
                 </div>
-                {userid &&<a href="#" class="shop-btn">
+                {userid &&<a href="#" class="shop-btn" onClick={() => handleAddToCart(product.productid)}>
                   <span>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                       xmlns="http://www.w3.org/2000/svg">
@@ -211,7 +207,7 @@ const ProductDetails = () => {
                         fill="white" />
                     </svg>
                   </span>
-                   <span onClick={() => handleAddToCart(product.productid)}>Add to Cart</span>
+                   <span >Add to Cart</span>
                 </a>}
               </div>
               <hr></hr>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import 'react-toastify/dist/ReactToastify.css';
 // import "./style.css";
 import { BrowserRouter, Route, Routes, useLocation} from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";

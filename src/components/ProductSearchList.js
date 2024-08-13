@@ -3,7 +3,7 @@ import { useParams, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import temp_product_image from '../assets/products/p-img-29.webp';
 import Loader from './loader/Loader';
-
+import { ToastContainer, toast } from 'react-toastify';
 const ProductSearchList = () => {
   const location = useLocation();
   const [searchedProducts, setSearchProducts] = useState([]);
@@ -37,7 +37,11 @@ const ProductSearchList = () => {
         productid,
         quantity
       });
-      setMessage(response.data.message || 'Added to cart');
+      if(response.status === 200){
+        toast.success("Product added to cart successfully");
+      } else {
+        toast.error("Failed to add product to cart");
+      }
     } catch (error) {
       setMessage('There was an error adding the product to the cart!');
       console.error('Error adding to cart:', error);
@@ -52,7 +56,12 @@ const ProductSearchList = () => {
         userid,
         productid,
       });
-      setMessage(response.data.message || 'Added to wishlist');
+      // setMessage(response.data.message || 'Added to wishlist');
+      if(response.status === 200){
+        toast.success("Product added to wishlist successfully");
+      } else {
+        toast.error("Failed to add product to cart");
+      }
     } catch (error) {
       setMessage('There was an error adding the product to the wishlist!');
       console.error('Error adding to wishlist:', error);
@@ -62,7 +71,7 @@ const ProductSearchList = () => {
 
   return (
     <>
-
+      <ToastContainer/>
       <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
           {loading && <Loader />}
