@@ -14,8 +14,8 @@ const Category = () => {
   useEffect(() => {
     const fetchCategoryData = async () => {
       try {
-        const categoryResponse = await axios.get(`${process.env.REACT_APP_API_URL}category/getById/${categoryid}`);
-        setCategoryName(categoryResponse.data[0].categoryname);
+        const categoryResponse = await axios.get(`${process.env.REACT_APP_API_URL}category/allcategory}`);
+        setCategoryName();
 
         const subcategoryResponse = await axios.get(`${process.env.REACT_APP_API_URL}subCategory/categoryid/${categoryid}`);
         setSubcategories(subcategoryResponse.data);
