@@ -13,13 +13,10 @@ const DashboardRoutes = () => {
                 {/* nav-buttons */}
                 <Link
                     className="nav-link active"
-                    id="v-pills-home-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#v-pills-home"
+                    
                     type="button"
-                    role="tab"
-                    aria-controls="v-pills-home"
-                    aria-selected="true"
+                    
+                    to="/dashboard"
                 >
                     <span>
                         <svg
@@ -38,7 +35,7 @@ const DashboardRoutes = () => {
                     </span>
                     <span className="text">Dashboard</span>
                 </Link>
-                <Link to='/profile'
+                {/* <Link to='/profile'
                     className="nav-link"
                     type="button"
                     role="tab"
@@ -56,7 +53,7 @@ const DashboardRoutes = () => {
                         </svg>
                     </span>
                     <span className="text">Profile</span>
-                </Link>
+                </Link> */}
                 {/* <Link
                     className="nav-link"
                     to='/payment'

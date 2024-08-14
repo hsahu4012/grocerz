@@ -61,8 +61,9 @@ const OrderDetailsPrint = () => {
                                                 <div className="col-sm-12 text-custom-font-1">
                                                     <div className='heading-custom-font-1'>Shipping Address</div>
                                                     <strong>Name :</strong> {order.name}
-                                                    <p><strong>Address :</strong> {order.line1}, {order.line2}, {order.line3}, {order.city}, {order.country}</p>
-                                                    <span><strong>Contact: </strong>{order.contact}</span>
+                                                    <p><strong>Address :</strong> {order.line1}, {order.city}</p>
+                                                    <p><strong>Landmark :</strong> {order.landmark}</p>
+                                                    <span><strong>Contact: </strong>{order.contact}, {order.alternatecontact}</span>
                                                 </div>
                                             </div>}
 
@@ -93,7 +94,7 @@ const OrderDetailsPrint = () => {
                                                                     <p><strong>{index+1}</strong></p>
                                                                     <p><strong>Name - {item.prod_name}</strong></p>
                                                                     <p><strong>Quantity - {item.quantity}</strong></p>
-                                                                    {(usertype === 'customer') && <p><strong>&#8377;&nbsp;{item.price_final}</strong></p>}
+                                                                    {(usertype !== 'vendor') && <p><strong>&#8377;&nbsp;{item.price_final}</strong></p>}
                                                                 </div>
                                                             </div>
                                                         </div>

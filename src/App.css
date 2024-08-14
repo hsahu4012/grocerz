@@ -137,3 +137,7 @@
   height: 100%;
   background-color: #34a853;
 }
+
+.shop-btn-nomargin {
+  margin: 0rem !important;
+}

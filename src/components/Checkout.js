@@ -13,6 +13,8 @@ function Checkout() {
     const userId = localStorage.getItem('userid'); // Assuming userId is stored in localStorage
     const navigate = useNavigate();
 
+    const [checkoutstatus, setCheckoutStatus] = useState(false);
+
     useEffect(() => {
         // Fetch cart items and addresses on component mount
         const fetchCartItems = async () => {
@@ -245,7 +247,7 @@ function Checkout() {
                                                 </div> */}
                                             </div>
 
-                                            <div className="payment-mode">
+                                            <div className="payment-mode my-2">
                                                 <h5 className="wrapper-heading">Select Payment Mode:</h5>
                                                 <select value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)} className="form-select">
                                                     <option value="DUE - COD/QR/UPI">Due - Cash on Delivery / UPI / QR</option>
@@ -253,8 +255,13 @@ function Checkout() {
                                                     <option value="qr">QR</option> */}
                                                 </select>
                                             </div>
+                                            {(totalAmount < 100) &&
+                                                <div class="alert alert-danger" role="alert">
+                                                Minimum Cart Value should be 100.
+                                              </div>
+                                            }
                                             <div className="checkout-footer mt-4">
-                                                <button className="shop-btn d-block" onClick={placeOrder}>Place Order</button>
+                                                <button className="shop-btn d-block" onClick={placeOrder} disabled={!checkoutstatus}>Place Order</button>
                                             </div>
                                             {/* <div className="payment-method">
                                                 <img src={qr} alt="QR Payment" style={{ height: '200px' }} />
