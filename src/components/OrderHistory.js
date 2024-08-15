@@ -15,13 +15,14 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
   const handleOrderClick = (orderid) => {
-    navigate(`orderdetail/${orderid}`);
+    navigate(`/orderhistory/orderdetail/${orderid}`);
   };
   const fetchOrders = async () => {
     try {
       const url = (usertype === 'admin') ? 'orders/allOrders' : 'orders/getByuserId/' + userid;
       const response = await axios.get(`${process.env.REACT_APP_API_URL}${url}`);
       setOrders(response.data);
+      console.log("Orders ",orders)
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -61,6 +62,12 @@ const OrderHistory = () => {
                             <img src="https://picsum.photos/500/200" className="img-fluid" alt="dummy" />
                           </div> */}
                           <div className="col-sm-12">
+                            <h5 className="card-title">
+                              
+                              <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
+                                {index+1}.ORD ID {order.order_id} , Total ₹{order.paymentamount}
+                              </strong>
+                            </h5>
                             <div className='row'>
                               <div className='col-9'>
                                 <h5 className="card-title">
@@ -77,7 +84,6 @@ const OrderHistory = () => {
                               </div>
 
                             </div>
-
 
                             <div className='text-end'>
 

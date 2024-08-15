@@ -12,6 +12,7 @@ const OrderDetailsPrint = () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}orderdetails/${orderid}`);
             setOrderDetails(response.data);
+            console.log("orderdeatilspage")
         } catch (error) {
             console.error("Error!! can't fetch orders", error);
         }
