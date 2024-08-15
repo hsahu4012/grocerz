@@ -68,10 +68,10 @@ const OrderDetail = () => {
     const handleAddProduct = async () => {
         try {
             const productObj = products.find(product => product.productid === selectedProduct);
-            const url = `${process.env.REACT_APP_API_URL}orderdetails/addIProductInToOrder/${orderid}`;
+            const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
             await axios.post(url, productObj);
-            fetchOrderDetails(); // Refresh order details after adding product
-            setShowPopup(false); // Close the popup
+            fetchOrderDetails(); 
+            setShowPopup(false);
         } catch (error) {
             console.error('Error adding product to order:', error);
         }
@@ -222,7 +222,7 @@ const OrderDetail = () => {
                                                     >
                                                         <div className="card-body d-flex align-items-center">
                                                             <div className="col-md-3">
-                                                                <img src="https://picsum.photos/50" className="img-fluid" alt="dummy" />
+                                                                <img src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`} className="img-fluid" alt={`${process.env.REACT_APP_IMAGE_URL}${item.prod_name}`} />
                                                             </div>
                                                             <div className="col-md-9 d-flex justify-content-between align-items-center">
                                                                 <p><strong>{item.prod_name}</strong></p>
