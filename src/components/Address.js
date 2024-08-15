@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import DashboardRoutes from './DashboardRoutes';
 
 const Address = () => {
-  
+
   const userid = localStorage.getItem('userid');
   const [formData, setFormData] = useState({
     userid: userid,
@@ -21,6 +21,8 @@ const Address = () => {
     alternatecontact: "",
     landmark: "",
   });
+
+  const [error, setError] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -91,6 +93,21 @@ const Address = () => {
     }
   };
 
+  const fillpindetails = () => {
+    if (formData.pin === '848210') {
+      setError('')
+      setFormData((prevState) => ({
+        ...prevState,
+        city: 'Rosera',
+        state: 'Bihar',
+        country: 'India'
+      }));
+    }
+    else {
+      setError('Sorry! We do not serve in this area.')
+    }
+  }
+
 
   return (
     <>
@@ -159,56 +176,69 @@ const Address = () => {
                           <input type="text" name="addressid" value={formData.addressid} onChange={handleChange} />
                         </div>
                       </div> */}
-                                            <div className="col-lg-12">
+                                            <div className="col-lg-12 review-form">
+
                                               <div className="checkout__form__input">
                                                 <p>Name <span>*</span></p>
-                                                <input type="text" name="name" value={formData.name} onChange={handleChange} />
+                                                <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-control" />
                                               </div>
                                               <div className="checkout__form__input">
-                                                <p>Address Line 1 <span>*</span></p>
-                                                <input type="text" name="line1" value={formData.line1} onChange={handleChange} />
+                                                <p>Address<span>*</span></p>
+                                                <input type="text" name="line1" value={formData.line1} onChange={handleChange} className="form-control" />
                                               </div>
+
                                               <div className="checkout__form__input">
+                                                <p>Landmark</p>
+                                                <input type="text" name="landmark" value={formData.landmark} onChange={handleChange} className="form-control" />
+                                              </div>
+
+                                              {/* <div className="checkout__form__input">
                                                 <p>Address Line 2</p>
-                                                <input type="text" name="line2" value={formData.line2} onChange={handleChange} />
+                                                <input type="text" name="line2" value={formData.line2} onChange={handleChange} className="form-control" />
                                               </div>
                                               <div className="checkout__form__input">
                                                 <p>Address Line 3</p>
-                                                <input type="text" name="line3" value={formData.line3} onChange={handleChange} />
+                                                <input type="text" name="line3" value={formData.line3} onChange={handleChange} className="form-control" />
+                                              </div> */}
+
+                                              <div className="checkout__form__input">
+                                                <p>Pin <span>*</span></p>
+                                                <input type="text" name="pin" value={formData.pin} onChange={handleChange} onBlur={fillpindetails} className="form-control" />
                                               </div>
+
                                               <div className="checkout__form__input">
                                                 <p>City <span>*</span></p>
-                                                <input type="text" name="city" value={formData.city} onChange={handleChange} />
+                                                <input type="text" name="city" value={formData.city} onChange={handleChange} className="form-control" disabled />
                                               </div>
                                               <div className="checkout__form__input">
                                                 <p>State <span>*</span></p>
-                                                <input type="text" name="state" value={formData.state} onChange={handleChange} />
+                                                <input type="text" name="state" value={formData.state} onChange={handleChange} className="form-control" disabled />
                                               </div>
                                               <div className="checkout__form__input">
                                                 <p>Country <span>*</span></p>
-                                                <input type="text" name="country" value={formData.country} onChange={handleChange} />
+                                                <input type="text" name="country" value={formData.country} onChange={handleChange} className="form-control" disabled />
                                               </div>
-                                              <div className="checkout__form__input">
-                                                <p>Pin <span>*</span></p>
-                                                <input type="text" name="pin" value={formData.pin} onChange={handleChange} />
-                                              </div>
+
                                               <div className="checkout__form__input">
                                                 <p>Contact <span>*</span></p>
-                                                <input type="text" name="contact" value={formData.contact} onChange={handleChange} />
+                                                <input type="text" name="contact" value={formData.contact} onChange={handleChange} className="form-control" />
                                               </div>
                                               <div className="checkout__form__input">
                                                 <p>Alternate Contact</p>
-                                                <input type="text" name="alternatecontact" value={formData.alternatecontact} onChange={handleChange} />
+                                                <input type="text" name="alternatecontact" value={formData.alternatecontact} onChange={handleChange} className="form-control" />
                                               </div>
-                                              <div className="checkout__form__input">
-                                                <p>Landmark</p>
-                                                <input type="text" name="landmark" value={formData.landmark} onChange={handleChange} />
-                                              </div>
+
                                             </div>
                                           </div>
                                         </div>
                                       </div>
-                                      <button type="submit" class="shop-btn">Add Address</button>
+                                      {
+                                        error &&
+                                        <div class="alert alert-danger" role="alert">
+                                          {error}
+                                        </div>
+                                      }
+                                      <button type="submit" class="shop-btn" disabled={error}>Add Address</button>
                                     </form>
                                   </div>
                                 </div>

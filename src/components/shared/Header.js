@@ -2395,6 +2395,7 @@ const Header = () => {
               <div>
                 {loginstatus ? (
                   <>
+                  <Link to="/dashboard"><button class="shop-btn me-1">Dashboard</button></Link>
                   <Link to="/cart"><button class="shop-btn me-1">Cart</button></Link>
                   <button class="shop-btn" onClick={handleLogout}>Logout</button>
                   </>

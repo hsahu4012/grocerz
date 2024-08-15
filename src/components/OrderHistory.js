@@ -19,7 +19,7 @@ const OrderHistory = () => {
   };
   const fetchOrders = async () => {
     try {
-      const url = (usertype === 'admin') ? 'orders/allOrders' : 'orders/getByuserId/'+userid;
+      const url = (usertype === 'admin') ? 'orders/allOrders' : 'orders/getByuserId/' + userid;
       const response = await axios.get(`${process.env.REACT_APP_API_URL}${url}`);
       setOrders(response.data);
       console.log("Orders ",orders)
@@ -28,18 +28,18 @@ const OrderHistory = () => {
     }
   };
 
-    useEffect(() => {
-      fetchOrders();
-    }, []);
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
-    return (
-      <>
-        <section className="blog about-blog">
-          <div className="container">
-            <div className="blog-bradcrum">
-              <span><a href="/">Home</a></span>
-              <span className="devider">/</span>
-              <span><a href="OrderHistory">Orders</a></span>
+  return (
+    <>
+      <section className="blog about-blog">
+        <div className="container">
+          <div className="blog-bradcrum">
+            <span><a href="/">Home</a></span>
+            <span className="devider">/</span>
+            <span><a href="OrderHistory">Orders</a></span>
           </div>
           <div className="blog-heading about-heading">
             <h1 className="heading">Orders</h1>
@@ -68,15 +68,31 @@ const OrderHistory = () => {
                                 {index+1}.ORD ID {order.order_id} , Total ₹{order.paymentamount}
                               </strong>
                             </h5>
+                            <div className='row'>
+                              <div className='col-9'>
+                                <h5 className="card-title">
+                                  <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
+                                    ORD {order.order_id}. Total ₹{order.paymentamount}
+                                  </strong>
+                                </h5>
+                              </div>
+
+                              <div className='col-3'>
+                                <button className="view_details_btn shop-btn shop-btn-nomargin" onClick={() => handleOrderClick(order.order_id)}>
+                                  View Details
+                                </button>
+                              </div>
+
+                            </div>
+
                             <div className='text-end'>
 
-                              <button className="view_details_btn success" onClick={() => handleOrderClick(order.order_id)}>
-                                View Details
-                              </button>
+
 
                             </div>
                             <p><strong>Placed on:</strong> {order.order_date}, {order.order_time}</p>
-                            <p>{order.delivery_status}</p>
+                            <p>Order Status - {order.order_status}</p>
+                            <p>Delivery Status - {order.delivery_status}</p>
                           </div>
                         </div>
                       </div>
