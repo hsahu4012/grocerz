@@ -11,6 +11,7 @@ const OrderDetail = () => {
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
     const [products, setProducts] = useState([]);
+    const [SelectedSingleproduct, setSelectedSingleproduct] = useState({});
     const { orderid } = useParams();
     const [orderDetails, setOrderDetails] = useState([]);
     const navigate = useNavigate();
@@ -63,13 +64,13 @@ const OrderDetail = () => {
             console.error("Error fetching order details:", error);
         }
     };
-
     // Handle adding product to order
     const handleAddProduct = async () => {
         try {
             const productObj = products.find(product => product.productid === selectedProduct);
+            setSelectedSingleproduct(productObj)
             const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
-            await axios.post(url, productObj);
+            await axios.post(url, SelectedSingleproduct);
             fetchOrderDetails(); 
             setShowPopup(false);
         } catch (error) {
@@ -193,25 +194,21 @@ const OrderDetail = () => {
                                                             {selectedSubcategory && (
                                                                 <select
                                                                     value={selectedProduct}
-                                                                    onChange={(e) => setSelectedProduct(e.target.value)}>
+                                                                    onChange={(e) =>{setSelectedProduct(e.target.value)} }>
                                                                     <option value="">Select Product</option>
                                                                     {products
                                                                         .filter(product => product.subcategory_id === selectedSubcategory)
                                                                         .map(product => (
                                                                             <option key={product.productid} value={product.productid}>
-                                                                                {product.prod_name}
+                                                                                {product.prod_name} <span style={{ color: "#34a853" }}> Price {product.price}</span>
                                                                             </option>
                                                                         ))
                                                                     }
                                                                 </select>
                                                             )}
-
-                                                            {/* Confirm Button */}
                                                             <button onClick={handleAddProduct}>
                                                                 Add Product
                                                             </button>
-
-                                                            {/* Close Button */}
                                                             <button onClick={() => setShowPopup(false)}>Close</button>
                                                         </div>
                                                     </div>
