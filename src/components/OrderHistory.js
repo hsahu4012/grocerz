@@ -36,11 +36,11 @@ const OrderHistory = () => {
     <>
       <section className="blog about-blog">
         <div className="container">
-          <div className="blog-bradcrum">
+          {/* <div className="blog-bradcrum">
             <span><a href="/">Home</a></span>
             <span className="devider">/</span>
             <span><a href="OrderHistory">Orders</a></span>
-          </div>
+          </div> */}
           <div className="blog-heading about-heading">
             <h1 className="heading">Orders</h1>
           </div>
@@ -52,7 +52,7 @@ const OrderHistory = () => {
             <div className="user-dashboard">
               <DashboardRoutes />
               <div className="container mt-4">
-                <h2>All Orders</h2>
+                <h3>All Orders</h3>
                 {orders.length > 0 ? (
                   orders.map((order, index) => (
                     <div key={index} className="card mt-3">
@@ -62,17 +62,17 @@ const OrderHistory = () => {
                             <img src="https://picsum.photos/500/200" className="img-fluid" alt="dummy" />
                           </div> */}
                           <div className="col-sm-12">
-                            <h5 className="card-title">
+                            {/* <h5 className="card-title">
                               
                               <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
                                 {index+1}.ORD ID {order.order_id} , Total ₹{order.paymentamount}
                               </strong>
-                            </h5>
+                            </h5> */}
                             <div className='row'>
                               <div className='col-9'>
                                 <h5 className="card-title">
                                   <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
-                                    ORD {order.order_id}. Total ₹{order.paymentamount}
+                                    Order NO - {order.srno}. Total ₹{order.paymentamount}
                                   </strong>
                                 </h5>
                               </div>
@@ -90,9 +90,10 @@ const OrderHistory = () => {
 
 
                             </div>
-                            <p><strong>Placed on:</strong> {order.order_date}, {order.order_time}</p>
-                            <p>Order Status - {order.order_status}</p>
-                            <p>Delivery Status - {order.delivery_status}</p>
+                            <p><strong>Order ID - </strong> {order.order_id}</p>
+                            <p><strong>Placed on - </strong> {order.order_date}, {order.order_time}</p>
+                            <p><strong>Order Status -</strong> {order.order_status}</p>
+                            <p><strong>Delivery Status -</strong> {order.delivery_status}</p>
                           </div>
                         </div>
                       </div>

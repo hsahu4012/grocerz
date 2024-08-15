@@ -73,7 +73,7 @@ const Home = () => {
                                     <div class="hero-wrapper-slide wrapper-slide">
                                         <div class="wrapper-info">
                                             <span class="wrapper-subtitle">Fresh Grocery, Fruits & Sabji</span>
-                                            <h1 class="wrapper-details">There's you can Buy your all of Daily Need Products.
+                                            <h1 class="wrapper-details">Marketplace for all your Daily Need Products
                                             </h1>
                                             {/* <a class="shop-btn">Shop Now
                                                 <span>

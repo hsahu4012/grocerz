@@ -261,7 +261,7 @@ function Checkout() {
                                               </div>
                                             }
                                             <div className="checkout-footer mt-4">
-                                                <button className="shop-btn d-block" onClick={placeOrder}>Place Order</button>
+                                                <button className="shop-btn d-block" onClick={placeOrder} disabled={totalAmount < 100}>Place Order</button>
                                             </div>
                                             {/* <div className="payment-method">
                                                 <img src={qr} alt="QR Payment" style={{ height: '200px' }} />

@@ -1,7 +1,15 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, {useContext} from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { DataAppContext } from '../DataContext';
 
 const DashboardRoutes = () => {
+    const navigate = useNavigate();
+    const { appstate, logout_user } = useContext(DataAppContext);
+    const handleLogout = () => {
+        logout_user();
+        navigate("/login");
+      };
+
     return (
         <>
             <div
@@ -247,9 +255,10 @@ const DashboardRoutes = () => {
                     </span>
                     <span className="text">Reviews</span>
                 </Link> */}
-                <Link
+                <button
                     className="nav-link"
                     type="button"
+                    onClick={handleLogout}
                 >
                     <span>
                         <svg
@@ -262,8 +271,8 @@ const DashboardRoutes = () => {
                             <path d="M12.9919 6.43707V5.3498C12.9919 2.39616 10.5957 0 7.64208 0C4.68844 0 2.29227 2.39616 2.29227 5.3498V6.43707C0.900288 7.04304 0 8.41771 0 9.93435V14.5224C0.00346265 16.6311 1.71054 18.3417 3.82276 18.3451H11.4683C13.5771 18.3417 15.2876 16.6346 15.2911 14.5224V9.93781C15.2807 8.41771 14.3804 7.0465 12.9919 6.43707ZM8.40386 12.9953C8.40386 13.4178 8.06106 13.7606 7.63861 13.7606C7.21617 13.7606 6.87337 13.4178 6.87337 12.9953V11.4648C6.87337 11.0424 7.21617 10.6996 7.63861 10.6996C8.06106 10.6996 8.40386 11.0424 8.40386 11.4648V12.9953ZM11.4614 6.11505H3.81584V5.3498C3.81584 3.23758 5.52639 1.52703 7.63861 1.52703C9.75083 1.52703 11.4614 3.23758 11.4614 5.3498V6.11505Z" />
                         </svg>
                     </span>
-                    <span className="text">Change Password</span>
-                </Link>
+                    <span className="text">Logout</span>
+                </button>
                 {/* <Link
                     className="nav-link"
                     type="button"

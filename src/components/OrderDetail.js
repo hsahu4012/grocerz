@@ -15,7 +15,7 @@ const OrderDetail = () => {
     const { orderid } = useParams();
     const [orderDetails, setOrderDetails] = useState([]);
     const navigate = useNavigate();
-    const usertype = 'admin';
+    const usertype = window.localStorage.getItem('usertype');
 
     // Fetch all categories
     const fetchCategoryData = async () => {
@@ -71,7 +71,7 @@ const OrderDetail = () => {
             setSelectedSingleproduct(productObj)
             const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
             await axios.post(url, SelectedSingleproduct);
-            fetchOrderDetails(); 
+            fetchOrderDetails();
             setShowPopup(false);
         } catch (error) {
             console.error('Error adding product to order:', error);
@@ -195,7 +195,7 @@ const OrderDetail = () => {
                                                             {selectedSubcategory && (
                                                                 <select
                                                                     value={selectedProduct}
-                                                                    onChange={(e) =>{setSelectedProduct(e.target.value)} }>
+                                                                    onChange={(e) => { setSelectedProduct(e.target.value) }}>
                                                                     <option value="">Select Product</option>
                                                                     {products
                                                                         .filter(product => product.subcategory_id === selectedSubcategory)
@@ -238,11 +238,15 @@ const OrderDetail = () => {
                                             </div>
 
                                             <div className="heading-custom-font-1 my-5">Order Status : {order.delivery_status} </div>
-                                            <div className="text-center">
-                                                <Link to={`/orderhistory/orderdetailsprint/${orderid}/vendor`} className="shop-btn mx-1">Print for Vendor</Link>
-                                                <Link to={`/orderhistory/orderdetailsprint/${orderid}/customer`} className="shop-btn mx-1">Print for Customer</Link>
-                                                <Link to={`/orderhistory/orderdetailsprint/${orderid}/partner`} className="shop-btn mx-1">Print for Delivery Partner</Link>
-                                            </div>
+
+                                            {
+                                                (usertype === 'admin') && <div className="text-center">
+                                                    <Link to={`/orderhistory/orderdetailsprint/${orderid}/vendor`} className="shop-btn mx-1">Print for Vendor</Link>
+                                                    <Link to={`/orderhistory/orderdetailsprint/${orderid}/customer`} className="shop-btn mx-1">Print for Customer</Link>
+                                                    <Link to={`/orderhistory/orderdetailsprint/${orderid}/partner`} className="shop-btn mx-1">Print for Delivery Partner</Link>
+                                                </div>
+                                            }
+
                                         </div>
                                     ) : (
                                         <p>No order found.</p>
