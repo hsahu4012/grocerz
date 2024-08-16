@@ -73,7 +73,7 @@ const OrderDetail = () => {
             const productObj = products.find(product => product.productid === selectedProduct);
             setSelectedSingleproduct(productObj)
             const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
-            await axios.post(url, SelectedSingleproduct);
+            await axios.post(url, productObj);
             fetchOrderDetails();
             setShowPopup(false);
         } catch (error) {
