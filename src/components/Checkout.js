@@ -46,7 +46,7 @@ function Checkout() {
     }, [userId]);
 
     const placeOrder = async () => {
-        console.log('Order start...');
+        // console.log('Order start...');
 
         try {
             // Prepare data for checkout
@@ -65,13 +65,16 @@ function Checkout() {
 
             // Make API call to place the order
             const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}checkout/checkout`, orderData);
-
             if (orderResponse.data.status === 'success') {
-                console.log('Order placed successfully.');
+                // console.log('Order placed successfully.');
+                const soldProductData = cartData.map(item => ({
+                    productid: item.productid,
+                    quantity: item.quantity
+                }));
+                const soldProductCount = await axios.post(`${process.env.REACT_APP_API_URL}orders/soldproductcount`, soldProductData);
+            // console.log("soldProductCount,",soldProductCount)
                 navigate('/ordersuccess', { state: { orderId: orderResponse.data.orderid } });
-            } else {
-                console.error("Error placing order", orderResponse.data.message);
-            }
+            } 
         } catch (error) {
             console.error("Error placing order", error);
         }
