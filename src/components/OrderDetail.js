@@ -5,8 +5,8 @@ import DashboardRoutes from './DashboardRoutes';
 
 const OrderDetail = () => {
     const [showPopup, setShowPopup] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedSubcategory, setSelectedSubcategory] = useState('');
+    const [category, setcategory] = useState('');
+    const [subcategory, setsubcategory] = useState('');
     const [selectedProduct, setSelectedProduct] = useState('');
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
@@ -15,7 +15,8 @@ const OrderDetail = () => {
     const { orderid } = useParams();
     const [orderDetails, setOrderDetails] = useState([]);
     const navigate = useNavigate();
-    const usertype = window.localStorage.getItem('usertype');
+    // const usertype = window.localStorage.getItem('usertype');
+    const usertype = "admin"
 
     // Fetch all categories
     const fetchCategoryData = async () => {
@@ -45,9 +46,11 @@ const OrderDetail = () => {
     const fetchProductsData = async (subCategoryid) => {
         try {
             if (subCategoryid) {
-                const url = `${process.env.REACT_APP_API_URL}products/bySubCategoryId/${subCategoryid}`;
-                const response = await axios.get(url);
+                const url = `${process.env.REACT_APP_API_URL}products/bySubCategory`;
+                const response = await axios.post(url,{category,subcategory});
                 setProducts(response.data);
+                // console.log("response.data",response.data)
+                // console.log("products",products)
             }
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -95,15 +98,16 @@ const OrderDetail = () => {
         fetchOrderDetails();
     }, [orderid]);
 
-    // Fetch subcategories when selectedCategory changes
+    // Fetch subcategories when category changes
     useEffect(() => {
-        fetchSubCategoryData(selectedCategory);
-    }, [selectedCategory]);
+        fetchSubCategoryData(category);
+    }, [category]);
 
-    // Fetch products when selectedSubcategory changes
+    // Fetch products when subcategory changes
     useEffect(() => {
-        fetchProductsData(selectedSubcategory);
-    }, [selectedSubcategory]);
+        fetchProductsData(subcategory);
+    }, [subcategory]);
+
 
     const order = orderDetails.length > 0 ? orderDetails[0] : null;
 
@@ -164,8 +168,8 @@ const OrderDetail = () => {
 
                                                             {/* Category Selection */}
                                                             <select
-                                                                value={selectedCategory}
-                                                                onChange={(e) => setSelectedCategory(e.target.value)}>
+                                                                value={category}
+                                                                onChange={(e) => setcategory(e.target.value)}>
                                                                 <option value="">Select Category</option>
                                                                 {categories.map(category => (
                                                                     <option key={category.category_id} value={category.category_id}>
@@ -175,13 +179,13 @@ const OrderDetail = () => {
                                                             </select>
 
                                                             {/* Subcategory Selection */}
-                                                            {selectedCategory && (
+                                                            {category && (
                                                                 <select
-                                                                    value={selectedSubcategory}
-                                                                    onChange={(e) => setSelectedSubcategory(e.target.value)}>
+                                                                    value={subcategory}
+                                                                    onChange={(e) => setsubcategory(e.target.value)}>
                                                                     <option value="">Select Subcategory</option>
                                                                     {subcategories
-                                                                        .filter(sub => sub.category_id === selectedCategory)
+                                                                        .filter(sub => sub.category_id === category)
                                                                         .map(subcategory => (
                                                                             <option key={subcategory.subcategory_id} value={subcategory.subcategory_id}>
                                                                                 {subcategory.subcategoryname}
@@ -192,14 +196,12 @@ const OrderDetail = () => {
                                                             )}
 
                                                             {/* Product List Selection */}
-                                                            {selectedSubcategory && (
+                                                            {subcategory && (
                                                                 <select
                                                                     value={selectedProduct}
                                                                     onChange={(e) => { setSelectedProduct(e.target.value) }}>
                                                                     <option value="">Select Product</option>
-                                                                    {products
-                                                                        .filter(product => product.subcategory_id === selectedSubcategory)
-                                                                        .map(product => (
+                                                                    {products.map(product => (
                                                                             <option key={product.productid} value={product.productid}>
                                                                                 {product.prod_name} <span style={{ color: "#34a853" }}> Price {product.price}</span>
                                                                             </option>
