@@ -1,10 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 import DashboardRoutes from './DashboardRoutes';
 
 const Dashboard = () => {
+  const initialState = {
+    name: '-',
+    email: '-',
+    phone: '-',
+  }
+  const [userDetails, setUserDetails] = useState(initialState);
+  const userid = localStorage.getItem('userid');
 
+  useEffect(() => {
+    const fetchDetails = async () => { 
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}users/searchuser/${userid}`);
+        setUserDetails({
+          name: response.data[0].name,
+          email: response.data[0].email,
+          phone: response.data[0].mobile
+        })
+      }catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchDetails();
+  },[])
   return (
 
     <>    
@@ -135,15 +159,15 @@ const Dashboard = () => {
                                 <p>Name:</p>
                                 <p>Email:</p>
                                 <p>Phone:</p>
-                                <p>City:</p>
-                                <p>Zip:</p>
+                                {/* <p>City:</p>
+                                <p>Zip:</p> */}
                               </div>
                               <div className="info-details">
-                                <p>-</p>
-                                <p>-</p>
-                                <p>-</p>
-                                <p>-</p>
-                                <p>-</p>
+                                <p>{userDetails.name}</p>
+                                <p>{userDetails.email}</p>
+                                <p>{userDetails.phone}</p>
+                                {/* <p>-</p>
+                                <p>-</p> */}
                               </div>
                             </div>
                           </div>
