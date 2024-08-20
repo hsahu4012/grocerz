@@ -33,6 +33,22 @@ const OrderHistory = () => {
       console.error("Error fetching cart items", error);
     }
   };
+  const handleDelivered = async (orderid) => {
+    try {
+      const url =   process.env.REACT_APP_API_URL +"orders/markdelivered/" + orderid;
+      const response = await axios.put(url);
+    } catch (error) {
+      console.error("Error fetching cart items", error);
+    }
+  };
+  const handleDeliveryCancel = async (orderid) => {
+    try {
+      const url =   process.env.REACT_APP_API_URL +"orders/markdeliverycancelled/" + orderid;
+      const response = await axios.put(url);
+    } catch (error) {
+      console.error("Error fetching cart items", error);
+    }
+  };
   const fetchOrders = async () => {
     try {
       const url = (usertype === 'admin') ? 'orders/allOrders' : 'orders/getByuserId/' + userid;
@@ -114,7 +130,9 @@ const OrderHistory = () => {
                                 </h5>
                               </div>
 
-                              <div className='order-actions'>
+                              {
+                                usertype==='admin' &&
+                                <div className='order-actions'>
                                 {(order.order_status==='Placed' ) &&<button className="mark-cancelled-btn" onClick={() => handleOrderCancel(order.order_id)}>
                                   Cancel Order
                                 </button> }
@@ -125,6 +143,20 @@ const OrderHistory = () => {
                                   Mark Complete
                                 </button>}
                               </div>
+                              }
+                              {
+                                usertype==='DELIVERYPARTNER' &&<div className='order-actions'>
+                                {(order.delivery_status!=='' ) &&<button className="mark-cancelled-btn" onClick={() => handleDeliveryCancel(order.order_id)}>
+                                  Cancel Delivery
+                                </button> }
+                                <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
+                                  View Details
+                                </button> 
+                                {(order.delivery_status==='Delivered' ) &&<button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
+                                  Mark Delivered
+                                </button>}
+                              </div>
+                              }
                             </div>
 
 
