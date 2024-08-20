@@ -17,6 +17,22 @@ const OrderHistory = () => {
   const handleOrderClick = (orderid) => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
   };
+  const handleMarkComplete = async (orderid) => {
+    try {
+      const url =   process.env.REACT_APP_API_URL +"orders/markascompleted/" + orderid;
+      const response = await axios.put(url);
+    } catch (error) {
+      console.error("Error fetching cart items", error);
+    }
+  };
+  const handleOrderCancel = async (orderid) => {
+    try {
+      const url =   process.env.REACT_APP_API_URL +"orders/markascancelled/" + orderid;
+      const response = await axios.put(url);
+    } catch (error) {
+      console.error("Error fetching cart items", error);
+    }
+  };
   const fetchOrders = async () => {
     try {
       const url = (usertype === 'admin') ? 'orders/allOrders' : 'orders/getByuserId/' + userid;
@@ -30,7 +46,7 @@ const OrderHistory = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [handleMarkComplete]);
 
   return (
     <>
@@ -61,14 +77,14 @@ const OrderHistory = () => {
                           {/* <div className="col-md-3">
                             <img src="https://picsum.photos/500/200" className="img-fluid" alt="dummy" />
                           </div> */}
-                          <div className="col-sm-12">
+                          <div className="col-sm-12 ">
                             {/* <h5 className="card-title">
                               
                               <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
                                 {index+1}.ORD ID {order.order_id} , Total ₹{order.paymentamount}
                               </strong>
                             </h5> */}
-                            <div className='row'>
+                            {/* <div className='row'>
                               <div className='col-9'>
                                 <h5 className="card-title">
                                   <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
@@ -77,13 +93,40 @@ const OrderHistory = () => {
                                 </h5>
                               </div>
 
-                              <div className='col-3'>
+                              <div className='col-2 button-container'>
                                 <button className="view_details_btn shop-btn shop-btn-nomargin" onClick={() => handleOrderClick(order.order_id)}>
                                   View Details
                                 </button>
                               </div>
+                              <div className='col-2 button-container'>
+                              <button className="view_details_btn shop-btn shop-btn-nomargin" onClick={() => handleOrderClick(order.order_id)}>
+                                  Mark Complete
+                                </button>
+                              </div>
 
+                            </div> */}
+                            <div className='order-card'>
+                              <div className='order-details'>
+                                <h5 className="card-title">
+                                  <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
+                                    Order NO - {order.srno}. Total ₹{order.paymentamount}
+                                  </strong>
+                                </h5>
+                              </div>
+
+                              <div className='order-actions'>
+                                {(order.order_status==='Placed' ) &&<button className="mark-cancelled-btn" onClick={() => handleOrderCancel(order.order_id)}>
+                                  Cancel Order
+                                </button> }
+                                <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
+                                  View Details
+                                </button> 
+                                {(order.order_status==='Placed' ) &&<button className="mark-complete-btn" onClick={() => handleMarkComplete(order.order_id)}>
+                                  Mark Complete
+                                </button>}
+                              </div>
                             </div>
+
 
                             <div className='text-end'>
 
