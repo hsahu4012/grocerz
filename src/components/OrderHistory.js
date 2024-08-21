@@ -19,7 +19,7 @@ const OrderHistory = () => {
   };
   const handleMarkComplete = async (orderid) => {
     try {
-      const url =   process.env.REACT_APP_API_URL +"orders/markascompleted/" + orderid;
+      const url = process.env.REACT_APP_API_URL + "orders/markascompleted/" + orderid;
       const response = await axios.put(url);
     } catch (error) {
       console.error("Error fetching cart items", error);
@@ -27,7 +27,7 @@ const OrderHistory = () => {
   };
   const handleOrderCancel = async (orderid) => {
     try {
-      const url =   process.env.REACT_APP_API_URL +"orders/markascancelled/" + orderid;
+      const url = process.env.REACT_APP_API_URL + "orders/markascancelled/" + orderid;
       const response = await axios.put(url);
     } catch (error) {
       console.error("Error fetching cart items", error);
@@ -35,7 +35,7 @@ const OrderHistory = () => {
   };
   const handleDelivered = async (orderid) => {
     try {
-      const url =   process.env.REACT_APP_API_URL +"orders/markdelivered/" + orderid;
+      const url = process.env.REACT_APP_API_URL + "orders/markdelivered/" + orderid;
       const response = await axios.put(url);
     } catch (error) {
       console.error("Error fetching cart items", error);
@@ -43,7 +43,7 @@ const OrderHistory = () => {
   };
   const handleDeliveryCancel = async (orderid) => {
     try {
-      const url =   process.env.REACT_APP_API_URL +"orders/markdeliverycancelled/" + orderid;
+      const url = process.env.REACT_APP_API_URL + "orders/markdeliverycancelled/" + orderid;
       const response = await axios.put(url);
     } catch (error) {
       console.error("Error fetching cart items", error);
@@ -51,10 +51,10 @@ const OrderHistory = () => {
   };
   const fetchOrders = async () => {
     try {
-      const url = (usertype === 'admin') ? 'orders/allOrders' : 'orders/getByuserId/' + userid;
+      const url = (usertype !== 'user') ? 'orders/allOrders' : 'orders/getByuserId/' + userid;
       const response = await axios.get(`${process.env.REACT_APP_API_URL}${url}`);
       setOrders(response.data);
-      console.log("Orders ",orders)
+      console.log("Orders ", orders)
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -131,31 +131,44 @@ const OrderHistory = () => {
                               </div>
 
                               {
-                                usertype==='admin' &&
+                                usertype === 'admin' &&
                                 <div className='order-actions'>
-                                {(order.order_status==='Placed' ) &&<button className="mark-cancelled-btn" onClick={() => handleOrderCancel(order.order_id)}>
-                                  Cancel Order
-                                </button> }
-                                <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
-                                  View Details
-                                </button> 
-                                {(order.order_status==='Placed' ) &&<button className="mark-complete-btn" onClick={() => handleMarkComplete(order.order_id)}>
-                                  Mark Complete
-                                </button>}
-                              </div>
+                                  {(order.order_status !== 'CANCELLED') && <button className="mark-cancelled-btn" onClick={() => handleOrderCancel(order.order_id)}>
+                                    Cancel Order
+                                  </button>}
+                                  <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
+                                    View Details
+                                  </button>
+                                  {(order.delivery_status !== 'DELIVERED') && <button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
+                                    Mark Delivered
+                                  </button>}
+                                  {(order.order_status !== 'COMPLETED') && <button className="mark-complete-btn" onClick={() => handleMarkComplete(order.order_id)}>
+                                    Mark Complete
+                                  </button>}
+                                </div>
                               }
                               {
-                                usertype==='DELIVERYPARTNER' &&<div className='order-actions'>
-                                {(order.delivery_status!=='' ) &&<button className="mark-cancelled-btn" onClick={() => handleDeliveryCancel(order.order_id)}>
+                                usertype === 'deliverypartner' && <div className='order-actions'>
+                                  {/* {(order.delivery_status!=='CANCELLED' ) &&<button className="mark-cancelled-btn" onClick={() => handleDeliveryCancel(order.order_id)}>
                                   Cancel Delivery
-                                </button> }
-                                <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
-                                  View Details
-                                </button> 
-                                {(order.delivery_status==='Delivered' ) &&<button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
-                                  Mark Delivered
-                                </button>}
-                              </div>
+                                </button> } */}
+                                  <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
+                                    View Details
+                                  </button>
+                                  {(order.delivery_status !== 'DELIVERED') && <button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
+                                    Mark Delivered
+                                  </button>}
+                                </div>
+                              }
+
+                              {
+                                usertype === 'user' && <div className='order-actions'>
+                                  
+                                  <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
+                                    View Details
+                                  </button>
+                                 
+                                </div>
                               }
                             </div>
 
