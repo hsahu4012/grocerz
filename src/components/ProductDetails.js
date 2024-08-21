@@ -111,6 +111,23 @@ const ProductDetails = () => {
 
   return (
     <>
+    <section className="blog about-blog">
+        <div className="container">
+            <div class="blog-bradcrum">
+                <span><a href="/home">Home</a></span>
+                <span class="devider">/</span>
+                <span><a href="/home">Category</a></span>
+                <span class="devider">/</span>
+                <span><a href="/home">Subcategory</a></span>
+                <span class="devider">/</span>
+                <span><a href="">Product Details</a></span>
+            </div>
+            <div className="blog-heading about-heading">
+              <h1 className="heading">Product Details</h1>
+            </div>
+        </div>
+    </section>
+
     <ToastContainer/>
       <div class="product-info-section">
         {loading && <Loader />}
