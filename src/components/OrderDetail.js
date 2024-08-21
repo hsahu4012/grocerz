@@ -158,9 +158,9 @@ const OrderDetail = () => {
                                                 <div className="col-sm-12">
                                                     <div className="heading-custom-font-1">Bill Details</div>
                                                     <ul className="list-group text-custom-font-1">
-                                                        <li className="list-group-item">Total Amount - {order.paymentamount}</li>
-                                                        <li className="list-group-item">Delivery Charge - 20</li>
-                                                        <li className="list-group-item">Promotional Discount - 20</li>
+                                                        {/* <li className="list-group-item">Total Amount - {order.paymentamount}</li>
+                                                        <li className="list-group-item">Delivery Charge - 0</li>
+                                                        <li className="list-group-item">Promotional Discount - 0</li> */}
                                                         <li className="list-group-item text-success"><strong>Final Payment Amount - {order.paymentamount}</strong></li>
                                                         <li className="list-group-item">Payment Mode - {order.paymentmode}</li>
                                                     </ul>
@@ -256,9 +256,11 @@ const OrderDetail = () => {
 
                                             {
                                                 (usertype === 'admin') && <div className="text-center">
-                                                    <Link to={`/orderhistory/orderdetailsprint/${orderid}/vendor`} className="shop-btn mx-1">Print for Vendor</Link>
+                                                    {/* <Link to={`/orderhistory/orderdetailsprint/${orderid}/vendor`} className="shop-btn mx-1">Print for Vendor</Link>
                                                     <Link to={`/orderhistory/orderdetailsprint/${orderid}/customer`} className="shop-btn mx-1">Print for Customer</Link>
-                                                    <Link to={`/orderhistory/orderdetailsprint/${orderid}/partner`} className="shop-btn mx-1">Print for Delivery Partner</Link>
+                                                    <Link to={`/orderhistory/orderdetailsprint/${orderid}/partner`} className="shop-btn mx-1">Print for Delivery Partner</Link> */}
+
+                                                    <Link to={`/orderhistory/orderdetailsprint/${orderid}/customer`} className="shop-btn mx-1">Print Invoice</Link>
                                                 </div>
                                             }
 
