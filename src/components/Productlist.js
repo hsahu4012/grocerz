@@ -17,7 +17,7 @@ const Productlist = () => {
   const [orderIDs, setOrderIDs] = useState([]);
   const [selectedorderIDs, setselectedOrderIDs] = useState();
   const [singleProduct, setSingleProduct] = useState();
-  const usertype=localStorage.getItem("usertype")
+  const usertype = localStorage.getItem("usertype")
   // const usertype='admin'
 
   useEffect(() => {
@@ -87,7 +87,7 @@ const Productlist = () => {
   const fetchOrderIDs = async () => {
     setLoading(true);
     try {
-      const url=process.env.REACT_APP_API_URL+'orders/allorderIDs';
+      const url = process.env.REACT_APP_API_URL + 'orders/allorderIDs';
       const response = await axios.get(url);
       // console.log('orderIds response:', response.data);
       setOrderIDs(response.data);
@@ -96,7 +96,7 @@ const Productlist = () => {
     }
     setLoading(false);
   };
-  const addToExistingOrder = async ( ) => {
+  const addToExistingOrder = async () => {
     setLoading(true);
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}products/bySubCategory`, {
@@ -132,7 +132,7 @@ const Productlist = () => {
         productid,
         quantity
       });
-      if(response.status === 200){
+      if (response.status === 200) {
         toast.success("Product added to cart successfully");
       } else {
         toast.error("Failed to add product to cart");
@@ -151,7 +151,7 @@ const Productlist = () => {
         userid,
         productid,
       });
-      if(response.status === 200){
+      if (response.status === 200) {
         toast.success("Product added to wishlist successfully");
       } else {
         toast.error("Failed to add product to cart");
@@ -169,10 +169,10 @@ const Productlist = () => {
       const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${selectedorderIDs}`;
       await axios.post(url, singleProduct);
       setShowPopup(false);
-  } catch (error) {
+    } catch (error) {
       console.error('Error adding product to order:', error);
-  }
-  setLoading(false);
+    }
+    setLoading(false);
   };
 
   return (
@@ -189,7 +189,7 @@ const Productlist = () => {
           </div>
         </div>
       </div> */}
-      <ToastContainer/>
+      <ToastContainer />
       <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
           {loading && <Loader />}
@@ -259,33 +259,33 @@ const Productlist = () => {
                               <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">
                                 Add to Wishlist
                               </button>
-                              {usertype==='admin' &&<button className="product-btn mt-2" type="button" onClick={() => {setShowPopup(true);setSingleProduct(product);}}>
+                              {usertype === 'admin' && <button className="product-btn mt-2" type="button" onClick={() => { setShowPopup(true); setSingleProduct(product); }}>
                                 Add to Pending Orders
                               </button>}
                               {showPopup && (
-                                                  <div className="popup-overlay">
-                                                        <div className="popup-content">
-                                                            <h3>Select Order ID</h3>
-                                                            <select
-                                                                value={selectedorderIDs}
-                                                                onChange={(e) => setselectedOrderIDs(e.target.value)}
-                                                                >
-                                                                <option value="">Select Order ID</option>
-                                                                {orderIDs.map(oid => (
-                                                                    <option key={oid.order_id} value={oid.order_id}>
-                                                                        {oid.order_id}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                            <button className='' onClick={handleAddProduct}>Add Product
-                                                            </button>
-                                                            <button onClick={() => setShowPopup(false)}>Close</button>
-                                                            {/* {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>} */}
-                                                        {/* {err && <p className=''>{err}</p>} */}
-                                                        </div>
-                                                           
-                                                    </div>
-                                                )}
+                                <div className="popup-overlay">
+                                  <div className="popup-content">
+                                    <h3>Select Order ID</h3>
+                                    <select
+                                      value={selectedorderIDs}
+                                      onChange={(e) => setselectedOrderIDs(e.target.value)}
+                                    >
+                                      <option value="">Select Order ID</option>
+                                      {orderIDs.map(oid => (
+                                        <option key={oid.order_id} value={oid.order_id}>
+                                          {oid.srno} - {oid.order_id}
+                                        </option>
+                                      ))}
+                                    </select>
+                                    <button className='' onClick={handleAddProduct}>Add Product
+                                    </button>
+                                    <button onClick={() => setShowPopup(false)}>Close</button>
+                                    {/* {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>} */}
+                                    {/* {err && <p className=''>{err}</p>} */}
+                                  </div>
+
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
