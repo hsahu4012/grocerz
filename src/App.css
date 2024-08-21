@@ -212,3 +212,60 @@
 .shop-btn-nomargin {
   margin: 0rem !important;
 }
+
+.view_details_btn{
+  height:  50%;
+  padding-top: 5px;
+  margin-top: 2px;
+}
+
+
+.order-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.order-details h5 {
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.order-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.view-details-btn, .mark-complete-btn,.mark-cancelled-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.mark-complete-btn {
+  background-color: #28a745;
+}
+
+.view-details-btn:hover {
+  background-color: #0056b3;
+}
+
+.mark-complete-btn:hover {
+  background-color: #218838;
+}
+.mark-cancelled-btn {
+  background-color: #d04512;
+}
+.mark-cancelled-btn:hover {
+  background-color: #8f2e0b;
+}
