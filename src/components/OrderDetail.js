@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
-
+import Loader from './loader/Loader';
 const OrderDetail = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [category, setcategory] = useState('');
@@ -11,12 +11,12 @@ const OrderDetail = () => {
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
     const [products, setProducts] = useState([]);
-    const [SelectedSingleproduct, setSelectedSingleproduct] = useState({});
     const { orderid } = useParams();
     const [orderDetails, setOrderDetails] = useState([]);
     const navigate = useNavigate();
-    // const usertype = window.localStorage.getItem('usertype');
-    const usertype = "admin"
+    const [loading, setLoading] = useState(false);
+    const [err, setError] = useState(false);
+    const usertype = window.localStorage.getItem('usertype');
 
     // Fetch all categories
     const fetchCategoryData = async () => {
@@ -25,7 +25,9 @@ const OrderDetail = () => {
             const response = await axios.get(url);
             setCategories(response.data);
         } catch (error) {
+            setError("Error fetching categories !")
             console.error('Error fetching categories:', error);
+            
         }
     };
 
@@ -38,6 +40,7 @@ const OrderDetail = () => {
                 setSubcategories(response.data);
             }
         } catch (error) {
+            setError("Error fetching subcategories !")
             console.error('Error fetching subcategories:', error);
         }
     };
@@ -53,6 +56,7 @@ const OrderDetail = () => {
                 // console.log("products",products)
             }
         } catch (error) {
+            setError("Error fetching products !")
             console.error('Error fetching products:', error);
         }
     };
@@ -60,25 +64,32 @@ const OrderDetail = () => {
     // Fetch order details
     const fetchOrderDetails = async () => {
         try {
+            setLoading(true)
             const url = `${process.env.REACT_APP_API_URL}orderdetails/${orderid}`;
             const response = await axios.get(url);
             setOrderDetails(response.data);
         } catch (error) {
+            setError("Something went wrong please try again !")
             console.error("Error fetching order details:", error);
+        }
+        finally{
+            setLoading(false)
         }
     };
     // Handle adding product to order
     const handleAddProduct = async () => {
         try {
+            setLoading(true);
             const productObj = products.find(product => product.productid === selectedProduct);
-            setSelectedSingleproduct(productObj)
             const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
             await axios.post(url, productObj);
             fetchOrderDetails();
             setShowPopup(false);
         } catch (error) {
+            setError("Something went wrong please try again !")
             console.error('Error adding product to order:', error);
         }
+        setLoading(false);
     };
 
     // Handle removing product from order
@@ -115,6 +126,7 @@ const OrderDetail = () => {
         <>
             <section className="blog about-blog">
                 <div className="container">
+                {loading && <div className='spinner-overlay'><p className='spinner'></p></div>}
                     <div className="blog-heading about-heading">
                         <h1 className="heading">Order Details</h1>
                     </div>
@@ -160,7 +172,6 @@ const OrderDetail = () => {
                                                 {usertype === 'admin' && (
                                                     <div className="shop-btn mx-1" onClick={() => setShowPopup(true)}>Add Product to existing order</div>
                                                 )}
-
                                                 {showPopup && (
                                                     <div className="popup-overlay">
                                                         <div className="popup-content">
@@ -181,8 +192,8 @@ const OrderDetail = () => {
                                                             {/* Subcategory Selection */}
                                                             {category && (
                                                                 <select
-                                                                    value={subcategory}
-                                                                    onChange={(e) => setsubcategory(e.target.value)}>
+                                                                value={subcategory}
+                                                                onChange={(e) => setsubcategory(e.target.value)}>
                                                                     <option value="">Select Subcategory</option>
                                                                     {subcategories
                                                                         .filter(sub => sub.category_id === category)
@@ -209,11 +220,13 @@ const OrderDetail = () => {
                                                                     }
                                                                 </select>
                                                             )}
-                                                            <button onClick={handleAddProduct}>
-                                                                Add Product
+                                                            <button className='' onClick={handleAddProduct}>Add Product
                                                             </button>
                                                             <button onClick={() => setShowPopup(false)}>Close</button>
+                                                            {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>}
+                                                        {/* {err && <p className=''>{err}</p>} */}
                                                         </div>
+                                                           
                                                     </div>
                                                 )}
 
