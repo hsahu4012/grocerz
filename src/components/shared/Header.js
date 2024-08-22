@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DataAppContext } from "../../DataContext";
-import axios from "axios";
 import logo from '../../assets/images/logo.png';
 import { marketCategory } from '../../utils/category';
 
@@ -18,17 +17,17 @@ const Header = () => {
     return name.replace(/\s+/g, "-").toLowerCase(); // Replace spaces with hyphens and convert to lowercase
   };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}category/allCategory`);
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const response = await axios.get(`${process.env.REACT_APP_API_URL}category/allCategory`);
+  //       setCategories(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching categories:", error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
 
   const securePages = ["/dashboard", "/cart", "/wishlist", "/OrderHistory", "/profile", "/checkout", "/address", "/payment"];
 
@@ -109,7 +108,7 @@ const Header = () => {
                 <Link to="/contact">
                   <span>Support</span>
                 </Link>
-                
+
               </div>
               <div><p className="delivery-slot">Next Delivery Slot {deliverySlot}</p></div>
               <div class="header-contact">
@@ -172,7 +171,7 @@ const Header = () => {
                 </Link>
               </div>
               <div class="header-search-btn1 ">
-                <input  value={searchText} onChange={(e)=>(setSearchText(e.target.value))} type="text" placeholder="Search Product....." className=""/>
+                <input value={searchText} onChange={(e) => (setSearchText(e.target.value))} type="text" placeholder="Search Product....." className="" />
                 {/* <div class="divider"></div>
                 <div id="allcat">
                   <button type="button" onclick="selectBoxHandler('allcat')">
@@ -533,7 +532,7 @@ const Header = () => {
                           <div class="dropdown-item d-flex justify-content-between align-items-center">
                             <div class="dropdown-list-item d-flex">
                               <span class="dropdown-img">
-                                <img src={item.image} alt="category image"/>
+                                <img src={item.image} alt="category image" />
                                 {/* <svg
                                   aria-hidden="true"
                                   focusable="false"
@@ -1385,9 +1384,9 @@ const Header = () => {
               <div>
                 {loginstatus ? (
                   <>
-                  <Link to="/dashboard"><button class="shop-btn me-1">Dashboard</button></Link>
-                  <Link to="/cart"><button class="shop-btn me-1">Cart</button></Link>
-                  <button class="shop-btn" onClick={handleLogout}>Logout</button>
+                    <Link to="/dashboard"><button class="shop-btn me-1">Dashboard</button></Link>
+                    <Link to="/cart"><button class="shop-btn me-1">Cart</button></Link>
+                    <button class="shop-btn" onClick={handleLogout}>Logout</button>
                   </>
                 ) : (
                   <><Link to="/login">

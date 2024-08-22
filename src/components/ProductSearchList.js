@@ -14,8 +14,9 @@ const ProductSearchList = () => {
   const [orderIDs, setOrderIDs] = useState([]);
   const [selectedorderIDs, setselectedOrderIDs] = useState();
   const [singleProduct, setSingleProduct] = useState();
-    // const usertype = localStorage.getItem("usertype")
-  const usertype='admin'
+  const usertype = localStorage.getItem("usertype")
+  //const usertype='admin'
+
   const query = new URLSearchParams(location.search);
   useEffect(() => {
     fetchSearchedProducts();
@@ -43,7 +44,7 @@ const ProductSearchList = () => {
         productid,
         quantity
       });
-      if(response.status === 200){
+      if (response.status === 200) {
         toast.success("Product added to cart successfully");
       } else {
         toast.error("Failed to add product to cart");
@@ -63,7 +64,7 @@ const ProductSearchList = () => {
         productid,
       });
       // setMessage(response.data.message || 'Added to wishlist');
-      if(response.status === 200){
+      if (response.status === 200) {
         toast.success("Product added to wishlist successfully");
       } else {
         toast.error("Failed to add product to cart");
@@ -104,7 +105,7 @@ const ProductSearchList = () => {
 
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
       <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
           {loading && <Loader />}
@@ -142,32 +143,32 @@ const ProductSearchList = () => {
                               Add to Wishlist
                             </button>
                             {usertype === 'admin' && <button className="product-btn mt-2" type="button" onClick={() => { setShowPopup(true); setSingleProduct(product); }}>
-                                Add to Orders
-                              </button>}
-                              {showPopup && (
-                                <div className="popup-overlay">
-                                  <div className="popup-content">
-                                    <h3>Select Order ID</h3>
-                                    <select
-                                      value={selectedorderIDs}
-                                      onChange={(e) => setselectedOrderIDs(e.target.value)}
-                                    >
-                                      <option value="">Select Order ID</option>
-                                      {orderIDs.map(oid => (
-                                        <option key={oid.order_id} value={oid.order_id}>
-                                          {oid.srno} - {oid.order_id}
-                                        </option>
-                                      ))}
-                                    </select>
-                                    <button className='' onClick={handleAddProduct}>Add Product
-                                    </button>
-                                    <button onClick={() => setShowPopup(false)}>Close</button>
-                                    {/* {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>} */}
-                                    {/* {err && <p className=''>{err}</p>} */}
-                                  </div>
-
+                              Add to Orders
+                            </button>}
+                            {showPopup && (
+                              <div className="popup-overlay">
+                                <div className="popup-content">
+                                  <h3>Select Order ID</h3>
+                                  <select
+                                    value={selectedorderIDs}
+                                    onChange={(e) => setselectedOrderIDs(e.target.value)}
+                                  >
+                                    <option value="">Select Order ID</option>
+                                    {orderIDs.map(oid => (
+                                      <option key={oid.order_id} value={oid.order_id}>
+                                        {oid.srno} - {oid.order_id}
+                                      </option>
+                                    ))}
+                                  </select>
+                                  <button className='' onClick={handleAddProduct}>Add Product
+                                  </button>
+                                  <button onClick={() => setShowPopup(false)}>Close</button>
+                                  {/* {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>} */}
+                                  {/* {err && <p className=''>{err}</p>} */}
                                 </div>
-                              )}
+
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>
