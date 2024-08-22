@@ -30,6 +30,7 @@ const OrderHistory = () => {
     try {
       const url = process.env.REACT_APP_API_URL + "orders/markascancelled/" + orderid;
       const response = await axios.put(url);
+      handleDeliveryCancel(orderid);
       fetchOrders();
     } catch (error) {
       console.error("Error fetching cart items", error);
@@ -140,15 +141,17 @@ const OrderHistory = () => {
                                   {(order.order_status === 'Placed') && <button className="mark-cancelled-btn" onClick={() => handleOrderCancel(order.order_id)}>
                                     Cancel Order
                                   </button>}
+                                  
+                                  {(order.delivery_status === 'Pending') && <button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
+                                    Mark Delivered
+                                  </button>}
+                                  {(order.order_status === 'Placed') && <button className="mark-complete-btn" onClick={() => handleMarkComplete(order.order_id)}>
+                                    Mark Complete
+                                  </button>}
+
                                   <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
                                     View Details
                                   </button>
-                                  {(order.delivery_status !== 'DELIVERED') && <button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
-                                    Mark Delivered
-                                  </button>}
-                                  {(order.order_status !== 'COMPLETED') && <button className="mark-complete-btn" onClick={() => handleMarkComplete(order.order_id)}>
-                                    Mark Complete
-                                  </button>}
                                 </div>
                               }
                               {
@@ -156,12 +159,14 @@ const OrderHistory = () => {
                                   {/* {(order.delivery_status!=='CANCELLED' ) &&<button className="mark-cancelled-btn" onClick={() => handleDeliveryCancel(order.order_id)}>
                                   Cancel Delivery
                                 </button> } */}
+                                  
+                                  {(order.delivery_status === 'Pending') && <button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
+                                    Mark Delivered
+                                  </button>}
+
                                   <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
                                     View Details
                                   </button>
-                                  {(order.delivery_status !== 'DELIVERED') && <button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
-                                    Mark Delivered
-                                  </button>}
                                 </div>
                               }
 
