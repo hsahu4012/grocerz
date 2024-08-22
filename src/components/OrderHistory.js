@@ -21,6 +21,7 @@ const OrderHistory = () => {
     try {
       const url = process.env.REACT_APP_API_URL + "orders/markascompleted/" + orderid;
       const response = await axios.put(url);
+      fetchOrders();
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -29,6 +30,7 @@ const OrderHistory = () => {
     try {
       const url = process.env.REACT_APP_API_URL + "orders/markascancelled/" + orderid;
       const response = await axios.put(url);
+      fetchOrders();
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -37,6 +39,7 @@ const OrderHistory = () => {
     try {
       const url = process.env.REACT_APP_API_URL + "orders/markdelivered/" + orderid;
       const response = await axios.put(url);
+      fetchOrders();
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -45,6 +48,7 @@ const OrderHistory = () => {
     try {
       const url = process.env.REACT_APP_API_URL + "orders/markdeliverycancelled/" + orderid;
       const response = await axios.put(url);
+      fetchOrders();
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -62,7 +66,7 @@ const OrderHistory = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, [handleMarkComplete]);
+  }, []);
 
   return (
     <>
@@ -83,7 +87,7 @@ const OrderHistory = () => {
           <div className="user-profile-section box-shadows">
             <div className="user-dashboard">
               <DashboardRoutes />
-              <div className="container mt-4">
+              <div className="container">
                 <h3>All Orders</h3>
                 {orders.length > 0 ? (
                   orders.map((order, index) => (
@@ -133,7 +137,7 @@ const OrderHistory = () => {
                               {
                                 usertype === 'admin' &&
                                 <div className='order-actions'>
-                                  {(order.order_status !== 'CANCELLED') && <button className="mark-cancelled-btn" onClick={() => handleOrderCancel(order.order_id)}>
+                                  {(order.order_status === 'Placed') && <button className="mark-cancelled-btn" onClick={() => handleOrderCancel(order.order_id)}>
                                     Cancel Order
                                   </button>}
                                   <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>

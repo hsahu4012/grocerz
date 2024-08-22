@@ -1374,11 +1374,11 @@ const Header = () => {
                         <span class="list-text">Contact</span>
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link to="/customproduct">
                         <span class="list-text">Custom Product</span>
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>

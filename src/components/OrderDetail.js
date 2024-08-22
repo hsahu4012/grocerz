@@ -50,7 +50,7 @@ const OrderDetail = () => {
         try {
             if (subCategoryid) {
                 const url = `${process.env.REACT_APP_API_URL}products/bySubCategory`;
-                const response = await axios.post(url,{category,subcategory});
+                const response = await axios.post(url, { category, subcategory });
                 setProducts(response.data);
                 // console.log("response.data",response.data)
                 // console.log("products",products)
@@ -72,7 +72,7 @@ const OrderDetail = () => {
             setError("Something went wrong please try again !")
             console.error("Error fetching order details:", error);
         }
-        finally{
+        finally {
             setLoading(false)
         }
     };
@@ -126,7 +126,7 @@ const OrderDetail = () => {
         <>
             <section className="blog about-blog">
                 <div className="container">
-                {loading && <div className='spinner-overlay'><p className='spinner'></p></div>}
+                    {loading && <div className='spinner-overlay'><p className='spinner'></p></div>}
                     <div className="blog-heading about-heading">
                         <h1 className="heading">Order Details</h1>
                     </div>
@@ -138,12 +138,12 @@ const OrderDetail = () => {
                     <div className="user-profile-section box-shadows">
                         <div className="user-dashboard">
                             <DashboardRoutes />
-                            <div className="container mt-5">
+                            <div className="container">
                                 <h2 className="mb-4 main-heading-custom-font-1">Order Summary - {order && order.srno}</h2>
                                 <div className="card">
                                     {order ? (
                                         <div className="card-body">
-                                            <p><strong>Order Date & Time :</strong> {order.order_date} {order.order_time} | <strong>Order# :</strong> {order.order_id} | <strong>Order ID :</strong> {order.srno}</p>
+                                            <p><strong>Order Date & Time :</strong> {order.order_date} {order.order_time} | <strong>Order ID :</strong> {order.order_id} | <strong>Order Number :</strong> {order.srno}</p>
                                             <div className="row my-5">
                                                 <div className="col-sm-12 text-custom-font-1">
                                                     <div className="heading-custom-font-1">Shipping Address</div>
@@ -192,8 +192,8 @@ const OrderDetail = () => {
                                                             {/* Subcategory Selection */}
                                                             {category && (
                                                                 <select
-                                                                value={subcategory}
-                                                                onChange={(e) => setsubcategory(e.target.value)}>
+                                                                    value={subcategory}
+                                                                    onChange={(e) => setsubcategory(e.target.value)}>
                                                                     <option value="">Select Subcategory</option>
                                                                     {subcategories
                                                                         .filter(sub => sub.category_id === category)
@@ -213,10 +213,10 @@ const OrderDetail = () => {
                                                                     onChange={(e) => { setSelectedProduct(e.target.value) }}>
                                                                     <option value="">Select Product</option>
                                                                     {products.map(product => (
-                                                                            <option key={product.productid} value={product.productid}>
-                                                                                {product.prod_name} <span style={{ color: "#34a853" }}> Price {product.price}</span>
-                                                                            </option>
-                                                                        ))
+                                                                        <option key={product.productid} value={product.productid}>
+                                                                            {product.prod_name} <span style={{ color: "#34a853" }}> Price {product.price}</span>
+                                                                        </option>
+                                                                    ))
                                                                     }
                                                                 </select>
                                                             )}
@@ -224,9 +224,9 @@ const OrderDetail = () => {
                                                             </button>
                                                             <button onClick={() => setShowPopup(false)}>Close</button>
                                                             {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>}
-                                                        {/* {err && <p className=''>{err}</p>} */}
+                                                            {/* {err && <p className=''>{err}</p>} */}
                                                         </div>
-                                                           
+
                                                     </div>
                                                 )}
 
@@ -235,6 +235,7 @@ const OrderDetail = () => {
                                                     >
                                                         <div className="card-body d-flex align-items-center">
                                                             <div className="col-md-3">
+                                                                <span><strong>{index + 1}</strong></span>
                                                                 <img src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`} className="img-fluid" alt={`${process.env.REACT_APP_IMAGE_URL}${item.prod_name}`} />
                                                             </div>
                                                             <div className="col-md-9 d-flex justify-content-between align-items-center">
