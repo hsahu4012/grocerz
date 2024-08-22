@@ -1374,6 +1374,11 @@ const Header = () => {
                         <span class="list-text">Contact</span>
                       </Link>
                     </li>
+                    <li>
+                      <Link to="/customproduct">
+                        <span class="list-text">Custom Product</span>
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </div>

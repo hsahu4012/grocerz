@@ -215,14 +215,14 @@ function Checkout() {
                                                 <h5 class="wrapper-heading">Delivery Charges</h5>
                                                 <h5 class="wrapper-heading">&#8377; 0</h5>
                                             </div>
-                                            <div className="subtotal product-total">
+                                            {/* <div className="subtotal product-total">
                                                 <h5 class="wrapper-heading">Packaging Charges</h5>
                                                 <h5 class="wrapper-heading">&#8377; 0</h5>
                                             </div>
                                             <div className="subtotal product-total">
                                                 <h5 class="wrapper-heading">Platform Fee</h5>
                                                 <h5 class="wrapper-heading">&#8377; 0</h5>
-                                            </div>
+                                            </div> */}
 
                                             <div class="subtotal total"><h5 class="wrapper-heading">TOTAL</h5>
                                             <h5 class="wrapper-heading price">&#8377;{totalAmount}</h5></div>

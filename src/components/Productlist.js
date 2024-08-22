@@ -13,6 +13,12 @@ const Productlist = () => {
   const [subcategoryName, setSubcategoryName] = useState('');
   const userid = localStorage.getItem('userid');
   const [loading, setLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [orderIDs, setOrderIDs] = useState([]);
+  const [selectedorderIDs, setselectedOrderIDs] = useState();
+  const [singleProduct, setSingleProduct] = useState();
+  const usertype = localStorage.getItem("usertype")
+  // const usertype='admin'
 
   useEffect(() => {
     if (category_id) {
@@ -21,7 +27,7 @@ const Productlist = () => {
   }, [category_id]);
 
   const storeSelectedSubcategory = (firstSubcategoryId) => {
-    console.log('setting sub category id')
+    // console.log('setting sub category id')
     setSelectedSubcategory(firstSubcategoryId);
     window.localStorage.setItem('selectedSubcategory', firstSubcategoryId);
   }
@@ -71,7 +77,31 @@ const Productlist = () => {
         category: categoryId,
         subcategory: subcategoryId
       });
-      console.log('Products response:', response.data);
+      // console.log('Products response:', response.data);
+      setProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+    setLoading(false);
+  };
+  const fetchOrderIDs = async () => {
+    setLoading(true);
+    try {
+      const url = process.env.REACT_APP_API_URL + 'orders/allorderIDs';
+      const response = await axios.get(url);
+      // console.log('orderIds response:', response.data);
+      setOrderIDs(response.data);
+    } catch (error) {
+      console.error('Error fetching orderIDs:', error);
+    }
+    setLoading(false);
+  };
+  const addToExistingOrder = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}products/bySubCategory`, {
+      });
+      // console.log('Products response:', response.data);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -89,6 +119,10 @@ const Productlist = () => {
     setSelectedSubcategory(window.localStorage.getItem('selectedSubcategory'));
   }, [])
 
+  useEffect(() => {
+    fetchOrderIDs()
+  }, [showPopup])
+
   const handleAddToCart = async (productid) => {
     setLoading(true);
     try {
@@ -98,7 +132,7 @@ const Productlist = () => {
         productid,
         quantity
       });
-      if(response.status === 200){
+      if (response.status === 200) {
         toast.success("Product added to cart successfully");
       } else {
         toast.error("Failed to add product to cart");
@@ -117,7 +151,7 @@ const Productlist = () => {
         userid,
         productid,
       });
-      if(response.status === 200){
+      if (response.status === 200) {
         toast.success("Product added to wishlist successfully");
       } else {
         toast.error("Failed to add product to cart");
@@ -126,6 +160,17 @@ const Productlist = () => {
     } catch (error) {
       setMessage('There was an error adding the product to the wishlist!');
       console.error('Error adding to wishlist:', error);
+    }
+    setLoading(false);
+  };
+  const handleAddProduct = async (productid) => {
+    try {
+      setLoading(true);
+      const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${selectedorderIDs}`;
+      await axios.post(url, singleProduct);
+      setShowPopup(false);
+    } catch (error) {
+      console.error('Error adding product to order:', error);
     }
     setLoading(false);
   };
@@ -144,7 +189,7 @@ const Productlist = () => {
           </div>
         </div>
       </div> */}
-      <ToastContainer/>
+      <ToastContainer />
       <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
           {loading && <Loader />}
@@ -186,7 +231,7 @@ const Productlist = () => {
                 {products.length > 0 ? (
                   products.map(product => (
                     <div className="col-xl-4 col-sm-6" key={product.productid}>
-                      <div className="product-wrapper" data-aos="fade-up">
+                      <div className="product-wrapper m-2" data-aos="fade-up">
                         <Link to={`/product/${product.productid}`}>
                           <div className="product-img">
                             <img
@@ -214,6 +259,33 @@ const Productlist = () => {
                               <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">
                                 Add to Wishlist
                               </button>
+                              {usertype === 'admin' && <button className="product-btn mt-2" type="button" onClick={() => { setShowPopup(true); setSingleProduct(product); }}>
+                                Add to Pending Orders
+                              </button>}
+                              {showPopup && (
+                                <div className="popup-overlay">
+                                  <div className="popup-content">
+                                    <h3>Select Order ID</h3>
+                                    <select
+                                      value={selectedorderIDs}
+                                      onChange={(e) => setselectedOrderIDs(e.target.value)}
+                                    >
+                                      <option value="">Select Order ID</option>
+                                      {orderIDs.map(oid => (
+                                        <option key={oid.order_id} value={oid.order_id}>
+                                          {oid.srno} - {oid.order_id}
+                                        </option>
+                                      ))}
+                                    </select>
+                                    <button className='' onClick={handleAddProduct}>Add Product
+                                    </button>
+                                    <button onClick={() => setShowPopup(false)}>Close</button>
+                                    {/* {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>} */}
+                                    {/* {err && <p className=''>{err}</p>} */}
+                                  </div>
+
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>

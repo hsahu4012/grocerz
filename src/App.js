@@ -19,6 +19,7 @@ import ProductDetails from "./components/ProductDetails";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Contact from "./components/Contact";
+import CustomProduct from "./components/CustomProduct";
 // import CategoryBack from "./components/Category_backup";
 import Category from "./components/Category";
 import Address from './components/Address';
@@ -102,6 +103,7 @@ import ProductSearchList from "./components/ProductSearchList";
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/customproduct" element={<CustomProduct/>} />
             <Route path="/about" element={<About />} />
 
 
