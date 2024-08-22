@@ -6,6 +6,7 @@ import Loader from "./loader/Loader";
 
 const ShopCart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [cartItemsUI, setCartItemsUI] = useState([]);
   const [message, setMessage] = useState("");
   const userid = localStorage.getItem("userid");
   const [loading, setLoading] = useState(false);
@@ -22,10 +23,22 @@ const ShopCart = () => {
   const fetchCartItems = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}cart/userCart/${userid}`
-      );
-      setCartItems(response.data);
+      // Retrieve cart items from localStorage
+      const storedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Fetch product details for each item in the cart
+      const productDetailsPromises = storedCartItems.map(async (item) => {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}products/productByPId/${item.productid}`
+        );
+        return {
+          ...item,
+          ...response.data, // Merge the product details with the cart item
+        };
+      });
+
+      const updatedCartItems = await Promise.all(productDetailsPromises);
+      setCartItems(updatedCartItems);
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -34,7 +47,6 @@ const ShopCart = () => {
 
   const calculateTotal = () => {
     console.log("totalling");
-    //setLoading(true);
     let total = cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
       0
@@ -52,9 +64,12 @@ const ShopCart = () => {
       setCartItems((prevItems) =>
         prevItems.filter((item) => item.productid !== productid)
       );
+      // Update localStorage as well
+      const updatedCartItems = cartItems.filter((item) => item.productid !== productid);
+      localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     } catch (error) {
       setMessage("There was an error removing product from the cart!");
-      console.error("Error removing to cart:", error);
+      console.error("Error removing from cart:", error);
     }
     setLoading(false);
   };
@@ -74,6 +89,13 @@ const ShopCart = () => {
               : item
           )
         );
+        // Update localStorage as well
+        const updatedCartItems = cartItems.map((item) =>
+          item.productid === productid
+            ? { ...item, quantity: newQuantity }
+            : item
+        );
+        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
       } else {
         console.error("Failed to update quantity", response.data);
       }
@@ -94,27 +116,6 @@ const ShopCart = () => {
       removeFromCart(productid);
     }
   };
-
-  const addToCart = async (productid, quantity = 1) => {
-    setLoading(true);
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}cart/addToCart`,
-        { userid, productid, quantity }
-      );
-      if (response.status === 200) {
-        setMessage(response.data.message);
-        fetchCartItems();
-      } else {
-        setMessage("Failed to add item to cart!");
-      }
-    } catch (error) {
-      setMessage("There was an error adding product to the cart!");
-      console.error("Error adding to cart:", error);
-    }
-    setLoading(false);
-  };
-
   return (
     <section className="product-cart product footer-padding">
       {loading && <Loader />}
