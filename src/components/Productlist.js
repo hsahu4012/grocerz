@@ -132,21 +132,6 @@ const Productlist = () => {
 
   return (
     <>
-    
-    <section className="blog about-blog">
-        <div className="container">
-            <div class="blog-bradcrum">
-                <span><a href="/home">Home</a></span>
-                <span class="devider">/</span>
-                <span><a href="/home">Category</a></span>
-                <span class="devider">/</span>
-                <span><a href="/home">Subcategory</a></span>
-            </div>
-            <div className="blog-heading about-heading">
-              <h1 className="heading">Subcategory</h1>
-            </div>
-        </div>
-    </section>
       {/* <div className="breadcrumb-option">
         <div className="container">
           <div className="row">
