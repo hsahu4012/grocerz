@@ -80,17 +80,31 @@ const ProductDetails = () => {
   const handleAddToCart = async (productid) => {
     setLoading(true);
     try {
-      const quantity = 1;
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
-        userid,
-        productid,
-        quantity
-      });
-      if(response.status === 200){
-        toast.success("Product added to cart successfully");
-      } else {
-        toast.error("Failed to add product to cart");
+      if(userid){
+        const quantity = 1;
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
+          userid,
+          productid,
+          quantity
+        });
+        if(response.status === 200){
+          toast.success("Product added to cart successfully");
+        } else {
+          toast.error("Failed to add product to cart");
+        }
+      }else{
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingProduct = cart.find(item => item.productid === productid);
+        if (existingProduct) {
+          existingProduct.quantity += quantity;
+        } else {
+          cart.push({ productid, quantity });
+        }
+         // Save the updated cart back to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+      toast.success("Product added to cart successfully");
       }
+      
     } catch (error) {
       console.error('Error adding to cart:', error);
     }
@@ -198,7 +212,7 @@ const ProductDetails = () => {
                     </span>
                   </div> */}
                 </div>
-                {userid &&<a href="#" class="shop-btn" onClick={() => handleAddToCart(product.productid)}>
+                <a href="#" class="shop-btn" onClick={() => handleAddToCart(product.productid)}>
                   <span>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                       xmlns="http://www.w3.org/2000/svg">
@@ -208,7 +222,7 @@ const ProductDetails = () => {
                     </svg>
                   </span>
                    <span >Add to Cart</span>
-                </a>}
+                </a>
               </div>
               <hr></hr>
             </div>

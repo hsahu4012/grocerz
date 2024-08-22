@@ -30,7 +30,7 @@ const Header = () => {
     fetchCategories();
   }, []);
 
-  const securePages = ["/dashboard", "/cart", "/wishlist", "/OrderHistory", "/profile", "/checkout", "/address", "/payment"];
+  const securePages = ["/dashboard", "/wishlist", "/OrderHistory", "/profile", "/address",];
 
   const checkLoginAndRedirect = () => {
     const token = localStorage.getItem("jwttoken");
