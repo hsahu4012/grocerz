@@ -1054,6 +1054,7 @@ button {
 }
 .header-nav .header-nav-menu .menu-list li {
   position: relative;
+  margin-right: 2rem;
 }
 .header-nav .header-nav-menu .menu-list li:hover .header-sub-menu {
   visibility: visible;
@@ -1161,6 +1162,8 @@ button {
   transition: all 0.3s;
   overflow: hidden;
   font-weight: 600;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 }
 .header-nav .shop-btn::after {
   content: " ";
@@ -1172,6 +1175,8 @@ button {
   right: 0;
   top: 0;
   z-index: -3;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 }
 .header-nav .shop-btn svg {
   fill: #ffffff;
@@ -5245,3 +5250,62 @@ table .ticket-row:hover {
 .user-dashboard .nav-content .modal-wrapper.active {
   display: flex;
 }/*# sourceMappingURL=style.css.map */
+
+
+
+
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .header-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-left: 10px;
+  }
+
+  .header-nav .header-nav-menu-section {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+    padding-left: 10px;
+  }
+
+  .header-nav .category-menu-section {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+    margin-right: 10px;
+  }
+
+  .logout-button {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    /* gap: 10px; */
+    padding-left: 100px;
+  }
+
+  .header-top .header-contact .header-top-contact {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+  .header-top .header-contact .header-top-contact .top-contact {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+
+  /* .header-nav .header-nav-menu .menu-list{
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+    padding-left: 10px;
+  } */
+}
