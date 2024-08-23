@@ -116,12 +116,11 @@ const ProductDetails = () => {
             <div class="blog-bradcrum">
                 <span><a href="/home">Home</a></span>
                 <span class="devider">/</span>
-                <span><a href="/home">Category</a></span>
+                <span><a href={`/category/${product.category}`}>{product.categoryname} </a></span>
                 <span class="devider">/</span>
-                <span><a href="" > Product</a></span>
             </div>
             <div className="blog-heading about-heading">
-              <h1 className="heading">Product Details</h1>
+              <h1 className="heading">{product.prod_name}</h1>
             </div>
         </div>
     </section>
