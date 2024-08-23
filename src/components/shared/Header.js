@@ -1400,6 +1400,49 @@ const Header = () => {
             </div>
           </div>
         </div>
+
+
+        <div class="header-bottom d-lg-block">
+          <div class="container">
+            <div class="header-nav">
+              {/* <div class="header-nav-menu-section">
+                
+                <div class="header-nav-menu">
+                  <ul class="menu-list">
+                    <li>
+                      <Link to="/home">
+                        <span class="list-text">Home</span>
+                      </Link>
+                    </li>
+                    
+                    <li>
+                      <Link to="/contact">
+                        <span class="list-text">Contact</span>
+                      </Link>
+                    </li>
+                    
+                  </ul>
+                </div>
+              </div> */}
+              <div>
+                {loginstatus ? (
+                  <>
+                    <Link to="/dashboard"><button class="shop-btn me-1">Dashboard</button></Link>
+                    <Link to="/cart"><button class="shop-btn me-1">Cart</button></Link>
+                    <button class="shop-btn" onClick={handleLogout}>Logout</button>
+                  </>
+                ) : (
+                  <><Link to="/login">
+                    <button class="shop-btn me-1">Login</button>
+                  </Link>
+                    <Link to="/register">
+                      <button class="shop-btn ms-5">Register</button>
+                    </Link></>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </header >
     </>
   );
