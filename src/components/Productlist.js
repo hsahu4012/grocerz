@@ -104,6 +104,7 @@ const Productlist = () => {
 
   useEffect(() => {
     setSelectedSubcategory(window.localStorage.getItem('selectedSubcategory'));
+    window.scrollTo(0, 0);
   }, [])
 
   useEffect(() => {

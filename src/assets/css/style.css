@@ -520,6 +520,8 @@ button {
 @media (max-width:1023px) {
   .header-top {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -1148,7 +1150,7 @@ button {
   opacity: 1;
 }
 .header-nav .shop-btn {
-  padding: 1.4rem 4rem;
+  padding: 1.4rem 3rem;
   margin: 0px;
   text-align: center;
   border-radius: 0.4rem;
@@ -5261,7 +5263,7 @@ table .ticket-row:hover {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    padding-left: 10px;
+    /* padding-left: 10px; */
   }
 
   .header-nav .header-nav-menu-section {
@@ -5269,7 +5271,7 @@ table .ticket-row:hover {
     align-items: flex-start;
     width: 100%;
     gap: 10px;
-    padding-left: 10px;
+    /* padding-left: 10px; */
   }
 
   .header-nav .category-menu-section {
@@ -5289,13 +5291,13 @@ table .ticket-row:hover {
   }
 
   .header-top .header-contact .header-top-contact {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     width: 100%;
     gap: 10px;
   }
   .header-top .header-contact .header-top-contact .top-contact {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     width: 100%;
     gap: 10px;
