@@ -306,9 +306,7 @@ const Contact = () => {
                                             onChange={handleChange}/>
                                     </div>
                                     <div class="review-form-name">
-                                        {/* <label for="email" class="form-label">Email*</label> */}
-                                        <input name="mobile" type="tel
-                                        " id="mobile" class="form-control"
+                                        <input name="mobile" type="tel" id="mobile" class="form-control"
                                             placeholder="mobile"
                                             value={formData.mobile}
                                             onChange={handleChange}/>
