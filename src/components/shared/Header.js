@@ -1110,7 +1110,7 @@ const Header = () => {
           </div>
         </nav>
 
-        <div class="header-bottom d-lg-block d-none">
+        <div class="header-bottom d-lg-block">
           <div class="container">
             <div class="header-nav">
               <div class="header-nav-menu-section">
