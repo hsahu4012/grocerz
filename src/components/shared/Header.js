@@ -1402,10 +1402,10 @@ const Header = () => {
         </div>
 
 
-        <div class="header-bottom d-lg-block">
+        {/* <div class="header-bottom d-lg-block">
           <div class="container">
             <div class="header-nav">
-              {/* <div class="header-nav-menu-section">
+              <div class="header-nav-menu-section">
                 
                 <div class="header-nav-menu">
                   <ul class="menu-list">
@@ -1423,7 +1423,7 @@ const Header = () => {
                     
                   </ul>
                 </div>
-              </div> */}
+              </div>
               <div>
                 {loginstatus ? (
                   <>
@@ -1442,7 +1442,7 @@ const Header = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </header >
     </>
   );
