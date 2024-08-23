@@ -152,7 +152,7 @@ const ShopCart = () => {
                   <td className="table-wrapper wrapper-product">
                     <div className="wrapper">
                       <div className="wrapper-img">
-                        <img src={item.image || dress1} alt="Product" />
+                        <img src={`${process.env.REACT_APP_API_URL}${item.image}`} alt="Product" />
                       </div>
                       <div className="wrapper-content">
                         {/* <h5 className="heading">{item.prod_name || 'Product Name - ' + item.productid}</h5> */}
