@@ -238,7 +238,7 @@ const OrderDetail = () => {
                                                                 <img src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`} className="img-fluid" alt={`${process.env.REACT_APP_IMAGE_URL}${item.prod_name}`} />
                                                             </div>
                                                             <div className="col-md-9 d-flex justify-content-between align-items-center">
-                                                                <p><strong>{item.prod_name}</strong></p>
+                                                                <p><strong  >{item.prod_name}</strong></p>
                                                                 <p><strong>Qty: {item.quantity}</strong></p>
                                                                 <p><strong>&#8377;&nbsp;{item.price_final}</strong></p>
                                                                 {usertype === 'admin' && (

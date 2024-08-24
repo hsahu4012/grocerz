@@ -1390,8 +1390,12 @@ const Header = () => {
                   <button class="shop-btn" onClick={handleLogout}>Logout</button>
                   </>
                 ) : (
-                  <><Link to="/login">
-                    <button class="shop-btn me-1">Login</button>
+                  <>
+                  <Link to="/cart">
+                    <button class="shop-btn me-1">cart</button>
+                  </Link>
+                  <Link to="/login">
+                    <button class="shop-btn ms-5">Login</button>
                   </Link>
                     <Link to="/register">
                       <button class="shop-btn ms-5">Register</button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import dress1 from "../assets/img/product/women/dress1.jpg";
@@ -23,22 +23,29 @@ const ShopCart = () => {
   const fetchCartItems = async () => {
     setLoading(true);
     try {
-      // Retrieve cart items from localStorage
-      const storedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
-
-      // Fetch product details for each item in the cart
+      if(!userid){
+        const storedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
       const productDetailsPromises = storedCartItems.map(async (item) => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}products/productByPId/${item.productid}`
         );
         return {
           ...item,
-          ...response.data, // Merge the product details with the cart item
+          ...response.data,
         };
       });
 
       const updatedCartItems = await Promise.all(productDetailsPromises);
       setCartItems(updatedCartItems);
+      // localStorage.setItem("cart",cartItems)
+      localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+      }
+      else{
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userid}`);
+                const items = response.data;
+                setCartItems(items);
+                setLoading(false);
+      }
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -46,12 +53,12 @@ const ShopCart = () => {
   };
 
   const calculateTotal = () => {
-    console.log("totalling");
+    // console.log("totalling");
     let total = cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
-    console.log("total", total);
+    // console.log("total", total);
     setTotalCost(total);
   };
 
@@ -77,33 +84,39 @@ const ShopCart = () => {
   const updateQuantity = async (productid, newQuantity) => {
     setLoading(true);
     try {
-      const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}cart/handleQuantity/${userid}/${productid}`,
-        { quantity: newQuantity }
-      );
-      if (response.status === 200) {
-        setCartItems((prevItems) =>
-          prevItems.map((item) =>
+      if (userid) {
+        const response = await axios.put(
+          `${process.env.REACT_APP_API_URL}cart/handleQuantity/${userid}/${productid}`,
+          { quantity: newQuantity }
+        );
+  
+        if (response.status === 200) {
+          setCartItems((prevItems) =>
+            prevItems.map((item) =>
+              item.productid === productid
+                ? { ...item, quantity: newQuantity }
+                : item
+            )
+          );
+        }
+      } else {
+        // Update cartItems locally if the user is not logged in
+        setCartItems((prevItems) => {
+          const updatedItems = prevItems.map((item) =>
             item.productid === productid
               ? { ...item, quantity: newQuantity }
               : item
-          )
-        );
-        // Update localStorage as well
-        const updatedCartItems = cartItems.map((item) =>
-          item.productid === productid
-            ? { ...item, quantity: newQuantity }
-            : item
-        );
-        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-      } else {
-        console.error("Failed to update quantity", response.data);
+          );
+          localStorage.setItem("cart", JSON.stringify(updatedItems));
+          return updatedItems;
+        });
       }
     } catch (error) {
       console.error("Error updating quantity:", error);
     }
     setLoading(false);
   };
+  
 
   const incrementQuantity = (productid, currentQuantity) => {
     updateQuantity(productid, currentQuantity + 1);

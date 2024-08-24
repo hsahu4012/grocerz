@@ -2,48 +2,71 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import qr from '../assets/images/hashedbitqr.jpg';
 import axios from "axios";
+import Address from "./Address";
+import GuestAddess from "./GuestAddess";
 
 function Checkout() {
     const [cartItems, setCartItems] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [addresses, setAddresses] = useState([]);
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [paymentMode, setPaymentMode] = useState("DUE - COD/QR/UPI"); // State for payment mode
-    const userId = localStorage.getItem('userid'); // Assuming userId is stored in localStorage
+    const [flagAddressAdd, setAddressFlag] = useState(false);
+    const userId = localStorage.getItem('userid') ||"";
+    console.log("userID",userId)
     const navigate = useNavigate();
 
     const [checkoutstatus, setCheckoutStatus] = useState(false);
+    const fetchCartItems = async () => {
+        setLoading(true);
+        try {
+          if(userId){
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userId}`);
+            const items = response.data;
+            setCartItems(items);
+          }
+          else{
+            const storedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
+            setCartItems(storedCartItems);
+            console.log(cartItems)
+          }
+        } catch (error) {
+          console.error("Error fetching cart items", error);
+        }
+        setLoading(false);
+      };
+    
+      const calculateTotal = () => {
+        // console.log("totalling");
+        let total = cartItems.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        );
+        // console.log("total", total);
+        setTotalAmount(total);
+      };
 
+      const fetchAddresses = async () => {
+        try {
+            if(userId){
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}address/getByuserId/${userId}`);
+            setAddresses(response.data);
+            if (response.data.length > 0) {
+                setSelectedAddressId(response.data[0].addressid);
+            }}
+        } catch (error) {
+            console.error("Error fetching addresses", error);
+        }
+    };
     useEffect(() => {
-        // Fetch cart items and addresses on component mount
-        const fetchCartItems = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userId}`);
-                const items = response.data;
-                setCartItems(items);
-                const total = items.reduce((acc, item) => acc + ((Number(item.price) * item.quantity) - Number(item.discount)), 0);
-                setTotalAmount(total);
-            } catch (error) {
-                console.error("Error fetching cart items", error);
-            }
-        };
 
-        const fetchAddresses = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}address/getByuserId/${userId}`);
-                setAddresses(response.data);
-                if (response.data.length > 0) {
-                    setSelectedAddressId(response.data[0].addressid);
-                }
-            } catch (error) {
-                console.error("Error fetching addresses", error);
-            }
-        };
 
         fetchCartItems();
+        calculateTotal();
         fetchAddresses();
-    }, [userId]);
+    }, [fetchCartItems, calculateTotal, fetchAddresses]);
 
     const placeOrder = async () => {
         // console.log('Order start...');
@@ -103,7 +126,8 @@ function Checkout() {
                                     <div className="account-section billing-section box-shadows">
                                         <div className="profile-section address-section addresses">
                                             <div className="row gy-md-0 g-5">
-                                                {addresses.map((address) => (
+                                                {userId ?<>
+                                                    {addresses.map((address) => (
                                                     <div
                                                         key={address.addressid}
                                                         onClick={() => setSelectedAddressId(address.addressid)}
@@ -117,11 +141,15 @@ function Checkout() {
                                                     >
                                                         <h5>{address.name}</h5>
                                                         <p>{address.street}, {address.line1}, {address.line2}, {address.line3}, {address.city}, {address.pin}, {address.country}, {address.contact}, {address.alternatecontact}, {address.landmark}</p>
+                                                        <Link to="/addressnew" className="shop-btn">Add New Address</Link>
                                                     </div>
                                                 ))}
+                                                </>:<>
+                                                        <GuestAddess setAddressFlag={setAddressFlag}/>
+                                                </>}
                                                 <div className="col-lg-6">
                                                     {/* <a href="#" className="shop-btn" onClick={modalAction}>Open in Modal - Add New Address</a> */}
-                                                    <Link to="/addressnew" className="shop-btn">Add New Address</Link>
+                                                    {/* <Link to="/addressnew" className="shop-btn">Add New Address</Link> */}
 
                                                     <div className={`modal-wrapper submit ${isModalOpen ? 'open' : ''}`}>
                                                         <div className="anywhere-away" onClick={modalAction}></div>
@@ -264,7 +292,8 @@ function Checkout() {
                                               </div>
                                             }
                                             <div className="checkout-footer mt-4">
-                                                <button className="shop-btn d-block" onClick={placeOrder} disabled={totalAmount < 100}>Place Order</button>
+                                                {userId &&<button className="shop-btn d-block" onClick={placeOrder} disabled={totalAmount < 100}>Place Order</button>}
+                                                
                                             </div>
                                             {/* <div className="payment-method">
                                                 <img src={qr} alt="QR Payment" style={{ height: '200px' }} />
