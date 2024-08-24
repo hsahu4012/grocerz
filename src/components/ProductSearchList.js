@@ -10,6 +10,13 @@ const ProductSearchList = () => {
   const [message, setMessage] = useState('');
   const userid = localStorage.getItem('userid');
   const [loading, setLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [orderIDs, setOrderIDs] = useState([]);
+  const [selectedorderIDs, setselectedOrderIDs] = useState();
+  const [singleProduct, setSingleProduct] = useState();
+  const usertype = localStorage.getItem("usertype")
+  //const usertype='admin'
+
   const query = new URLSearchParams(location.search);
   useEffect(() => {
     fetchSearchedProducts();
@@ -32,30 +39,16 @@ const ProductSearchList = () => {
     setLoading(true);
     try {
       const quantity = 1;
-      if(userid){
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
-          userid,
-          productid,
-          quantity
-        });
-        if(response.status === 200){
-          toast.success("Product added to cart successfully");
-        } else {
-          toast.error("Failed to add product to cart");
-        }
-      }else{
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existingProduct = cart.find(item => item.productid === productid);
-        if (existingProduct) {
-          existingProduct.quantity += quantity;
-        } else {
-          cart.push({ productid, quantity });
-        }
-         // Save the updated cart back to localStorage
-      localStorage.setItem("cart", JSON.stringify(cart));
-      toast.success("Product added to cart successfully");
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
+        userid,
+        productid,
+        quantity
+      });
+      if(response.status === 200){
+        toast.success("Product added to cart successfully");
+      } else {
+        toast.error("Failed to add product to cart");
       }
-      
     } catch (error) {
       console.error('Error adding to cart:', error);
     }
@@ -71,7 +64,7 @@ const ProductSearchList = () => {
         productid,
       });
       // setMessage(response.data.message || 'Added to wishlist');
-      if(response.status === 200){
+      if (response.status === 200) {
         toast.success("Product added to wishlist successfully");
       } else {
         toast.error("Failed to add product to cart");
@@ -82,10 +75,37 @@ const ProductSearchList = () => {
     }
     setLoading(false);
   };
+  const fetchOrderIDs = async () => {
+    setLoading(true);
+    try {
+      const url = process.env.REACT_APP_API_URL + 'orders/allorderIDs';
+      const response = await axios.get(url);
+      // console.log('orderIds response:', response.data);
+      setOrderIDs(response.data);
+    } catch (error) {
+      console.error('Error fetching orderIDs:', error);
+    }
+    setLoading(false);
+  };
+  const handleAddProduct = async (productid) => {
+    try {
+      setLoading(true);
+      const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${selectedorderIDs}`;
+      await axios.post(url, singleProduct);
+      setShowPopup(false);
+    } catch (error) {
+      console.error('Error adding product to order:', error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchOrderIDs()
+  }, [showPopup])
 
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
       <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
           {loading && <Loader />}
@@ -122,6 +142,33 @@ const ProductSearchList = () => {
                             <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">
                               Add to Wishlist
                             </button>
+                            {usertype === 'admin' && <button className="product-btn mt-2" type="button" onClick={() => { setShowPopup(true); setSingleProduct(product); }}>
+                              Add to Orders
+                            </button>}
+                            {showPopup && (
+                              <div className="popup-overlay">
+                                <div className="popup-content">
+                                  <h3>Select Order ID</h3>
+                                  <select
+                                    value={selectedorderIDs}
+                                    onChange={(e) => setselectedOrderIDs(e.target.value)}
+                                  >
+                                    <option value="">Select Order ID</option>
+                                    {orderIDs.map(oid => (
+                                      <option key={oid.order_id} value={oid.order_id}>
+                                        {oid.srno} - {oid.order_id}
+                                      </option>
+                                    ))}
+                                  </select>
+                                  <button className='' onClick={handleAddProduct}>Add Product
+                                  </button>
+                                  <button onClick={() => setShowPopup(false)}>Close</button>
+                                  {/* {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>} */}
+                                  {/* {err && <p className=''>{err}</p>} */}
+                                </div>
+
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>

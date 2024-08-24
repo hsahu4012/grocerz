@@ -55,7 +55,7 @@ const OrderDetailsPrint = () => {
                                 <div className="card">
                                     {order ? (
                                         <div className="card-body">
-                                            <p><strong>Order Date & Time :</strong> {order.order_date} {order.order_time} | <strong>Order# :</strong> {order.order_id}| <strong>Order ID :</strong> {order.srno}</p>
+                                            <p><strong>Order Date & Time :</strong> {order.order_date} {order.order_time} | <strong>Order ID :</strong> {order.order_id}| <strong>Order Number :</strong> {order.srno}</p>
 
 
                                             {(usertype !== 'vendor') && <div className="row my-5">

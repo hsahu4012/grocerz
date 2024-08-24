@@ -64,7 +64,7 @@ const Home = () => {
 
     return (
         <>
-            <section id="hero" class="hero">
+            <section id="hero" class="hero d-lg-block d-none">
                 <div class="hero-section">
                     <div class="container">
                         <div class="swiper hero-swiper">
@@ -301,10 +301,10 @@ const Home = () => {
 
             <section class="product-category product mt-5">
                 <div class="container">
-                    <div class="section-title">
+                    {/*<div class="section-title">
                         <h3>Market Category</h3>
-                        {/* <a class="view">View All</a> */}
-                    </div>
+                        <a class="view">View All</a>
+                    </div>*/}
                     <div class="category-section">
                         {/* <div class="product-wrapper" data-aos="fade-right" data-aos-duration="100">
                             <div class="wrapper-img">

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DataAppContext } from "../../DataContext";
-import axios from "axios";
 import logo from '../../assets/images/logo.png';
 import { marketCategory } from '../../utils/category';
 
@@ -18,17 +17,17 @@ const Header = () => {
     return name.replace(/\s+/g, "-").toLowerCase(); // Replace spaces with hyphens and convert to lowercase
   };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}category/allCategory`);
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const response = await axios.get(`${process.env.REACT_APP_API_URL}category/allCategory`);
+  //       setCategories(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching categories:", error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
 
   const securePages = ["/dashboard", "/wishlist", "/OrderHistory", "/profile", "/address",];
 
@@ -101,15 +100,21 @@ const Header = () => {
             <div class="header-top">
               <div class="header-profile">
                 <Link to="/dashboard">
+                  <span>Home</span>
+                </Link>
+                <Link to="/dashboard">
                   <span>Account</span>
                 </Link>
                 {/* <a href="order.html">
                   <span>Track Order</span>
                 </a> */}
                 <Link to="/contact">
-                  <span>Support</span>
+                  <span>Contact</span>
                 </Link>
-                
+                <Link to="/feedback">
+                  <span>Feedback</span>
+                </Link>
+
               </div>
               <div><p className="delivery-slot">Next Delivery Slot {deliverySlot}</p></div>
               <div class="header-contact">
@@ -172,7 +177,7 @@ const Header = () => {
                 </Link>
               </div>
               <div class="header-search-btn1 ">
-                <input  value={searchText} onChange={(e)=>(setSearchText(e.target.value))} type="text" placeholder="Search Product....." className=""/>
+                <input value={searchText} onChange={(e) => (setSearchText(e.target.value))} type="text" placeholder="Search Product....." className="" />
                 {/* <div class="divider"></div>
                 <div id="allcat">
                   <button type="button" onclick="selectBoxHandler('allcat')">
@@ -346,7 +351,7 @@ const Header = () => {
 
         <nav class="mobile-menu d-block d-lg-none">
           <div class="mobile-menu-header d-flex justify-content-between align-items-center">
-            <button
+            {/* <button
               class="btn"
               type="button"
               data-bs-toggle="offcanvas"
@@ -366,7 +371,7 @@ const Header = () => {
                   <rect y="4" width="10" height="1" fill="#1D1D1D" />
                 </svg>
               </span>
-            </button>
+            </button> */}
 
 
             <Link to="/home" class="mobile-header-logo">
@@ -533,7 +538,7 @@ const Header = () => {
                           <div class="dropdown-item d-flex justify-content-between align-items-center">
                             <div class="dropdown-list-item d-flex">
                               <span class="dropdown-img">
-                                <img src={item.image} alt="category image"/>
+                                <img src={item.image} alt="category image" />
                                 {/* <svg
                                   aria-hidden="true"
                                   focusable="false"
@@ -1111,7 +1116,7 @@ const Header = () => {
           </div>
         </nav>
 
-        <div class="header-bottom d-lg-block d-none">
+        <div class="header-bottom d-lg-block">
           <div class="container">
             <div class="header-nav">
               <div class="header-nav-menu-section">
@@ -1225,169 +1230,26 @@ const Header = () => {
                         <span class="list-text">Home</span>
                       </Link>
                     </li>
-                    {/* <li class="mega-menu">
-                      <a href="product-sidebar.html">
-                        <span class="list-text">Shop</span>
-                        <span>
-                          <svg
-                            width="10"
-                            height="10"
-                            viewBox="0 0 10 10"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <g clip-path="url(#clip0_1_183)">
-                              <path
-                                d="M2.37811 5.89491C1.88356 5.89491 1.38862 5.90351 0.894066 5.89218C0.443267 5.88202 0.108098 5.59451 0.0178597 5.17027C-0.0641747 4.7851 0.137786 4.36204 0.508895 4.20305C0.659291 4.13859 0.83586 4.11008 1.00071 4.10851C1.93786 4.09992 2.87539 4.10461 3.81254 4.10422C4.07075 4.10422 4.10357 4.07062 4.10396 3.80889C4.10474 2.85847 4.102 1.90843 4.10513 0.958001C4.10669 0.513061 4.336 0.177111 4.71218 0.0501527C5.30752 -0.151027 5.88567 0.278287 5.89387 0.937687C5.90168 1.56232 5.89582 2.18735 5.89582 2.81237C5.89582 3.14441 5.89504 3.47646 5.89621 3.80811C5.897 4.07023 5.92942 4.10422 6.18685 4.10422C7.13728 4.105 8.08732 4.10265 9.03774 4.10539C9.48503 4.10656 9.81941 4.33235 9.94872 4.70776C10.1534 5.30192 9.72605 5.88437 9.06782 5.89413C8.50803 5.90233 7.94825 5.89608 7.38846 5.89608C6.97829 5.89608 6.56851 5.89491 6.15833 5.89687C5.93918 5.89804 5.897 5.94023 5.8966 6.1625C5.89543 7.11918 5.89778 8.07625 5.89543 9.03293C5.89426 9.48216 5.67238 9.81577 5.29736 9.94741C4.70437 10.1552 4.11841 9.72983 4.10669 9.07316C4.09771 8.57861 4.10474 8.08367 4.10474 7.58912C4.10474 7.12035 4.10552 6.65197 4.10435 6.1832C4.10396 5.93398 4.06841 5.89726 3.82387 5.89687C3.34221 5.89569 2.86055 5.89647 2.37889 5.89647C2.37811 5.8953 2.37811 5.8953 2.37811 5.89491Z"
-                                fill="white"
-                              />
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_1_185">
-                                <rect width="10" height="10" fill="white" />
-                              </clipPath>
-                            </defs>
-                          </svg>
-                        </span>
-                      </a>
-                      <div class="shop-menu">
-                        <div class="menu-wrapper">
-                          <div class="menu-list">
-                            <h5 class="menu-title">Dresses</h5>
-                            <ul>
-                              <li>
-                                <a href="product-sidebar.html">Shirt</a>
-                              </li>
-                              <li>
-                                <a href="product-sidebar.html">Skart</a>
-                              </li>
-                              <li>
-                                <a href="product-sidebar.html"> T-Shirt</a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div class="menu-list">
-                            <h5 class="menu-title">Bags</h5>
-                            <ul>
-                              <li>
-                                <a href="product-sidebar.html">HandBags</a>
-                              </li>
-                              <li>
-                                <a href="product-sidebar.html">Mobile Bags</a>
-                              </li>
-                              <li>
-                                <a href="product-sidebar.html">School Bags</a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div class="menu-list">
-                            <h5 class="menu-title">Cosmetics</h5>
-                            <ul>
-                              <li>
-                                <a href="product-sidebar.html">Liptics</a>
-                              </li>
-                              <li>
-                                <a href="product-sidebar.html">Foundation</a>
-                              </li>
-                              <li>
-                                <a href="product-sidebar.html"> Eye Liner</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="shop-menu-img">
-                          <img
-                            src="assets/images/homepage-one/empty-wishlist.webp"
-                            alt="img"
-                          />
-                        </div>
-                      </div>
-                    </li> */}
-                    {/* <li>
-                      <a href="#">
-                        <span class="list-text">Pages</span>
-                        <span>
-                          <svg
-                            width="10"
-                            height="10"
-                            viewBox="0 0 10 10"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <g clip-path="url(#clip0_1_183)">
-                              <path
-                                d="M2.37811 5.89491C1.88356 5.89491 1.38862 5.90351 0.894066 5.89218C0.443267 5.88202 0.108098 5.59451 0.0178597 5.17027C-0.0641747 4.7851 0.137786 4.36204 0.508895 4.20305C0.659291 4.13859 0.83586 4.11008 1.00071 4.10851C1.93786 4.09992 2.87539 4.10461 3.81254 4.10422C4.07075 4.10422 4.10357 4.07062 4.10396 3.80889C4.10474 2.85847 4.102 1.90843 4.10513 0.958001C4.10669 0.513061 4.336 0.177111 4.71218 0.0501527C5.30752 -0.151027 5.88567 0.278287 5.89387 0.937687C5.90168 1.56232 5.89582 2.18735 5.89582 2.81237C5.89582 3.14441 5.89504 3.47646 5.89621 3.80811C5.897 4.07023 5.92942 4.10422 6.18685 4.10422C7.13728 4.105 8.08732 4.10265 9.03774 4.10539C9.48503 4.10656 9.81941 4.33235 9.94872 4.70776C10.1534 5.30192 9.72605 5.88437 9.06782 5.89413C8.50803 5.90233 7.94825 5.89608 7.38846 5.89608C6.97829 5.89608 6.56851 5.89491 6.15833 5.89687C5.93918 5.89804 5.897 5.94023 5.8966 6.1625C5.89543 7.11918 5.89778 8.07625 5.89543 9.03293C5.89426 9.48216 5.67238 9.81577 5.29736 9.94741C4.70437 10.1552 4.11841 9.72983 4.10669 9.07316C4.09771 8.57861 4.10474 8.08367 4.10474 7.58912C4.10474 7.12035 4.10552 6.65197 4.10435 6.1832C4.10396 5.93398 4.06841 5.89726 3.82387 5.89687C3.34221 5.89569 2.86055 5.89647 2.37889 5.89647C2.37811 5.8953 2.37811 5.8953 2.37811 5.89491Z"
-                                fill="white"
-                              />
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_1_18">
-                                <rect width="10" height="10" fill="white" />
-                              </clipPath>
-                            </defs>
-                          </svg>
-                        </span>
-                      </a>
-                      <ul class="header-sub-menu">
-                        <li>
-                          <a href="product-info.html">Product-details</a>
-                        </li>
-                        <li>
-                          <a href="privacy.html">Privacy Policy</a>
-                        </li>
-                        <li>
-                          <a href="terms.html">Terms & Condition</a>
-                        </li>
-                        <li>
-                          <a href="faq.html">FAQ</a>
-                        </li>
-                        <li>
-                          <a href="product-sidebar.html">Shop Category Icon</a>
-                        </li>
-                        <li>
-                          <a href="product-sidebar.html">Shop List View</a>
-                        </li>
-                      </ul>
-                    </li> */}
-                    {/* <li>
-                      <a href="about.html">
-                        <span class="list-text">About</span>
-                      </a>
-                    </li> */}
-                    {/* <li>
-                      <a href="blogs.html">
-                        <span class="list-text">Blog</span>
-                      </a>
-                      <ul class="header-sub-menu">
-                        <li>
-                          <a href="blogs-details.html">Blog-details</a>
-                        </li>
-                      </ul>
-                    </li> */}
-                    {/* <li>
-                      <Link to="/dashboard">
-                        <span className="list-text">User Dashboard</span>
-                      </Link>
-                    </li> */}
+                    
                     <li>
                       <Link to="/contact">
                         <span class="list-text">Contact</span>
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link to="/customproduct">
                         <span class="list-text">Custom Product</span>
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
               <div>
                 {loginstatus ? (
                   <>
-                  <Link to="/dashboard"><button class="shop-btn me-1">Dashboard</button></Link>
-                  <Link to="/cart"><button class="shop-btn me-1">Cart</button></Link>
-                  <button class="shop-btn" onClick={handleLogout}>Logout</button>
+                    <Link to="/dashboard"><button class="shop-btn me-1">Dashboard</button></Link>
+                    <Link to="/cart"><button class="shop-btn me-1">Cart</button></Link>
+                    <button class="shop-btn" onClick={handleLogout}>Logout</button>
                   </>
                 ) : (
                   <>
@@ -1405,6 +1267,49 @@ const Header = () => {
             </div>
           </div>
         </div>
+
+
+        {/* <div class="header-bottom d-lg-block">
+          <div class="container">
+            <div class="header-nav">
+              <div class="header-nav-menu-section">
+                
+                <div class="header-nav-menu">
+                  <ul class="menu-list">
+                    <li>
+                      <Link to="/home">
+                        <span class="list-text">Home</span>
+                      </Link>
+                    </li>
+                    
+                    <li>
+                      <Link to="/contact">
+                        <span class="list-text">Contact</span>
+                      </Link>
+                    </li>
+                    
+                  </ul>
+                </div>
+              </div>
+              <div>
+                {loginstatus ? (
+                  <>
+                    <Link to="/dashboard"><button class="shop-btn me-1">Dashboard</button></Link>
+                    <Link to="/cart"><button class="shop-btn me-1">Cart</button></Link>
+                    <button class="shop-btn" onClick={handleLogout}>Logout</button>
+                  </>
+                ) : (
+                  <><Link to="/login">
+                    <button class="shop-btn me-1">Login</button>
+                  </Link>
+                    <Link to="/register">
+                      <button class="shop-btn ms-5">Register</button>
+                    </Link></>
+                )}
+              </div>
+            </div>
+          </div>
+        </div> */}
       </header >
     </>
   );

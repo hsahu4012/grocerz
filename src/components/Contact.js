@@ -212,8 +212,8 @@ const Contact = () => {
                                                     <h5 class="wrapper-heading">Phone</h5>
                                                     <p class="paragraph">
                                                     <p>
-                                                      <span> [  +91 9669787936  ]</span>
-                                                      <span>[  +91 9599171535  ]</span>
+                                                      <span>8757499345, </span>
+                                                      <span>8757499344</span>
                                                       </p>
                                                       </p>
                                                 </div>
@@ -245,7 +245,7 @@ const Contact = () => {
                                                 </div>
                                                 <div class="wrapper-content">
                                                     <h5 class="wrapper-heading">Email</h5>
-                                                    <p class="paragraph">hashedbit@gmail.com</p>
+                                                    <p class="paragraph">grocji@gmail.com</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -269,12 +269,12 @@ const Contact = () => {
                                                         <p class="paragraph">Gurgaon, Haryana, India</p>
                                                     </div>
                                                 </div>
-                                                <div class="contact-map">
+                                                {/* <div class="contact-map">
                                                     <iframe
                                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224568.15030524903!2d76.9897491!3d28.42295755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19d582e38859%3A0x2cf5fe8e5c64b1e!2sGurugram%2C%20Haryana!5e0!3m2!1sen!2sin!4v1722529618520!5m2!1sen!2sin"
                                                         width="524" height="206" allowfullscreen="" loading="lazy"
                                                         referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>
@@ -286,34 +286,34 @@ const Contact = () => {
                         <div class="question-section login-section ">
                             <div class="review-form box-shadows">
                                 <div class="review-form-text">
-                                    <h1 class="comment-title">Get In Touch</h1>
-                                    <img src="assets/images/homepage-one/vector-line.png" alt="img"/>
+                                    <h1 class="heading-custom-font-1">Get In Touch</h1>
+                                    {/* <img src="assets/images/homepage-one/vector-line.png" alt="img"/> */}
                                 </div>
                                 <form onSubmit={handleSubmit}>
                                 <div class=" account-inner-form">
                                     <div class="review-form-name">
-                                        <label for="fname" class="form-label">Name*</label>
+                                        {/* <label for="fname" class="form-label">Name*</label> */}
                                         <input name="name" type="text" id="fname" class="form-control" placeholder="Name"
                                         value={formData.name}
                                         onChange={handleChange}
                                         />
                                     </div>
                                     <div class="review-form-name">
-                                        <label for="email" class="form-label">Email*</label>
+                                        {/* <label for="email" class="form-label">Email*</label> */}
                                         <input name="email" type="email" id="email" class="form-control"
-                                            placeholder="user@gmail.com"
+                                            placeholder="Email"
                                             value={formData.email}
                                             onChange={handleChange}/>
                                     </div>
                                     <div class="review-form-name">
-                                        <label for="subject" class="form-label">Subject*</label>
+                                        {/* <label for="subject" class="form-label">Subject*</label> */}
                                         <input name="subject" type="text" id="subject" class="form-control" placeholder="Subject"
                                         value={formData.subject}
                                         onChange={handleChange}/>
                                     </div>
                                 </div>
                                 <div class="review-textarea">
-                                    <label for="floatingTextarea">Message*</label>
+                                    {/* <label for="floatingTextarea">Message*</label> */}
                                     <textarea name="message" class="form-control" placeholder="Write Message..........."
                                         id="floatingTextarea" rows="3"
                                         value={formData.message}

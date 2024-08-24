@@ -96,19 +96,6 @@ const Productlist = () => {
     }
     setLoading(false);
   };
-  const addToExistingOrder = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}products/bySubCategory`, {
-      });
-      // console.log('Products response:', response.data);
-      setProducts(response.data);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
     if (selectedSubcategory) {
       fetchProducts(category_id, selectedSubcategory);
@@ -117,6 +104,7 @@ const Productlist = () => {
 
   useEffect(() => {
     setSelectedSubcategory(window.localStorage.getItem('selectedSubcategory'));
+    window.scrollTo(0, 0);
   }, [])
 
   useEffect(() => {
