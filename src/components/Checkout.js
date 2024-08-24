@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import qr from '../assets/images/hashedbitqr.jpg';
 import axios from "axios";
-import Address from "./Address";
 import GuestAddess from "./GuestAddess";
-
+import Loader from "./loader/Loader";
 function Checkout() {
     const [cartItems, setCartItems] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
@@ -13,24 +12,25 @@ function Checkout() {
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [paymentMode, setPaymentMode] = useState("DUE - COD/QR/UPI"); // State for payment mode
-    const [flagAddressAdd, setAddressFlag] = useState(false);
+    const [isPlacingOrder, setIsPlacingOrder] = useState(false);
     const userId = localStorage.getItem('userid') ||"";
-    console.log("userID",userId)
+    // console.log("userID",userId)
     const navigate = useNavigate();
 
     const [checkoutstatus, setCheckoutStatus] = useState(false);
     const fetchCartItems = async () => {
         setLoading(true);
         try {
-          if(userId){
+            const userId = localStorage.getItem('userid') ||"";
+            if(userId){
             const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userId}`);
             const items = response.data;
+            console.log("Itemsi",items)
             setCartItems(items);
           }
           else{
             const storedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
             setCartItems(storedCartItems);
-            console.log(cartItems)
           }
         } catch (error) {
           console.error("Error fetching cart items", error);
@@ -39,14 +39,20 @@ function Checkout() {
       };
     
       const calculateTotal = () => {
-        // console.log("totalling");
-        let total = cartItems.reduce(
-          (total, item) => total + item.price * item.quantity,
-          0
-        );
-        // console.log("total", total);
-        setTotalAmount(total);
-      };
+        if (cartItems.length > 0) {
+            let total = cartItems.reduce(
+                (total, item) => total + item.price * item.quantity,
+                0
+            );
+            // console.log("Total Calculated:", total);
+            setTotalAmount(total);
+        } else {
+            setTotalAmount(0);
+        }
+    };
+      useEffect(() => {
+        calculateTotal();
+    }, [cartItems]);
 
       const fetchAddresses = async () => {
         try {
@@ -60,17 +66,17 @@ function Checkout() {
             console.error("Error fetching addresses", error);
         }
     };
+
     useEffect(() => {
 
 
         fetchCartItems();
         calculateTotal();
         fetchAddresses();
-    }, [fetchCartItems, calculateTotal, fetchAddresses]);
+    }, []);
 
     const placeOrder = async () => {
-        // console.log('Order start...');
-
+        setIsPlacingOrder(true)
         try {
             // Prepare data for checkout
             const cartData = cartItems.map(item => ({
@@ -101,6 +107,9 @@ function Checkout() {
         } catch (error) {
             console.error("Error placing order", error);
         }
+        finally{
+            setIsPlacingOrder(false)
+        }
     };
 
     const modalAction = () => {
@@ -111,6 +120,7 @@ function Checkout() {
         <>
             <section className="blog about-blog">
                 <div className="container">
+                {loading && <Loader/>}
                     <div className="blog-heading about-heading">
                         <h1 className="heading">Checkout</h1>
                     </div>
@@ -145,7 +155,7 @@ function Checkout() {
                                                     </div>
                                                 ))}
                                                 </>:<>
-                                                        <GuestAddess setAddressFlag={setAddressFlag}/>
+                                                        <GuestAddess/>
                                                 </>}
                                                 <div className="col-lg-6">
                                                     {/* <a href="#" className="shop-btn" onClick={modalAction}>Open in Modal - Add New Address</a> */}
@@ -292,7 +302,22 @@ function Checkout() {
                                               </div>
                                             }
                                             <div className="checkout-footer mt-4">
-                                                {userId &&<button className="shop-btn d-block" onClick={placeOrder} disabled={totalAmount < 100}>Place Order</button>}
+                                                {userId && (
+                                                    <>
+                                                        <button
+                                                            className="shop-btn d-block"
+                                                            onClick={placeOrder}
+                                                            disabled={totalAmount < 100 || !selectedAddressId} 
+                                                        >
+                                                            {isPlacingOrder ? "Placing Your Order..." : "Place Order"}
+                                                        </button>
+                                                        {!selectedAddressId && (
+                                                            <div className="alert alert-danger mt-2" role="alert">
+                                                                Please select a delivery address.
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                )}
                                                 
                                             </div>
                                             {/* <div className="payment-method">

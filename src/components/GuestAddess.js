@@ -2,7 +2,7 @@ import React ,{useState} from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const GuestAddess = ({setAddressFlag}) => {
+const GuestAddess = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -64,29 +64,28 @@ const GuestAddess = ({setAddressFlag}) => {
 
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}users/addguestuser`, {...formData});
-      // setFormData({
-      //   name: "",
-      //   line1: "",
-      //   line2: "",
-      //   line3: "",
-      //   city: "",
-      //   state: "",
-      //   country: "",
-      //   pin: "",
-      //   contact: "",
-      //   alternatecontact: "",
-      //   landmark: "",
-      // });
-      console.log(response)
-      console.log(response.data.userid)
-      console.log(response.data.addressid)
+      setFormData({
+        name: "",
+        line1: "",
+        line2: "",
+        line3: "",
+        city: "",
+        state: "",
+        country: "",
+        pin: "",
+        contact: "",
+        alternatecontact: "",
+        landmark: "",
+      });
+      // console.log(response)
+      // console.log(response.data.userid)
+      // console.log(response.data.addressid)
       const uid = response.data.userid;
       const aid = response.data.addressid;
       localStorage.setItem("userid",uid)
       localStorage.setItem('usertype',"user");
-      // AddProductsToCart()
-      // localStorage.setItem('cart',"");
-      setAddressFlag(true)
+      AddProductsToCart()
+      localStorage.setItem('cart',"");
     } catch (error) {
       console.error("API error:", error);
     }
