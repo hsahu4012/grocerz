@@ -29,10 +29,11 @@ const Login = () => {
         localStorage.setItem("userid", response.data.userId);
         localStorage.setItem("usertype", response.data.userType);
         login_user();
+        AddProductsToCart()
         navigate("/home");
       }
     } catch (error) {
-      console.error("Login failed:", error);
+      // console.error("Login failed:", error);
       if (error.response && error.response.status === 422) {
         setError("User not found. Please check your credentials.");
       } else if (error.response && error.response.data) {
@@ -46,6 +47,30 @@ const Login = () => {
       setLoading(false);
       setSubmitting(false);
     }
+  };
+  const AddProductsToCart = async () => {
+    setLoading(true);
+    try {
+      const userid = localStorage.getItem('userid');
+      const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItems = storedCart.map(item => ({
+        productid: item.productid,
+        quantity: item.quantity
+    }));
+    for (let i = 0; i < cartItems.length; i++) {
+      const { productid, quantity } = cartItems[i];
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
+          userid,
+          productid,
+          quantity
+      })};
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
+   finally{
+     setLoading(false);
+     localStorage.setItem('cart',"");
+   }
   };
 
   return (
