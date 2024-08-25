@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import dress1 from "../assets/img/product/women/dress1.jpg";
-import Loader from "./loader/Loader";
+// import Loader from "./loader/Loader";
+import loaderGif from "../assets/images/loader.gif"; 
 
 const ShopCart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -44,6 +45,7 @@ const ShopCart = () => {
   };
 
   const removeFromCart = async (productid) => {
+    setLoading(true);
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}cart/removeProduct/${userid}/${productid}`
@@ -117,7 +119,17 @@ const ShopCart = () => {
 
   return (
     <section className="product-cart product footer-padding">
-      {loading && <Loader />}
+      {loading && (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '50vh',
+        }}>
+          <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
+        </div>
+      )}
+      {!loading && (
       <div className="container">
         <div className="cart-section">
           <table>
@@ -245,7 +257,7 @@ const ShopCart = () => {
         </div>
         {message && <p>{message}</p>}
       </div>
-
+      )}
       <div>
         {/* <div className="col-lg-6 col-md-6 col-sm-6">
           <div className="cart__btn update__btn">
@@ -279,6 +291,7 @@ const ShopCart = () => {
           </div>
         </div>
       </div> */}
+      
     </section>
   );
 };

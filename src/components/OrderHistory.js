@@ -4,20 +4,19 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
-
+import loaderGif from "../assets/images/loader.gif";
 const OrderHistory = () => {
-
-
-
   const userid = localStorage.getItem('userid');
   const usertype = localStorage.getItem('usertype');
 
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
   const handleOrderClick = (orderid) => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
   };
   const handleMarkComplete = async (orderid) => {
+    setLoading(true);
     try {
       const url = process.env.REACT_APP_API_URL + "orders/markascompleted/" + orderid;
       const response = await axios.put(url);
@@ -25,8 +24,10 @@ const OrderHistory = () => {
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
+    setLoading(false);
   };
   const handleOrderCancel = async (orderid) => {
+    setLoading(true);
     try {
       const url = process.env.REACT_APP_API_URL + "orders/markascancelled/" + orderid;
       const response = await axios.put(url);
@@ -35,8 +36,10 @@ const OrderHistory = () => {
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
+    setLoading(false);
   };
   const handleDelivered = async (orderid) => {
+    setLoading(true);
     try {
       const url = process.env.REACT_APP_API_URL + "orders/markdelivered/" + orderid;
       const response = await axios.put(url);
@@ -44,8 +47,10 @@ const OrderHistory = () => {
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
+    setLoading(false);
   };
   const handleDeliveryCancel = async (orderid) => {
+    setLoading(true);
     try {
       const url = process.env.REACT_APP_API_URL + "orders/markdeliverycancelled/" + orderid;
       const response = await axios.put(url);
@@ -53,8 +58,10 @@ const OrderHistory = () => {
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
+    setLoading(false);
   };
   const fetchOrders = async () => {
+    setLoading(true);
     try {
       const url = (usertype !== 'user') ? 'orders/allOrders' : 'orders/getByuserId/' + userid;
       const response = await axios.get(`${process.env.REACT_APP_API_URL}${url}`);
@@ -63,6 +70,7 @@ const OrderHistory = () => {
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -90,7 +98,17 @@ const OrderHistory = () => {
               <DashboardRoutes />
               <div className="container">
                 <h3>All Orders</h3>
-                {orders.length > 0 ? (
+                {loading ? (
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '50vh',
+                  }}>
+                    <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
+                  </div>
+                ) : (
+                orders.length > 0 ? (
                   orders.map((order, index) => (
                     <div key={index} className="card mt-3">
                       <div className="card-body">
@@ -198,6 +216,7 @@ const OrderHistory = () => {
                   ))
                 ) : (
                   <p>No orders found.</p>
+                )
                 )}
               </div>
             </div>
