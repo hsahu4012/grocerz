@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import qr from '../assets/images/hashedbitqr.jpg';
 import axios from "axios";
+import loaderGif from '../assets/images/loader.gif';
 
 function Checkout() {
     const [cartItems, setCartItems] = useState([]);
@@ -12,6 +13,7 @@ function Checkout() {
     const [paymentMode, setPaymentMode] = useState("DUE - COD/QR/UPI"); // State for payment mode
     const userId = localStorage.getItem('userid'); // Assuming userId is stored in localStorage
     const navigate = useNavigate();
+    const [loader, setLoader] = useState(false);
 
     const [checkoutstatus, setCheckoutStatus] = useState(false);
 
@@ -47,6 +49,7 @@ function Checkout() {
 
     const placeOrder = async () => {
         // console.log('Order start...');
+        setLoader(true);
 
         try {
             // Prepare data for checkout
@@ -72,10 +75,12 @@ function Checkout() {
                     quantity: item.quantity
                 }));
                 const soldProductCount = await axios.post(`${process.env.REACT_APP_API_URL}orders/soldproductcount`, soldProductData);
-            // console.log("soldProductCount,",soldProductCount)
+                // console.log("soldProductCount,",soldProductCount)
+                setLoader(false);
                 navigate('/ordersuccess', { state: { orderId: orderResponse.data.orderid } });
-            } 
+            }
         } catch (error) {
+            setLoader(false);
             console.error("Error placing order", error);
         }
     };
@@ -225,13 +230,13 @@ function Checkout() {
                                             </div> */}
 
                                             <div class="subtotal total"><h5 class="wrapper-heading">TOTAL</h5>
-                                            <h5 class="wrapper-heading price">&#8377;{totalAmount}</h5></div>
+                                                <h5 class="wrapper-heading price">&#8377;{totalAmount}</h5></div>
                                             <h5>Payment Mode</h5>
 
 
                                             <div class="subtotal payment-type">
                                                 <div>UPI ID - 9599171535@upi</div>
-                                                <div>QR - <img src="/static/media/hashedbitqr.6cccddbb20d59af97044.jpg" alt="qr" style={{width: '200px'}} /></div>
+                                                <div>QR - <img src="/static/media/hashedbitqr.6cccddbb20d59af97044.jpg" alt="qr" style={{ width: '200px' }} /></div>
                                                 {/* <div class="checkbox-item">
                                                     <input type="radio" id="cash" name="bank" />
                                                     <div class="cash">
@@ -260,8 +265,8 @@ function Checkout() {
                                             </div>
                                             {(totalAmount < 100) &&
                                                 <div class="alert alert-danger" role="alert">
-                                                Minimum Cart Value should be 100.
-                                              </div>
+                                                    Minimum Cart Value should be 100.
+                                                </div>
                                             }
                                             <div className="checkout-footer mt-4">
                                                 <button className="shop-btn d-block" onClick={placeOrder} disabled={totalAmount < 100}>Place Order</button>
@@ -280,6 +285,16 @@ function Checkout() {
                     </div>
                 </div>
             </section>
+
+            {loader && (
+                <div className="loader-overlay">
+                    <img
+                        src={loaderGif}
+                        alt="Loading..."
+                        className="loader-green"
+                    />
+                </div>
+            )}
         </>
     );
 }

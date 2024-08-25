@@ -119,6 +119,10 @@ const OrderDetail = () => {
         fetchProductsData(subcategory);
     }, [subcategory]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
 
     const order = orderDetails.length > 0 ? orderDetails[0] : null;
 

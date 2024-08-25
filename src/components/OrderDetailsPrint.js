@@ -27,6 +27,10 @@ const OrderDetailsPrint = () => {
         navigate(`/product/${productid}`);
     };
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const order = orderDetails.length > 0 ? orderDetails[0] : null;
 
     return (
