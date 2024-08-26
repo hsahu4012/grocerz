@@ -4,7 +4,7 @@ import { DataAppContext } from "../DataContext";
 import axios from "axios";
 import DashboardRoutes from "./DashboardRoutes";
 import Loader from './loader/Loader';
-
+import loaderGif from "../assets/images/loader.gif"; 
 const Wishlist = () => {
   const { isUserLoggedIn } = useContext(DataAppContext);
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -46,7 +46,7 @@ const Wishlist = () => {
               <Link to="/wishlist">Wishlist</Link>
             </span>
           </div> */}
-          {loading && <Loader />}
+          {/* {loading && <Loader />} */}
           <div className="blog-heading about-heading">
             <h1 className="heading">User Wishlist</h1>
           </div>
@@ -58,7 +58,18 @@ const Wishlist = () => {
             <div className="user-dashboard">
               <DashboardRoutes />
               <div>
-                {wishlistItems.length > 0 ? (
+              {loading ? (
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '50vh',
+                    marginLeft: '300px',
+                  }}>
+                    <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
+                  </div>
+                ) : 
+                wishlistItems.length > 0 ? (
                   <section
                     className="cart product wishlist footer-padding"
                     data-aos="fade-up"
