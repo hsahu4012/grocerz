@@ -41,7 +41,7 @@ const ShopCart = () => {
     console.log("totalling");
     //setLoading(true);
     let total = cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
+      (total, item) => total + ((Number(item.price) - Number(item.discount)) * item.quantity),
       0
     );
     console.log("total", total);
@@ -186,7 +186,7 @@ const ShopCart = () => {
                   </td>
                   <td className="table-wrapper">
                     <div className="table-wrapper-center">
-                      <h5 className="heading main-price">Rs. {item.price}</h5>
+                      <h5 className="heading main-price">Rs. {item.price - Number(item.discount)}</h5>
                     </div>
                   </td>
                   <td className="table-wrapper">
@@ -215,7 +215,7 @@ const ShopCart = () => {
                   <td className="table-wrapper wrapper-total">
                     <div className="table-wrapper-center">
                       <h5 className="heading total-price">
-                        Rs. {item.price * item.quantity}
+                        Rs. {(item.price - Number(item.discount)) * item.quantity}
                       </h5>
                     </div>
                   </td>

@@ -24,7 +24,7 @@ function Checkout() {
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userId}`);
                 const items = response.data;
                 setCartItems(items);
-                const total = items.reduce((acc, item) => acc + ((Number(item.price) * item.quantity) - Number(item.discount)), 0);
+                const total = items.reduce((acc, item) => acc + ((Number(item.price) * item.quantity) - (Number(item.discount) * item.quantity)), 0);
                 setTotalAmount(total);
             } catch (error) {
                 console.error("Error fetching cart items", error);
@@ -56,7 +56,7 @@ function Checkout() {
             const cartData = cartItems.map(item => ({
                 productid: item.productid,
                 quantity: item.quantity,
-                price_final: (Number(item.price) * item.quantity) - Number(item.discount)
+                price_final: (Number(item.price) * item.quantity) - (Number(item.discount) * item.quantity)
             }));
 
             const orderData = {
