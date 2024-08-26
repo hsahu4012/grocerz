@@ -74,6 +74,7 @@ const OrderHistory = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchOrders();
   }, []);
 
