@@ -6,7 +6,6 @@ import DashboardRoutes from "./DashboardRoutes";
 import Loader from './loader/Loader';
 
 const Wishlist = () => {
-
   const { isUserLoggedIn } = useContext(DataAppContext);
   const [wishlistItems, setWishlistItems] = useState([]);
   const navigate = useNavigate();
@@ -15,17 +14,16 @@ const Wishlist = () => {
 
   const fetchWishlistItems = async () => {
     setLoading(true);
-    const url = `${process.env.REACT_APP_API_URL}wishlist/allWishlistItems`;
+    const url = `${process.env.REACT_APP_API_URL}wishlist/usersWishlist/${userid}`;
 
     try {
       const response = await axios.get(url);
       setWishlistItems(response.data);
     } catch (error) {
       console.error("Error fetching wishlist items:", error);
-
-    };
+    }
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     fetchWishlistItems();
@@ -37,7 +35,6 @@ const Wishlist = () => {
 
   return (
     <>
-
       <section className="blog about-blog">
         <div className="container">
           {/* <div className="blog-bradcrum">
@@ -70,21 +67,36 @@ const Wishlist = () => {
                       <div className="cart-section wishlist-section">
                         <table>
                           <tbody>
+                            <tr className="table-row table-top-row">
+                              <td className="table-wrapper wrapper-product">
+                                <h5 className="table-heading">PRODUCT</h5>
+                              </td>
+                              <td className="table-wrapper">
+                                <div className="table-wrapper-center">
+                                  <h5 className="table-heading">PRICE</h5>
+                                </div>
+                              </td>
+                              <td className="table-wrapper">
+                                <div className="table-wrapper-center">
+                                  <h5 className="table-heading">ACTION</h5>
+                                </div>
+                              </td>
+                            </tr>
                             {wishlistItems.map((item, index) => (
                               <tr key={index} className="table-row ticket-row">
                                 <td className="table-wrapper wrapper-product">
                                   <div className="wrapper">
                                     <div className="wrapper-img">
-                                      <img src={item.image} alt={item.name} />
+                                      <img src={item.image} alt={item.prod_name} />
                                     </div>
                                     <div className="wrapper-content">
-                                      <h5 className="heading">{item.productid}</h5>
+                                      <h5 className="heading">{item.prod_name}</h5> {/* Display product name */}
                                     </div>
                                   </div>
                                 </td>
                                 <td className="table-wrapper">
                                   <div className="table-wrapper-center">
-                                    <h5 className="heading">Rs. {item.price}</h5>
+                                    <h5 className="heading">Rs. {item.price}</h5> {/* Display product price */}
                                   </div>
                                 </td>
                                 <td className="table-wrapper">
@@ -99,9 +111,8 @@ const Wishlist = () => {
                         </table>
                       </div>
                       <div className="wishlist-btn">
-                        
                         <Link onClick={handleCleanWishlist} className="shop-btn shop-btn-red">
-                        Clean Wishlist
+                          Clean Wishlist
                         </Link>
                       </div>
                     </div>
@@ -130,7 +141,6 @@ const Wishlist = () => {
           </div>
         </div>
       </section>
-
     </>
   );
 };
