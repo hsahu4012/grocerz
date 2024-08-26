@@ -87,7 +87,8 @@ const Wishlist = () => {
                                 <td className="table-wrapper wrapper-product">
                                   <div className="wrapper">
                                     <div className="wrapper-img">
-                                      <img src={item.image} alt={item.prod_name} />
+                                      <img src={`${process.env.REACT_APP_API_URL}${item.image}`} alt={item.prod_name} />
+                                      {/* <img src={item.image} alt={item.prod_name} /> */}
                                     </div>
                                     <div className="wrapper-content">
                                       <h5 className="heading">{item.prod_name}</h5> {/* Display product name */}
