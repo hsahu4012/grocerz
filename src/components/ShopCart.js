@@ -13,6 +13,10 @@ const ShopCart = () => {
   const [totalCost, setTotalCost] = useState(0);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     calculateTotal();
   }, [cartItems]);
 

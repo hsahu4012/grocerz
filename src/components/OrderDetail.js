@@ -27,7 +27,7 @@ const OrderDetail = () => {
         } catch (error) {
             setError("Error fetching categories !")
             console.error('Error fetching categories:', error);
-            
+
         }
     };
 

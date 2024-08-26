@@ -89,6 +89,10 @@ function Checkout() {
         setIsModalOpen(!isModalOpen);
     };
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
     return (
         <>
             <section className="blog about-blog">

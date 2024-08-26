@@ -106,6 +106,7 @@ const ProductDetails = () => {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchProductDetail();
   }, [])
 

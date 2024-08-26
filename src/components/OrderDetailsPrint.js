@@ -55,7 +55,7 @@ const OrderDetailsPrint = () => {
                         <div className="user-dashboard">
 
                             <div className="container mt-5">
-                                <h2 className="mb-4 main-heading-custom-font-1">Order Summary - {order && order.srno}</h2>
+                                <h2 className="mb-4 main-heading-custom-font-1">Grocji Order Summary - {order && order.srno}</h2>
                                 <div className="card">
                                     {order ? (
                                         <div className="card-body">

@@ -163,6 +163,13 @@ const Productlist = () => {
     setLoading(false);
   };
 
+  const connectwhatsapp = () => {
+    const phoneNumber = '+918757499345';
+    const message = `Hi. I want to place an order.`;
+    const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    window.open(whatsappLink, '_blank').focus();
+  }
+
   return (
     <>
       {/* <div className="breadcrumb-option">
@@ -211,6 +218,10 @@ const Productlist = () => {
                     </div>
                   )}
                 </div>
+              </div>
+
+              <div class="login-btn">
+                <button onClick={connectwhatsapp} class="shop-btn shop-btn-full">If your product is not listed<br></br>Order on WhatsApp</button>
               </div>
             </div>
 

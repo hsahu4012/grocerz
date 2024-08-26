@@ -621,7 +621,7 @@ const Header = () => {
                 <ul class="category-list">
                   {
                     category && category.map((item, index) => (
-                      <li className="category-list-item" >
+                      <li className="category-list-item" key={index}>
                         <Link to={`/category/${item.category_id}`}>
                           <div class="dropdown-item d-flex justify-content-between align-items-center">
                             <div class="dropdown-list-item d-flex">

@@ -10,7 +10,7 @@ const OrderHistory = () => {
   const usertype = localStorage.getItem('usertype');
 
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleOrderClick = (orderid) => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
@@ -78,6 +78,19 @@ const OrderHistory = () => {
     fetchOrders();
   }, []);
 
+  const findClassNames = (order_status) => {
+    if(order_status === 'Placed') {
+      return 'card-body bg-warning bg-opacity-25';
+    }
+    if(order_status === 'CANCELLED') {
+      return 'card-body bg-danger bg-opacity-25';
+    }
+    if(order_status === 'COMPLETED') {
+      return 'card-body bg-success bg-opacity-25';
+    }
+    return 'card-body bg-warning bg-opacity-25';
+  }
+
   return (
     <>
       <section className="blog about-blog">
@@ -112,7 +125,7 @@ const OrderHistory = () => {
                 orders.length > 0 ? (
                   orders.map((order, index) => (
                     <div key={index} className="card mt-3">
-                      <div className="card-body">
+                      <div className={findClassNames(order.order_status)}>
                         <div className="row">
                           {/* <div className="col-md-3">
                             <img src="https://picsum.photos/500/200" className="img-fluid" alt="dummy" />
