@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import DashboardRoutes from './DashboardRoutes';
+import loaderGif from "../assets/images/loader.gif"; 
 
 const Address = () => {
 
@@ -21,7 +22,7 @@ const Address = () => {
     alternatecontact: "",
     landmark: "",
   });
-
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('')
 
   const handleChange = (e) => {
@@ -66,6 +67,8 @@ const Address = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
       // Make POST request to the API endpoint
       const response = await axios.post(`${process.env.REACT_APP_API_URL}address/addAddress`, formData);
@@ -91,6 +94,7 @@ const Address = () => {
       console.error("API error:", error);
       // Handle error, maybe show an error message to the user
     }
+    setLoading(false);
   };
 
   const fillpindetails = () => {
@@ -158,6 +162,16 @@ const Address = () => {
                               <div className="container">
                                 <div className="row">
                                   <div className="col-lg-12">
+                                  {loading ? (
+                                      <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        height: '50vh',
+                                      }}>
+                                        <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
+                                      </div>
+                                    ) : (
                                     <form onSubmit={handleSubmit} className="checkout__form">
                                       <div className="row">
                                         <div className="col-lg-12">
@@ -240,6 +254,7 @@ const Address = () => {
                                       }
                                       <button type="submit" class="shop-btn" disabled={error}>Add Address</button>
                                     </form>
+                                    )}
                                   </div>
                                 </div>
                               </div>
