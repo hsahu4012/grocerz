@@ -2,7 +2,8 @@ import React, { useEffect, useId, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import dress1 from "../assets/img/product/women/dress1.jpg";
-import Loader from "./loader/Loader";
+// import Loader from "./loader/Loader";
+import loaderGif from "../assets/images/loader.gif"; 
 
 const ShopCart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -11,6 +12,10 @@ const ShopCart = () => {
   const userid = localStorage.getItem("userid");
   const [loading, setLoading] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     calculateTotal();
@@ -55,7 +60,7 @@ const ShopCart = () => {
   const calculateTotal = () => {
     // console.log("totalling");
     let total = cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
+      (total, item) => total + ((Number(item.price) - Number(item.discount)) * item.quantity),
       0
     );
     // console.log("total", total);
@@ -63,6 +68,7 @@ const ShopCart = () => {
   };
 
   const removeFromCart = async (productid) => {
+    setLoading(true);
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}cart/removeProduct/${userid}/${productid}`
@@ -131,7 +137,17 @@ const ShopCart = () => {
   };
   return (
     <section className="product-cart product footer-padding">
-      {loading && <Loader />}
+      {loading && (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '50vh',
+        }}>
+          <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
+        </div>
+      )}
+      {!loading && (
       <div className="container">
         <div className="cart-section">
           <table>
@@ -184,7 +200,7 @@ const ShopCart = () => {
                   </td>
                   <td className="table-wrapper">
                     <div className="table-wrapper-center">
-                      <h5 className="heading main-price">Rs. {item.price}</h5>
+                      <h5 className="heading main-price">Rs. {item.price - Number(item.discount)}</h5>
                     </div>
                   </td>
                   <td className="table-wrapper">
@@ -213,7 +229,7 @@ const ShopCart = () => {
                   <td className="table-wrapper wrapper-total">
                     <div className="table-wrapper-center">
                       <h5 className="heading total-price">
-                        Rs. {item.price * item.quantity}
+                        Rs. {(item.price - Number(item.discount)) * item.quantity}
                       </h5>
                     </div>
                   </td>
@@ -259,7 +275,7 @@ const ShopCart = () => {
         </div>
         {message && <p>{message}</p>}
       </div>
-
+      )}
       <div>
         {/* <div className="col-lg-6 col-md-6 col-sm-6">
           <div className="cart__btn update__btn">
@@ -293,6 +309,7 @@ const ShopCart = () => {
           </div>
         </div>
       </div> */}
+      
     </section>
   );
 };

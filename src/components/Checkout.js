@@ -4,6 +4,8 @@ import qr from '../assets/images/hashedbitqr.jpg';
 import axios from "axios";
 import GuestAddess from "./GuestAddess";
 import Loader from "./loader/Loader";
+import loaderGif from '../assets/images/loader.gif';
+
 function Checkout() {
     // Setting up single button to place order 
     const [formData, setFormData] = useState({
@@ -91,6 +93,7 @@ function Checkout() {
     const userId = localStorage.getItem('userid') ||"";
     // console.log("userID",userId)
     const navigate = useNavigate();
+    const [loader, setLoader] = useState(false);
 
     const [checkoutstatus, setCheckoutStatus] = useState(false);
     const fetchCartItems = async () => {
@@ -143,6 +146,18 @@ function Checkout() {
     };
 
     useEffect(() => {
+        // Fetch cart items and addresses on component mount
+        const fetchCartItems = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userId}`);
+                const items = response.data;
+                setCartItems(items);
+                const total = items.reduce((acc, item) => acc + ((Number(item.price) * item.quantity) - (Number(item.discount) * item.quantity)), 0);
+                setTotalAmount(total);
+            } catch (error) {
+                console.error("Error fetching cart items", error);
+            }
+        };
 
 
         fetchCartItems();
@@ -190,10 +205,12 @@ function Checkout() {
                     quantity: item.quantity
                 }));
                 const soldProductCount = await axios.post(`${process.env.REACT_APP_API_URL}orders/soldproductcount`, soldProductData);
-            // console.log("soldProductCount,",soldProductCount)
+                // console.log("soldProductCount,",soldProductCount)
+                setLoader(false);
                 navigate('/ordersuccess', { state: { orderId: orderResponse.data.orderid } });
-            } 
+            }
         } catch (error) {
+            setLoader(false);
             console.error("Error placing order", error);
         }
         finally{
@@ -204,6 +221,10 @@ function Checkout() {
     const modalAction = () => {
         setIsModalOpen(!isModalOpen);
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
     return (
         <>
@@ -352,13 +373,13 @@ function Checkout() {
                                             </div> */}
 
                                             <div class="subtotal total"><h5 class="wrapper-heading">TOTAL</h5>
-                                            <h5 class="wrapper-heading price">&#8377;{totalAmount}</h5></div>
+                                                <h5 class="wrapper-heading price">&#8377;{totalAmount}</h5></div>
                                             <h5>Payment Mode</h5>
 
 
                                             <div class="subtotal payment-type">
                                                 <div>UPI ID - 9599171535@upi</div>
-                                                <div>QR - <img src="/static/media/hashedbitqr.6cccddbb20d59af97044.jpg" alt="qr" style={{width: '200px'}} /></div>
+                                                <div>QR - <img src="/static/media/hashedbitqr.6cccddbb20d59af97044.jpg" alt="qr" style={{ width: '200px' }} /></div>
                                                 {/* <div class="checkbox-item">
                                                     <input type="radio" id="cash" name="bank" />
                                                     <div class="cash">
@@ -387,8 +408,8 @@ function Checkout() {
                                             </div>
                                             {(totalAmount < 100) &&
                                                 <div class="alert alert-danger" role="alert">
-                                                Minimum Cart Value should be 100.
-                                              </div>
+                                                    Minimum Cart Value should be 100.
+                                                </div>
                                             }
                                             <div className="checkout-footer mt-4">
                                                         <button
@@ -413,6 +434,16 @@ function Checkout() {
                     </div>
                 </div>
             </section>
+
+            {loader && (
+                <div className="loader-overlay">
+                    <img
+                        src={loaderGif}
+                        alt="Loading..."
+                        className="loader-green"
+                    />
+                </div>
+            )}
         </>
     );
 }
