@@ -49,7 +49,7 @@ function ChangePasswordPage() {
         setNewPassword("");
         setConfirmPassword("");
         setTimeout(() => {
-          navigate("/loginandsecurity");
+          navigate("/dashboard");
         }, 1500);
       }
     } catch (error) {
@@ -88,7 +88,7 @@ function ChangePasswordPage() {
                   <div className="col-lg-6">
                     <div className="form-section">
                       <form onSubmit={handleSubmit}>
-                        <div className="currentpass form-item">
+                        {/* <div className="currentpass form-item">
                           <label
                             htmlFor="currentPassword"
                             className="form-label input-lg text-lg font-semibold h5"
@@ -103,7 +103,7 @@ function ChangePasswordPage() {
                             className="form-control text-lg p-3 h5"
                             placeholder="******"
                           />
-                        </div>
+                        </div> */}
                         <div className="password form-item">
                           <label
                             htmlFor="newPassword"
