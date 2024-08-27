@@ -3830,6 +3830,8 @@ table .ticket-row:hover {
   justify-content: space-between;
   gap: 1rem;
   transition: all 0.5s;
+  width: 100vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .faq-accordion .faq-item .faq-button::after {
   display: none;
@@ -3870,14 +3872,19 @@ table .ticket-row:hover {
 }
 .faq-accordion .faq-item .accordion-body {
   padding: 3rem 2rem;
+  width: 80vw;
 }
 .faq-accordion .faq-item .accordion-body .paragraph {
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 2.2rem;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
 }
 .faq-accordion .faq-item .accordion-collapse {
   background-color: #34a853;
+  width: 100vw;
 }
 .faq-accordion .faq-item .accordion-collapse .paragraph {
   color: #ffffff;
