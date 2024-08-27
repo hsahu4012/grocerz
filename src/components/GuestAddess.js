@@ -2,23 +2,7 @@ import React ,{useState} from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const GuestAddess = () => {
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    line1: "",
-    line2: "",
-    line3: "",
-    city: "",
-    state: "",
-    country: "",
-    pin: "",
-    contact: "",
-    alternatecontact: "",
-    landmark: "",
-  });
-
-  const [error, setError] = useState('')
+const GuestAddess = ( { formData,setFormData, error,setError ,handleSubmit}) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,88 +13,28 @@ const GuestAddess = () => {
   };
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    // Check if mandatory fields are empty
-    if (
-      formData.name.trim() === "" ||
-      formData.line1.trim() === "" ||
-      formData.city.trim() === "" ||
-      formData.state.trim() === "" ||
-      formData.country.trim() === "" ||
-      formData.pin.trim() === "" ||
-      formData.contact.trim() === ""
-
-    ) {
-      alert("Please fill in all mandatory fields.");
-      return;
-    }
-
-    // Check if pin code is a number
-    if (isNaN(formData.pin.trim())) {
-      alert("Pin code must be a number.");
-      return;
-    }
-
-    // Check if contact numbers are 10 digits
-    if (
-      !/^\d{10}$/.test(formData.contact.trim())
-      //!/^\d{10}$/.test(formData.alternatecontact.trim())
-    ) {
-      alert("Contact numbers must be 10-digit numbers.");
-      return;
-    }
-
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}users/addguestuser`, {...formData});
-      setFormData({
-        name: "",
-        line1: "",
-        line2: "",
-        line3: "",
-        city: "",
-        state: "",
-        country: "",
-        pin: "",
-        contact: "",
-        alternatecontact: "",
-        landmark: "",
-      });
-      // console.log(response)
-      // console.log(response.data.userid)
-      // console.log(response.data.addressid)
-      const uid = response.data.userid;
-      const aid = response.data.addressid;
-      localStorage.setItem("userid",uid)
-      localStorage.setItem('usertype',"user");
-      AddProductsToCart()
-      localStorage.setItem('cart',"");
-    } catch (error) {
-      console.error("API error:", error);
-    }
-  };
-  const AddProductsToCart = async () => {
-    setLoading(true);
-    try {
-      const userid = localStorage.getItem('userid');
-      const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-      const cartItems = storedCart.map(item => ({
-        productid: item.productid,
-        quantity: item.quantity
-    }));
-    for (let i = 0; i < cartItems.length; i++) {
-      const { productid, quantity } = cartItems[i];
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
-          userid,
-          productid,
-          quantity
-      })};
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-    }
-    setLoading(false);
-  };
+  // const AddProductsToCart = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const userid = localStorage.getItem('userid');
+  //     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+  //     const cartItems = storedCart.map(item => ({
+  //       productid: item.productid,
+  //       quantity: item.quantity
+  //   }));
+  //   for (let i = 0; i < cartItems.length; i++) {
+  //     const { productid, quantity } = cartItems[i];
+  //     const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
+  //         userid,
+  //         productid,
+  //         quantity
+  //     })};
+  //   } catch (error) {
+  //     console.error('Error adding to cart:', error);
+  //   }
+  //   setLoading(false);
+  // };
 
   const fillpindetails = () => {
     if (formData.pin === '848210') {
@@ -187,7 +111,6 @@ const GuestAddess = () => {
                                           {error}
                                         </div>
                                       }
-                                      <button type="submit" class="shop-btn mt-3" disabled={error}>Add Details and Order</button>
                                     </form>
                                   </div>
                                 </div>

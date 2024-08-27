@@ -5,6 +5,81 @@ import axios from "axios";
 import GuestAddess from "./GuestAddess";
 import Loader from "./loader/Loader";
 function Checkout() {
+    // Setting up single button to place order 
+    const [formData, setFormData] = useState({
+      name: "",
+      line1: "",
+      line2: "",
+      line3: "",
+      city: "",
+      state: "",
+      country: "",
+      pin: "",
+      contact: "",
+      alternatecontact: "",
+      landmark: "",
+    });
+    const [error, setError] = useState('');
+    const handleSubmit = async () => {
+    
+        // Check if mandatory fields are empty
+        if (
+          formData.name.trim() === "" ||
+          formData.line1.trim() === "" ||
+          formData.city.trim() === "" ||
+          formData.state.trim() === "" ||
+          formData.country.trim() === "" ||
+          formData.pin.trim() === "" ||
+          formData.contact.trim() === ""
+    
+        ) {
+          alert("Please fill in all mandatory fields.");
+          return;
+        }
+    
+        // Check if pin code is a number
+        if (isNaN(formData.pin.trim())) {
+          alert("Pin code must be a number.");
+          return;
+        }
+    
+        // Check if contact numbers are 10 digits
+        if (
+          !/^\d{10}$/.test(formData.contact.trim())
+          //!/^\d{10}$/.test(formData.alternatecontact.trim())
+        ) {
+          alert("Contact numbers must be 10-digit numbers.");
+          return;
+        }
+    
+        try {
+          const response = await axios.post(`${process.env.REACT_APP_API_URL}users/addguestuser`, {...formData});
+          setFormData({
+            name: "",
+            line1: "",
+            line2: "",
+            line3: "",
+            city: "",
+            state: "",
+            country: "",
+            pin: "",
+            contact: "",
+            alternatecontact: "",
+            landmark: "",
+          });
+          // console.log(response)
+          // console.log(response.data.userid)
+          // console.log(response.data.addressid)
+          const uid = response.data.userid;
+          const aid = response.data.addressid;
+          const obj={aid:aid,uid:uid}
+          return obj
+        } catch (error) {
+          console.error("API error:", error);
+          return {};
+        }
+      };
+    // to here
     const [cartItems, setCartItems] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -77,20 +152,34 @@ function Checkout() {
 
     const placeOrder = async () => {
         setIsPlacingOrder(true)
+        let userData={}
+        let orderData={}
+        const cartData = cartItems.map(item => ({
+            productid: item.productid,
+            quantity: item.quantity,
+            price_final: (Number(item.price) * item.quantity) - Number(item.discount)
+        }));
         try {
-            // Prepare data for checkout
-            const cartData = cartItems.map(item => ({
-                productid: item.productid,
-                quantity: item.quantity,
-                price_final: (Number(item.price) * item.quantity) - Number(item.discount)
-            }));
-
-            const orderData = {
+        if(userId){
+            
+             orderData = {
                 cartData,
                 userid: userId,
                 addressId: selectedAddressId,
                 paymentMode: paymentMode,
+
             };
+        }else{
+            userData= handleSubmit()  
+             orderData = {
+                cartData,
+                userid: userData.uid,
+                addressId: userData.aid,
+                paymentMode: paymentMode,
+            };          
+        }
+            // Prepare data for checkout
+            
 
             // Make API call to place the order
             const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}checkout/checkout`, orderData);
@@ -155,7 +244,7 @@ function Checkout() {
                                                     </div>
                                                 ))}
                                                 </>:<>
-                                                        <GuestAddess/>
+                                                        <GuestAddess  setFormData={setFormData} setError={setError} formData={formData} error={error}  />
                                                 </>}
                                                 <div className="col-lg-6">
                                                     {/* <a href="#" className="shop-btn" onClick={modalAction}>Open in Modal - Add New Address</a> */}
@@ -302,23 +391,13 @@ function Checkout() {
                                               </div>
                                             }
                                             <div className="checkout-footer mt-4">
-                                                {userId && (
-                                                    <>
                                                         <button
                                                             className="shop-btn d-block"
                                                             onClick={placeOrder}
-                                                            disabled={totalAmount < 100 || !selectedAddressId} 
+                                                            disabled={totalAmount < 100 } 
                                                         >
                                                             {isPlacingOrder ? "Placing Your Order..." : "Place Order"}
                                                         </button>
-                                                        {!selectedAddressId && (
-                                                            <div className="alert alert-danger mt-2" role="alert">
-                                                                Please select a delivery address.
-                                                            </div>
-                                                        )}
-                                                    </>
-                                                )}
-                                                
                                             </div>
                                             {/* <div className="payment-method">
                                                 <img src={qr} alt="QR Payment" style={{ height: '200px' }} />
