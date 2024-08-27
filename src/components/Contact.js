@@ -340,6 +340,12 @@ const Contact = () => {
                             onChange={handleChange} />
                         </div>
                         <div class="review-form-name">
+                          <input name="mobile" type="tel" id="mobile" class="form-control"
+                            placeholder="Mobile"
+                            value={formData.mobile}
+                            onChange={handleChange} />
+                        </div>
+                        <div class="review-form-name">
                           {/* <label for="subject" class="form-label">Subject*</label> */}
                           <input name="subject" type="text" id="subject" class="form-control" placeholder="Subject"
                             value={formData.subject}
