@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import DashboardRoutes from "../DashboardRoutes";
+import { Link } from "react-router-dom";
+import axios from "axios";
+
 function ChangePasswordPage() {
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+
+  const url = `${process.env.REACT_APP_API_URL}users/updateuserpassword`;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (newPassword !== confirmPassword) {
@@ -14,69 +24,175 @@ function ChangePasswordPage() {
       return;
     }
 
-    // Your logic to handle password change goes here
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("jwt");
+      const userid = localStorage.getItem("userid");
 
-    setCurrentPassword('');
-    setNewPassword('');
-    setConfirmPassword('');
-    setErrorMessage('');
-    navigate("/loginandsecurity")
-    console.log(confirmPassword);
+      const response = await axios.put(
+        url,
+        {
+          userid: userid,
+          password: newPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setErrorMessage("");
+        setSuccessMessage("Password updated successfully!");
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+        setTimeout(() => {
+          navigate("/loginandsecurity");
+        }, 1500);
+      }
+    } catch (error) {
+      console.error("Error changing password", error);
+      if (error.response && error.response.status === 401) {
+        setErrorMessage("Current password is incorrect.");
+      } else if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.message);
+      } else if (error.message === "Network Error") {
+        setErrorMessage("Network error occurred. Please try again later.");
+      } else {
+        setErrorMessage("Something went wrong. Please try again later.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="container mx-auto max-w-md my-3 mb-4 my-5 mt-8">
-      <h2 className="text-xl font-semibold mb-4">Change Password</h2>
-      <div className="border rounded ">
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="currentPassword" className=" my-2 mx-3 block mb-1">Current Password:</label>
-            <div className="row">
-              <input
-                type="password"
-                id="currentPassword"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full p-2 mx-4 col-6  border border-gray-300 rounded  "
-              />
+    <>
+      <section className="blog about-blog">
+        <div className="container">
+          <div className="blog-heading about-heading">
+            <h1 className="heading">Password</h1>
+          </div>
+        </div>
+      </section>
+      <section className="user-profile footer-padding">
+        <div className="container">
+          <div className="user-profile-section box-shadows">
+            <div className="user-dashboard">
+              <DashboardRoutes />
+              <div className="container mx-auto max-w-md my-3 mb-4 my-5 mt-8">
+                <h2 className="text-xl font-semibold mb-4">Change Password</h2>
+                <div className="row align-items-center">
+                  <div className="col-lg-6">
+                    <div className="form-section">
+                      <form onSubmit={handleSubmit}>
+                        <div className="currentpass form-item">
+                          <label
+                            htmlFor="currentPassword"
+                            className="form-label input-lg text-lg font-semibold h5"
+                          >
+                            Current Password*
+                          </label>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            id="currentPassword"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            className="form-control text-lg p-3 h5"
+                            placeholder="******"
+                          />
+                        </div>
+                        <div className="password form-item">
+                          <label
+                            htmlFor="newPassword"
+                            className="form-label text-lg font-semibold h5"
+                          >
+                            New Password*
+                          </label>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            id="newPassword"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            className="form-control text-lg p-3 h5"
+                            placeholder="******"
+                          />
+                        </div>
+                        <div className="re-password form-item">
+                          <label
+                            htmlFor="confirmPassword"
+                            className="form-label text-lg font-semibold h5"
+                          >
+                            Re-enter Password*
+                          </label>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            className="form-control text-lg p-3 h5"
+                            placeholder="******"
+                          />
+                        </div>
+                        <div className="show-password-checkbox">
+                          <input
+                            type="checkbox"
+                            id="showPassword"
+                            checked={showPassword}
+                            onChange={() => setShowPassword(!showPassword)}
+                          />
+                          <label
+                            htmlFor="showPassword"
+                            className="form-label text-lg ml-2"
+                          >
+                            Show Passwords
+                          </label>
+                        </div>
+                        {errorMessage && (
+                          <div className="text-red-500 mb-4 text-lg">
+                            {errorMessage}
+                          </div>
+                        )}
+                        {successMessage && (
+                          <div className="text-green-500 mb-4 text-lg">
+                            {successMessage}
+                          </div>
+                        )}
+                        <div className="form-btn d-flex gap-2 mt-4">
+                          <button
+                            type="submit"
+                            className="shop-btn text-lg p-3"
+                            disabled={loading}
+                          >
+                            {loading ? "Updating..." : "Update Password"}
+                          </button>
+                          <Link
+                            to="/dashboard"
+                            className="shop-btn cancel-btn text-lg p-3"
+                          >
+                            Cancel
+                          </Link>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="reset-img text-end">
+                      <img
+                        src="assets/images/homepage-one/reset.webp"
+                        alt="reset"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="newPassword" className="block mx-3 mb-1">New Password:</label>
-            <div className="row">
-              <input
-                type="password"
-                id="newPassword"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full p-2 mx-4  col-6 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block mx-3 mb-1">Re-enter New Password:</label>
-            <div className="row ">
-              <input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-2 mx-4 col-6  border border-gray-300 rounded focus:outline-none focus:border-blue-500 "
-              />
-            </div>
-          </div>
-          {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
-          <div className="mb-4">
-            <button type="submit" className="px-4 py-2 mx-3 bg-blue-800 text-black rounded hover">
-              Submit
-            </button>
-            <button className="px-4 py-2 mx-3 bg-blue-800 text-black rounded hover">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      </section>
+    </>
   );
 }
 
