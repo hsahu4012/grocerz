@@ -251,9 +251,10 @@ function Checkout() {
                                                         >
                                                             <h5>{address.name}</h5>
                                                             <p>{address.street}, {address.line1}, {address.line2}, {address.line3}, {address.city}, {address.pin}, {address.country}, {address.contact}, {address.alternatecontact}, {address.landmark}</p>
-                                                            <Link to="/addressnew" className="shop-btn">Add New Address</Link>
+                                                            
                                                         </div>
                                                     ))}
+                                                    <Link to="/addressnew" className="shop-btn">Add New Address</Link>
                                                 </> : <>
                                                     <GuestAddess setFormData={setFormData} setError={setError} formData={formData} error={error} />
                                                 </>}

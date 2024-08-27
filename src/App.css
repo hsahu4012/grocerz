@@ -38,6 +38,16 @@
   }
 }
 
+@font-face {
+  font-family: 'Kanit';
+  /* src: local('Kanit'), url('./assets//fonts/Kanit/Kanit-Regular.ttf') format('ttf'); */
+  src: local('Kanit'), url('./assets/fonts/Kanit/Kanit-Light.ttf') format('ttf');
+}
+
+* {
+  font-family: 'Courier New', Courier, monospace !important;
+  font-family: 'Kanit' !important;
+}
 
 .logo-image {
   width: 100px;
