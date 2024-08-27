@@ -111,8 +111,9 @@ const Productlist = () => {
     fetchOrderIDs()
   }, [showPopup])
 
-  const handleAddToCart = async (productid) => {
+  const handleAddToCart = async (product) => {
     setLoading(true);
+    const {productid, prod_name, price, image, discount } = product;
     try {
       const quantity = 1;
       if(userid){
@@ -127,12 +128,12 @@ const Productlist = () => {
           toast.error("Failed to add product to cart");
         }
       }else{
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cart = (localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : [];
         const existingProduct = cart.find(item => item.productid === productid);
         if (existingProduct) {
           existingProduct.quantity += quantity;
         } else {
-          cart.push({ productid, quantity });
+          cart.push({ productid, prod_name, price, image, discount, quantity });
         }
          // Save the updated cart back to localStorage
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -265,12 +266,12 @@ const Productlist = () => {
                           )}
                           {product.stock_quantity > 0 && (
                             <div className="product-cart-btn">
-                              <button onClick={() => handleAddToCart(product.productid)} className="product-btn mb-2" type="button">
+                              <button onClick={() => handleAddToCart(product)} className="product-btn mb-2" type="button">
                                 Add to Cart
                               </button>
-                              <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">
+                              {userid && <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">
                                 Add to Wishlist
-                              </button>
+                              </button>}
                               {usertype === 'admin' && <button className="product-btn mt-2" type="button" onClick={() => { setShowPopup(true); setSingleProduct(product); }}>
                                 Add to Pending Orders
                               </button>}

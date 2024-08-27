@@ -12,30 +12,6 @@ const GuestAddess = ( { formData,setFormData, error,setError ,handleSubmit}) => 
     }));
   };
 
-
-
-  // const AddProductsToCart = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const userid = localStorage.getItem('userid');
-  //     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-  //     const cartItems = storedCart.map(item => ({
-  //       productid: item.productid,
-  //       quantity: item.quantity
-  //   }));
-  //   for (let i = 0; i < cartItems.length; i++) {
-  //     const { productid, quantity } = cartItems[i];
-  //     const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
-  //         userid,
-  //         productid,
-  //         quantity
-  //     })};
-  //   } catch (error) {
-  //     console.error('Error adding to cart:', error);
-  //   }
-  //   setLoading(false);
-  // };
-
   const fillpindetails = () => {
     if (formData.pin === '848210') {
       setError('')
@@ -58,7 +34,7 @@ const GuestAddess = ( { formData,setFormData, error,setError ,handleSubmit}) => 
                                       <div className="row">
                                         <div className="col-lg-12">
                                           
-                                          <div className="row">
+                                          <div className="row review-form">
                                             <div className="col-lg-12 add-form">
                                             <h5>Add Details To Order</h5>
                                               <div className="checkout__form__input">

@@ -114,7 +114,7 @@ const Login = () => {
                             id="password"
                             name="password"
                             class="form-control"
-                            placeholder="password"
+                            placeholder="Password"
                           />
                         </div>
                         {/* <div class="review-form-name checkbox">

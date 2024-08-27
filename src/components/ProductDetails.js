@@ -77,11 +77,12 @@ const ProductDetails = () => {
   };
 
   //for data and Api
-  const handleAddToCart = async (productid) => {
+  const handleAddToCart = async (product) => {
     setLoading(true);
+    const {productid, prod_name, price, image, discount } = product;
     try {
+      const quantity = 1;
       if(userid){
-        const quantity = 1;
         const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
           userid,
           productid,
@@ -93,12 +94,12 @@ const ProductDetails = () => {
           toast.error("Failed to add product to cart");
         }
       }else{
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cart = (localStorage.getItem("cart").length) ? JSON.parse(localStorage.getItem("cart")) : [];
         const existingProduct = cart.find(item => item.productid === productid);
         if (existingProduct) {
           existingProduct.quantity += quantity;
         } else {
-          cart.push({ productid, quantity });
+          cart.push({ productid, prod_name, price, image, discount, quantity });
         }
          // Save the updated cart back to localStorage
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -227,7 +228,7 @@ const ProductDetails = () => {
                     </span>
                   </div> */}
                 </div>
-                <a href="#" class="shop-btn" onClick={() => handleAddToCart(product.productid)}>
+                <a href="#" class="shop-btn" onClick={() => handleAddToCart(product)}>
                   <span>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                       xmlns="http://www.w3.org/2000/svg">
