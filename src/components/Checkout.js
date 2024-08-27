@@ -234,7 +234,7 @@ function Checkout() {
                             <div className="col-lg-6">
                                 <div className="checkout-wrapper">
                                     <div className="account-section billing-section box-shadows">
-                                    <h5 className="wrapper-heading">{userId ? 'Select Delivery Address' : 'Add Details To Order'}</h5>
+                                        <h5 className="wrapper-heading">{userId ? 'Select Delivery Address' : 'Add Details To Order'}</h5>
                                         <div className="profile-section address-section addresses">
                                             <div className="">
                                                 {userId ? <>
@@ -253,9 +253,13 @@ function Checkout() {
                                                             <p>City - {address.city}, {address.state}, {address.country}, {address.pin},</p>
                                                             <p>Landmark - {address.landmark}</p>
                                                             <p>Contact - {address.contact}&nbsp;&nbsp; {address.alternatecontact}</p>
-                                                            
                                                         </div>
                                                     ))}
+                                                    {(addresses.length === 0) &&
+                                                        <div class="alert alert-danger my-4 text-custom-font-1" role="alert">
+                                                            Please, add an address to proceed.
+                                                        </div>
+                                                    }
                                                     <Link to="/addressnew" className="shop-btn">Add New Address</Link>
                                                 </> : <>
                                                     <GuestAddess setFormData={setFormData} setError={setError} formData={formData} error={error} />
