@@ -18,9 +18,12 @@ const OrderHistory = () => {
   const handleMarkComplete = async (orderid) => {
     setLoading(true);
     try {
-      const url = process.env.REACT_APP_API_URL + "orders/markascompleted/" + orderid;
-      const response = await axios.put(url);
-      fetchOrders();
+      const confirm = window.confirm("Are you sure to mark the order as completed?");
+      if(confirm){
+        const url = process.env.REACT_APP_API_URL + "orders/markascompleted/" + orderid;
+        const response = await axios.put(url);
+        fetchOrders();
+      }
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -29,10 +32,13 @@ const OrderHistory = () => {
   const handleOrderCancel = async (orderid) => {
     setLoading(true);
     try {
-      const url = process.env.REACT_APP_API_URL + "orders/markascancelled/" + orderid;
-      const response = await axios.put(url);
-      handleDeliveryCancel(orderid);
-      fetchOrders();
+      const confirm = window.confirm("Are you sure to cancel the order?");
+      if(confirm){
+        const url = process.env.REACT_APP_API_URL + "orders/markascancelled/" + orderid;
+        const response = await axios.put(url);
+        handleDeliveryCancel(orderid);
+        fetchOrders();
+      }
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -41,9 +47,12 @@ const OrderHistory = () => {
   const handleDelivered = async (orderid) => {
     setLoading(true);
     try {
-      const url = process.env.REACT_APP_API_URL + "orders/markdelivered/" + orderid;
-      const response = await axios.put(url);
-      fetchOrders();
+      const confirm = window.confirm("Are you sure to mark the order as delivered?");
+      if(confirm){
+        const url = process.env.REACT_APP_API_URL + "orders/markdelivered/" + orderid;
+        const response = await axios.put(url);
+        fetchOrders();
+      }
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
