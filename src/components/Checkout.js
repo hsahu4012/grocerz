@@ -170,7 +170,7 @@ function Checkout() {
 
             };
         }else{
-            userData= handleSubmit()  
+            userData= await handleSubmit()  
              orderData = {
                 cartData,
                 userid: userData.uid,
