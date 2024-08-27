@@ -46,6 +46,7 @@ import OrderDetailsPrint from "./components/OrderDetailsPrint";
 import About from "./components/About";
 import ProductSearchList from "./components/ProductSearchList";
 import Complainform from './components/Complainform';
+import Faq from "./components/Faq";
 
  function App() {
 
@@ -119,6 +120,7 @@ import Complainform from './components/Complainform';
             <Route path="/orderhistory" element={<OrderHistory />} />
             <Route path="/orderhistory/orderdetailsprint/:orderid/:usertype" element={<OrderDetailsPrint />} />
             <Route path="/productsearchlist" element={<ProductSearchList />} />
+            <Route path="/Faq" element={<Faq />} />
 
             <Route path="/" element={<Home />} />
 
