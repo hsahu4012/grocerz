@@ -56,68 +56,75 @@ const Login = () => {
       const cartItems = storedCart.map(item => ({
         productid: item.productid,
         quantity: item.quantity
-    }));
-    for (let i = 0; i < cartItems.length; i++) {
-      const { productid, quantity } = cartItems[i];
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
+      }));
+      for (let i = 0; i < cartItems.length; i++) {
+        const { productid, quantity } = cartItems[i];
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
           userid,
           productid,
           quantity
-      })};
+        })
+      };
     } catch (error) {
       console.error('Error adding to cart:', error);
     }
-   finally{
-     setLoading(false);
-     localStorage.setItem('cart',"");
-   }
+    finally {
+      setLoading(false);
+      localStorage.setItem('cart', "");
+    }
   };
 
   return (
     <>
       <section class="login product footer-padding">
         <div class="container">
-        {loading && <Loader />}
+          {loading && <Loader />}
           <Formik initialValues={initialValues} onSubmit={submitLogin}>
-          {({ isSubmitting }) => (
-            <Form class="login-section">
-              <div class="row align-items-center">
-                <div class="col-lg-6">
-                  <div class="login-form">
-                    <div class="review-form  box-shadows">
-                      <div class="review-form-text">
-                        <h5 class="comment-title">Log In</h5>
-                        <img
-                          src="assets/images/homepage-one/vector-line.png"
-                          alt="img"
-                        />
-                      </div>
-                      <div class="review-inner-form ">
-                        <div class="review-form-name">
-                          <label for="username" class="form-label">
-                            Username/Mobile/Email**
-                          </label>
-                          <Field
-                            type="text"
-                            id="username"
-                            name="username"
-                            class="form-control"
-                            placeholder="Username/Mobile/Email"
+            {({ isSubmitting }) => (
+              <Form class="login-section">
+                <div class="row align-items-center">
+                  <div class="col-lg-6">
+                    <div class="login-form">
+                      <div class="review-form  box-shadows">
+                        <div class="d-flex justify-content-around mb-5">
+                          <span class="shop-account">
+                            Dont't have an account?
+                            <Link to="/register"> <button class="btn btn-warning btn-lg ps-5  ps-5 pe-5   ">Register</button></Link>
+                          </span>
+                        </div>
+                        <div class="review-form-text">
+                          <h5 class="comment-title">Log In</h5>
+                          <img
+                            src="assets/images/homepage-one/vector-line.png"
+                            alt="img"
                           />
                         </div>
-                        <div class="review-form-name">
-                          <label for="password" class="form-label">
-                            Password*
-                          </label>
-                          <Field
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="form-control"
-                            placeholder="Password"
-                          />
-                        </div>
-                        {/* <div class="review-form-name checkbox">
+                        <div class="review-inner-form ">
+                          <div class="review-form-name">
+                            <label for="username" class="form-label">
+                              Username/Mobile/Email**
+                            </label>
+                            <Field
+                              type="text"
+                              id="username"
+                              name="username"
+                              class="form-control"
+                              placeholder="Username/Mobile/Email"
+                            />
+                          </div>
+                          <div class="review-form-name">
+                            <label for="password" class="form-label">
+                              Password*
+                            </label>
+                            <Field
+                              type="password"
+                              id="password"
+                              name="password"
+                              class="form-control"
+                              placeholder="Password"
+                            />
+                          </div>
+                          {/* <div class="review-form-name checkbox">
                           <div class="checkbox-item">
                             <input type="checkbox" />
                             <span class="address">Remember Me</span>
@@ -126,35 +133,35 @@ const Login = () => {
                             <p>Forgot password?</p>
                           </div>
                         </div> */}
-                      </div>
-                      {error && <div class="error-message">{error}</div>}
-                      <div class="login-btn text-center">
-                        <button
-                          type="submit"
-                          class="shop-btn"
-                          disabled={isSubmitting}
-                        >
-                          Log In
-                        </button>
-                        <span class="shop-account">
-                          Dont't have an account ?
-                          <Link to="/register">Sign Up Free</Link>
-                        </span>
+                        </div>
+                        {error && <div class="error-message">{error}</div>}
+                        <div class="login-btn text-center">
+                          <button
+                            type="submit"
+                            class="shop-btn"
+                            disabled={isSubmitting}
+                          >
+                            Log In
+                          </button>
+                          <span class="shop-account">
+                            Dont't have an account ?
+                            <Link to="/register">Sign Up Free</Link>
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="login-img">
-                    <img
-                      src="assets/images/homepage-one/account-img.webp"
-                      alt="img"
-                    />
+                  <div class="col-lg-6">
+                    <div class="login-img">
+                      <img
+                        src="assets/images/homepage-one/account-img.webp"
+                        alt="img"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Form>
-          )}
+              </Form>
+            )}
           </Formik>
         </div>
       </section>
