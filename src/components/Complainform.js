@@ -49,7 +49,7 @@ const Complainform = () => {
 
       <div className="container mb-5 ">
         <div className="row justify-content-center">
-          <div className="col-lg-6">
+          <div className="col-lg-12">
           <div className="question-section login-section">
               <div className="review-form box-shadows shadow-lg p-4">
                 <div className="review-form-text mb-4">

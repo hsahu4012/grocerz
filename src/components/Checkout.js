@@ -234,23 +234,25 @@ function Checkout() {
                             <div className="col-lg-6">
                                 <div className="checkout-wrapper">
                                     <div className="account-section billing-section box-shadows">
+                                    <h5 className="wrapper-heading">{userId ? 'Select Delivery Address' : 'Add Details To Order'}</h5>
                                         <div className="profile-section address-section addresses">
-                                            <div className="row gy-md-0 g-5">
+                                            <div className="">
                                                 {userId ? <>
-                                                    {addresses.map((address) => (
+                                                    {addresses.map((address, index) => (
                                                         <div
                                                             key={address.addressid}
                                                             onClick={() => setSelectedAddressId(address.addressid)}
+                                                            className="seller-info"
                                                             style={{
-                                                                padding: '10px',
-                                                                border: '1px solid #ddd',
-                                                                marginBottom: '10px',
-                                                                cursor: 'pointer',
-                                                                backgroundColor: address.addressid === selectedAddressId ? '#f0f8ff' : 'white'
+                                                                backgroundColor: address.addressid === selectedAddressId ? 'rgba(52, 168, 83, 0.2)' : 'white'
                                                             }}
                                                         >
-                                                            <h5>{address.name}</h5>
-                                                            <p>{address.street}, {address.line1}, {address.line2}, {address.line3}, {address.city}, {address.pin}, {address.country}, {address.contact}, {address.alternatecontact}, {address.landmark}</p>
+                                                            <h4 className="heading-custom-font-1">Address - {index + 1}</h4>
+                                                            <p>Name - {address.name}</p>
+                                                            <p>Address - {address.line1}</p>
+                                                            <p>City - {address.city}, {address.state}, {address.country}, {address.pin},</p>
+                                                            <p>Landmark - {address.landmark}</p>
+                                                            <p>Contact - {address.contact}&nbsp;&nbsp; {address.alternatecontact}</p>
                                                             
                                                         </div>
                                                     ))}
@@ -364,7 +366,7 @@ function Checkout() {
                                             </div> */}
 
                                             <div class="subtotal total">
-                                                <h5 class="wrapper-heading">TOTAL</h5>
+                                                <h5 class="wrapper-heading">Total</h5>
                                                 <h5 class="wrapper-heading price">&#8377;{totalAmount}</h5>
                                             </div>
                                             <h5 className="heading-custom-font-1">Payment Mode - Cash on Delivery / UPI / QR</h5>
@@ -383,11 +385,11 @@ function Checkout() {
                                                 </select>
                                             </div> */}
                                             {(totalAmount < 100) &&
-                                                <div class="alert alert-danger" role="alert">
+                                                <div class="alert alert-danger my-4 text-custom-font-1" role="alert">
                                                     Minimum Cart Value should be 100.
                                                 </div>
                                             }
-                                            <div className="checkout-footer mt-4">
+                                            <div className="checkout-footer mt-5">
                                                 <button
                                                     className="shop-btn d-block"
                                                     onClick={placeOrder}

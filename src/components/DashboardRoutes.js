@@ -172,7 +172,7 @@ const DashboardRoutes = () => {
                     <span className="text">Address</span>
                 </Link>
                 <Link to='/ChangePassword'
-                    className={(window.location.pathname === '/address') ? 'nav-link active' : 'nav-link'}
+                    className={(window.location.pathname === '/ChangePassword') ? 'nav-link active' : 'nav-link'}
                     type="button"
                 >
                     <span>
