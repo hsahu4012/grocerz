@@ -45,6 +45,7 @@ import OrderDetailsPrint from "./components/OrderDetailsPrint";
 
 import About from "./components/About";
 import ProductSearchList from "./components/ProductSearchList";
+import Complainform from './components/Complainform';
 
  function App() {
 
@@ -102,6 +103,7 @@ import ProductSearchList from "./components/ProductSearchList";
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/complainform" element={<Complainform />} />
             <Route path="/customproduct" element={<CustomProduct/>} />
             <Route path="/about" element={<About />} />
 
