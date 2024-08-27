@@ -39,7 +39,6 @@ const Complainform = () => {
 
   return (
     <>
-      
       <section className="blog about-blog mb-5">
         <div className="container">
           <div className="blog-heading about-heading text-center">
@@ -48,11 +47,10 @@ const Complainform = () => {
         </div>
       </section>
 
-      
-      <div className="container mb-5"> 
+      <div className="container mb-5 ">
         <div className="row justify-content-center">
-          <div className="col-lg-9 col-md-15"> 
-            <div className="question-section login-section">
+          <div className="col-lg-6">
+          <div className="question-section login-section">
               <div className="review-form box-shadows shadow-lg p-4">
                 <div className="review-form-text mb-4">
                 </div>
@@ -130,7 +128,7 @@ const Complainform = () => {
                       required
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary btn-lg w-100">
+                  <button type="submit" className="shop-btn login-btn">
                     Send Message
                   </button>
                 </form>
