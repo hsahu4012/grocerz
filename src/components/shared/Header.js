@@ -29,7 +29,7 @@ const Header = () => {
   //   fetchCategories();
   // }, []);
 
-  const securePages = ["/dashboard", "/cart", "/wishlist", "/OrderHistory", "/profile", "/checkout", "/address", "/payment"];
+  const securePages = ["/dashboard", "/wishlist", "/OrderHistory", "/orderhistory", "/profile", "/address",];
 
   const checkLoginAndRedirect = () => {
     const token = localStorage.getItem("jwttoken");
@@ -95,11 +95,78 @@ const Header = () => {
   return (
     <>
       <header id="header" class="header">
-        <div class="header-top-section">
+        <div class="header-top-section d-block d-lg-none">
+          <div class="container">
+            <div class="header-top">
+              {/* <div class="header-profile">
+                <Link to="/home">
+                  <span>Home</span>
+                </Link>
+                <Link to="/dashboard">
+                  <span>Account</span>
+                </Link>
+                <Link to="/contact">
+                  <span>Contact</span>
+                </Link>
+                <Link to="/feedback">
+                  <span>Feedback</span>
+                </Link>
+              </div> */}
+              {/* <div><p className="delivery-slot">Next Delivery Slot {deliverySlot}</p></div> */}
+              <div class="header-contact">
+                <div class="header-top-contact">
+                  <a href="#" class="top-contact phone">
+                    <span>
+                      <svg
+                        width="20"
+                        height="21"
+                        viewBox="0 0 20 21"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6.23801 8.53196C7.50029 10.7178 9.16931 12.4839 11.3767 13.7235C11.5568 13.8249 11.6712 13.8023 11.8147 13.6555C12.2344 13.2261 12.653 12.7946 13.1007 12.3965C13.925 11.6639 14.9111 11.6596 15.704 12.4137C16.565 13.2315 17.4054 14.0709 18.22 14.9351C19.0097 15.7733 19.0183 16.7886 18.2566 17.6452C17.7377 18.2299 17.1896 18.7931 16.6168 19.325C15.6771 20.1967 14.5378 20.2593 13.3478 20.0381C11.6529 19.7231 10.1327 18.9776 8.69029 18.0767C5.22711 15.9114 2.60544 12.9888 0.899747 9.26775C0.458488 8.3054 0.132668 7.30313 0.0258596 6.23936C-0.0917375 5.07094 0.181218 4.04385 1.06158 3.21312C1.48881 2.8107 1.88691 2.37699 2.30552 1.96594C3.26571 1.02517 4.34459 1.01438 5.31126 1.95084C6.0697 2.68663 6.81952 3.43321 7.55207 4.19382C8.49393 5.17235 8.49609 6.16492 7.57149 7.16503C7.15505 7.616 6.71703 8.04323 6.23801 8.53196ZM1.16299 5.81644C1.12523 5.82507 1.08855 5.8337 1.05079 5.84341C1.26225 6.61696 1.4025 7.42072 1.69811 8.16083C3.24414 12.021 5.87335 14.9782 9.38508 17.1619C10.6948 17.9764 12.0747 18.6485 13.6153 18.9301C14.6672 19.1222 15.5756 18.9517 16.2801 18.0606C16.5693 17.6948 16.9383 17.3917 17.2652 17.055C17.8035 16.5005 17.8089 16.1251 17.2716 15.5813C16.538 14.839 15.799 14.1022 15.0578 13.3675C14.5723 12.8863 14.2044 12.8841 13.7124 13.3642C13.2453 13.8195 12.7922 14.2888 12.325 14.7441C11.9603 15.0991 11.6313 15.1627 11.1911 14.9135C10.5805 14.5672 9.95364 14.2316 9.39695 13.8087C7.68693 12.5098 6.22075 10.9853 5.25408 9.03795C4.91855 8.3615 4.98544 8.10149 5.52164 7.58579C5.94455 7.17905 6.36639 6.77016 6.77421 6.34832C7.23489 5.87254 7.23381 5.5068 6.76666 5.02994C6.01792 4.2661 5.26163 3.50981 4.49994 2.75784C4.02848 2.29176 3.62498 2.29284 3.14272 2.75784C2.71981 3.16565 2.31955 3.59612 1.89339 3.99854C1.36798 4.49266 1.10905 5.0882 1.16299 5.81644Z"
+                          fill="#27AE60"
+                        />
+                        <path
+                          d="M11.0349 0C11.953 0.295611 12.829 0.486571 13.6274 0.850151C17.0614 2.4102 19.1944 5.04373 19.969 8.75073C20.0683 9.22436 19.9259 9.51457 19.5741 9.58146C19.2008 9.65159 18.9549 9.44337 18.8535 8.95032C18.3043 6.26177 16.877 4.16445 14.5962 2.64971C13.5637 1.96463 12.4298 1.52013 11.215 1.27954C11.0877 1.25473 10.9529 1.23531 10.8407 1.17705C10.5796 1.04111 10.4372 0.799444 10.558 0.529726C10.6443 0.333371 10.8536 0.192039 11.0349 0Z"
+                          fill="#27AE60"
+                        />
+                        <path
+                          d="M16.3863 9.17931C16.3776 9.48679 16.2363 9.70472 15.9191 9.75542C15.6095 9.80505 15.3797 9.66804 15.2815 9.36703C15.193 9.09515 15.1574 8.80602 15.0614 8.53846C14.3839 6.64504 13.0795 5.43023 11.1203 4.9361C11.0318 4.91345 10.9423 4.89834 10.8538 4.87569C10.5053 4.78722 10.3144 4.53908 10.3597 4.23376C10.4082 3.90686 10.6823 3.7159 11.0458 3.75474C13.5294 4.02446 16.095 6.5803 16.3712 9.05739C16.3755 9.09623 16.3809 9.13507 16.3863 9.17931Z"
+                          fill="#27AE60"
+                        />
+                      </svg>
+                    </span>
+                    <span class="contact-text">8757499345</span>
+                  
+                    <span>
+                      <svg
+                        width="17"
+                        height="12"
+                        viewBox="0 0 17 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8.24976 11.6506C6.05064 11.6506 3.85153 11.6513 1.65176 11.65C0.57874 11.6493 0.000808974 11.0669 0.000161795 9.98673C0.000161795 7.2058 -0.000485385 4.42422 0.000808974 1.64264C0.00145615 0.587739 0.587154 0.000747299 1.64141 0.000747299C6.072 0.000100119 10.5032 -0.000547061 14.9338 0.000747299C15.9855 0.000747299 16.5686 0.589034 16.5693 1.64782C16.5705 4.4294 16.5699 7.21033 16.5693 9.99191C16.5686 11.0701 15.9894 11.65 14.9125 11.65C12.6914 11.6513 10.4709 11.6506 8.24976 11.6506ZM1.7016 0.990285C1.79867 1.09578 1.86533 1.17473 1.93782 1.24722C3.65802 2.95836 5.37887 4.6695 7.10037 6.38C7.88928 7.16373 8.67949 7.16503 9.4671 6.38259C11.1886 4.67274 12.9088 2.96159 14.6297 1.2498C14.7028 1.17732 14.7701 1.09901 14.8711 0.990285C10.4651 0.990285 6.10695 0.990285 1.7016 0.990285ZM10.709 6.50037C10.0263 7.25628 9.3545 7.93905 8.27694 7.93776C7.19874 7.93582 6.53732 7.23492 5.88626 6.53726C4.51359 7.9397 3.1584 9.32467 1.86016 10.6514C6.1173 10.6514 10.4748 10.6514 14.7727 10.6514C13.4382 9.28842 12.0888 7.90993 10.709 6.50037ZM5.03069 5.86937C3.68844 4.50965 2.33324 3.13633 0.999407 1.78502C0.999407 4.47146 0.999407 7.19609 0.999407 9.97055C2.38761 8.55776 3.73827 7.18444 5.03069 5.86937ZM11.5387 5.80012C12.8661 7.15079 14.2193 8.52734 15.5752 9.90648C15.5752 7.18444 15.5752 4.46046 15.5752 1.71318C14.1993 3.10592 12.8473 4.47535 11.5387 5.80012Z"
+                          fill="#27AE60"
+                        />
+                      </svg>
+                    </span>
+                    <span class="contact-text">grocji@gmail.com</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-top-section d-none d-lg-flex">
           <div class="container">
             <div class="header-top">
               <div class="header-profile">
-                <Link to="/dashboard">
+                <Link to="/home">
                   <span>Home</span>
                 </Link>
                 <Link to="/dashboard">
@@ -378,7 +445,28 @@ const Header = () => {
               <img src={logo} alt="logo" className="logo-image" />
             </Link>
 
-            <Link to="/wishlist" class="cart-item">
+<div className="offcanvas-body">
+            <div class="header-input">
+                <input value={searchText} onChange={(e) => (setSearchText(e.target.value))} type="text" placeholder="Search...." />
+                {/* <input value={searchText} onChange={(e) => (setSearchText(e.target.value))} type="text" placeholder="Search Product....." className="" /> */}
+                <span onClick={handleSearch}>
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 22 22"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13.9708 16.4151C12.5227 17.4021 10.9758 17.9723 9.27353 18.0062C5.58462 18.0802 2.75802 16.483 1.05056 13.1945C-1.76315 7.77253 1.33485 1.37571 7.25086 0.167548C12.2281 -0.848249 17.2053 2.87895 17.7198 7.98579C17.9182 9.95558 17.5566 11.7939 16.5852 13.5061C16.4512 13.742 16.483 13.8725 16.6651 14.0553C18.2412 15.6386 19.8112 17.2272 21.3735 18.8244C22.1826 19.6513 22.2058 20.7559 21.456 21.4932C20.7697 22.1678 19.7047 22.1747 18.9764 21.4793C18.3623 20.8917 17.7774 20.2737 17.1796 19.6688C16.118 18.5929 15.0564 17.5153 13.9708 16.4151ZM2.89545 9.0364C2.91692 12.4172 5.59664 15.1164 8.91967 15.1042C12.2384 15.092 14.9138 12.3493 14.8889 8.98505C14.864 5.63213 12.1826 2.92508 8.89047 2.92857C5.58204 2.93118 2.87397 5.68958 2.89545 9.0364Z"
+                      fill="#fff"
+                    ></path>
+                  </svg>
+                </span>
+              </div>
+              </div>
+
+            {/* <Link to="/wishlist" class="cart-item">
               <span>
                 <svg
                   width="28"
@@ -437,7 +525,7 @@ const Header = () => {
                   />
                 </svg>
               </span>
-            </Link>
+            </Link> */}
 
 
           </div>
@@ -533,7 +621,7 @@ const Header = () => {
                 <ul class="category-list">
                   {
                     category && category.map((item, index) => (
-                      <li className="category-list-item" >
+                      <li className="category-list-item" key={index}>
                         <Link to={`/category/${item.category_id}`}>
                           <div class="dropdown-item d-flex justify-content-between align-items-center">
                             <div class="dropdown-list-item d-flex">
@@ -1223,40 +1311,76 @@ const Header = () => {
                     </ul>
                   </div>
                 </div>
-                <div class="header-nav-menu">
+                <div class="header-nav-menu d-none d-lg-flex">
                   <ul class="menu-list">
-                    <li>
+                    {/* <li>
                       <Link to="/home">
                         <span class="list-text">Home</span>
                       </Link>
                     </li>
-                    
+
                     <li>
                       <Link to="/contact">
                         <span class="list-text">Contact</span>
                       </Link>
-                    </li>
+                    </li> */}
+                  </ul>
+                </div>
+
+                <div class="header-nav-menu d-block d-lg-none">
+                  <ul class="menu-list">
                     {/* <li>
-                      <Link to="/customproduct">
-                        <span class="list-text">Custom Product</span>
+                      <Link to="/home">
+                        <span class="list-text">Home</span>
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link to="/contact">
+                        <span class="list-text">Contact</span>
                       </Link>
                     </li> */}
                   </ul>
                 </div>
               </div>
-              <div>
+              <div className="d-none d-lg-flex">
+                <Link to="/home"><button class="shop-btn me-1">Home</button></Link>
+                <Link to="/cart"><button class="shop-btn me-1">Cart</button></Link>
+                <Link to="/contact"><button class="shop-btn me-1">Contact</button></Link>
                 {loginstatus ? (
                   <>
                     <Link to="/dashboard"><button class="shop-btn me-1">Dashboard</button></Link>
-                    <Link to="/cart"><button class="shop-btn me-1">Cart</button></Link>
-                    <button class="shop-btn" onClick={handleLogout}>Logout</button>
+
+                    <button class="shop-btn me-1" onClick={handleLogout}>Logout</button>
                   </>
                 ) : (
-                  <><Link to="/login">
+                  <>
+                  
+                  <Link to="/login">
                     <button class="shop-btn me-1">Login</button>
                   </Link>
                     <Link to="/register">
-                      <button class="shop-btn ms-5">Register</button>
+                      <button class="shop-btn me-1">Register</button>
+                    </Link></>
+                )}
+              </div>
+
+              <div className="d-block d-lg-none">
+                <Link to="/home"><button class="shop-btn me-1 shop-btn-mobile">Home</button></Link>
+                <Link to="/cart"><button class="shop-btn me-1 shop-btn-mobile">Cart</button></Link>
+                <Link to="/contact"><button class="shop-btn me-1 shop-btn-mobile">Contact</button></Link>
+                {loginstatus ? (
+                  <>
+                    <Link to="/dashboard"><button class="shop-btn me-1 shop-btn-mobile">Dashboard</button></Link>
+
+                    <button class="shop-btn shop-btn-mobile" onClick={handleLogout}>Logout</button>
+                  </>
+                ) : (
+                  <><Link to="/login">
+                    <button class="shop-btn me-1 shop-btn-mobile">Login</button>
+                  </Link>
+                    <Link to="/register">
+                      <button class="shop-btn me-1 shop-btn-mobile">Register</button>
                     </Link></>
                 )}
               </div>

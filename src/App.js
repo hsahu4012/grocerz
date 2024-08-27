@@ -45,6 +45,7 @@ import OrderDetailsPrint from "./components/OrderDetailsPrint";
 
 import About from "./components/About";
 import ProductSearchList from "./components/ProductSearchList";
+import Complainform from './components/Complainform';
 
  function App() {
 
@@ -92,7 +93,6 @@ import ProductSearchList from "./components/ProductSearchList";
             <Route path="/category/:category_id" element={<Productlist />} />
             <Route path="/product/:productid" element={<ProductDetails />} />
 
-
             <Route path="/cart" element={<ShopCart />} />
             <Route path="/wishlist" element={< Wishlist />} />
             <Route path='/checkout' element={<Checkout />} />
@@ -103,9 +103,9 @@ import ProductSearchList from "./components/ProductSearchList";
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/complainform" element={<Complainform />} />
             <Route path="/customproduct" element={<CustomProduct/>} />
             <Route path="/about" element={<About />} />
-
 
             <Route path="/loginandsecurity" element={<LoginAndSecurityPage />} />
             <Route path='/address' element={<AddressList />} />
@@ -119,7 +119,6 @@ import ProductSearchList from "./components/ProductSearchList";
             <Route path="/orderhistory" element={<OrderHistory />} />
             <Route path="/orderhistory/orderdetailsprint/:orderid/:usertype" element={<OrderDetailsPrint />} />
             <Route path="/productsearchlist" element={<ProductSearchList />} />
-
 
             <Route path="/" element={<Home />} />
 
