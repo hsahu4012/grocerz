@@ -27,7 +27,7 @@ const OrderDetail = () => {
         } catch (error) {
             setError("Error fetching categories !")
             console.error('Error fetching categories:', error);
-            
+
         }
     };
 
@@ -51,7 +51,8 @@ const OrderDetail = () => {
             if (subCategoryid) {
                 const url = `${process.env.REACT_APP_API_URL}products/bySubCategory`;
                 const response = await axios.post(url, { category, subcategory });
-                setProducts(response.data);
+                let tempObj = response.data.map(temp => ({...temp, price: temp.price - temp.discount}));
+                setProducts([...tempObj]);
                 // console.log("response.data",response.data)
                 // console.log("products",products)
             }
@@ -118,6 +119,10 @@ const OrderDetail = () => {
     useEffect(() => {
         fetchProductsData(subcategory);
     }, [subcategory]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
 
     const order = orderDetails.length > 0 ? orderDetails[0] : null;
@@ -212,7 +217,7 @@ const OrderDetail = () => {
                                                                     value={selectedProduct}
                                                                     onChange={(e) => { setSelectedProduct(e.target.value) }}>
                                                                     <option value="">Select Product</option>
-                                                                    {products.map(product => (
+                                                                    {products.length > 0 && products.map(product => (
                                                                         <option key={product.productid} value={product.productid}>
                                                                             {product.prod_name} <span style={{ color: "#34a853" }}> Price {product.price}</span>
                                                                         </option>
@@ -239,7 +244,7 @@ const OrderDetail = () => {
                                                                 <img src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`} className="img-fluid" alt={`${process.env.REACT_APP_IMAGE_URL}${item.prod_name}`} />
                                                             </div>
                                                             <div className="col-md-9 d-flex justify-content-between align-items-center">
-                                                                <p><strong>{item.prod_name}</strong></p>
+                                                                <p><strong  >{item.prod_name}</strong></p>
                                                                 <p><strong>Qty: {item.quantity}</strong></p>
                                                                 <p><strong>&#8377;&nbsp;{item.price_final}</strong></p>
                                                                 {usertype === 'admin' && (
