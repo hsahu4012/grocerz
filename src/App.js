@@ -92,7 +92,6 @@ import ProductSearchList from "./components/ProductSearchList";
             <Route path="/category/:category_id" element={<Productlist />} />
             <Route path="/product/:productid" element={<ProductDetails />} />
 
-
             <Route path="/cart" element={<ShopCart />} />
             <Route path="/wishlist" element={< Wishlist />} />
             <Route path='/checkout' element={<Checkout />} />
@@ -106,7 +105,6 @@ import ProductSearchList from "./components/ProductSearchList";
             <Route path="/customproduct" element={<CustomProduct/>} />
             <Route path="/about" element={<About />} />
 
-
             <Route path="/loginandsecurity" element={<LoginAndSecurityPage />} />
             <Route path='/address' element={<AddressList />} />
             <Route path='/addressnew' element={<Address />} />
@@ -119,7 +117,6 @@ import ProductSearchList from "./components/ProductSearchList";
             <Route path="/orderhistory" element={<OrderHistory />} />
             <Route path="/orderhistory/orderdetailsprint/:orderid/:usertype" element={<OrderDetailsPrint />} />
             <Route path="/productsearchlist" element={<ProductSearchList />} />
-
 
             <Route path="/" element={<Home />} />
 

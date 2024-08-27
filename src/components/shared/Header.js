@@ -29,7 +29,7 @@ const Header = () => {
   //   fetchCategories();
   // }, []);
 
-  const securePages = ["/dashboard", "/cart", "/wishlist", "/OrderHistory", "/profile", "/checkout", "/address", "/payment"];
+  const securePages = ["/dashboard", "/wishlist", "/OrderHistory", "/orderhistory", "/profile", "/address",];
 
   const checkLoginAndRedirect = () => {
     const token = localStorage.getItem("jwttoken");
@@ -1351,10 +1351,12 @@ const Header = () => {
                   <>
                     <Link to="/dashboard"><button class="shop-btn me-1">Dashboard</button></Link>
 
-                    <button class="shop-btn" onClick={handleLogout}>Logout</button>
+                    <button class="shop-btn me-1" onClick={handleLogout}>Logout</button>
                   </>
                 ) : (
-                  <><Link to="/login">
+                  <>
+                  
+                  <Link to="/login">
                     <button class="shop-btn me-1">Login</button>
                   </Link>
                     <Link to="/register">
