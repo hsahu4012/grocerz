@@ -29,9 +29,25 @@ const Wishlist = () => {
     fetchWishlistItems();
   }, [userid]);
 
-  const handleCleanWishlist = () => {
-    setWishlistItems([]);
+  const handleCleanWishlist = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete all items from your wishlist?");
+    if (confirmDelete) {
+      try {
+        setLoading(true);
+        const url = `${process.env.REACT_APP_API_URL}wishlist/emptyWishList/${userid}`;
+        await axios.put(url);
+        setWishlistItems([]);
+      } catch (error) {
+        console.error("Error cleaning wishlist:", error);
+      }
+      setLoading(false);
+    }
   };
+  
+
+  //const handleCleanWishlist = () => {
+  //  setWishlistItems([]);
+ // };
 
   return (
     <>
