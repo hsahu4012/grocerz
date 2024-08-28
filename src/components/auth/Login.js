@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useId } from "react";
 import { Formik, Field, Form } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { DataAppContext } from "../../DataContext";
@@ -11,6 +11,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const url = `${process.env.REACT_APP_API_URL}users/login`;
+  const [cartItems, setCartItems] = useState([]);
 
   const initialValues = {
     username: "",
@@ -30,6 +31,7 @@ const Login = () => {
         localStorage.setItem("usertype", response.data.userType);
         login_user();
         AddProductsToCart()
+        fetchCartItems()
         navigate("/home");
       }
     } catch (error) {
@@ -72,6 +74,19 @@ const Login = () => {
       setLoading(false);
       localStorage.setItem('cart', "");
     }
+  };
+  const fetchCartItems = async () => {
+    setLoading(true);
+    const userid = localStorage.getItem('userid');
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userid}`);
+        const items = response.data;
+        setCartItems(items);
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+    } catch (error) {
+      console.error("Error fetching cart items", error);
+    }
+    setLoading(false);
   };
 
   return (

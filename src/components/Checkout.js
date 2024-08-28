@@ -105,8 +105,6 @@ function Checkout() {
                 const items = response.data;
                 console.log("Itemsi", items)
                 setCartItems(items);
-                // const total = items.reduce((acc, item) => acc + ((Number(item.price) * item.quantity) - (Number(item.discount) * item.quantity)), 0);
-                // setTotalAmount(total);
             }
             else {
                 const storedCartItems = (localStorage.getItem("cart").length) ? JSON.parse(localStorage.getItem("cart")) : [];
