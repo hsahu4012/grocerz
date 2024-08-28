@@ -3,10 +3,11 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
 import Loader from './loader/Loader';
+
 const OrderDetail = () => {
     const [showPopup, setShowPopup] = useState(false);
-    const [category, setcategory] = useState('');
-    const [subcategory, setsubcategory] = useState('');
+    const [category, setCategory] = useState('');
+    const [subcategory, setSubcategory] = useState('');
     const [selectedProduct, setSelectedProduct] = useState('');
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
@@ -27,7 +28,6 @@ const OrderDetail = () => {
         } catch (error) {
             setError("Error fetching categories !")
             console.error('Error fetching categories:', error);
-
         }
     };
 
@@ -51,10 +51,8 @@ const OrderDetail = () => {
             if (subCategoryid) {
                 const url = `${process.env.REACT_APP_API_URL}products/bySubCategory`;
                 const response = await axios.post(url, { category, subcategory });
-                let tempObj = response.data.map(temp => ({...temp, price: temp.price - temp.discount}));
+                let tempObj = response.data.map(temp => ({ ...temp, price: temp.price - temp.discount }));
                 setProducts([...tempObj]);
-                // console.log("response.data",response.data)
-                // console.log("products",products)
             }
         } catch (error) {
             setError("Error fetching products !")
@@ -65,18 +63,18 @@ const OrderDetail = () => {
     // Fetch order details
     const fetchOrderDetails = async () => {
         try {
-            setLoading(true)
+            setLoading(true);
             const url = `${process.env.REACT_APP_API_URL}orderdetails/${orderid}`;
             const response = await axios.get(url);
             setOrderDetails(response.data);
         } catch (error) {
             setError("Something went wrong please try again !")
             console.error("Error fetching order details:", error);
-        }
-        finally {
-            setLoading(false)
+        } finally {
+            setLoading(false);
         }
     };
+
     // Handle adding product to order
     const handleAddProduct = async () => {
         try {
@@ -124,7 +122,6 @@ const OrderDetail = () => {
         window.scrollTo(0, 0);
     }, []);
 
-
     const order = orderDetails.length > 0 ? orderDetails[0] : null;
 
     return (
@@ -163,9 +160,6 @@ const OrderDetail = () => {
                                                 <div className="col-sm-12">
                                                     <div className="heading-custom-font-1">Bill Details</div>
                                                     <ul className="list-group text-custom-font-1">
-                                                        {/* <li className="list-group-item">Total Amount - {order.paymentamount}</li>
-                                                        <li className="list-group-item">Delivery Charge - 0</li>
-                                                        <li className="list-group-item">Promotional Discount - 0</li> */}
                                                         <li className="list-group-item text-success"><strong>Final Payment Amount - {order.paymentamount}</strong></li>
                                                         <li className="list-group-item">Payment Mode - {order.paymentmode}</li>
                                                     </ul>
@@ -185,7 +179,7 @@ const OrderDetail = () => {
                                                             {/* Category Selection */}
                                                             <select
                                                                 value={category}
-                                                                onChange={(e) => setcategory(e.target.value)}>
+                                                                onChange={(e) => setCategory(e.target.value)}>
                                                                 <option value="">Select Category</option>
                                                                 {categories.map(category => (
                                                                     <option key={category.category_id} value={category.category_id}>
@@ -198,7 +192,7 @@ const OrderDetail = () => {
                                                             {category && (
                                                                 <select
                                                                     value={subcategory}
-                                                                    onChange={(e) => setsubcategory(e.target.value)}>
+                                                                    onChange={(e) => setSubcategory(e.target.value)}>
                                                                     <option value="">Select Subcategory</option>
                                                                     {subcategories
                                                                         .filter(sub => sub.category_id === category)
@@ -229,22 +223,20 @@ const OrderDetail = () => {
                                                             </button>
                                                             <button onClick={() => setShowPopup(false)}>Close</button>
                                                             {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>}
-                                                            {/* {err && <p className=''>{err}</p>} */}
                                                         </div>
-
                                                     </div>
                                                 )}
 
                                                 {orderDetails.map((item, index) => (
                                                     <div className="card mb-1" key={index} style={{ cursor: 'pointer' }}
-                                                    >
+                                                        onClick={() => navigate(`/product/${item.productid}`)}>
                                                         <div className="card-body d-flex align-items-center">
                                                             <div className="col-md-3">
                                                                 <span><strong>{index + 1}</strong></span>
                                                                 <img src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`} className="img-fluid" alt={`${process.env.REACT_APP_IMAGE_URL}${item.prod_name}`} />
                                                             </div>
                                                             <div className="col-md-9 d-flex justify-content-between align-items-center">
-                                                                <p><strong  >{item.prod_name}</strong></p>
+                                                                <p><strong>{item.prod_name}</strong></p>
                                                                 <p><strong>Qty: {item.quantity}</strong></p>
                                                                 <p><strong>&#8377;&nbsp;{item.price_final}</strong></p>
                                                                 {usertype === 'admin' && (
@@ -260,16 +252,11 @@ const OrderDetail = () => {
 
                                             <div className="heading-custom-font-1 my-5">Order Status : {order.delivery_status} </div>
 
-                                            {
-                                                (usertype === 'admin') && <div className="text-center">
-                                                    {/* <Link to={`/orderhistory/orderdetailsprint/${orderid}/vendor`} className="shop-btn mx-1">Print for Vendor</Link>
-                                                    <Link to={`/orderhistory/orderdetailsprint/${orderid}/customer`} className="shop-btn mx-1">Print for Customer</Link>
-                                                    <Link to={`/orderhistory/orderdetailsprint/${orderid}/partner`} className="shop-btn mx-1">Print for Delivery Partner</Link> */}
-
+                                            {usertype === 'admin' && (
+                                                <div className="text-center">
                                                     <Link to={`/orderhistory/orderdetailsprint/${orderid}/customer`} className="shop-btn mx-1">Print Invoice</Link>
                                                 </div>
-                                            }
-
+                                            )}
                                         </div>
                                     ) : (
                                         <p>No order found.</p>
