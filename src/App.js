@@ -11,6 +11,7 @@ import "./assets/css/style.css";
 import Loader from "./components/loader/Loader";
 import Checkout from './components/Checkout';
 import Header from "./components/shared/Header";
+import Icon from "./components/shared/Icon";
 import Footer from "./components/shared/Footer";
 import Home from "./components/Home";
 import Product from "./components/Product";
@@ -124,6 +125,7 @@ import Complainform from './components/Complainform';
 
           </Routes>
           {/* <Home /> */}
+          <Icon />
           <Footer />
         </DataApp>
       </BrowserRouter>
