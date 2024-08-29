@@ -11,7 +11,6 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const url = `${process.env.REACT_APP_API_URL}users/login`;
-  const [cartItems, setCartItems] = useState([]);
 
   const initialValues = {
     username: "",
@@ -24,7 +23,7 @@ const Login = () => {
       const response = await axios.post(url, values);
 
       if (response.status === 202) {
-        console.log(response.data);
+        // console.log(response.data);
         const token = response.data.token;
         localStorage.setItem("jwttoken", token);
         localStorage.setItem("userid", response.data.userId);
@@ -81,8 +80,16 @@ const Login = () => {
     try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userid}`);
         const items = response.data;
-        setCartItems(items);
-        localStorage.setItem("cart", JSON.stringify(cartItems));
+        const sortedItems = items.map(item => ({
+          productid: item.productid,
+          prod_name: item.prod_name,
+          price: item.price,
+          image: item.image,
+          discount: item.discount
+      })).sort((a, b) => {
+          return a.prod_name.localeCompare(b.prod_name);
+      });
+        localStorage.setItem("cart", JSON.stringify(sortedItems));
     } catch (error) {
       console.error("Error fetching cart items", error);
     }

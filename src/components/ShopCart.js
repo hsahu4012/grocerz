@@ -30,7 +30,16 @@ const ShopCart = () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userid}`);
         const items = response.data;
         setCartItems(items);
-        localStorage.setItem("cart", JSON.stringify(items));
+        const sortedItems = items.map(item => ({
+          productid: item.productid,
+          prod_name: item.prod_name,
+          price: item.price,
+          image: item.image,
+          discount: item.discount
+      })).sort((a, b) => {
+          return a.prod_name.localeCompare(b.prod_name);
+      });
+        localStorage.setItem("cart", JSON.stringify(sortedItems));
         setLoading(false);
       }
       else {
