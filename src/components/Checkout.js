@@ -220,10 +220,21 @@ function Checkout() {
         <>
             <section className="blog about-blog">
                 <div className="container">
-                    {loading && <Loader />}
+                    {/* {loading && <Loader />}
                     <div className="blog-heading about-heading">
                         <h1 className="heading">Checkout</h1>
+                        <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
+                    </div> */}
+                   {loading && (
+                    <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '50vh',
+                    }}>
+                    <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
                     </div>
+                    )}
                 </div>
             </section>
 
