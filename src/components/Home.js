@@ -6,6 +6,7 @@ import homeImage from "../assets/groc.png";
 import homeImage1 from "../assets/groc1.png";
 import homeImage2 from "../assets/groc2.webp";
 import homeImage3 from "../assets/groc3.webp";
+import Notice from "./Notice";
 
 const Home = () => {
   const [category, setCategory] = useState(marketCategory);
@@ -84,6 +85,9 @@ const Home = () => {
         <div class="hero-section">
           <div class="container">
             <div class="swiper hero-swiper">
+                  {/* start notice section */}
+                  <Notice />
+                  {/* end notice section */}
               <div class="swiper-wrapper hero-wrapper">
                 <div class="swiper-slide hero-slide">
                   <div class="hero-wrapper-slide wrapper-slide">
