@@ -11,6 +11,7 @@ import "./assets/css/style.css";
 import Loader from "./components/loader/Loader";
 import Checkout from './components/Checkout';
 import Header from "./components/shared/Header";
+import Icon from "./components/shared/Icon";
 import Footer from "./components/shared/Footer";
 import Home from "./components/Home";
 import Product from "./components/Product";
@@ -46,6 +47,8 @@ import OrderDetailsPrint from "./components/OrderDetailsPrint";
 import About from "./components/About";
 import ProductSearchList from "./components/ProductSearchList";
 import OurTeam from './components/OurTeam';
+import Complainform from './components/Complainform';
+import Faq from "./components/Faq";
 
  function App() {
 
@@ -93,7 +96,6 @@ import OurTeam from './components/OurTeam';
             <Route path="/category/:category_id" element={<Productlist />} />
             <Route path="/product/:productid" element={<ProductDetails />} />
 
-
             <Route path="/cart" element={<ShopCart />} />
             <Route path="/wishlist" element={< Wishlist />} />
             <Route path='/checkout' element={<Checkout />} />
@@ -104,6 +106,7 @@ import OurTeam from './components/OurTeam';
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/complainform" element={<Complainform />} />
             <Route path="/customproduct" element={<CustomProduct/>} />
             <Route path="/about" element={<About />} />
             <Route path="/ourteam" element={<OurTeam/>} />
@@ -121,12 +124,13 @@ import OurTeam from './components/OurTeam';
             <Route path="/orderhistory" element={<OrderHistory />} />
             <Route path="/orderhistory/orderdetailsprint/:orderid/:usertype" element={<OrderDetailsPrint />} />
             <Route path="/productsearchlist" element={<ProductSearchList />} />
-
+            <Route path="/Faq" element={<Faq />} />
 
             <Route path="/" element={<Home />} />
 
           </Routes>
           {/* <Home /> */}
+          <Icon />
           <Footer />
         </DataApp>
       </BrowserRouter>

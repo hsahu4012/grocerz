@@ -35,26 +35,41 @@ const ProductSearchList = () => {
     setLoading(false);
   };
 
-  const handleAddToCart = async (productid) => {
+  const handleAddToCart = async (product) => {
     setLoading(true);
+    const {productid, prod_name, price, image, discount } = product;
     try {
       const quantity = 1;
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
-        userid,
-        productid,
-        quantity
-      });
-      if (response.status === 200) {
-        toast.success("Product added to cart successfully");
-      } else {
-        toast.error("Failed to add product to cart");
+      if(userid){
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
+          userid,
+          productid,
+          quantity
+        });
+        if(response.status === 200){
+          toast.success("Product added to cart successfully");
+        } else {
+          toast.error("Failed to add product to cart");
+        }
+      }else{
+        let cart = (localStorage.getItem("cart").length) ? JSON.parse(localStorage.getItem("cart")) : [];
+        const existingProduct = cart.find(item => item.productid === productid);
+        if (existingProduct) {
+          existingProduct.quantity += quantity;
+        } else {
+          cart.push({ productid, prod_name, price, image, discount, quantity });
+        }
+         // Save the updated cart back to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+      toast.success("Product added to cart successfully");
       }
+      
     } catch (error) {
-      setMessage('There was an error adding the product to the cart!');
       console.error('Error adding to cart:', error);
     }
     setLoading(false);
   };
+
 
   const addToWishlist = async (productid) => {
     setLoading(true);
@@ -103,13 +118,20 @@ const ProductSearchList = () => {
     fetchOrderIDs()
   }, [showPopup])
 
+  const connectwhatsapp = () => {
+    const phoneNumber = '+918757499345';
+    const message = `Hi. I want to place an order.`;
+    const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    window.open(whatsappLink, '_blank').focus();
+  }
+
   return (
     <>
       <ToastContainer />
       <section className="shop spad product product-sidebar footer-padding">
         <div className="container">
           {loading && <Loader />}
-          <div className="col-lg-9 col-md-9 mx-auto">
+          <div className="col-lg-12 col-md-12 mx-auto">
             <div className="row g-4">  {/* Added g-4 class for gutter spacing */}
               {searchedProducts.length > 0 ? (
                 searchedProducts.map(product => (
@@ -127,21 +149,21 @@ const ProductSearchList = () => {
                         <div className="product-description">
                           <div className="product-details">{product.prod_name}</div>
                           <div className="price">
-                            {(product.discount === 0) && <span className="price-cut">&#8377; &nbsp;{product.price}</span>}
+                            {(product.discount !== 0) && <span className="price-cut">&#8377; &nbsp;{product.price}</span>}
                             <span className="new-price">&#8377; &nbsp;{product.price - product.discount}</span>
                           </div>
                         </div>
                         {product.stock_quantity < 1 && (
                           <p className="out-of-stock">Out of Stock</p>
                         )}
-                        {userid && product.stock_quantity > 0 && (
+                        { product.stock_quantity > 0 && (
                           <div className="product-cart-btn">
-                            <button onClick={() => handleAddToCart(product.productid)} className="product-btn mb-2" type="button">
+                            <button onClick={() => handleAddToCart(product)} className="product-btn mb-2" type="button">
                               Add to Cart
                             </button>
-                            <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">
+                            {userid && <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">
                               Add to Wishlist
-                            </button>
+                            </button>}
                             {usertype === 'admin' && <button className="product-btn mt-2" type="button" onClick={() => { setShowPopup(true); setSingleProduct(product); }}>
                               Add to Orders
                             </button>}
@@ -181,6 +203,10 @@ const ProductSearchList = () => {
                 </div>
               )}
             </div>
+          </div>
+
+          <div class="login-btn">
+            <button onClick={connectwhatsapp} class="shop-btn shop-btn-full">If your product is not listed<br></br>Order on WhatsApp</button>
           </div>
         </div>
       </section>

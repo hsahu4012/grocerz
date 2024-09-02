@@ -22,7 +22,7 @@ const Address = () => {
     alternatecontact: "",
     landmark: "",
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('')
 
   const handleChange = (e) => {
