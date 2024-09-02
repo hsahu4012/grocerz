@@ -45,6 +45,7 @@ import OrderDetailsPrint from "./components/OrderDetailsPrint";
 
 import About from "./components/About";
 import ProductSearchList from "./components/ProductSearchList";
+import OurTeam from './components/OurTeam';
 
  function App() {
 
@@ -105,7 +106,8 @@ import ProductSearchList from "./components/ProductSearchList";
             <Route path="/contact" element={<Contact />} />
             <Route path="/customproduct" element={<CustomProduct/>} />
             <Route path="/about" element={<About />} />
-
+            <Route path="/ourteam" element={<OurTeam/>} />
+           
 
             <Route path="/loginandsecurity" element={<LoginAndSecurityPage />} />
             <Route path='/address' element={<AddressList />} />
