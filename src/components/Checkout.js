@@ -55,7 +55,28 @@ function Checkout() {
         }
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}users/addguestuser`, { ...formData });
+            const userId = localStorage.getItem('userid') || "";
+            if(userId){
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}address/addAddress`, {userid:userId, ...formData });
+                setFormData({
+                    name: "",
+                    line1: "",
+                    line2: "",
+                    line3: "",
+                    city: "",
+                    state: "",
+                    country: "",
+                    pin: "",
+                    contact: "",
+                    alternatecontact: "",
+                    landmark: "",
+                });
+                const uid = response.data.userid;
+                const aid = response.data.addressid;
+                const obj = { aid: aid, uid: uid }
+                return obj
+            } 
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}users/addguestuser`, { ...formData });           
             setFormData({
                 name: "",
                 line1: "",
@@ -212,6 +233,29 @@ function Checkout() {
         setIsModalOpen(!isModalOpen);
     };
 
+    const fillpindetails = () => {
+        if (formData.pin === '848210') {
+          setError('')
+          setFormData((prevState) => ({
+            ...prevState,
+            city: 'Rosera',
+            state: 'Bihar',
+            country: 'India'
+          }));
+        }
+        else {
+          setError('Sorry! We do not serve in this area.')
+        }
+      }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -271,70 +315,82 @@ function Checkout() {
                                                             Please, add an address to proceed.
                                                         </div>
                                                     }
-                                                    <Link to="/addressnew" className="shop-btn">Add New Address</Link>
+                                                    <button type="button" className="shop-btn" onClick={modalAction}>Add New Address</button>
                                                 </> : <>
                                                     <GuestAddess setFormData={setFormData} setError={setError} formData={formData} error={error} />
                                                 </>}
-                                                <div className="col-lg-6">
+                                                <form onSubmit={handleSubmit}>
                                                     {/* <a href="#" className="shop-btn" onClick={modalAction}>Open in Modal - Add New Address</a> */}
                                                     {/* <Link to="/addressnew" className="shop-btn">Add New Address</Link> */}
 
-                                                    <div className={`modal-wrapper submit ${isModalOpen ? 'open' : ''}`}>
+                                                    <div className="modal-wrapper" style={{ display: isModalOpen ? 'block' : 'none', marginLeft: "33vw", marginTop: "10vh" }}>
                                                         <div className="anywhere-away" onClick={modalAction}></div>
-                                                        <div className="login-section account-section modal-main">
+                                                        <div className="login-section account-section modal-main col-4">
                                                             <div className="review-form">
-                                                                <div className="review-content">
-                                                                    <h5 className="comment-title">Add Your Address</h5>
+                                                                <div className="review-content" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '6em'}}>
+                                                                    <h5 className="comment-title" style={{
+                                                                        marginTop: '1.67em',
+                                                                        marginBottom: '1.67em',                                                                       
+                                                                    }}>Add Your Address</h5>
                                                                     <div className="close-btn">
                                                                         <img src="assets/images/homepage-one/close-btn.png" onClick={modalAction} alt="close-btn" />
                                                                     </div>
                                                                 </div>
                                                                 <div className="account-inner-form">
                                                                     <div className="review-form-name">
-                                                                        <label htmlFor="firstname" className="form-label">First Name*</label>
-                                                                        <input type="text" id="firstname" className="form-control" placeholder="First Name" />
+                                                                        <label htmlFor="name" className="form-label">Name*</label>
+                                                                        <input type="text" id="name" className="form-control" name="name" placeholder="Name" onChange={handleChange}/>
+                                                                    </div>                                                                    
+                                                                </div>
+                                                                <div className="account-inner-form">                                                                   
+                                                                    <div className="review-form-name">
+                                                                        <label htmlFor="userphone" className="form-label">Contact*</label>
+                                                                        <input type="tel" id="userphone" className="form-control" name="contact" placeholder="Contact" onChange={handleChange}/>
                                                                     </div>
                                                                     <div className="review-form-name">
-                                                                        <label htmlFor="lastname" className="form-label">Last Name*</label>
-                                                                        <input type="text" id="lastname" className="form-control" placeholder="Last Name" />
+                                                                        <label htmlFor="alternatephone" className="form-label">Alternate Contact</label>
+                                                                        <input type="tel" id="alternatephone" className="form-control" name="alternatecontact" placeholder="Alternate Contact" onChange={handleChange}/>
                                                                     </div>
                                                                 </div>
                                                                 <div className="account-inner-form">
-                                                                    <div className="review-form-name">
-                                                                        <label htmlFor="useremail" className="form-label">Email*</label>
-                                                                        <input type="email" id="useremail" className="form-control" placeholder="user@gmail.com" />
-                                                                    </div>
-                                                                    <div className="review-form-name">
-                                                                        <label htmlFor="userphone" className="form-label">Phone*</label>
-                                                                        <input type="tel" id="userphone" className="form-control" placeholder="+880388**0899" />
-                                                                    </div>
-                                                                </div>
-                                                                <div className="review-form-name address-form">
+                                                                <div className="review-form-name">
                                                                     <label htmlFor="useraddress" className="form-label">Address*</label>
-                                                                    <input type="text" id="useraddress" className="form-control" placeholder="Enter your Address" />
+                                                                    <input type="text" id="useraddress" className="form-control" name="line1" placeholder="Enter your Address" onChange={handleChange}/>
                                                                 </div>
-                                                                <div className="account-inner-form city-inner-form">
-                                                                    <div className="review-form-name">
-                                                                        <label htmlFor="usercity" className="form-label">Town / City*</label>
-                                                                        <select id="usercity" className="form-select">
-                                                                            <option>Choose...</option>
-                                                                            <option>New York</option>
-                                                                            <option>Dhaka</option>
-                                                                            <option selected>London</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div className="review-form-name">
-                                                                        <label htmlFor="usernumber" className="form-label">Postcode / ZIP*</label>
-                                                                        <input type="number" id="usernumber" className="form-control" placeholder="0000" />
-                                                                    </div>
                                                                 </div>
+                                                                <div className="account-inner-form">
+                                                                <div className="review-form-name">
+                                                                    <label htmlFor="landmark" className="form-label">Landmark</label>
+                                                                    <input type="text" id="landmark" className="form-control" name="landmark" placeholder="Landmark" onChange={handleChange}/>
+                                                                </div>
+                                                                <div className="review-form-name">
+                                                                    <label htmlFor="zip" className="form-label" >Pin*</label>
+                                                                    <input type="number" id="zip" className="form-control" name="pin" placeholder="Pin" onChange={handleChange} onBlur={fillpindetails}/>
+                                                                </div>
+                                                                </div>
+                                                                <div className="account-inner-form">
+                                                                <div className="review-form-name">
+                                                                    <label htmlFor="city" className="form-label">City*</label>
+                                                                    <input type="text" id="city" value={formData.city} className="form-control" name="city" placeholder="City" onChange={handleChange} disabled/>
+                                                                </div>
+
+                                                                <div className="review-form-name">
+                                                                    <label htmlFor="state" className="form-label">State*</label>
+                                                                    <input type="text" id="state" value={formData.state} className="form-control" name="state" placeholder="State" onChange={handleChange} disabled/>
+                                                                </div>
+
+                                                                <div className="review-form-name">
+                                                                    <label htmlFor="country" className="form-label">Country*</label>
+                                                                    <input type="text" id="country" value={formData.country} className="form-control" name="country" placeholder="Country" onChange={handleChange} disabled/>
+                                                                </div>
+                                                                </div>                                                                
                                                                 <div className="login-btn text-center">
-                                                                    <a href="#" onClick={modalAction} className="shop-btn">Add Address</a>
+                                                                    <button type="submit" onClick={modalAction} className="shop-btn">Add Address</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
