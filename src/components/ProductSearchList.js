@@ -15,7 +15,13 @@ const ProductSearchList = () => {
   const [selectedorderIDs, setselectedOrderIDs] = useState();
   const [singleProduct, setSingleProduct] = useState();
   const usertype = localStorage.getItem("usertype")
-  //const usertype='admin'
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    // Fetch the cart from local storage when the component mounts
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCart(storedCart);
+  }, []);
 
   const query = new URLSearchParams(location.search);
   useEffect(() => {
@@ -47,6 +53,9 @@ const ProductSearchList = () => {
           quantity
         });
         if(response.status === 200){
+          let cart = (localStorage.getItem("cart").length) ? JSON.parse(localStorage.getItem("cart")) : [];
+          cart.push({ productid, prod_name, price, image, discount, quantity });
+          localStorage.setItem("cart", JSON.stringify(cart));
           toast.success("Product added to cart successfully");
         } else {
           toast.error("Failed to add product to cart");
@@ -124,7 +133,9 @@ const ProductSearchList = () => {
     const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
     window.open(whatsappLink, '_blank').focus();
   }
-
+  const isInCart = (productid) => {
+    return cart.some(item => item.productid === productid);
+  };
   return (
     <>
       <ToastContainer />
@@ -158,9 +169,15 @@ const ProductSearchList = () => {
                         )}
                         { product.stock_quantity > 0 && (
                           <div className="product-cart-btn">
-                            <button onClick={() => handleAddToCart(product)} className="product-btn mb-2" type="button">
-                              Add to Cart
-                            </button>
+                            {isInCart(product.productid) ? (
+                        <Link to={'/cart'} className="product-btn mb-2" type="button">
+                          Go to Cart
+                        </Link>
+                      ) : (
+                        <button onClick={() => handleAddToCart(product)} className="product-btn mb-2" type="button">
+                          Add to Cart
+                        </button>
+                      )}
                             {userid && <button onClick={() => addToWishlist(product.productid)} className="product-btn" type="button">
                               Add to Wishlist
                             </button>}

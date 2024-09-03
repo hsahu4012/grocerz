@@ -456,3 +456,36 @@
 .width-100 {
   width: 100%;
 }
+/* css for cart bage and wishlist badge */
+.cartbadge {
+  position: absolute;
+  top: -2px;
+  right: -8px;
+  width: 18px;
+  height: 18px;
+  background-color: #34A853;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: #f8f8f8;
+  border-radius: 50%;
+}
+
+.wishlistbadge
+{
+  position: absolute;
+  top: -2px;
+  right: -8px;
+  width: 18px;
+  height: 18px;
+  background-color: #34A853;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  border-radius: 50%; 
+}
