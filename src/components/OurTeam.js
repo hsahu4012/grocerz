@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,7 +8,6 @@ const OurTeam = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
 
-  // Fetch team members from the API
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
@@ -24,13 +22,11 @@ const OurTeam = () => {
     fetchTeamMembers();
   }, []);
 
-  // Function to handle showing details of a team member
   const handleViewDetails = (member) => {
     setSelectedMember(member);
     setShowPopup(true);
   };
 
-  // Function to handle closing the popup
   const handleClosePopup = () => {
     setShowPopup(false);
     setSelectedMember(null);
@@ -64,20 +60,23 @@ const OurTeam = () => {
                       <img
                         src={member.image ? `${process.env.REACT_APP_IMAGE_URL}${member.image}` : 'default-image.jpg'}
                         alt={member.name}
-                        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
                       />
                     </div>
                   </Link>
                   <div className="product-info flex-grow-1">
                     <div className="product-description">
-                      <div style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '5px' }}>{member.name}</div>
-                      <div style={{ color: '#34A853',  fontSize: '15px',   marginBottom: '5px' }}>
-                        Designation: {member.designation}
+                      <div className="product-details">{member.name}</div>
+                      <div className="price">
+                        <span className="designation text-success">
+                          Designation: {member.designation}
+                        </span>
                       </div>
-                      <div style={{ color: '#34A853', fontSize: '15px',  marginBottom: '10px' }}>
-                        Department: {member.department}
+                      <div className="price">
+                        <span className="designation text-success">
+                          Department: {member.department}
+                        </span>
                       </div>
-                      <p style={{ color: '#555', fontSize: '15px', lineHeight: '1.5' }}>{member.description}</p>
+                      <p className="description">{member.description}</p>
                     </div>
                     <div className="product-cart-btn">
                       <button onClick={() => handleViewDetails(member)} className="product-btn" type="button">
