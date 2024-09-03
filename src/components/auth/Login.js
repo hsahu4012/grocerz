@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useId } from "react";
 import { Formik, Field, Form } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { DataAppContext } from "../../DataContext";
@@ -23,13 +23,14 @@ const Login = () => {
       const response = await axios.post(url, values);
 
       if (response.status === 202) {
-        console.log(response.data);
+        // console.log(response.data);
         const token = response.data.token;
         localStorage.setItem("jwttoken", token);
         localStorage.setItem("userid", response.data.userId);
         localStorage.setItem("usertype", response.data.userType);
         login_user();
         AddProductsToCart()
+        fetchCartItems()
         navigate("/home");
       }
     } catch (error) {
@@ -72,6 +73,27 @@ const Login = () => {
       setLoading(false);
       localStorage.setItem('cart', "");
     }
+  };
+  const fetchCartItems = async () => {
+    setLoading(true);
+    const userid = localStorage.getItem('userid');
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userid}`);
+        const items = response.data;
+        const sortedItems = items.map(item => ({
+          productid: item.productid,
+          prod_name: item.prod_name,
+          price: item.price,
+          image: item.image,
+          discount: item.discount
+      })).sort((a, b) => {
+          return a.prod_name.localeCompare(b.prod_name);
+      });
+        localStorage.setItem("cart", JSON.stringify(sortedItems));
+    } catch (error) {
+      console.error("Error fetching cart items", error);
+    }
+    setLoading(false);
   };
 
   return (

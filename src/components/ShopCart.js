@@ -30,6 +30,16 @@ const ShopCart = () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userid}`);
         const items = response.data;
         setCartItems(items);
+        const sortedItems = items.map(item => ({
+          productid: item.productid,
+          prod_name: item.prod_name,
+          price: item.price,
+          image: item.image,
+          discount: item.discount
+      })).sort((a, b) => {
+          return a.prod_name.localeCompare(b.prod_name);
+      });
+        localStorage.setItem("cart", JSON.stringify(sortedItems));
         setLoading(false);
       }
       else {
@@ -80,15 +90,16 @@ const ShopCart = () => {
           `${process.env.REACT_APP_API_URL}cart/handleQuantity/${userid}/${productid}`,
           { quantity: newQuantity }
         );
-
         if (response.status === 200) {
-          setCartItems((prevItems) =>
-            prevItems.map((item) =>
+          setCartItems((prevItems) => {
+            const updatedItems = prevItems.map((item) =>
               item.productid === productid
                 ? { ...item, quantity: newQuantity }
                 : item
-            )
-          );
+            );
+            localStorage.setItem("cart", JSON.stringify(updatedItems));
+            return updatedItems;
+          });
         }
       } else {
         // Update cartItems locally if the user is not logged in
