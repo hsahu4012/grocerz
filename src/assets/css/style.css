@@ -1960,9 +1960,10 @@ button {
   background: none;
   padding: 3rem 4rem 4rem;
 }
-/* .grocery-section .wrapper-left {
-  background: url("../assets/images/homepage-one/grocery-bg.webp") no-repeat center/cover;
-} */
+.grocery-section .wrapper-left {
+  /* background: url("../discountSection/2.jpg") no-repeat center/cover; */
+  background: #c4e3d9;
+}
 .grocery-section .wrapper-left .shop-btn {
   background: #ffbb38;
   color: #1d1d1d;
@@ -1977,9 +1978,10 @@ button {
 .grocery-section .wrapper-left .shop-btn:hover svg {
   fill: #ffffff;
 }
-/* .grocery-section .wrapper-right {
-  background: url("../assets/images/homepage-one/grocery-bg-1.webp") no-repeat center/cover;
-} */
+.grocery-section .wrapper-right {
+  /* background: url("../assets/images/homepage-one/grocery-bg-1.webp") no-repeat center/cover; */
+  background: #fed9da;
+}
 @media (max-width:1023px) {
   .grocery-section .product-wrapper {
     height: 29rem;

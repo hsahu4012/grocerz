@@ -7,6 +7,8 @@ import homeImage1 from "../assets/groc1.png";
 import homeImage2 from "../assets/groc2.webp";
 import homeImage3 from "../assets/groc3.webp";
 import Notice from "./Notice";
+import GrocerySection from './GrocerySection';
+
 
 const Home = () => {
   const [category, setCategory] = useState(marketCategory);
@@ -208,6 +210,10 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
+            </section>
+            <div className="grocery-section container">
+                <GrocerySection />
+            </div>
               </div>
               <div class="swiper-pagination"></div>
             </div>
