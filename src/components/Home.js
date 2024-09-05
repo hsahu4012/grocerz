@@ -411,9 +411,14 @@ const Home = () => {
             </div>
           </div>
         </div>
-    </section >
+      </section>
 
-    {/* <section class="product flash-sale">
+      {/* Section fot cards */}
+      <div className="grocery-section container">
+        <GrocerySection />
+      </div>
+      
+      {/* <section class="product flash-sale">
         <div class="container">
             <div class="flash-sale-section">
                 <div class="countdown-section">
