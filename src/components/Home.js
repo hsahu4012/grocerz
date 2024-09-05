@@ -210,10 +210,6 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-            </section>
-            <div className="grocery-section container">
-                <GrocerySection />
-            </div>
               </div>
               <div class="swiper-pagination"></div>
             </div>
@@ -413,7 +409,10 @@ const Home = () => {
           </div>
         </div>
       </section>
-
+{/* Section fot cards */}
+<div className="grocery-section container">
+                <GrocerySection />
+            </div>
       {/* <section class="product flash-sale">
         <div class="container">
             <div class="flash-sale-section">
