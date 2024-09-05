@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { marketCategory } from '../utils/category';
 import homeImage from '../assets/groc.png';
+import GrocerySection from './GrocerySection';
 
 const Home = () => {
 
@@ -250,6 +251,9 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+            <div className="grocery-section container">
+                <GrocerySection />
+            </div>
 
     {/* <section class="product flash-sale">
         <div class="container">
