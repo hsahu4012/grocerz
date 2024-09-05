@@ -90,22 +90,6 @@ const Dashboard = () => {
                       <h5 className="heading">Welcome to your Profile</h5>
                     </div>
                     <div className="profile-section">
-                      {isEditing ? (
-                        <div className='Edit-fields'>
-                          <p>Name: <input type="text" style={{ border: "2px solid #34A853", borderRadius:"5px", paddingLeft:"2px"}} name="name" value={userDetails.name}  onChange={handleInputChange} /></p>
-                          <p>Email: <input type="text" style={{ border: "2px solid #34A853", borderRadius:"5px", paddingLeft:"2px", margin: "5px 0" }} name="email" value={userDetails.email} onChange={handleInputChange} /></p>
-                          <p>Phone: <input type="text" style={{ border: "2px solid #34A853", borderRadius:"5px", paddingLeft:"2px", marginBottom: "5px"}} name="mobile" value={userDetails.mobile} onChange={handleInputChange} /></p>
-                          <button style={{backgroundColor: "#34A853", fontSize: "15px", color: "white", borderRadius: "5px", height:"25px", width: "50px"}} onClick={updateUserDetails}>Update</button>
-                          <button style={{backgroundColor: "#FF0000", fontSize: "15px", color: "white", borderRadius: "5px", height:"25px", width: "50px", marginLeft: "10px"}} onClick={() => setIsEditing(false)}>Cancel</button>
-                        </div>
-                        ) : (
-                        <div>
-                          <p>Name:  {userDetails.name}</p>
-                          <p style={{ margin: "5px 0"}}>Email:  {userDetails.email}</p>
-                          <p style={{ marginTop: "6.5px", marginBottom: "5.5px"}}>Phone:  {userDetails.mobile}</p>
-                          <button style={{backgroundColor: "#34A853", fontSize: "15px", color: "white", borderRadius: "5px", height:"25px", width: "50px"}} onClick={() => setIsEditing(true)}>Edit</button>
-                        </div>
-                      )}
                       <div className="row g-5">
                         <div className="col-lg-4 col-sm-6">
                           <div className="product-wrapper">
@@ -171,19 +155,22 @@ const Dashboard = () => {
                             <div className="seller-info">
                               <h5 className="heading">Personal Information</h5>
                               <div className="info-list">
-                                <div className="info-title">
-                                  <p>Name:</p>
-                                  <p>Email:</p>
-                                  <p>Phone:</p>
-                                  {/* <p>City:</p>
-                                <p>Zip:</p> */}
-                                </div>
-                                <div className="info-details">
-                                  <p>{userDetails.name}</p>
-                                  <p>{userDetails.email}</p>
-                                  <p>{userDetails.phone}</p>
-                                  {/* <p>-</p>
-                                <p>-</p> */}
+                              {isEditing ? (
+                        <div className='Edit-fields'>
+                          <p>Name: <input type="text" style={{ border: "2px solid #34A853", borderRadius:"5px", paddingLeft:"2px"}} name="name" value={userDetails.name}  onChange={handleInputChange} /></p>
+                          <p>Email: <input type="text" style={{ border: "2px solid #34A853", borderRadius:"5px", paddingLeft:"2px", margin: "5px 0" }} name="email" value={userDetails.email} onChange={handleInputChange} /></p>
+                          <p>Phone: <input type="text" style={{ border: "2px solid #34A853", borderRadius:"5px", paddingLeft:"2px", marginBottom: "5px"}} name="mobile" value={userDetails.mobile} onChange={handleInputChange} /></p>
+                          <button style={{backgroundColor: "#34A853", fontSize: "15px", color: "white", borderRadius: "5px", height:"25px", width: "50px"}} onClick={updateUserDetails}>Update</button>
+                          <button style={{backgroundColor: "#FF0000", fontSize: "15px", color: "white", borderRadius: "5px", height:"25px", width: "50px", marginLeft: "10px"}} onClick={() => setIsEditing(false)}>Cancel</button>
+                        </div>
+                        ) : (
+                        <div>
+                          <p>Name:  {userDetails.name}</p>
+                          <p style={{ margin: "5px 0"}}>Email:  {userDetails.email}</p>
+                          <p style={{ marginTop: "6.5px", marginBottom: "5.5px"}}>Phone:  {userDetails.mobile}</p>
+                          <button style={{backgroundColor: "#34A853", fontSize: "15px", color: "white", borderRadius: "5px", height:"25px", width: "50px"}} onClick={() => setIsEditing(true)}>Edit</button>
+                        </div>
+                      )}
                                 </div>
                               </div>
                             </div>
@@ -197,7 +184,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-        </div>
       </section>
     </>
   );
