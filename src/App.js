@@ -46,6 +46,7 @@ import OrderDetailsPrint from "./components/OrderDetailsPrint";
 
 import About from "./components/About";
 import ProductSearchList from "./components/ProductSearchList";
+import OurTeam from './components/OurTeam';
 import Complainform from './components/Complainform';
 import Faq from "./components/Faq";
 
@@ -108,6 +109,8 @@ import Faq from "./components/Faq";
             <Route path="/complainform" element={<Complainform />} />
             <Route path="/customproduct" element={<CustomProduct/>} />
             <Route path="/about" element={<About />} />
+            <Route path="/ourteam" element={<OurTeam/>} />
+           
 
             <Route path="/loginandsecurity" element={<LoginAndSecurityPage />} />
             <Route path='/address' element={<AddressList />} />
