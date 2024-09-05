@@ -11,7 +11,10 @@ const Dashboard = () => {
     phone: '-',
   }
   const [userDetails, setUserDetails] = useState(initialState);
+  const [userOrders, setUserOrders] = useState([]);
+  const [totalOrders, setTotalOrders] = useState(0);
   const userid = localStorage.getItem('userid');
+  const userRole = localStorage.getItem('role');
 
   const fetchDetails = async () => {
     try {
@@ -20,16 +23,24 @@ const Dashboard = () => {
         name: response.data[0].name,
         email: response.data[0].email,
         phone: response.data[0].mobile
-      })
+      });
+
+      const userOrdersResponse = await axios.get(`${process.env.REACT_APP_API_URL}orders/getOrderCountByUserId/${userid}`);
+      setUserOrders(userOrdersResponse.data.totalOrders);
+
+
+      
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchDetails();
-  }, [])
+  }, []);;
+
+  
   return (
 
     <>
@@ -88,8 +99,9 @@ const Dashboard = () => {
                               </span>
                             </div>
                             <div className="wrapper-content">
-                              <p className="paragraph">New Orders</p>
-                              <h3 className="heading">-</h3>
+                            <p className="paragraph">Your Orders</p>
+                            <h3 className="heading">{userOrders}</h3>
+                        
                             </div>
                           </div>
                         </div>
@@ -151,6 +163,7 @@ const Dashboard = () => {
                             </div>
                           </div>
                         </div>
+                        
                         <div className="col-lg-12">
                           <div className="info-section">
                             <div className="seller-info">
