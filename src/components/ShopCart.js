@@ -131,6 +131,26 @@ const ShopCart = () => {
       removeFromCart(productid);
     }
   };
+  const clearCart = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete all items from your cart?");
+    if (confirmDelete) {
+      try {
+        setLoading(true);
+        const url = `${process.env.REACT_APP_API_URL}cart/emptyCart/${userid}`;
+        const response = await axios.put(url);
+        if (response.status === 200) {
+          setCartItems([]);
+        } else {
+          setMessage("There was an error clearing the cart!");
+        }
+      } catch (error) {
+        console.error("Error cleaning cart:", error);
+        setMessage("There was an error clearing the cart!");
+      }
+      setLoading(false);
+    }
+  };
+  
   return (
     <section className="product-cart product footer-padding">
       {loading && (
@@ -259,7 +279,7 @@ const ShopCart = () => {
           <div className="wishlist-btn cart-btn">
             <button
               className="clean-btn shop-btn"
-              onClick={() => setCartItems([])}
+              onClick={clearCart}
             >
               Clear Cart
             </button>

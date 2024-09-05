@@ -11,6 +11,7 @@ import "./assets/css/style.css";
 import Loader from "./components/loader/Loader";
 import Checkout from './components/Checkout';
 import Header from "./components/shared/Header";
+import Icon from "./components/shared/Icon";
 import Footer from "./components/shared/Footer";
 import Home from "./components/Home";
 import Product from "./components/Product";
@@ -46,6 +47,7 @@ import OrderDetailsPrint from "./components/OrderDetailsPrint";
 import About from "./components/About";
 import ProductSearchList from "./components/ProductSearchList";
 import Complainform from './components/Complainform';
+import Faq from "./components/Faq";
 
  function App() {
 
@@ -119,11 +121,13 @@ import Complainform from './components/Complainform';
             <Route path="/orderhistory" element={<OrderHistory />} />
             <Route path="/orderhistory/orderdetailsprint/:orderid/:usertype" element={<OrderDetailsPrint />} />
             <Route path="/productsearchlist" element={<ProductSearchList />} />
+            <Route path="/Faq" element={<Faq />} />
 
             <Route path="/" element={<Home />} />
 
           </Routes>
           {/* <Home /> */}
+          <Icon />
           <Footer />
         </DataApp>
       </BrowserRouter>
