@@ -34,7 +34,7 @@ const DataApp = (props) => {
         localStorage.removeItem('jwttoken');
         localStorage.removeItem('userid');
         localStorage.removeItem('usertype');
-        localStorage.removeItem('cart');
+        // localStorage.removeItem('cart');
         setAppState({ ...appstate, loginstatus: false });
         navigate('/login');
     }

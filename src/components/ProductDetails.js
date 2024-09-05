@@ -15,6 +15,13 @@ const ProductDetails = () => {
 
   const { productid } = useParams();
   const userid = localStorage.getItem('userid');
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    // Fetch the cart from local storage when the component mounts
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCart(storedCart);
+  }, []);
 
 
   const [product, setProduct] = useState({
@@ -89,6 +96,9 @@ const ProductDetails = () => {
           quantity
         });
         if(response.status === 200){
+          let cart = (localStorage.getItem("cart").length) ? JSON.parse(localStorage.getItem("cart")) : [];
+          cart.push({ productid, prod_name, price, image, discount, quantity });
+          localStorage.setItem("cart", JSON.stringify(cart));
           toast.success("Product added to cart successfully");
         } else {
           toast.error("Failed to add product to cart");
@@ -115,7 +125,7 @@ const ProductDetails = () => {
   const fetchProductDetail = async () => {
     setLoading(true);
     const response = await axios.get(`${process.env.REACT_APP_API_URL}products/productById/${productid}`)
-    console.log('Product Details - ', response.data);
+    // console.log('Product Details - ', response.data);
     setProduct(response.data);
     setLoading(false);
   }
@@ -125,6 +135,9 @@ const ProductDetails = () => {
     fetchProductDetail();
   }, [])
 
+  const isInCart = (productid) => {
+    return cart.some(item => item.productid === productid);
+  };
   return (
     <>
     <section className="blog about-blog">
@@ -228,7 +241,7 @@ const ProductDetails = () => {
                     </span>
                   </div> */}
                 </div>
-                <a href="#" class="shop-btn" onClick={() => handleAddToCart(product)}>
+                {/* <a href="#" class="shop-btn" onClick={() => handleAddToCart(product)}>
                   <span>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                       xmlns="http://www.w3.org/2000/svg">
@@ -237,8 +250,16 @@ const ProductDetails = () => {
                         fill="white" />
                     </svg>
                   </span>
-                   <span >Add to Cart</span>
-                </a>
+                </a> */}
+                {isInCart(product.productid) ? (
+                        <Link to={'/cart'} className="product-btn  shop-btn mb-2" type="button">
+                          Go to Cart
+                        </Link>
+                      ) : (
+                        <button onClick={() => handleAddToCart(product)} className="shop-btn" type="button">
+                          Add to Cart
+                        </button>
+                      )}
               </div>
               <hr></hr>
             </div>

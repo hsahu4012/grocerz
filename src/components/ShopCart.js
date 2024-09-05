@@ -30,6 +30,16 @@ const ShopCart = () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userid}`);
         const items = response.data;
         setCartItems(items);
+        const sortedItems = items.map(item => ({
+          productid: item.productid,
+          prod_name: item.prod_name,
+          price: item.price,
+          image: item.image,
+          discount: item.discount
+      })).sort((a, b) => {
+          return a.prod_name.localeCompare(b.prod_name);
+      });
+        localStorage.setItem("cart", JSON.stringify(sortedItems));
         setLoading(false);
       }
       else {
@@ -80,15 +90,16 @@ const ShopCart = () => {
           `${process.env.REACT_APP_API_URL}cart/handleQuantity/${userid}/${productid}`,
           { quantity: newQuantity }
         );
-
         if (response.status === 200) {
-          setCartItems((prevItems) =>
-            prevItems.map((item) =>
+          setCartItems((prevItems) => {
+            const updatedItems = prevItems.map((item) =>
               item.productid === productid
                 ? { ...item, quantity: newQuantity }
                 : item
-            )
-          );
+            );
+            localStorage.setItem("cart", JSON.stringify(updatedItems));
+            return updatedItems;
+          });
         }
       } else {
         // Update cartItems locally if the user is not logged in
@@ -120,6 +131,26 @@ const ShopCart = () => {
       removeFromCart(productid);
     }
   };
+  const clearCart = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete all items from your cart?");
+    if (confirmDelete) {
+      try {
+        setLoading(true);
+        const url = `${process.env.REACT_APP_API_URL}cart/emptyCart/${userid}`;
+        const response = await axios.put(url);
+        if (response.status === 200) {
+          setCartItems([]);
+        } else {
+          setMessage("There was an error clearing the cart!");
+        }
+      } catch (error) {
+        console.error("Error cleaning cart:", error);
+        setMessage("There was an error clearing the cart!");
+      }
+      setLoading(false);
+    }
+  };
+  
   return (
     <section className="product-cart product footer-padding">
       {loading && (
@@ -248,7 +279,7 @@ const ShopCart = () => {
           <div className="wishlist-btn cart-btn">
             <button
               className="clean-btn shop-btn"
-              onClick={() => setCartItems([])}
+              onClick={clearCart}
             >
               Clear Cart
             </button>
