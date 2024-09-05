@@ -22,7 +22,7 @@ const Productlist = () => {
 
   useEffect(() => {
     // Fetch the cart from local storage when the component mounts
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const storedCart = localStorage.getItem('cart') && JSON.parse(localStorage.getItem('cart')) || [];
     setCart(storedCart);
   }, []);
 

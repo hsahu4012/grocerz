@@ -43,7 +43,7 @@ const ShopCart = () => {
         setLoading(false);
       }
       else {
-        const storedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
+        const storedCartItems = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")) || [];
         setCartItems([...storedCartItems]);
       }
     } catch (error) {

@@ -53,7 +53,7 @@ const Login = () => {
     setLoading(true);
     try {
       const userid = localStorage.getItem('userid');
-      const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+      const storedCart = localStorage.getItem('cart') && JSON.parse(localStorage.getItem('cart')) || [];
       const cartItems = storedCart.map(item => ({
         productid: item.productid,
         quantity: item.quantity

@@ -12,10 +12,7 @@ const Header = () => {
   const userid=localStorage.getItem("userid")
   const [searchText, setSearchText] = useState("");
   const [wishlistcount,setWishlistcount]=useState([])
-  const [cartItemCount, setCategories] = useState(() => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    return cart ? cart.length : 0;
-  });
+  const [cartItemCount, setCartItemCount] = useState(0);
   const [category, setCategory] = useState(marketCategory);
 
   const formatcategoryName = (name) => {
@@ -50,6 +47,13 @@ const Header = () => {
       navigate("/login");
     }
   };
+
+  useEffect(() => {
+    setCartItemCount(() => {
+      const cart = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"));
+      return cart ? cart.length : 0;
+    });
+  }, []);
 
   useEffect(() => {
     checkPageAccess();
