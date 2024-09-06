@@ -84,7 +84,7 @@ const Home = () => {
   return (
     <>
       <section id="hero" class="hero d-lg-block d-none">
-        <div class="hero-section">
+        <div class="hero-section container">
           <div class="container">
             <div class="swiper hero-swiper">
               {/* start notice section */}
@@ -210,9 +210,6 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="grocery-section container">
-                <GrocerySection />
               </div>
             </div>
             <div class="swiper-pagination"></div>

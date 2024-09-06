@@ -11,7 +11,8 @@ const OurTeam = () => {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/ourteam/allourteam');
+        const url=`${process.env.REACT_APP_API_URL}ourteam/allourteam`;
+        const response = await axios.get(url);
         setTeamMembers(response.data);
       } catch (error) {
         toast.error('Error fetching team members.');
