@@ -61,7 +61,7 @@ const Register = () => {
 
       const response = await axios.post(url, {
         name: values.name,
-        email: values.email ? values.email : undefined,
+        email: values.email,
         mobile: values.mobile,
         password: values.password,
       });
