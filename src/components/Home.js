@@ -22,12 +22,9 @@ const Home = () => {
   //     fetchCartItems();
   // }, []);
 
-
   return (
     <>
-
       <HomeSlider />
-
 
       {/* Section fot cards */}
       <div className='grocery-section container'>
@@ -126,8 +123,7 @@ const Home = () => {
               ))}
           </div>
 
-          <HomeBottomSection/>
-          
+          <HomeBottomSection />
         </div>
       </section>
     </>
