@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 const Notice = () => {
   const [notice, setNotice] = useState(null);
@@ -25,12 +25,13 @@ const Notice = () => {
 
   return (
     <>
-    {notice.setting_value && <div className="alert alert-info text-center p-4 shadow-lg">
-      <span className="fs-5">{notice.setting_value}</span>
-    </div>}
+      {notice.setting_value && (
+        <div className='alert alert-info text-center p-4 shadow-lg'>
+          <span className='fs-5'>{notice.setting_value}</span>
+        </div>
+      )}
     </>
   );
 };
 
 export default Notice;
-

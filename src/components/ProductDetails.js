@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from "axios";
+import axios from 'axios';
 import Loader from './loader/Loader';
 import dress1 from '../assets/img/product/women/dress1.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const ProductDetails = () => {
-  
-  const [selectedSize, setSelectedSize] = useState("xs");
-  const [selectedColor, setSelectedColor] = useState("red");
-  const [activeTab, setActiveTab] = useState("description");
+  const [selectedSize, setSelectedSize] = useState('xs');
+  const [selectedColor, setSelectedColor] = useState('red');
+  const [activeTab, setActiveTab] = useState('description');
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -19,55 +18,57 @@ const ProductDetails = () => {
 
   useEffect(() => {
     // Fetch the cart from local storage when the component mounts
-    const storedCart = localStorage.getItem('cart') && JSON.parse(localStorage.getItem('cart')) || [];
+    const storedCart =
+      (localStorage.getItem('cart') &&
+        JSON.parse(localStorage.getItem('cart'))) ||
+      [];
     setCart(storedCart);
   }, []);
 
-
   const [product, setProduct] = useState({
     image:
-      "https://cdn.pixabay.com/photo/2016/12/06/09/30/blank-1886001_640.png",
+      'https://cdn.pixabay.com/photo/2016/12/06/09/30/blank-1886001_640.png',
     image1:
-      "https://5.imimg.com/data5/HB/VQ/MY-44811379/men-black-plain-t-shirt.jpg",
+      'https://5.imimg.com/data5/HB/VQ/MY-44811379/men-black-plain-t-shirt.jpg',
     image2:
-      "https://assets.ajio.com/medias/sys_master/root/20231012/O3AN/65281d84afa4cf41f53f4650/-473Wx593H-466701145-black-MODEL2.jpg",
+      'https://assets.ajio.com/medias/sys_master/root/20231012/O3AN/65281d84afa4cf41f53f4650/-473Wx593H-466701145-black-MODEL2.jpg',
     image3:
-      "https://cdn11.bigcommerce.com/s-o7vdfbtasz/images/stencil/500x659/products/358/1048/i-once-lived-in-fargo-really-fargo-stuff-black-back__82397.1541002551.jpg?c=2",
-    prod_name: "Essential structured blazer",
-    brand: "Brand: SKMEIMore Men Watches from SKMEI",
+      'https://cdn11.bigcommerce.com/s-o7vdfbtasz/images/stencil/500x659/products/358/1048/i-once-lived-in-fargo-really-fargo-stuff-black-back__82397.1541002551.jpg?c=2',
+    prod_name: 'Essential structured blazer',
+    brand: 'Brand: SKMEIMore Men Watches from SKMEI',
     description:
-      "Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur magni lores eos qui ratione voluptatem sequi nesciunt.",
+      'Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur magni lores eos qui ratione voluptatem sequi nesciunt.',
     specification:
-      "Traditionally, it has short sleeves and a round neckline, known as a crew neck, which lacks a collar. T-shirts are generally made of stretchy, light, and inexpensive fabric and are easy to clean.",
+      'Traditionally, it has short sleeves and a round neckline, known as a crew neck, which lacks a collar. T-shirts are generally made of stretchy, light, and inexpensive fabric and are easy to clean.',
     reviews:
       "The most famous of T-shirts styles are crew necks, also known as classic T-shirts. These are T-shirts with a round circular neck. They provide excellent flexibility, and fit comfortably on your body giving you a toned appearance. They work well if you've got a long and narrow face with slightly sloped shoulders.",
-    disc_price: "75$",
-    price: "83$",
-    shipping: "Free Shipping",
+    disc_price: '75$',
+    price: '83$',
+    shipping: 'Free Shipping',
   });
 
   //tabchange
-  const handleTabClick = (tab) => {
+  const handleTabClick = tab => {
     setActiveTab(tab);
   };
 
   // Function to handle size selection
-  const handleSizeChange = (size) => {
+  const handleSizeChange = size => {
     setSelectedSize(size);
   };
 
   // Function to handle color selection
-  const handleColorChange = (color) => {
+  const handleColorChange = color => {
     setSelectedColor(color);
   };
 
   //product_detail_pic_left change
-  const handleThumbnailClick = (imageUrl) => {
+  const handleThumbnailClick = imageUrl => {
     setProduct({ ...product, image: imageUrl });
   };
 
   //for quantity
-  const handleQuantityChange = (e) => {
+  const handleQuantityChange = e => {
     setLoading(true);
     // Parse the input value to ensure it's a number
     const newQuantity = parseInt(e.target.value);
@@ -84,38 +85,44 @@ const ProductDetails = () => {
   };
 
   //for data and Api
-  const handleAddToCart = async (product) => {
+  const handleAddToCart = async product => {
     setLoading(true);
-    const {productid, prod_name, price, image, discount } = product;
+    const { productid, prod_name, price, image, discount } = product;
     try {
       const quantity = 1;
-      if(userid){
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
-          userid,
-          productid,
-          quantity
-        });
-        if(response.status === 200){
-          let cart = (localStorage.getItem("cart").length) ? JSON.parse(localStorage.getItem("cart")) : [];
+      if (userid) {
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_URL}cart/addToCart`,
+          {
+            userid,
+            productid,
+            quantity,
+          }
+        );
+        if (response.status === 200) {
+          let cart = localStorage.getItem('cart').length
+            ? JSON.parse(localStorage.getItem('cart'))
+            : [];
           cart.push({ productid, prod_name, price, image, discount, quantity });
-          localStorage.setItem("cart", JSON.stringify(cart));
-          toast.success("Product added to cart successfully");
+          localStorage.setItem('cart', JSON.stringify(cart));
+          toast.success('Product added to cart successfully');
         } else {
-          toast.error("Failed to add product to cart");
+          toast.error('Failed to add product to cart');
         }
-      }else{
-        let cart = (localStorage.getItem("cart").length) ? JSON.parse(localStorage.getItem("cart")) : [];
+      } else {
+        let cart = localStorage.getItem('cart').length
+          ? JSON.parse(localStorage.getItem('cart'))
+          : [];
         const existingProduct = cart.find(item => item.productid === productid);
         if (existingProduct) {
           existingProduct.quantity += quantity;
         } else {
           cart.push({ productid, prod_name, price, image, discount, quantity });
         }
-         // Save the updated cart back to localStorage
-      localStorage.setItem("cart", JSON.stringify(cart));
-      toast.success("Product added to cart successfully");
+        // Save the updated cart back to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+        toast.success('Product added to cart successfully');
       }
-      
     } catch (error) {
       console.error('Error adding to cart:', error);
     }
@@ -124,59 +131,72 @@ const ProductDetails = () => {
 
   const fetchProductDetail = async () => {
     setLoading(true);
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}products/productById/${productid}`)
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}products/productById/${productid}`
+    );
     // console.log('Product Details - ', response.data);
     setProduct(response.data);
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchProductDetail();
-  }, [])
+  }, []);
 
-  const isInCart = (productid) => {
+  const isInCart = productid => {
     return cart.some(item => item.productid === productid);
   };
   return (
     <>
-    <section className="blog about-blog">
-        <div className="container">
-            <div class="blog-bradcrum">
-                <span><a href="/home">Home</a></span>
-                <span class="devider">/</span>
-                <span><a href={`/category/${product.category}`}>{product.categoryname} </a></span>
-                <span class="devider">/</span>
-            </div>
-            <div className="blog-heading about-heading">
-              <h1 className="heading">{product.prod_name}</h1>
-            </div>
+      <section className='blog about-blog'>
+        <div className='container'>
+          <div class='blog-bradcrum'>
+            <span>
+              <a href='/home'>Home</a>
+            </span>
+            <span class='devider'>/</span>
+            <span>
+              <a href={`/category/${product.category}`}>
+                {product.categoryname}{' '}
+              </a>
+            </span>
+            <span class='devider'>/</span>
+          </div>
+          <div className='blog-heading about-heading'>
+            <h1 className='heading'>{product.prod_name}</h1>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <ToastContainer/>
-      <div class="product-info-section">
+      <ToastContainer />
+      <div class='product-info-section'>
         {loading && <Loader />}
-        <div class="row ">
-          <div class="col-md-6">
-            <div class="product-info-img" data-aos="fade-right">
-              <div class="swiper product-top">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide slider-top-img">
-                    <img src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`} alt="ProductIMG" />
+        <div class='row '>
+          <div class='col-md-6'>
+            <div class='product-info-img' data-aos='fade-right'>
+              <div class='swiper product-top'>
+                <div class='swiper-wrapper'>
+                  <div class='swiper-slide slider-top-img'>
+                    <img
+                      src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`}
+                      alt='ProductIMG'
+                    />
                   </div>
-                  <div class="swiper-slide slider-top-img">
-                    <img src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`} alt="ProductIMG" />
+                  <div class='swiper-slide slider-top-img'>
+                    <img
+                      src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`}
+                      alt='ProductIMG'
+                    />
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="product-info-content" >
+          <div class='col-md-6'>
+            <div class='product-info-content'>
               {/* <span class="wrapper-subtitle">Vegetable</span> */}
-              <h3 class="wrapper-heading">{product.prod_name}</h3>
+              <h3 class='wrapper-heading'>{product.prod_name}</h3>
               {/* <div class="ratings">
                                 <span>
                                     <svg width="75" height="15" viewBox="0 0 75 15" fill="none"
@@ -200,26 +220,38 @@ const ProductDetails = () => {
                                 </span>
                                 <span class="text">6 Reviews</span>
                             </div> */}
-              <div class="price">
-              {(product.discount === 0) &&<span class="price-cut">&#8377; &nbsp;{product.price}</span>}
-                <span class="new-price">&#8377; &nbsp;{product.price - product.discount}</span>
+              <div class='price'>
+                {product.discount === 0 && (
+                  <span class='price-cut'>&#8377; &nbsp;{product.price}</span>
+                )}
+                <span class='new-price'>
+                  &#8377; &nbsp;{product.price - product.discount}
+                </span>
               </div>
               {/* <p class="content-paragraph">It is a long established fact that a reader will be distracted
                 by <span class="inner-text">the readable there content of a page.</span></p>
               <hr></hr> */}
-              <div class="product-details">
-                <p class="category">Category : <span class="inner-text">{product.categoryname}</span></p>
-                <p class="tags">Subcategory : <span class="inner-text">{product.subcategoryname}</span></p>
-                <p class="sku">Brand : <span class="inner-text">{product.brand_name}</span></p>
+              <div class='product-details'>
+                <p class='category'>
+                  Category :{' '}
+                  <span class='inner-text'>{product.categoryname}</span>
+                </p>
+                <p class='tags'>
+                  Subcategory :{' '}
+                  <span class='inner-text'>{product.subcategoryname}</span>
+                </p>
+                <p class='sku'>
+                  Brand : <span class='inner-text'>{product.brand_name}</span>
+                </p>
               </div>
               <hr></hr>
-              <div class="product-availability">
+              <div class='product-availability'>
                 <span>Availabillity : </span>
-                <span class="inner-text">Available</span>
+                <span class='inner-text'>Available</span>
               </div>
 
-              <div class="product-quantity">
-                <div class="quantity-wrapper">
+              <div class='product-quantity'>
+                <div class='quantity-wrapper'>
                   {/* <div class="quantity">
                     <span class="minus">
                       -
@@ -252,14 +284,22 @@ const ProductDetails = () => {
                   </span>
                 </a> */}
                 {isInCart(product.productid) ? (
-                        <Link to={'/cart'} className="product-btn  shop-btn mb-2" type="button">
-                          Go to Cart
-                        </Link>
-                      ) : (
-                        <button onClick={() => handleAddToCart(product)} className="shop-btn" type="button">
-                          Add to Cart
-                        </button>
-                      )}
+                  <Link
+                    to={'/cart'}
+                    className='product-btn  shop-btn mb-2'
+                    type='button'
+                  >
+                    Go to Cart
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className='shop-btn'
+                    type='button'
+                  >
+                    Add to Cart
+                  </button>
+                )}
               </div>
               <hr></hr>
             </div>
@@ -267,18 +307,23 @@ const ProductDetails = () => {
         </div>
       </div>
 
-
-
-
-      <section class="product product-description">
-        <div class="container">
-          <div class="product-detail-section">
+      <section class='product product-description'>
+        <div class='container'>
+          <div class='product-detail-section'>
             <nav>
-              <div class="nav nav-tabs nav-item" id="nav-tab" role="tablist">
-
-                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
-                  data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
-                  aria-selected="true">Description</button>
+              <div class='nav nav-tabs nav-item' id='nav-tab' role='tablist'>
+                <button
+                  class='nav-link active'
+                  id='nav-home-tab'
+                  data-bs-toggle='tab'
+                  data-bs-target='#nav-home'
+                  type='button'
+                  role='tab'
+                  aria-controls='nav-home'
+                  aria-selected='true'
+                >
+                  Description
+                </button>
 
                 {/* <button class="nav-link" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review"
                             type="button" role="tab" aria-controls="nav-review" aria-selected="false">Reviews</button>
@@ -286,17 +331,23 @@ const ProductDetails = () => {
                         <button class="nav-link" id="nav-seller-tab" data-bs-toggle="tab" data-bs-target="#nav-seller"
                             type="button" role="tab" aria-controls="nav-seller" aria-selected="false">Seller
                             Info</button> */}
-
               </div>
             </nav>
-            <div class="tab-content tab-item" id="nav-tabContent">
-
-              <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
-                tabindex="0" data-aos="fade-up">
-                <div class="product-intro-section">
-                  <h5 class="intro-heading">Introduction</h5>
-                  <p class="product-details">
-                    <div dangerouslySetInnerHTML={{ __html: product.prod_desc }} />
+            <div class='tab-content tab-item' id='nav-tabContent'>
+              <div
+                class='tab-pane fade show active'
+                id='nav-home'
+                role='tabpanel'
+                aria-labelledby='nav-home-tab'
+                tabindex='0'
+                data-aos='fade-up'
+              >
+                <div class='product-intro-section'>
+                  <h5 class='intro-heading'>Introduction</h5>
+                  <p class='product-details'>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: product.prod_desc }}
+                    />
                   </p>
                 </div>
                 {/* <div class="product-feature">
@@ -382,7 +433,6 @@ const ProductDetails = () => {
           </div>
         </div>
       </section>
-
 
       {/* <div className="breadcrumb-option">
         <div className="container">
