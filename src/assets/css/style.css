@@ -1955,7 +1955,7 @@ button {
   padding-top: 6rem;
 }
 .grocery-section .product-wrapper {
-  height: 29.5rem;
+  height: 21.5rem;
   border: none;
   background: none;
   padding: 3rem 4rem 4rem;
@@ -1984,8 +1984,9 @@ button {
 }
 @media (max-width:1023px) {
   .grocery-section .product-wrapper {
-    height: 29rem;
+    height: 18rem;
     padding: 2rem;
+    margin-bottom: 1rem;
     background-position: left;
   }
   .grocery-section .product-wrapper .wrapper-details {
