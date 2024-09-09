@@ -149,7 +149,7 @@ const Register = () => {
                           </div>
                           <div className='review-form-name'>
                             <label htmlFor='email' className='form-label'>
-                              Email Address (Optional)
+                              Email Address
                             </label>
                             <Field
                               type='email'
