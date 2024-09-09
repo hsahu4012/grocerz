@@ -11,7 +11,8 @@ const OurTeam = () => {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/ourteam/allourteam');
+        const url = `${process.env.REACT_APP_API_URL}ourteam/allourteam`;
+        const response = await axios.get(url);
         setTeamMembers(response.data);
       } catch (error) {
         toast.error('Error fetching team members.');
@@ -22,7 +23,7 @@ const OurTeam = () => {
     fetchTeamMembers();
   }, []);
 
-  const handleViewDetails = (member) => {
+  const handleViewDetails = member => {
     setSelectedMember(member);
     setShowPopup(true);
   };
@@ -34,52 +35,68 @@ const OurTeam = () => {
 
   return (
     <>
-      <section className="blog about-blog">
-        <div className="container">
-          <div className="blog-bradcrum">
-            <span><a href="/home">Home</a></span>
-            <span className="devider">/</span>
+      <section className='blog about-blog'>
+        <div className='container'>
+          <div className='blog-bradcrum'>
+            <span>
+              <a href='/home'>Home</a>
+            </span>
+            <span className='devider'>/</span>
             <span>Our Team</span>
           </div>
-          <div className="blog-heading about-heading">
-            <h1 className="heading">Meet Our Team</h1>
+          <div className='blog-heading about-heading'>
+            <h1 className='heading'>Meet Our Team</h1>
           </div>
         </div>
       </section>
 
       <ToastContainer />
 
-      <div className="container">
-        <div className="row d-flex flex-wrap">
+      <div className='container'>
+        <div className='row d-flex flex-wrap'>
           {teamMembers.length > 0 ? (
-            teamMembers.map((member) => (
-              <div className="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch" key={member.id}>
-                <div className="product-wrapper m-2 w-100 d-flex flex-column" data-aos="fade-up">
+            teamMembers.map(member => (
+              <div
+                className='col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch'
+                key={member.id}
+              >
+                <div
+                  className='product-wrapper m-2 w-100 d-flex flex-column'
+                  data-aos='fade-up'
+                >
                   <Link to={`/team/${member.id}`}>
-                    <div className="product-img">
+                    <div className='product-img'>
                       <img
-                        src={member.image ? `${process.env.REACT_APP_IMAGE_URL}${member.image}` : 'default-image.jpg'}
+                        src={
+                          member.image
+                            ? `${process.env.REACT_APP_IMAGE_URL}${member.image}`
+                            : 'default-image.jpg'
+                        }
                         alt={member.name}
                       />
                     </div>
                   </Link>
-                  <div className="product-info flex-grow-1">
-                    <div className="product-description">
-                      <div className="product-details">{member.name}</div>
-                      <div className="price">
-                        <span className="designation text-success">
+                  <div className='product-info flex-grow-1'>
+                    <div className='product-description'>
+                      <div className='product-details'>{member.name}</div>
+                      <div className='price'>
+                        <span className='designation text-success'>
                           Designation: {member.designation}
                         </span>
                       </div>
-                      <div className="price">
-                        <span className="designation text-success">
+                      <div className='price'>
+                        <span className='designation text-success'>
                           Department: {member.department}
                         </span>
                       </div>
-                      <p className="description">{member.description}</p>
+                      <p className='description'>{member.description}</p>
                     </div>
-                    <div className="product-cart-btn">
-                      <button onClick={() => handleViewDetails(member)} className="product-btn" type="button">
+                    <div className='product-cart-btn'>
+                      <button
+                        onClick={() => handleViewDetails(member)}
+                        className='product-btn'
+                        type='button'
+                      >
                         View Details
                       </button>
                     </div>
@@ -94,8 +111,8 @@ const OurTeam = () => {
       </div>
 
       {showPopup && selectedMember && (
-        <div className="popup-overlay">
-          <div className="popup-content">
+        <div className='popup-overlay'>
+          <div className='popup-content'>
             <h3>{selectedMember.name}</h3>
             <p>Designation: {selectedMember.designation}</p>
             <p>Department: {selectedMember.department}</p>

@@ -1,13 +1,13 @@
-import React, { useEffect, useId, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useId, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 // import Loader from "./loader/Loader";
-import loaderGif from "../assets/images/loader.gif";
+import loaderGif from '../assets/images/loader.gif';
 
 const ShopCart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [message, setMessage] = useState("");
-  const userid = localStorage.getItem("userid");
+  const [message, setMessage] = useState('');
+  const userid = localStorage.getItem('userid');
   const [loading, setLoading] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
 
@@ -27,27 +27,33 @@ const ShopCart = () => {
     setLoading(true);
     try {
       if (userid) {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}cart/userCart/${userid}`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}cart/userCart/${userid}`
+        );
         const items = response.data;
         setCartItems(items);
-        const sortedItems = items.map(item => ({
-          productid: item.productid,
-          prod_name: item.prod_name,
-          price: item.price,
-          image: item.image,
-          discount: item.discount
-      })).sort((a, b) => {
-          return a.prod_name.localeCompare(b.prod_name);
-      });
-        localStorage.setItem("cart", JSON.stringify(sortedItems));
+        const sortedItems = items
+          .map(item => ({
+            productid: item.productid,
+            prod_name: item.prod_name,
+            price: item.price,
+            image: item.image,
+            discount: item.discount,
+          }))
+          .sort((a, b) => {
+            return a.prod_name.localeCompare(b.prod_name);
+          });
+        localStorage.setItem('cart', JSON.stringify(sortedItems));
         setLoading(false);
-      }
-      else {
-        const storedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
+      } else {
+        const storedCartItems =
+          (localStorage.getItem('cart') &&
+            JSON.parse(localStorage.getItem('cart'))) ||
+          [];
         setCartItems([...storedCartItems]);
       }
     } catch (error) {
-      console.error("Error fetching cart items", error);
+      console.error('Error fetching cart items', error);
     }
     setLoading(false);
   };
@@ -55,29 +61,34 @@ const ShopCart = () => {
   const calculateTotal = () => {
     // console.log("totalling");
     let total = cartItems.reduce(
-      (total, item) => total + (((Number(item.price) * item.quantity) - (Number(item.discount)) * item.quantity)),
+      (total, item) =>
+        total +
+        (Number(item.price) * item.quantity -
+          Number(item.discount) * item.quantity),
       0
     );
     // console.log("total", total);
     setTotalCost(total);
   };
 
-  const removeFromCart = async (productid) => {
+  const removeFromCart = async productid => {
     setLoading(true);
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}cart/removeProduct/${userid}/${productid}`
       );
-      setMessage(response.data.message || "Removed from cart");
-      setCartItems((prevItems) =>
-        prevItems.filter((item) => item.productid !== productid)
+      setMessage(response.data.message || 'Removed from cart');
+      setCartItems(prevItems =>
+        prevItems.filter(item => item.productid !== productid)
       );
       // Update localStorage as well
-      const updatedCartItems = cartItems.filter((item) => item.productid !== productid);
-      localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+      const updatedCartItems = cartItems.filter(
+        item => item.productid !== productid
+      );
+      localStorage.setItem('cart', JSON.stringify(updatedCartItems));
     } catch (error) {
-      setMessage("There was an error removing product from the cart!");
-      console.error("Error removing from cart:", error);
+      setMessage('There was an error removing product from the cart!');
+      console.error('Error removing from cart:', error);
     }
     setLoading(false);
   };
@@ -91,34 +102,33 @@ const ShopCart = () => {
           { quantity: newQuantity }
         );
         if (response.status === 200) {
-          setCartItems((prevItems) => {
-            const updatedItems = prevItems.map((item) =>
+          setCartItems(prevItems => {
+            const updatedItems = prevItems.map(item =>
               item.productid === productid
                 ? { ...item, quantity: newQuantity }
                 : item
             );
-            localStorage.setItem("cart", JSON.stringify(updatedItems));
+            localStorage.setItem('cart', JSON.stringify(updatedItems));
             return updatedItems;
           });
         }
       } else {
         // Update cartItems locally if the user is not logged in
-        setCartItems((prevItems) => {
-          const updatedItems = prevItems.map((item) =>
+        setCartItems(prevItems => {
+          const updatedItems = prevItems.map(item =>
             item.productid === productid
               ? { ...item, quantity: newQuantity }
               : item
           );
-          localStorage.setItem("cart", JSON.stringify(updatedItems));
+          localStorage.setItem('cart', JSON.stringify(updatedItems));
           return updatedItems;
         });
       }
     } catch (error) {
-      console.error("Error updating quantity:", error);
+      console.error('Error updating quantity:', error);
     }
     setLoading(false);
   };
-
 
   const incrementQuantity = (productid, currentQuantity) => {
     updateQuantity(productid, currentQuantity + 1);
@@ -132,7 +142,9 @@ const ShopCart = () => {
     }
   };
   const clearCart = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete all items from your cart?");
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete all items from your cart?'
+    );
     if (confirmDelete) {
       try {
         setLoading(true);
@@ -141,98 +153,109 @@ const ShopCart = () => {
         if (response.status === 200) {
           setCartItems([]);
         } else {
-          setMessage("There was an error clearing the cart!");
+          setMessage('There was an error clearing the cart!');
         }
       } catch (error) {
-        console.error("Error cleaning cart:", error);
-        setMessage("There was an error clearing the cart!");
+        console.error('Error cleaning cart:', error);
+        setMessage('There was an error clearing the cart!');
       }
       setLoading(false);
     }
   };
-  
+
   return (
-    <section className="product-cart product footer-padding">
+    <section className='product-cart product footer-padding'>
       {loading && (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '50vh',
-        }}>
-          <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '50vh',
+          }}
+        >
+          <img
+            src={loaderGif}
+            alt='Loading...'
+            style={{ width: '80px', height: '80px' }}
+          />
         </div>
       )}
       {!loading && (
-        <div className="container">
-          <div className="cart-section">
+        <div className='container'>
+          <div className='cart-section'>
             <table>
               <tbody>
-                <tr className="table-row table-top-row">
-                  <td className="table-wrapper wrapper-product">
-                    <h5 className="table-heading">PRODUCT</h5>
+                <tr className='table-row table-top-row'>
+                  <td className='table-wrapper wrapper-product'>
+                    <h5 className='table-heading'>PRODUCT</h5>
                   </td>
-                  <td className="table-wrapper">
-                    <div className="table-wrapper-center">
-                      <h5 className="table-heading">PRICE</h5>
+                  <td className='table-wrapper'>
+                    <div className='table-wrapper-center'>
+                      <h5 className='table-heading'>PRICE</h5>
                     </div>
                   </td>
-                  <td className="table-wrapper">
-                    <div className="table-wrapper-center">
-                      <h5 className="table-heading">QUANTITY</h5>
+                  <td className='table-wrapper'>
+                    <div className='table-wrapper-center'>
+                      <h5 className='table-heading'>QUANTITY</h5>
                     </div>
                   </td>
-                  <td className="table-wrapper wrapper-total">
-                    <div className="table-wrapper-center">
-                      <h5 className="table-heading">TOTAL</h5>
+                  <td className='table-wrapper wrapper-total'>
+                    <div className='table-wrapper-center'>
+                      <h5 className='table-heading'>TOTAL</h5>
                     </div>
                   </td>
-                  <td className="table-wrapper">
-                    <div className="table-wrapper-center">
-                      <h5 className="table-heading">ACTION</h5>
+                  <td className='table-wrapper'>
+                    <div className='table-wrapper-center'>
+                      <h5 className='table-heading'>ACTION</h5>
                     </div>
                   </td>
                 </tr>
-                {cartItems.map((item) => (
-                  <tr className="table-row ticket-row" key={item.productid}>
-                    <td className="table-wrapper wrapper-product">
-                      <div className="wrapper">
-                        <div className="wrapper-img">
-                          <img src={`${process.env.REACT_APP_API_URL}${item.image}`} alt="Product" />
+                {cartItems.map(item => (
+                  <tr className='table-row ticket-row' key={item.productid}>
+                    <td className='table-wrapper wrapper-product'>
+                      <div className='wrapper'>
+                        <div className='wrapper-img'>
+                          <img
+                            src={`${process.env.REACT_APP_API_URL}${item.image}`}
+                            alt='Product'
+                          />
                         </div>
-                        <div className="wrapper-content">
+                        <div className='wrapper-content'>
                           {/* <h5 className="heading">{item.prod_name || 'Product Name - ' + item.productid}</h5> */}
-                          <h5 className="heading">
+                          <h5 className='heading'>
                             <Link
-                              className="heading"
+                              className='heading'
                               to={`/product/${item.productid}`}
                             >
                               {item.prod_name ||
-                                "Product Name - " + item.productid}
+                                'Product Name - ' + item.productid}
                             </Link>
                           </h5>
                         </div>
                       </div>
                     </td>
-                    <td className="table-wrapper">
-                      <div className="table-wrapper-center">
-                        <h5 className="heading main-price">Rs. {item.price - Number(item.discount)}</h5>
+                    <td className='table-wrapper'>
+                      <div className='table-wrapper-center'>
+                        <h5 className='heading main-price'>
+                          Rs. {item.price - Number(item.discount)}
+                        </h5>
                       </div>
                     </td>
-                    <td className="table-wrapper">
-                      <div className="table-wrapper-center">
-                        <div className="quantity">
+                    <td className='table-wrapper'>
+                      <div className='table-wrapper-center'>
+                        <div className='quantity'>
                           <span
-                            className="minus"
+                            className='minus'
                             onClick={() =>
                               decrementQuantity(item.productid, item.quantity)
                             }
                           >
                             -
                           </span>
-                          <span className="number">{item.quantity}</span>
+                          <span className='number'>{item.quantity}</span>
                           <span
-                            className="plus"
+                            className='plus'
                             onClick={() =>
                               incrementQuantity(item.productid, item.quantity)
                             }
@@ -242,29 +265,31 @@ const ShopCart = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="table-wrapper wrapper-total">
-                      <div className="table-wrapper-center">
-                        <h5 className="heading total-price">
-                          Rs. {((item.price * item.quantity) - (Number(item.discount)) * item.quantity)}
+                    <td className='table-wrapper wrapper-total'>
+                      <div className='table-wrapper-center'>
+                        <h5 className='heading total-price'>
+                          Rs.{' '}
+                          {item.price * item.quantity -
+                            Number(item.discount) * item.quantity}
                         </h5>
                       </div>
                     </td>
-                    <td className="table-wrapper">
+                    <td className='table-wrapper'>
                       <div
-                        className="table-wrapper-center"
+                        className='table-wrapper-center'
                         onClick={() => removeFromCart(item.productid)}
                       >
                         <span>
                           <svg
-                            width="10"
-                            height="10"
-                            viewBox="0 0 10 10"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                            width='10'
+                            height='10'
+                            viewBox='0 0 10 10'
+                            fill='none'
+                            xmlns='http://www.w3.org/2000/svg'
                           >
                             <path
-                              d="M9.7 0.3C9.3 -0.1 8.7 -0.1 8.3 0.3L5 3.6L1.7 0.3C1.3 -0.1 0.7 -0.1 0.3 0.3C-0.1 0.7 -0.1 1.3 0.3 1.7L3.6 5L0.3 8.3C-0.1 8.7 -0.1 9.3 0.3 9.7C0.7 10.1 1.3 10.1 1.7 9.7L5 6.4L8.3 9.7C8.7 10.1 9.3 10.1 9.7 9.7C10.1 9.3 10.1 8.7 9.7 8.3L6.4 5L9.7 1.7C10.1 1.3 10.1 0.7 9.7 0.3Z"
-                              fill="#AAAAAA"
+                              d='M9.7 0.3C9.3 -0.1 8.7 -0.1 8.3 0.3L5 3.6L1.7 0.3C1.3 -0.1 0.7 -0.1 0.3 0.3C-0.1 0.7 -0.1 1.3 0.3 1.7L3.6 5L0.3 8.3C-0.1 8.7 -0.1 9.3 0.3 9.7C0.7 10.1 1.3 10.1 1.7 9.7L5 6.4L8.3 9.7C8.7 10.1 9.3 10.1 9.7 9.7C10.1 9.3 10.1 8.7 9.7 8.3L6.4 5L9.7 1.7C10.1 1.3 10.1 0.7 9.7 0.3Z'
+                              fill='#AAAAAA'
                             ></path>
                           </svg>
                         </span>
@@ -276,16 +301,13 @@ const ShopCart = () => {
             </table>
           </div>
 
-          <div className="wishlist-btn cart-btn">
-            <button
-              className="clean-btn shop-btn"
-              onClick={clearCart}
-            >
+          <div className='wishlist-btn cart-btn'>
+            <button className='clean-btn shop-btn' onClick={clearCart}>
               Clear Cart
             </button>
-            <button className="shop-btn">Total - {totalCost}</button>
+            <button className='shop-btn'>Total - {totalCost}</button>
             {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
-            <Link to="/checkout" className="shop-btn">
+            <Link to='/checkout' className='shop-btn'>
               Proceed to Checkout
             </Link>
           </div>
@@ -325,7 +347,6 @@ const ShopCart = () => {
           </div>
         </div>
       </div> */}
-
     </section>
   );
 };

@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { FaMoneyBillAlt } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { FaMoneyBillAlt } from 'react-icons/fa';
 import upiicon from '../icon-img/upi.svg';
 import phonepeicon from '../icon-img/phonepe-logo-icon (1).svg';
 
 const RecommendedPage = () => {
   const [selectedMethod, setSelectedMethod] = useState(null);
-  const [captcha, setCaptcha] = useState("");
-  const [userInput, setUserInput] = useState("");
+  const [captcha, setCaptcha] = useState('');
+  const [userInput, setUserInput] = useState('');
 
-  const handlePaymentMethodClick = (method) => {
+  const handlePaymentMethodClick = method => {
     setSelectedMethod(method);
   };
 
-
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     setUserInput(event.target.value);
   };
 
@@ -32,14 +31,14 @@ const RecommendedPage = () => {
     // Logic to verify captcha
     if (userInput === captcha) {
       // Place order logic
-      alert("Order placed successfully!");
+      alert('Order placed successfully!');
     } else {
       // Invalid captcha
-      alert("Invalid captcha. Please try again.");
+      alert('Invalid captcha. Please try again.');
       // Clear the input field
-      setUserInput("");
+      setUserInput('');
       // Focus the input field
-      document.getElementById("captchaInput").focus();
+      document.getElementById('captchaInput').focus();
     }
   };
 
@@ -49,60 +48,90 @@ const RecommendedPage = () => {
   }, []);
 
   return (
-    <div className="recommended-container">
-      <div className="payment-method" onClick={() => handlePaymentMethodClick('cash')}>
-        <input type="radio" className="check" checked={selectedMethod === 'cash'} readOnly />
-        <FaMoneyBillAlt className="payment-icon" />
+    <div className='recommended-container'>
+      <div
+        className='payment-method'
+        onClick={() => handlePaymentMethodClick('cash')}
+      >
+        <input
+          type='radio'
+          className='check'
+          checked={selectedMethod === 'cash'}
+          readOnly
+        />
+        <FaMoneyBillAlt className='payment-icon' />
         <span>Cash on Delivery (Cash/UPI)</span>
         {selectedMethod === 'cash' && (
           <>
-            <div className="payment-details">
+            <div className='payment-details'>
               <p>Please enter the following captcha to proceed:</p>
-              <div className="captcha">
+              <div className='captcha'>
                 <span>{captcha}</span>
-                <button className="refresh-captcha" onClick={handleRefreshCaptchaClick}>
+                <button
+                  className='refresh-captcha'
+                  onClick={handleRefreshCaptchaClick}
+                >
                   Refresh
                 </button>
               </div>
               <input
-                id="captchaInput"
-                className="input-container"
-                type="text"
-                placeholder="Enter Captcha"
+                id='captchaInput'
+                className='input-container'
+                type='text'
+                placeholder='Enter Captcha'
                 value={userInput}
                 onChange={handleInputChange}
               />
             </div>
             <div>
-              <button className="place-order-btn" onClick={handlePlaceOrderClick}>
+              <button
+                className='place-order-btn'
+                onClick={handlePlaceOrderClick}
+              >
                 Place Order
               </button>
             </div>
           </>
         )}
       </div>
-      <div className="payment-method" onClick={() => handlePaymentMethodClick('googlePay')}>
-        <input type="radio" className="check" checked={selectedMethod === 'googlePay'} readOnly />
-        <img src={upiicon} alt="" className="payment-icon" />
+      <div
+        className='payment-method'
+        onClick={() => handlePaymentMethodClick('googlePay')}
+      >
+        <input
+          type='radio'
+          className='check'
+          checked={selectedMethod === 'googlePay'}
+          readOnly
+        />
+        <img src={upiicon} alt='' className='payment-icon' />
         <span>GooglePay</span>
         {selectedMethod === 'googlePay' && (
           <>
-            <div className="payment-details">
-              <input type="text" placeholder="Enter UPI ID" />
-              <button className="place-order-btn">Pay Now</button>
+            <div className='payment-details'>
+              <input type='text' placeholder='Enter UPI ID' />
+              <button className='place-order-btn'>Pay Now</button>
             </div>
           </>
         )}
       </div>
-      <div className="payment-method" onClick={() => handlePaymentMethodClick('phonePe')}>
-        <input type="radio" className="check" checked={selectedMethod === 'phonePe'} readOnly />
-        <img src={phonepeicon} alt="" className="payment-icon" />
+      <div
+        className='payment-method'
+        onClick={() => handlePaymentMethodClick('phonePe')}
+      >
+        <input
+          type='radio'
+          className='check'
+          checked={selectedMethod === 'phonePe'}
+          readOnly
+        />
+        <img src={phonepeicon} alt='' className='payment-icon' />
         <span>PhonePe</span>
         {selectedMethod === 'phonePe' && (
           <>
-            <div className="payment-details">
-              <input type="text" placeholder="Enter PhonePe ID" />
-              <button className="place-order-btn">Pay Now</button>
+            <div className='payment-details'>
+              <input type='text' placeholder='Enter PhonePe ID' />
+              <button className='place-order-btn'>Pay Now</button>
             </div>
           </>
         )}

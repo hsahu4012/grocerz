@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Formik, Field, Form } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import * as Yup from "yup";
+import React, { useState } from 'react';
+import { Formik, Field, Form } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import * as Yup from 'yup';
 
 //import loaderGif from 'src/assets/images/loader.gif';
-import loaderGif from "../../assets/images/loader.gif";
+import loaderGif from '../../assets/images/loader.gif';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -14,33 +14,33 @@ const Register = () => {
   const url = `${process.env.REACT_APP_API_URL}users/adduser`;
 
   const initialValues = {
-    name: "",
-    email: "",
-    mobile: "",
-    password: "",
+    name: '',
+    email: '',
+    mobile: '',
+    password: '',
     // confirmPassword: "",
   };
 
   const validationSchema = Yup.object({
     name: Yup.string()
-      .min(3, "Name must be at least 3 characters")
-      .required("Name is required"),
+      .min(3, 'Name must be at least 3 characters')
+      .required('Name is required'),
     email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
+      .email('Invalid email address')
+      .required('Email is required'),
     mobile: Yup.string()
       .matches(
         /^[6-9]\d{9}$/,
-        "Mobile number must be 10 digits starting with 6-9"
+        'Mobile number must be 10 digits starting with 6-9'
       )
-      .required("Mobile number is required"),
+      .required('Mobile number is required'),
     password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
+      .min(6, 'Password must be at least 6 characters')
       // .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
       // .matches(/[a-z]/, "Password must contain at least one lowercase letter")
       // .matches(/[0-9]/, "Password must contain at least one number")
       // .matches(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character")
-      .required("Password is required"),
+      .required('Password is required'),
     // confirmPassword: Yup.string()
     //   .oneOf([Yup.ref('password'), null], "Passwords must match")
     //   .required("Confirm Password is required"),
@@ -57,7 +57,7 @@ const Register = () => {
     // }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
       const response = await axios.post(url, {
         name: values.name,
@@ -67,15 +67,15 @@ const Register = () => {
       });
 
       if (response.status === 201) {
-        setSuccessMessage("Registration successful! Redirecting to login...");
-        setTimeout(() => navigate("/login"), 2000);
+        setSuccessMessage('Registration successful! Redirecting to login...');
+        setTimeout(() => navigate('/login'), 2000);
       }
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error('Registration failed:', error);
       if (error.response && error.response.status === 409) {
-        setError("User already registered. Please log in.");
+        setError('User already registered. Please log in.');
       } else {
-        setError("Something went wrong. Please try again later.");
+        setError('Something went wrong. Please try again later.');
       }
     } finally {
       setSubmitting(false);
@@ -110,93 +110,93 @@ const Register = () => {
       margin-top: 5px;
     }
   `}</style>
-      <section className="login product footer-padding">
-        <div className="container">
+      <section className='login product footer-padding'>
+        <div className='container'>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={submitRegistration}
           >
             {({ isSubmitting, errors, touched }) => (
-              <Form className="login-section">
-                <div className="row align-items-center">
-                  <div className="col-lg-6">
-                    <div className="login-form">
-                      <div className="review-form box-shadows">
-                        <div className="review-form-text">
-                          <h5 className="comment-title">Sign Up</h5>
+              <Form className='login-section'>
+                <div className='row align-items-center'>
+                  <div className='col-lg-6'>
+                    <div className='login-form'>
+                      <div className='review-form box-shadows'>
+                        <div className='review-form-text'>
+                          <h5 className='comment-title'>Sign Up</h5>
                           <img
-                            src="assets/images/homepage-one/vector-line.png"
-                            alt="img"
+                            src='assets/images/homepage-one/vector-line.png'
+                            alt='img'
                           />
                         </div>
-                        <div className="review-inner-form">
-                          <div className="review-form-name">
-                            <label htmlFor="name" className="form-label">
+                        <div className='review-inner-form'>
+                          <div className='review-form-name'>
+                            <label htmlFor='name' className='form-label'>
                               Name*
                             </label>
                             <Field
-                              type="text"
-                              id="name"
-                              name="name"
-                              className="form-control"
-                              placeholder="Name"
+                              type='text'
+                              id='name'
+                              name='name'
+                              className='form-control'
+                              placeholder='Name'
                               required
                             />
                             {errors.name && touched.name ? (
-                              <div className="error-message">{errors.name}</div>
+                              <div className='error-message'>{errors.name}</div>
                             ) : null}
                           </div>
-                          <div className="review-form-name">
-                            <label htmlFor="email" className="form-label">
+                          <div className='review-form-name'>
+                            <label htmlFor='email' className='form-label'>
                               Email Address*
                             </label>
                             <Field
-                              type="email"
-                              id="email"
-                              name="email"
-                              className="form-control"
-                              placeholder="Email"
+                              type='email'
+                              id='email'
+                              name='email'
+                              className='form-control'
+                              placeholder='Email'
                               required
                             />
                             {errors.email && touched.email ? (
-                              <div className="error-message">
+                              <div className='error-message'>
                                 {errors.email}
                               </div>
                             ) : null}
                           </div>
-                          <div className="review-form-name">
-                            <label htmlFor="mobile" className="form-label">
+                          <div className='review-form-name'>
+                            <label htmlFor='mobile' className='form-label'>
                               Mobile Number*
                             </label>
                             <Field
-                              type="text"
-                              id="mobile"
-                              name="mobile"
-                              className="form-control"
-                              placeholder="Mobile Number"
+                              type='text'
+                              id='mobile'
+                              name='mobile'
+                              className='form-control'
+                              placeholder='Mobile Number'
                               required
                             />
                             {errors.mobile && touched.mobile ? (
-                              <div className="error-message">
+                              <div className='error-message'>
                                 {errors.mobile}
                               </div>
                             ) : null}
                           </div>
-                          <div className="review-form-name">
-                            <label htmlFor="password" className="form-label">
+                          <div className='review-form-name'>
+                            <label htmlFor='password' className='form-label'>
                               Password*
                             </label>
                             <Field
-                              type="password"
-                              id="password"
-                              name="password"
-                              className="form-control"
-                              placeholder="Password"
+                              type='password'
+                              id='password'
+                              name='password'
+                              className='form-control'
+                              placeholder='Password'
                               required
                             />
                             {errors.password && touched.password ? (
-                              <div className="error-message">
+                              <div className='error-message'>
                                 {errors.password}
                               </div>
                             ) : null}
@@ -218,13 +218,13 @@ const Register = () => {
                             ) : null}
                           </div> */}
                         </div>
-                        {error && <div className="error-message">{error}</div>}
+                        {error && <div className='error-message'>{error}</div>}
                         {successMessage && (
-                          <div className="success-message">
+                          <div className='success-message'>
                             {successMessage}
                           </div>
                         )}
-                        <div className="login-btn text-center">
+                        <div className='login-btn text-center'>
                           {/*
                         {isSubmitting ? ( /
                             <div className="loader-container">  
@@ -237,38 +237,38 @@ const Register = () => {
                           ) : (*/}
                           <>
                             <button
-                              type="submit"
-                              className="shop-btn"
+                              type='submit'
+                              className='shop-btn'
                               disabled={isSubmitting}
                             >
                               Sign Up
                             </button>
-                            <span className="shop-account">
-                              Already have an account?{" "}
-                              <Link to="/login">Log In</Link>
+                            <span className='shop-account'>
+                              Already have an account?{' '}
+                              <Link to='/login'>Log In</Link>
                             </span>
                           </>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-6">
-                    <div className="login-img">
+                  <div className='col-lg-6'>
+                    <div className='login-img'>
                       <img
-                        src="assets/images/homepage-one/account-img.webp"
-                        alt="img"
+                        src='assets/images/homepage-one/account-img.webp'
+                        alt='img'
                       />
                     </div>
                   </div>
                 </div>
                 {isSubmitting && (
-                  <div className="loader-overlay">
+                  <div className='loader-overlay'>
                     <img
                       //src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif"
                       //src=""
                       src={loaderGif}
-                      alt="Loading..."
-                      className="loader"
+                      alt='Loading...'
+                      className='loader'
                     />
                   </div>
                 )}
