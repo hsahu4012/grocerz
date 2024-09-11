@@ -135,9 +135,11 @@ function App() {
           <Route path='/productsearchlist' element={<ProductSearchList />} />
           <Route path='/Faq' element={<Faq />} />
 
+          <Route path='/privacypolicy' element={<PrivacyPolicy />} />
+          
           <Route path='/' element={<Home />} />
 
-          <Route path='/privacypolicy' element={<PrivacyPolicy />} />
+          
         </Routes>
         {/* <Home /> */}
         <Icon />
