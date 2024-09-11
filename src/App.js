@@ -50,6 +50,8 @@ import OurTeam from './components/OurTeam';
 import Complainform from './components/Complainform';
 import Faq from './components/Faq';
 
+import PrivacyPolicy from './components/static/PrivacyPolicy.js';
+
 function App() {
   //temp code to keep server live
   // const callApiQsList = async () => {
@@ -134,9 +136,12 @@ function App() {
           <Route path='/Faq' element={<Faq />} />
 
           <Route path='/' element={<Home />} />
+
+          <Route path='/privacypolicy' element={<PrivacyPolicy />} />
         </Routes>
         {/* <Home /> */}
         <Icon />
+        
         <Footer />
       </DataApp>
     </BrowserRouter>
