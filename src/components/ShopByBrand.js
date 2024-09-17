@@ -159,7 +159,7 @@ const ShopByBrand = () => {
                                 }}
                               />
                               <label htmlFor={`brand-${brand.brand_id}`}>
-                                {brand.brand_name} ({brand.total_orders} orders)
+                                {brand.brand_name} 
                               </label>
                             </li>
                           ))}
