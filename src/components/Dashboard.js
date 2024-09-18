@@ -125,13 +125,9 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
-
-                      {/* User Information Section */}
                       <div className='col-lg-12 review-form'>
-                          {/* <div className="info-section"> */}
                             <div className="seller-info">
                               <h5 className="heading">Personal Information</h5>
-                              {/* <div className="info-list"> */}
                               {isEditing ? (
                         <div className='Edit-fields'>
                           <div className='checkout__form__input'>
@@ -154,8 +150,6 @@ const Dashboard = () => {
                           <button type='submit' class='shop-btn' onClick={() => setIsEditing(true)}>Edit</button>
                         </div>
                         )}
-                      {/* </div> */}
-                    {/* </div> */}
                   </div>
                 </div>
               </div>
