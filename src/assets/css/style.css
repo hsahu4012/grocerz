@@ -151,9 +151,33 @@ button {
 }
 
 .shop-btn-red {
-  background-color: #fe0600;
+  padding: 1.2rem 3.4rem;
+  margin: 4rem 4rem;
+  text-align: center;
+  border-radius: 0.4rem;
+  display: inline-block;
+  background: #fe0600;
+  font-size: 1.4rem;
+  font-weight: 500;
+  position: relative;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s;
+  overflow: hidden;
+  z-index: 1;
 }
 .shop-btn::after {
+  content: ' ';
+  width: 0%;
+  height: 100%;
+  background: #1d1d1d;
+  position: absolute;
+  transition: all 0.4s ease-in-out;
+  right: 0;
+  top: 0;
+  z-index: -3;
+}
+.shop-btn-red::after {
   content: ' ';
   width: 0%;
   height: 100%;
@@ -179,7 +203,16 @@ button {
   color: #ffffff;
   background-color: #34a853;
 }
+.shop-btn-red:hover {
+  color: #ffffff;
+  background-color: #fe0600;
+}
 .shop-btn:hover::after {
+  right: auto;
+  left: 0;
+  width: 100%;
+}
+.shop-btn-red:hover::after {
   right: auto;
   left: 0;
   width: 100%;
@@ -189,10 +222,16 @@ button {
   fill: #ffffff;
   transform: translate(5px);
 }
+.shop-btn-red:hover svg {
+  fill: #ffffff;
+  transform: translate(5px);
+}
 .shop-btn:hover span {
   color: #ffffff;
 }
-
+.shop-btn-red:hover span {
+  color: #ffffff;
+}
 .product {
   padding: 7rem 0 8rem 0;
 }

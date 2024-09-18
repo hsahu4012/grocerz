@@ -127,30 +127,35 @@ const Dashboard = () => {
                       </div>
 
                       {/* User Information Section */}
-                      <div className='row mt-4'>
-                      <div className="col-lg-12">
-                          <div className="info-section">
+                      <div className='col-lg-12 review-form'>
+                          {/* <div className="info-section"> */}
                             <div className="seller-info">
                               <h5 className="heading">Personal Information</h5>
-                              <div className="info-list">
+                              {/* <div className="info-list"> */}
                               {isEditing ? (
                         <div className='Edit-fields'>
-                          <p>Name: <input type="text" style={{ border: "2px solid #34A853", borderRadius:"5px", paddingLeft:"2px"}} name="name" value={userDetails.name}  onChange={handleInputChange} /></p>
-                          <p>Email: <input type="text" style={{ border: "2px solid #34A853", borderRadius:"5px", paddingLeft:"2px", margin: "5px 0" }} name="email" value={userDetails.email} onChange={handleInputChange} /></p>
-                          <p>Phone: <input type="text" style={{ border: "2px solid #34A853", borderRadius:"5px", paddingLeft:"2px", marginBottom: "5px"}} name="mobile" value={userDetails.mobile} onChange={handleInputChange} /></p>
-                          <button style={{backgroundColor: "#34A853", fontSize: "15px", color: "white", borderRadius: "5px", height:"25px", width: "50px"}} onClick={updateUserDetails}>Update</button>
-                          <button style={{backgroundColor: "#FF0000", fontSize: "15px", color: "white", borderRadius: "5px", height:"25px", width: "50px", marginLeft: "10px"}} onClick={() => setIsEditing(false)}>Cancel</button>
+                          <div className='checkout__form__input'>
+                          <p>Name:</p><input type='text' name='name' value={userDetails.name} onChange={handleInputChange} className='form-control'/>
+                          </div>
+                          <div className='checkout__form__input'>
+                          <p>Email: <input type="text" name="email" value={userDetails.email} onChange={handleInputChange} className='form-control'/></p>
+                          </div>
+                          <div className='checkout__form__input'>
+                          <p>Phone: <input type="text" name="mobile" value={userDetails.mobile} onChange={handleInputChange} className='form-control'/></p>
+                          </div>
+                          <button type='submit' class='shop-btn' onClick={updateUserDetails}>Update</button>
+                          <button type='submit' class='shop-btn-red' onClick={() => setIsEditing(false)}>Cancel</button>
                         </div>
                         ) : (
                         <div>
                           <p>Name:  {userDetails.name}</p>
-                          <p style={{ margin: "5px 0"}}>Email:  {userDetails.email}</p>
-                          <p style={{ marginTop: "6.5px", marginBottom: "5.5px"}}>Phone:  {userDetails.mobile}</p>
-                          <button style={{backgroundColor: "#34A853", fontSize: "15px", color: "white", borderRadius: "5px", height:"25px", width: "50px"}} onClick={() => setIsEditing(true)}>Edit</button>
+                          <p>Email:  {userDetails.email}</p>
+                          <p>Phone:  {userDetails.mobile}</p>
+                          <button type='submit' class='shop-btn' onClick={() => setIsEditing(true)}>Edit</button>
                         </div>
                         )}
-                      </div>
-                    </div>
+                      {/* </div> */}
+                    {/* </div> */}
                   </div>
                 </div>
               </div>
@@ -160,8 +165,6 @@ const Dashboard = () => {
         </div>
         </div>
         </div>
-        </div>
-
       </section>
     </>
   );
