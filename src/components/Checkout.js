@@ -126,6 +126,7 @@ function Checkout() {
     try {
       const userId = localStorage.getItem('userid') || '';
       if (userId) {
+        // orderCount(userId)
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}cart/userCart/${userId}`
         );
@@ -161,6 +162,7 @@ function Checkout() {
 
   useEffect(() => {
     calculateTotal();
+    
   }, [cartItems]);
 
   const fetchAddresses = async () => {
@@ -170,7 +172,8 @@ function Checkout() {
           `${process.env.REACT_APP_API_URL}address/getByuserId/${userId}`
         );
         setAddresses(response.data);
-        orderCount(userId)
+        // orderCount(userId)
+        // console.log("calling order count",orderCount(userId))
         if (response.data.length > 0) {
           setSelectedAddressId(response.data[0].addressid);
         }
@@ -183,6 +186,8 @@ function Checkout() {
   useEffect(() => {
     fetchCartItems();
     fetchAddresses();
+    orderCount(window.localStorage.getItem('userId'))
+
   }, []);
 
   const placeOrder = async () => {
@@ -280,8 +285,8 @@ function Checkout() {
   const [couponCode, setCouponCode] = useState('');
   const [isCouponApplied, setIsCouponApplied] = useState('');
   const [discountAmount ,setDiscountAmount]=useState(0)
-  const [discountPercentage ,setDiscountPercentage]=useState('')
-  const [totalDiscount ,setTotalDiscount]=useState('')
+  const [discountPercentage ,setDiscountPercentage]=useState(0);
+  const [totalDiscount ,setTotalDiscount]=useState(0)
   const [discountMsg ,setDiscountMsg]=useState(false)
   
   const verifyCouponCode=  async()=>{
@@ -320,21 +325,29 @@ function Checkout() {
       const {data} = await axios.get(
         `${process.env.REACT_APP_API_URL}orders/getOrderCountByUserId/${userId}`
       );
-      const totalOrders=data.totalOrders
+      if(data){
+        const totalOrders=data.totalOrders
       if(totalOrders=='0'){
       setDiscountPercentage(5)
-      setDiscountAmount(500)
-      calculateTotalDiscount(500,5)
+      // setDiscountAmount(500)
+      const discount = Number((5 / 100) * totalAmount) ;
+      // const finalDiscount = Number(Math.min(discount, discountAmount));
+      // calculateTotalDiscount(500,5)
       setIsCouponApplied(true);
       setDiscountMsg(true)
+      setTotalDiscount(discount)
       }
-      return totalOrders;
+      }
     } catch (error) {
       console.error('Error fetching addresses', error);
       setIsCouponApplied(false);
     }
   }
+useEffect(()=>{
 
+  const discount = (discountPercentage / 100) * totalAmount ;
+  setTotalDiscount(discount)
+},[discountPercentage])
   return (
     <>
       <section className='blog about-blog'>
@@ -685,7 +698,7 @@ function Checkout() {
                         <div className="col-5">
                           {isCouponApplied && (
                             <div className="alert alert-success mt-2" role="alert">
-                              {discountMsg ? <strong>It is your first order so..</strong>:<strong>Coupon Applied Successfully!</strong> }
+                              {discountMsg ? <strong >It is your first order so..</strong>:<strong>Coupon Applied Successfully!</strong> }
                               <span className="d-block">
                                 You Got <strong>{discountPercentage}%</strong> Discount up to
                                 <strong> ₹{discountAmount}</strong>.
