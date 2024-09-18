@@ -26,6 +26,7 @@ import Category from './components/Category';
 import Address from './components/Address';
 import AddressList from './components/AddressList';
 
+import ShopByBrand from './components/ShopByBrand';
 import LoginAndSecurityPage from './components/LoginAndSecurity';
 import Nameedit from './components/Editpages/Nameedit';
 import Emailedit from './components/Editpages/Emailedit';
@@ -97,6 +98,7 @@ function App() {
           {/* <Route path="/category/:categoryid" element={<CategoryBack />} /> */}
           <Route path='/category/:category_id' element={<Productlist />} />
           <Route path='/product/:productid' element={<ProductDetails />} />
+          <Route path='/shopbybrand' element={<ShopByBrand />}/>
 
           <Route path='/cart' element={<ShopCart />} />
           <Route path='/wishlist' element={<Wishlist />} />
