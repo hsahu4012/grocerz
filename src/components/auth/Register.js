@@ -3,6 +3,8 @@ import { Formik, Field, Form } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import * as Yup from 'yup';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //import loaderGif from 'src/assets/images/loader.gif';
 import loaderGif from '../../assets/images/loader.gif';
@@ -12,6 +14,11 @@ const Register = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const url = `${process.env.REACT_APP_API_URL}users/adduser`;
+  const [showPassword, setshowPassword]= useState(false);
+
+  const togglePasswordVisibility = () => {
+    setshowPassword(!showPassword);
+  };
 
   const initialValues = {
     name: '',
@@ -187,14 +194,19 @@ const Register = () => {
                             <label htmlFor='password' className='form-label'>
                               Password*
                             </label>
+                            <div className="input-group">
                             <Field
-                              type='password'
+                              type={showPassword ? "text" : "password"}
                               id='password'
                               name='password'
                               className='form-control'
                               placeholder='Password'
                               required
                             />
+                            <span className="input-group-text" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                              </span>
+                            </div>
                             {errors.password && touched.password ? (
                               <div className='error-message'>
                                 {errors.password}
