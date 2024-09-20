@@ -8,7 +8,6 @@
 //   const [products, setProducts] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
 //   const url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo5Q9zUcW2xzPpC56YtkwJbh9A95a9P6MFgQ&usqp=CAU";
 
-
 //   const temp = useParams();
 //   console.log(temp.productid);
 //   const [product, setcategory] = useState({})
@@ -28,9 +27,6 @@
 //   useEffect(() => {
 //     category(temp.productid);
 //   }, [])
-
-
-
 
 //   return (
 //     <>

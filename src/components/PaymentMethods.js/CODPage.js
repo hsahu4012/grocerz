@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 //import { FaMoneyBillAlt } from "react-icons/fa";
 
 const CODPage = () => {
-  const [captcha, setCaptcha] = useState("");
-  const [userInput, setUserInput] = useState("");
+  const [captcha, setCaptcha] = useState('');
+  const [userInput, setUserInput] = useState('');
 
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     setUserInput(event.target.value);
   };
 
   const handlePlaceOrderClick = () => {
-    const confirmed = window.confirm("Are you sure you want to place the order?");
+    const confirmed = window.confirm(
+      'Are you sure you want to place the order?'
+    );
     if (confirmed && userInput === captcha) {
       // Clear input
-      setUserInput("");
+      setUserInput('');
       // Show success message
-      alert("Order placed successfully!");
+      alert('Order placed successfully!');
       // Generate new captcha
       generateCaptcha();
     } else if (!confirmed) {
@@ -23,7 +25,7 @@ const CODPage = () => {
       return;
     } else {
       // Show error message for invalid captcha
-      alert("Invalid captcha. Please try again.");
+      alert('Invalid captcha. Please try again.');
     }
   };
 
@@ -37,29 +39,29 @@ const CODPage = () => {
   }, []);
 
   return (
-    <div className="cod-container">
-      <div className="cash-on-delivery-page">
-        <span className="payment-heading">Cash on Delivery (Cash/UPI)</span>
+    <div className='cod-container'>
+      <div className='cash-on-delivery-page'>
+        <span className='payment-heading'>Cash on Delivery (Cash/UPI)</span>
 
-        <div className="captcha-container">
+        <div className='captcha-container'>
           <br />
           <p>Please enter the following captcha to proceed:</p>
-          <div className="captcha">
+          <div className='captcha'>
             <span>{captcha}</span>
-            <button className="refresh-captcha" onClick={generateCaptcha}>
+            <button className='refresh-captcha' onClick={generateCaptcha}>
               Refresh
             </button>
           </div>
-          <div className="input-container">
+          <div className='input-container'>
             <input
-              type="text"
-              placeholder="Enter Captcha"
+              type='text'
+              placeholder='Enter Captcha'
               value={userInput}
               onChange={handleInputChange}
             />
           </div>
         </div>
-        <button className="place-order-btn" onClick={handlePlaceOrderClick}>
+        <button className='place-order-btn' onClick={handlePlaceOrderClick}>
           Place Order
         </button>
       </div>
