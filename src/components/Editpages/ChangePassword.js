@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import DashboardRoutes from "../DashboardRoutes";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import DashboardRoutes from '../DashboardRoutes';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function ChangePasswordPage() {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const url = `${process.env.REACT_APP_API_URL}users/updateuserpassword`;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     if (newPassword !== confirmPassword) {
@@ -26,8 +26,8 @@ function ChangePasswordPage() {
 
     setLoading(true);
     try {
-      const token = localStorage.getItem("jwt");
-      const userid = localStorage.getItem("userid");
+      const token = localStorage.getItem('jwt');
+      const userid = localStorage.getItem('userid');
 
       const response = await axios.put(
         url,
@@ -43,25 +43,25 @@ function ChangePasswordPage() {
       );
 
       if (response.status === 200) {
-        setErrorMessage("");
-        setSuccessMessage("Password updated successfully!");
-        setCurrentPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
+        setErrorMessage('');
+        setSuccessMessage('Password updated successfully!');
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate('/dashboard');
         }, 1500);
       }
     } catch (error) {
-      console.error("Error changing password", error);
+      console.error('Error changing password', error);
       if (error.response && error.response.status === 401) {
-        setErrorMessage("Current password is incorrect.");
+        setErrorMessage('Current password is incorrect.');
       } else if (error.response && error.response.data) {
         setErrorMessage(error.response.data.message);
-      } else if (error.message === "Network Error") {
-        setErrorMessage("Network error occurred. Please try again later.");
+      } else if (error.message === 'Network Error') {
+        setErrorMessage('Network error occurred. Please try again later.');
       } else {
-        setErrorMessage("Something went wrong. Please try again later.");
+        setErrorMessage('Something went wrong. Please try again later.');
       }
     } finally {
       setLoading(false);
@@ -70,23 +70,23 @@ function ChangePasswordPage() {
 
   return (
     <>
-      <section className="blog about-blog">
-        <div className="container">
-          <div className="blog-heading about-heading">
-            <h1 className="heading">Password</h1>
+      <section className='blog about-blog'>
+        <div className='container'>
+          <div className='blog-heading about-heading'>
+            <h1 className='heading'>Password</h1>
           </div>
         </div>
       </section>
-      <section className="user-profile footer-padding">
-        <div className="container">
-          <div className="user-profile-section box-shadows">
-            <div className="user-dashboard">
+      <section className='user-profile footer-padding'>
+        <div className='container'>
+          <div className='user-profile-section box-shadows'>
+            <div className='user-dashboard'>
               <DashboardRoutes />
-              <div className="container mx-auto max-w-md my-3 mb-4 my-5 mt-8">
-                <h2 className="text-xl font-semibold mb-4">Change Password</h2>
-                <div className="row align-items-center">
-                  <div className="col-lg-6">
-                    <div className="form-section">
+              <div className='container mx-auto max-w-md my-3 mb-4 my-5 mt-8'>
+                <h2 className='text-xl font-semibold mb-4'>Change Password</h2>
+                <div className='row align-items-center'>
+                  <div className='col-lg-6'>
+                    <div className='form-section'>
                       <form onSubmit={handleSubmit}>
                         {/* <div className="currentpass form-item">
                           <label
@@ -104,73 +104,73 @@ function ChangePasswordPage() {
                             placeholder="******"
                           />
                         </div> */}
-                        <div className="password form-item">
+                        <div className='password form-item'>
                           <label
-                            htmlFor="newPassword"
-                            className="form-label text-lg font-semibold h5"
+                            htmlFor='newPassword'
+                            className='form-label text-lg font-semibold h5'
                           >
                             New Password*
                           </label>
                           <input
-                            type={showPassword ? "text" : "password"}
-                            id="newPassword"
+                            type={showPassword ? 'text' : 'password'}
+                            id='newPassword'
                             value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            className="form-control text-lg p-3 h5"
-                            placeholder="******"
+                            onChange={e => setNewPassword(e.target.value)}
+                            className='form-control text-lg p-3 h5'
+                            placeholder='******'
                           />
                         </div>
-                        <div className="re-password form-item">
+                        <div className='re-password form-item'>
                           <label
-                            htmlFor="confirmPassword"
-                            className="form-label text-lg font-semibold h5"
+                            htmlFor='confirmPassword'
+                            className='form-label text-lg font-semibold h5'
                           >
                             Re-enter Password*
                           </label>
                           <input
-                            type={showPassword ? "text" : "password"}
-                            id="confirmPassword"
+                            type={showPassword ? 'text' : 'password'}
+                            id='confirmPassword'
                             value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="form-control text-lg p-3 h5"
-                            placeholder="******"
+                            onChange={e => setConfirmPassword(e.target.value)}
+                            className='form-control text-lg p-3 h5'
+                            placeholder='******'
                           />
                         </div>
-                        <div className="show-password-checkbox">
+                        <div className='show-password-checkbox'>
                           <input
-                            type="checkbox"
-                            id="showPassword"
+                            type='checkbox'
+                            id='showPassword'
                             checked={showPassword}
                             onChange={() => setShowPassword(!showPassword)}
                           />
                           <label
-                            htmlFor="showPassword"
-                            className="form-label text-lg ml-2"
+                            htmlFor='showPassword'
+                            className='form-label text-lg ml-2'
                           >
                             Show Passwords
                           </label>
                         </div>
                         {errorMessage && (
-                          <div className="text-red-500 mb-4 text-lg">
+                          <div className='text-red-500 mb-4 text-lg'>
                             {errorMessage}
                           </div>
                         )}
                         {successMessage && (
-                          <div className="text-green-500 mb-4 text-lg">
+                          <div className='text-green-500 mb-4 text-lg'>
                             {successMessage}
                           </div>
                         )}
-                        <div className="form-btn d-flex gap-2 mt-4">
+                        <div className='form-btn d-flex gap-2 mt-4'>
                           <button
-                            type="submit"
-                            className="shop-btn text-lg p-3"
+                            type='submit'
+                            className='shop-btn text-lg p-3'
                             disabled={loading}
                           >
-                            {loading ? "Updating..." : "Update Password"}
+                            {loading ? 'Updating...' : 'Update Password'}
                           </button>
                           <Link
-                            to="/dashboard"
-                            className="shop-btn cancel-btn text-lg p-3"
+                            to='/dashboard'
+                            className='shop-btn cancel-btn text-lg p-3'
                           >
                             Cancel
                           </Link>
@@ -178,11 +178,11 @@ function ChangePasswordPage() {
                       </form>
                     </div>
                   </div>
-                  <div className="col-lg-6">
-                    <div className="reset-img text-end">
+                  <div className='col-lg-6'>
+                    <div className='reset-img text-end'>
                       <img
-                        src="assets/images/homepage-one/reset.webp"
-                        alt="reset"
+                        src='assets/images/homepage-one/reset.webp'
+                        alt='reset'
                       />
                     </div>
                   </div>

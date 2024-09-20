@@ -10,10 +10,10 @@ const CustomProduct = () => {
   const [messages, setMessages] = useState({
     success: '',
     error: '',
-  })
+  });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
@@ -27,7 +27,7 @@ const CustomProduct = () => {
     return true;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     if (!validateForm()) return;
 
@@ -35,16 +35,25 @@ const CustomProduct = () => {
     try {
       const requestData = {
         ...formData,
-        requestid: 'req_' + Math.random().toString(36).substr(2, 6), 
-        userid: 'user123', 
+        requestid: 'req_' + Math.random().toString(36).substr(2, 6),
+        userid: 'user123',
       };
-      
-      await axios.post(`${process.env.REACT_APP_API_URL}customProduct/add`, requestData);
 
-      setMessages({ success: 'Product request submitted successfully!', error: '' });
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}customProduct/add`,
+        requestData
+      );
+
+      setMessages({
+        success: 'Product request submitted successfully!',
+        error: '',
+      });
       setFormData({ product_name: '', product_desc: '', quantity: '' });
     } catch (error) {
-      setMessages({ success: '', error: 'Failed to submit the request. Please try again.' });
+      setMessages({
+        success: '',
+        error: 'Failed to submit the request. Please try again.',
+      });
     } finally {
       setLoading(false);
     }
@@ -60,8 +69,8 @@ const CustomProduct = () => {
               <td style={styles.cell}>
                 <label style={styles.label}>Name of Product</label>
                 <FormField
-                  id="product_name"
-                  type="text"
+                  id='product_name'
+                  type='text'
                   value={formData.product_name}
                   onChange={handleChange}
                   required
@@ -70,8 +79,8 @@ const CustomProduct = () => {
               <td style={styles.cell}>
                 <label style={styles.label}>Description</label>
                 <FormField
-                  id="product_desc"
-                  type="text"
+                  id='product_desc'
+                  type='text'
                   value={formData.product_desc}
                   onChange={handleChange}
                   required
@@ -80,8 +89,8 @@ const CustomProduct = () => {
               <td style={styles.cell}>
                 <label style={styles.label}>Quantity</label>
                 <FormField
-                  id="quantity"
-                  type="number"
+                  id='quantity'
+                  type='number'
                   value={formData.quantity}
                   onChange={handleChange}
                   required
@@ -89,8 +98,12 @@ const CustomProduct = () => {
               </td>
             </tr>
             <tr>
-              <td colSpan="3" style={styles.submitCell}>
-                <button type="submit" disabled={loading} style={styles.submitButton}>
+              <td colSpan='3' style={styles.submitCell}>
+                <button
+                  type='submit'
+                  disabled={loading}
+                  style={styles.submitButton}
+                >
                   {loading ? 'Submitting...' : 'Submit'}
                 </button>
               </td>
@@ -98,7 +111,9 @@ const CustomProduct = () => {
           </tbody>
         </table>
       </form>
-      {messages.success && <p style={styles.successMessage}>{messages.success}</p>}
+      {messages.success && (
+        <p style={styles.successMessage}>{messages.success}</p>
+      )}
       {messages.error && <p style={styles.errorMessage}>{messages.error}</p>}
     </div>
   );

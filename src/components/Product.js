@@ -1,14 +1,8 @@
 import React from 'react';
-import dress_black from '../assets/category/womendress/dress_black.jpg'
+import dress_black from '../assets/category/womendress/dress_black.jpg';
 
 const Product = () => {
-    return (
-        <>
-            
+  return <></>;
+};
 
-
-        </>
-    )
-}
-
-export default Product
+export default Product;
