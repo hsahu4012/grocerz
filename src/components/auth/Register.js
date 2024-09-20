@@ -33,8 +33,8 @@ const Register = () => {
       .min(3, 'Name must be at least 3 characters')
       .required('Name is required'),
     email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required'),
+    .email('Invalid email address')
+    .optional(),
     mobile: Yup.string()
       .matches(
         /^[6-9]\d{9}$/,
@@ -156,7 +156,7 @@ const Register = () => {
                           </div>
                           <div className='review-form-name'>
                             <label htmlFor='email' className='form-label'>
-                              Email Address*
+                              Email Address
                             </label>
                             <Field
                               type='email'
@@ -164,7 +164,6 @@ const Register = () => {
                               name='email'
                               className='form-control'
                               placeholder='Email'
-                              required
                             />
                             {errors.email && touched.email ? (
                               <div className='error-message'>
