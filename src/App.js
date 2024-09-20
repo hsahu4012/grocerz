@@ -22,6 +22,7 @@ import Login from './components/auth/Login';
 import Forgetpassword from './components/auth/Forgetpassword';
 import Contact from './components/Contact';
 import CustomProduct from './components/CustomProduct';
+import Forgetpassword from './components/auth/Forgetpassword';
 // import CategoryBack from "./components/Category_backup";
 import Category from './components/Category';
 import Address from './components/Address';
@@ -111,6 +112,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/forgetpassword' element={<Forgetpassword />} />
+          <Route path="/feedback" element={<Feedback />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/complainform' element={<Complainform />} />
           <Route path='/customproduct' element={<CustomProduct />} />
