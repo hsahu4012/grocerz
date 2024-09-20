@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
-import loaderGif from "../assets/images/loader.gif";
+import loaderGif from '../assets/images/loader.gif';
 const OrderHistory = () => {
   const userid = localStorage.getItem('userid');
   const usertype = localStorage.getItem('usertype');
@@ -12,72 +12,87 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const handleOrderClick = (orderid) => {
+  const handleOrderClick = orderid => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
   };
-  const handleMarkComplete = async (orderid) => {
+  const handleMarkComplete = async orderid => {
     setLoading(true);
     try {
-      const confirm = window.confirm("Are you sure to mark the order as completed?");
-      if(confirm){
-        const url = process.env.REACT_APP_API_URL + "orders/markascompleted/" + orderid;
+      const confirm = window.confirm(
+        'Are you sure to mark the order as completed?'
+      );
+      if (confirm) {
+        const url =
+          process.env.REACT_APP_API_URL + 'orders/markascompleted/' + orderid;
         const response = await axios.put(url);
         fetchOrders();
       }
     } catch (error) {
-      console.error("Error fetching cart items", error);
+      console.error('Error fetching cart items', error);
     }
     setLoading(false);
   };
-  const handleOrderCancel = async (orderid) => {
+  const handleOrderCancel = async orderid => {
     setLoading(true);
     try {
-      const confirm = window.confirm("Are you sure to cancel the order?");
-      if(confirm){
-        const url = process.env.REACT_APP_API_URL + "orders/markascancelled/" + orderid;
+      const confirm = window.confirm('Are you sure to cancel the order?');
+      if (confirm) {
+        const url =
+          process.env.REACT_APP_API_URL + 'orders/markascancelled/' + orderid;
         const response = await axios.put(url);
         handleDeliveryCancel(orderid);
         fetchOrders();
       }
     } catch (error) {
-      console.error("Error fetching cart items", error);
+      console.error('Error fetching cart items', error);
     }
     setLoading(false);
   };
-  const handleDelivered = async (orderid) => {
+  const handleDelivered = async orderid => {
     setLoading(true);
     try {
-      const confirm = window.confirm("Are you sure to mark the order as delivered?");
-      if(confirm){
-        const url = process.env.REACT_APP_API_URL + "orders/markdelivered/" + orderid;
+      const confirm = window.confirm(
+        'Are you sure to mark the order as delivered?'
+      );
+      if (confirm) {
+        const url =
+          process.env.REACT_APP_API_URL + 'orders/markdelivered/' + orderid;
         const response = await axios.put(url);
         fetchOrders();
       }
     } catch (error) {
-      console.error("Error fetching cart items", error);
+      console.error('Error fetching cart items', error);
     }
     setLoading(false);
   };
-  const handleDeliveryCancel = async (orderid) => {
+  const handleDeliveryCancel = async orderid => {
     setLoading(true);
     try {
-      const url = process.env.REACT_APP_API_URL + "orders/markdeliverycancelled/" + orderid;
+      const url =
+        process.env.REACT_APP_API_URL +
+        'orders/markdeliverycancelled/' +
+        orderid;
       const response = await axios.put(url);
       fetchOrders();
     } catch (error) {
-      console.error("Error fetching cart items", error);
+      console.error('Error fetching cart items', error);
     }
     setLoading(false);
   };
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const url = (usertype !== 'user') ? 'orders/allOrders' : 'orders/getByuserId/' + userid;
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}${url}`);
+      const url =
+        usertype !== 'user'
+          ? 'orders/allOrders'
+          : 'orders/getByuserId/' + userid;
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}${url}`
+      );
       setOrders(response.data);
-      console.log("Orders ", orders)
+      console.log('Orders ', orders);
     } catch (error) {
-      console.error("Error fetching cart items", error);
+      console.error('Error fetching cart items', error);
     }
     setLoading(false);
   };
@@ -87,59 +102,64 @@ const OrderHistory = () => {
     fetchOrders();
   }, []);
 
-  const findClassNames = (order_status) => {
-    if(order_status === 'Placed') {
+  const findClassNames = order_status => {
+    if (order_status === 'Placed') {
       return 'card-body bg-warning bg-opacity-25';
     }
-    if(order_status === 'CANCELLED') {
+    if (order_status === 'CANCELLED') {
       return 'card-body bg-danger bg-opacity-25';
     }
-    if(order_status === 'COMPLETED') {
+    if (order_status === 'COMPLETED') {
       return 'card-body bg-success bg-opacity-25';
     }
     return 'card-body bg-warning bg-opacity-25';
-  }
+  };
 
   return (
     <>
-      <section className="blog about-blog">
-        <div className="container">
+      <section className='blog about-blog'>
+        <div className='container'>
           {/* <div className="blog-bradcrum">
             <span><a href="/">Home</a></span>
             <span className="devider">/</span>
             <span><a href="OrderHistory">Orders</a></span>
           </div> */}
-          <div className="blog-heading about-heading">
-            <h1 className="heading">Orders</h1>
+          <div className='blog-heading about-heading'>
+            <h1 className='heading'>Orders</h1>
           </div>
         </div>
       </section>
-      <section className="user-profile footer-padding">
-        <div className="container">
-          <div className="user-profile-section box-shadows">
-            <div className="user-dashboard">
+      <section className='user-profile footer-padding'>
+        <div className='container'>
+          <div className='user-profile-section box-shadows'>
+            <div className='user-dashboard'>
               <DashboardRoutes />
-              <div className="container">
+              <div className='container'>
                 <h3>All Orders</h3>
                 {loading ? (
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '50vh',
-                  }}>
-                    <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '50vh',
+                    }}
+                  >
+                    <img
+                      src={loaderGif}
+                      alt='Loading...'
+                      style={{ width: '80px', height: '80px' }}
+                    />
                   </div>
-                ) : (
-                orders.length > 0 ? (
+                ) : orders.length > 0 ? (
                   orders.map((order, index) => (
-                    <div key={index} className="card mt-3">
+                    <div key={index} className='card mt-3'>
                       <div className={findClassNames(order.order_status)}>
-                        <div className="row">
+                        <div className='row'>
                           {/* <div className="col-md-3">
                             <img src="https://picsum.photos/500/200" className="img-fluid" alt="dummy" />
                           </div> */}
-                          <div className="col-sm-12 ">
+                          <div className='col-sm-12 '>
                             {/* <h5 className="card-title">
                               
                               <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
@@ -169,69 +189,121 @@ const OrderHistory = () => {
                             </div> */}
                             <div className='order-card'>
                               <div className='order-details'>
-                                <h5 className="card-title">
-                                  <strong style={{ cursor: 'pointer' }} onClick={() => handleOrderClick(order.order_id)}>
-                                    Order NO - {order.srno}. Total ₹{order.paymentamount}
+                                <h5 className='card-title'>
+                                  <strong
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() =>
+                                      handleOrderClick(order.order_id)
+                                    }
+                                  >
+                                    Order NO - {order.srno}. Total ₹
+                                    {order.paymentamount}
                                   </strong>
                                 </h5>
                               </div>
 
-                              {
-                                usertype === 'admin' &&
+                              {usertype === 'admin' && (
                                 <div className='order-actions'>
-                                  {(order.order_status === 'Placed') && <button className="mark-cancelled-btn" onClick={() => handleOrderCancel(order.order_id)}>
-                                    Cancel Order
-                                  </button>}
-                                  
-                                  {(order.delivery_status === 'Pending') && <button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
-                                    Mark Delivered
-                                  </button>}
-                                  {(order.order_status === 'Placed') && <button className="mark-complete-btn" onClick={() => handleMarkComplete(order.order_id)}>
-                                    Mark Complete
-                                  </button>}
+                                  {order.order_status === 'Placed' && (
+                                    <button
+                                      className='mark-cancelled-btn'
+                                      onClick={() =>
+                                        handleOrderCancel(order.order_id)
+                                      }
+                                    >
+                                      Cancel Order
+                                    </button>
+                                  )}
 
-                                  <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
+                                  {order.delivery_status === 'Pending' && (
+                                    <button
+                                      className='mark-complete-btn'
+                                      onClick={() =>
+                                        handleDelivered(order.order_id)
+                                      }
+                                    >
+                                      Mark Delivered
+                                    </button>
+                                  )}
+                                  {order.order_status === 'Placed' && (
+                                    <button
+                                      className='mark-complete-btn'
+                                      onClick={() =>
+                                        handleMarkComplete(order.order_id)
+                                      }
+                                    >
+                                      Mark Complete
+                                    </button>
+                                  )}
+
+                                  <button
+                                    className='view-details-btn'
+                                    onClick={() =>
+                                      handleOrderClick(order.order_id)
+                                    }
+                                  >
                                     View Details
                                   </button>
                                 </div>
-                              }
-                              {
-                                usertype === 'deliverypartner' && <div className='order-actions'>
+                              )}
+                              {usertype === 'deliverypartner' && (
+                                <div className='order-actions'>
                                   {/* {(order.delivery_status!=='CANCELLED' ) &&<button className="mark-cancelled-btn" onClick={() => handleDeliveryCancel(order.order_id)}>
                                   Cancel Delivery
                                 </button> } */}
-                                  
-                                  {(order.delivery_status === 'Pending') && <button className="mark-complete-btn" onClick={() => handleDelivered(order.order_id)}>
-                                    Mark Delivered
-                                  </button>}
 
-                                  <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
+                                  {order.delivery_status === 'Pending' && (
+                                    <button
+                                      className='mark-complete-btn'
+                                      onClick={() =>
+                                        handleDelivered(order.order_id)
+                                      }
+                                    >
+                                      Mark Delivered
+                                    </button>
+                                  )}
+
+                                  <button
+                                    className='view-details-btn'
+                                    onClick={() =>
+                                      handleOrderClick(order.order_id)
+                                    }
+                                  >
                                     View Details
                                   </button>
                                 </div>
-                              }
+                              )}
 
-                              {
-                                usertype === 'user' && <div className='order-actions'>
-                                  
-                                  <button className="view-details-btn" onClick={() => handleOrderClick(order.order_id)}>
+                              {usertype === 'user' && (
+                                <div className='order-actions'>
+                                  <button
+                                    className='view-details-btn'
+                                    onClick={() =>
+                                      handleOrderClick(order.order_id)
+                                    }
+                                  >
                                     View Details
                                   </button>
-                                 
                                 </div>
-                              }
+                              )}
                             </div>
 
-
-                            <div className='text-end'>
-
-
-
-                            </div>
-                            <p><strong>Order ID - </strong> {order.order_id}</p>
-                            <p><strong>Placed on - </strong> {order.order_date}, {order.order_time}</p>
-                            <p><strong>Order Status -</strong> {order.order_status}</p>
-                            <p><strong>Delivery Status -</strong> {order.delivery_status}</p>
+                            <div className='text-end'></div>
+                            <p>
+                              <strong>Order ID - </strong> {order.order_id}
+                            </p>
+                            <p>
+                              <strong>Placed on - </strong> {order.order_date},{' '}
+                              {order.order_time}
+                            </p>
+                            <p>
+                              <strong>Order Status -</strong>{' '}
+                              {order.order_status}
+                            </p>
+                            <p>
+                              <strong>Delivery Status -</strong>{' '}
+                              {order.delivery_status}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -239,7 +311,6 @@ const OrderHistory = () => {
                   ))
                 ) : (
                   <p>No orders found.</p>
-                )
                 )}
               </div>
             </div>
@@ -249,6 +320,5 @@ const OrderHistory = () => {
     </>
   );
 };
-
 
 export default OrderHistory;

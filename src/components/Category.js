@@ -7,17 +7,21 @@ const Category = () => {
   const [subcategories, setSubcategories] = useState([]);
   const { categoryid } = useParams();
 
-  const formatSubcategoryName = (name) => {
+  const formatSubcategoryName = name => {
     return name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and convert to lowercase
   };
 
   useEffect(() => {
     const fetchCategoryData = async () => {
       try {
-        const categoryResponse = await axios.get(`${process.env.REACT_APP_API_URL}category/allcategory}`);
+        const categoryResponse = await axios.get(
+          `${process.env.REACT_APP_API_URL}category/allcategory}`
+        );
         setCategoryName();
 
-        const subcategoryResponse = await axios.get(`${process.env.REACT_APP_API_URL}subCategory/categoryid/${categoryid}`);
+        const subcategoryResponse = await axios.get(
+          `${process.env.REACT_APP_API_URL}subCategory/categoryid/${categoryid}`
+        );
         setSubcategories(subcategoryResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -29,7 +33,7 @@ const Category = () => {
 
   useEffect(() => {
     //console.log('subcategories - ', subcategories)
-  })
+  });
 
   return (
     <div>
@@ -43,31 +47,28 @@ const Category = () => {
         />
       </div> */}
       <div>
-        <h4 className="text-banner-title">Category - {categoryName}</h4>
+        <h4 className='text-banner-title'>Category - {categoryName}</h4>
       </div>
-      <div className="image-container">
+      <div className='image-container'>
         <div className='row'>
-
-          {
-            subcategories.map((item) => (
-              <>
+          {subcategories.map(item => (
+            <>
               <div className='col-3'>
-                <Link to={`/category/${categoryid}/${formatSubcategoryName(item.subcategoryname)}/${item.subcategory_id}`}>
+                <Link
+                  to={`/category/${categoryid}/${formatSubcategoryName(item.subcategoryname)}/${item.subcategory_id}`}
+                >
                   <img
-                    draggable="false"
-                    className="image-image undefined image-hand img-responsive"
-                    src="https://assets.myntassets.com/w_245,c_limit,fl_progressive,dpr_2.0/assets/images/2020/8/31/1dce9c3e-77fa-48f1-85a3-d3c136c1d73e1598892377652-USPA.jpg"
-                    srcset=""
-                    alt=""
+                    draggable='false'
+                    className='image-image undefined image-hand img-responsive'
+                    src='https://assets.myntassets.com/w_245,c_limit,fl_progressive,dpr_2.0/assets/images/2020/8/31/1dce9c3e-77fa-48f1-85a3-d3c136c1d73e1598892377652-USPA.jpg'
+                    srcset=''
+                    alt=''
                   />
                   <p className='text-center'>{item.subcategoryname}</p>
-
                 </Link>
-                </div>
-              </>
-            ))
-          }
-
+              </div>
+            </>
+          ))}
         </div>
 
         {/* {subcategories.length === 0 ? (
@@ -148,50 +149,50 @@ const Category = () => {
         /> */}
       </div>
       <div>
-        <h4 className="text-banner-title">Categories To Bag</h4>
+        <h4 className='text-banner-title'>Categories To Bag</h4>
       </div>
-      <div className="images-category">
+      <div className='images-category'>
         <img
-          draggable="false"
-          className="image-image undefined image-hand"
-          src="https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/89f1bd9d-3a28-456d-888a-beff717a06f81594222908155-Shirts.jpg"
-          srcset=""
-          alt=""
+          draggable='false'
+          className='image-image undefined image-hand'
+          src='https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/89f1bd9d-3a28-456d-888a-beff717a06f81594222908155-Shirts.jpg'
+          srcset=''
+          alt=''
         />
         <img
-          draggable="false"
-          className="image-image undefined image-hand"
-          src="https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/9ff1f34e-9242-47fd-9566-e7d7a5c240511594222908483-T-shirt.jpg"
-          srcset=""
-          alt=""
+          draggable='false'
+          className='image-image undefined image-hand'
+          src='https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/9ff1f34e-9242-47fd-9566-e7d7a5c240511594222908483-T-shirt.jpg'
+          srcset=''
+          alt=''
         />
         <img
-          draggable="false"
-          className="image-image undefined image-hand"
-          src="https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/720cf6ef-3be4-4825-8211-0125c942e3821594222907960-Jeans.jpg"
-          srcset=""
-          alt=""
+          draggable='false'
+          className='image-image undefined image-hand'
+          src='https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/720cf6ef-3be4-4825-8211-0125c942e3821594222907960-Jeans.jpg'
+          srcset=''
+          alt=''
         />
         <img
-          draggable="false"
-          className="image-image undefined image-hand"
-          src="https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/2bac5e2d-337b-42c0-88c7-3d4e2dc464141594222908262-Shorts-_-Trousers.jpg"
-          srcset=""
-          alt=""
+          draggable='false'
+          className='image-image undefined image-hand'
+          src='https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/2bac5e2d-337b-42c0-88c7-3d4e2dc464141594222908262-Shorts-_-Trousers.jpg'
+          srcset=''
+          alt=''
         />
         <img
-          draggable="false"
-          className="image-image undefined image-hand"
-          src="https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/ae14f627-9fd9-41ce-80a4-f107c316c7eb1594222907625-Casual-shoes.jpg"
-          srcset=""
-          alt=""
+          draggable='false'
+          className='image-image undefined image-hand'
+          src='https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/ae14f627-9fd9-41ce-80a4-f107c316c7eb1594222907625-Casual-shoes.jpg'
+          srcset=''
+          alt=''
         />
         <img
-          draggable="false"
-          className="image-image undefined image-hand"
-          src="https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/f0f9b81a-b9d5-4b8b-94d5-ea878fa9b18e1594222834121-Infant-Essential.jpg"
-          srcset=""
-          alt=""
+          draggable='false'
+          className='image-image undefined image-hand'
+          src='https://assets.myntassets.com/w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2020/7/8/f0f9b81a-b9d5-4b8b-94d5-ea878fa9b18e1594222834121-Infant-Essential.jpg'
+          srcset=''
+          alt=''
         />
       </div>
       {/* <div>
