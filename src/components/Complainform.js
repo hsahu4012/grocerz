@@ -3,6 +3,10 @@ import axios from 'axios';
 import loaderGif from "../assets/images/loader.gif";
 
 const Complainform = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,8 +28,8 @@ const Complainform = () => {
     e.preventDefault();
     setLoading(true);
     setSubmitted(true);
-        setError(false);
-        setSuccess(false);
+    setError(false);
+    setSuccess(false);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}complains/addcomplain`,
@@ -42,13 +46,13 @@ const Complainform = () => {
       });
       setLoading(false);
       setSuccess(true);
-      
-        
+
+
     } catch (error) {
       console.error('Error sending data:', error);
       setLoading(false);
       setError(true);
-      
+
     }
   };
 
@@ -146,22 +150,38 @@ const Complainform = () => {
                     Send Message
                   </button>
                   {submitted && success && (
-                        <div className="alert alert-success" role="alert">
-                            your complains sucessfully submitted.
-                        </div>
-                    )}
-                    {submitted && error && (
-                        <div className="alert alert-danger" role="alert">
-                            Something went wrong Please try again !
-                        </div>
-                    )}
+                    <div className="alert alert-success" role="alert">
+                      your complains sucessfully submitted.
+                    </div>
+                  )}
+                  {submitted && error && (
+                    <div className="alert alert-danger" role="alert">
+                      Something went wrong Please try again !
+                    </div>
+                  )}
+                  {loading && (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '50vh',
+                      }}
+                    >
+                      <img
+                        src={loaderGif}
+                        alt='Loading...'
+                        style={{ width: '80px', height: '80px' }}
+                      />
+                    </div>
+                  )}
                 </form>
-              </div>              
+              </div>
             </div>
           </div>
-        </div>  
+        </div>
       </div>
-      
+
     </>
   );
 };

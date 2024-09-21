@@ -38,7 +38,7 @@ const Dashboard = () => {
 
   const updateUserDetails = async () => {
     try {
-      const response = await axios.put(`${process.env.REACT_APP_API_URL}users/updateusers/${userid}`, {
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}users/updateusersdashboard/${userid}`, {
         name: userDetails.name,
         email: userDetails.email,
         mobile: userDetails.mobile
