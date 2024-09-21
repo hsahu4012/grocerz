@@ -54,6 +54,8 @@ import Faq from './components/Faq';
 import Feedback from './components/Feedback';
 import Offers from './components/Offers';
 
+import PrivacyPolicy from './components/static/PrivacyPolicy.js';
+
 function App() {
   //temp code to keep server live
   // const callApiQsList = async () => {
@@ -141,10 +143,15 @@ function App() {
           <Route path='/Faq' element={<Faq />} />
           <Route path='/offers' element={<Offers />} />
 
+          <Route path='/privacypolicy' element={<PrivacyPolicy />} />
+          
           <Route path='/' element={<Home />} />
+
+          
         </Routes>
         {/* <Home /> */}
         <Icon />
+        
         <Footer />
       </DataApp>
     </BrowserRouter>
