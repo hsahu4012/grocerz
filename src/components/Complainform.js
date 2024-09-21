@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import loaderGif from "../assets/images/loader.gif";
 
 const Complainform = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +22,10 @@ const Complainform = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setLoading(true);
+    setSubmitted(true);
+        setError(false);
+        setSuccess(false);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}complains/addcomplain`,
@@ -35,8 +40,15 @@ const Complainform = () => {
         subject: '',
         complain_desc: '',
       });
+      setLoading(false);
+      setSuccess(true);
+      
+        
     } catch (error) {
       console.error('Error sending data:', error);
+      setLoading(false);
+      setError(true);
+      
     }
   };
 
@@ -133,12 +145,23 @@ const Complainform = () => {
                   <button type='submit' className='shop-btn login-btn'>
                     Send Message
                   </button>
+                  {submitted && success && (
+                        <div className="alert alert-success" role="alert">
+                            your complains sucessfully submitted.
+                        </div>
+                    )}
+                    {submitted && error && (
+                        <div className="alert alert-danger" role="alert">
+                            Something went wrong Please try again !
+                        </div>
+                    )}
                 </form>
-              </div>
+              </div>              
             </div>
           </div>
-        </div>
+        </div>  
       </div>
+      
     </>
   );
 };
