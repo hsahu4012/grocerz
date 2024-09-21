@@ -30,11 +30,11 @@ export const marketCategory = [
     categoryname: 'Cosmetics',
     image: require('../assets/category/makeup.png'),
   },
-  {
-    category_id: 'hygie19570',
-    categoryname: 'Personal Care',
-    image: require('../assets/category/HygieneWellness.png'),
-  },
+  // {
+  //   category_id: 'hygie19570',
+  //   categoryname: 'Personal Care',
+  //   image: require('../assets/category/HygieneWellness.png'),
+  // },
 
   // {
   //   "category_id":"break52600",

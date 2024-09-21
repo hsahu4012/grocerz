@@ -121,29 +121,31 @@ const Home = () => {
                   </div>
                 </Link>
               ))}
-            <div className='product-wrapper' data-aos='fade-right' data-aos-duration='200'>
-  {/* <div className='wrapper-img'> */}
-  <Link to={"/shopbybrand"} className='image-link'>
-  <img
-    src='assets/images/homepage-one/hero-img-1.webp'
-    alt="Shop by brand"
-    width={150}
-    height={150}
-    style={{
-      transition: 'transform 0.3s',
-    }}
-    className='zoom-image'
-  />
-</Link>
-<div className='wrapper-info'>
-  <Link to={"/shopbybrand"} className='wrapper-details'>
-    Shop By Brands
-  </Link>
-</div>
 
-  </div>
-</div>
 
+
+            <Link
+              to="/shopbybrand"
+            >
+              <div
+                class='product-wrapper'
+                data-aos='fade-right'
+                data-aos-duration='200'
+              >
+                <div class='wrapper-img'>
+                  <img
+                    src='assets/images/homepage-one/hero-img-1.webp'
+                    alt="Shop by brand"
+                    width={150}
+                    height={150}
+                  />
+                </div>
+                <div class='wrapper-info'>
+                  <a class='wrapper-details'>Shop By Brand</a>
+                </div>
+              </div>
+            </Link>
+          </div>
 
           <HomeBottomSection />
         </div>

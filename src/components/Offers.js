@@ -11,7 +11,7 @@ const Offers = () => {
     useEffect(() => {
         const fetchTeamMembers = async () => {
             try {
-                const url = `${process.env.REACT_APP_API_URL}discount/alldiscount`;
+                const url = `${process.env.REACT_APP_API_URL}discount/alloffers`;
                 const response = await axios.get(url);
                 setTeamMembers(response.data);
             } catch (error) {
@@ -76,19 +76,19 @@ const Offers = () => {
                                             <div className='product-details'>{member.discountname}</div>
                                             <div className='price'>
                                                 <span className='designation text-success'>
-                                                    Designation: {member.discountid}
+                                                    PROMOCODE: {member.discountid}
                                                 </span>
                                             </div>
-                                            <div className='price'>
+                                            {(member.amount > 0)  && <div className='price'>
                                                 <span className='designation text-success'>
                                                     Fixed Discount: &#8377; {member.amount}
                                                 </span>
-                                            </div>
-                                            <div className='price'>
+                                            </div>}
+                                            {(member.percentage > 0)  && <div className='price'>
                                                 <span className='designation text-success'>
                                                     Percentage Discount: {member.percentage} %
                                                 </span>
-                                            </div>
+                                            </div>}
                                             <div className='price'>
                                                 <span className='designation text-success'>
                                                     Valid Till: {member.enddate.substring(0, 10)}
