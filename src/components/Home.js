@@ -27,9 +27,9 @@ const Home = () => {
       <HomeSlider />
 
       {/* Section fot cards */}
-      <div className='grocery-section container'>
+      {/* <div className='grocery-section container'>
         <GrocerySection />
-      </div>
+      </div> */}
 
       {/* <section class="product flash-sale">
         <div class="container">

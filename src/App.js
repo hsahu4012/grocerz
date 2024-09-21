@@ -22,7 +22,6 @@ import Login from './components/auth/Login';
 import Forgetpassword from './components/auth/Forgetpassword';
 import Contact from './components/Contact';
 import CustomProduct from './components/CustomProduct';
-import Forgetpassword from './components/auth/Forgetpassword';
 // import CategoryBack from "./components/Category_backup";
 import Category from './components/Category';
 import Address from './components/Address';
@@ -52,6 +51,8 @@ import ProductSearchList from './components/ProductSearchList';
 import OurTeam from './components/OurTeam';
 import Complainform from './components/Complainform';
 import Faq from './components/Faq';
+import Feedback from './components/Feedback';
+import Offers from './components/Offers';
 
 function App() {
   //temp code to keep server live
@@ -138,6 +139,7 @@ function App() {
           />
           <Route path='/productsearchlist' element={<ProductSearchList />} />
           <Route path='/Faq' element={<Faq />} />
+          <Route path='/offers' element={<Offers />} />
 
           <Route path='/' element={<Home />} />
         </Routes>

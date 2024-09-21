@@ -75,7 +75,8 @@ const Register = () => {
 
       if (response.status === 201) {
         setSuccessMessage('Registration successful! Redirecting to login...');
-        setTimeout(() => navigate('/login'), 2000);
+        navigate('/login');
+        // setTimeout(() => navigate('/login'), 2000);
       }
     } catch (error) {
       console.error('Registration failed:', error);
