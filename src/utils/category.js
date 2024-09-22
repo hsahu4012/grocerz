@@ -77,6 +77,11 @@ export const marketCategory = [
     categoryname: 'Pooja Samagri',
     image: require('../assets/category/pooja.jpg'),
   },
+  {
+    category_id: 'shopbybrand',
+    categoryname: 'Shop By Brand',
+    image: require('../assets/category/hero-img-1.webp'),
+  },
   // {
   //   "category_id":"groom1229",
   //   "categoryname": "Grooming Essentials",

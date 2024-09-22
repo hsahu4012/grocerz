@@ -91,7 +91,7 @@ const Offers = () => {
                                             </div>}
                                             <div className='price'>
                                                 <span className='designation text-success'>
-                                                    Valid Till: {member.enddate.substring(0, 10)}
+                                                    Valid Till: {member.enddate.substring(8, 10) + '/' + member.enddate.substring(5,7) + '/' + member.enddate.substring(0, 4)}
                                                 </span>
                                             </div>
                                             {/* <p className='description'>{member.description}</p> */}

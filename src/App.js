@@ -103,7 +103,7 @@ function App() {
           {/* <Route path="/category/:categoryid" element={<CategoryBack />} /> */}
           <Route path='/category/:category_id' element={<Productlist />} />
           <Route path='/product/:productid' element={<ProductDetails />} />
-          <Route path='/shopbybrand' element={<ShopByBrand />}/>
+          <Route path='/category/shopbybrand' element={<ShopByBrand />}/>
 
           <Route path='/cart' element={<ShopCart />} />
           <Route path='/wishlist' element={<Wishlist />} />

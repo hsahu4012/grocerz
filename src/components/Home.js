@@ -124,7 +124,7 @@ const Home = () => {
 
 
 
-            <Link
+            {/* <Link
               to="/shopbybrand"
             >
               <div
@@ -144,7 +144,7 @@ const Home = () => {
                   <a class='wrapper-details'>Shop By Brand</a>
                 </div>
               </div>
-            </Link>
+            </Link> */}
           </div>
 
           <HomeBottomSection />
