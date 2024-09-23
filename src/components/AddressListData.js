@@ -155,110 +155,123 @@ const AddressListData = () => {
             console.log(err);
         }
     };
+    useEffect(() => {
+        fetchAddresses()
+    }, [])
+
     return (
         <>
 
-            <div className="container">
+        <div className="container">
+            <h5>Saved Addresses</h5>
+            <div className="row address-section">
+
+                {/* <div className="col-lg-12">
+
+
+                    <Link to="/address" class="site-btn" >Add a new address</Link>
+
+                </div> */}
+
+
+               <div className="col-lg-12 container">
                 <h5>Saved Addresses</h5>
-                <div className="row address-section">
+                <div className='row card-deck '>
+                {
+                    addresses.map((address, index) => (
+                        <>
+                            <div className="col-lg-6" onClick={() => { modalAction(); setId(address.addressid); getDetails(address.addressid)}}>
+                                <div class="services__item bg-secondary bg-opacity-10 mb-3 seller-info">
+                                    {/* <i class="fa fa-car"></i> */}
+                                    <h4 className="heading-custom-font-1">Address - {index + 1}</h4>
+                                    <p>Name - {address.name}</p>
+                                    <p>Address - {address.line1}</p>
+                                    <p>City - {address.city}, {address.state}, {address.country}, {address.pin},</p>
+                                    <p>Landmark - {address.landmark}</p>
+                                    <p>Contact - {address.contact}&nbsp;&nbsp; {address.alternatecontact}</p>
+                                </div>
+                            </div>
+                        </>
+                    ))
+                }
 
-                    {/* <div className="col-lg-12">
-
-                        <Link to="/address" class="site-btn" >Add a new address</Link>
-
-                    </div> */}
-
-                    {
-                        addresses.map((address, index) => (
-                            <>
-                                <div className="col-lg-6" onClick={() => { modalAction(); setId(address.addressid); getDetails(address.addressid)}}>
-                                    <div class="services__item bg-secondary bg-opacity-10 mb-3 seller-info">
-                                        {/* <i class="fa fa-car"></i> */}
-                                        <h4 className="heading-custom-font-1">Address - {index + 1}</h4>
-                                        <p>Name - {address.name}</p>
-                                        <p>Address - {address.line1}</p>
-                                        <p>City - {address.city}, {address.state}, {address.country}, {address.pin},</p>
-                                        <p>Landmark - {address.landmark}</p>
-                                        <p>Contact - {address.contact}&nbsp;&nbsp; {address.alternatecontact}</p>
-                                    </div>
+                {/* Edit address-modal */}
+                <div className={`modal-wrapper submit ${isModalOpen ? 'active' : ''}`}>
+                    <div onClick={modalAction} className="anywhere-away"></div>
+                    <div className="login-section account-section modal-main">
+                        <div className="review-form">
+                            <div className="review-content">
+                                <h5 className="comment-title">Add Your Address</h5>
+                                <div className="close-btn">
+                                    <img src="./assets/images/homepage-one/close-btn.png" onClick={modalAction} alt="close-btn" />
                                 </div>
-                            </>
-                        ))
-                    }
-
-                    {/* Edit address-modal */}
-                    <div className={`modal-wrapper submit ${isModalOpen ? 'active' : ''}`}>
-                        <div onClick={modalAction} className="anywhere-away"></div>
-                        <div className="login-section account-section modal-main">
-                            <div className="review-form">
-                                <div className="review-content">
-                                    <h5 className="comment-title">Add Your Address</h5>
-                                    <div className="close-btn">
-                                        <img src="./assets/images/homepage-one/close-btn.png" onClick={modalAction} alt="close-btn" />
-                                    </div>
+                            </div>
+                            <div className=" account-inner-form">
+                                <div className="review-form-name">
+                                    <label htmlFor="name" className="form-label">
+                                        Name*</label>
+                                    <input type="text" id="name" name="name" className="form-control" placeholder="Name" value={formData.name} onChange={handleChange}/>
                                 </div>
-                                <div className=" account-inner-form">
-                                    <div className="review-form-name">
-                                        <label htmlFor="name" className="form-label">
-                                            Name*</label>
-                                        <input type="text" id="name" name="name" className="form-control" placeholder="Name" value={formData.name} onChange={handleChange}/>
-                                    </div>
+                            </div>
+                            <div className=" account-inner-form">
+                                <div className="review-form-name">
+                                    <label htmlFor="userphone" className="form-label">Contact*</label>
+                                    <input type="tel" id="userphone" name="contact" className="form-control" placeholder="Contact" value={formData.contact} onChange={handleChange}/>
                                 </div>
-                                <div className=" account-inner-form">
-                                    <div className="review-form-name">
-                                        <label htmlFor="userphone" className="form-label">Contact*</label>
-                                        <input type="tel" id="userphone" name="contact" className="form-control" placeholder="Contact" value={formData.contact} onChange={handleChange}/>
-                                    </div>
-                                    <div className="review-form-name">
-                                        <label htmlFor="alternatephone" className="form-label">Alternate Contact</label>
-                                        <input type="tel" id="alternatephone" name='alternatecontact' className="form-control" placeholder="Alternate Contact" value={formData.alternatecontact} onChange={handleChange}/>
-                                    </div>
+                                <div className="review-form-name">
+                                    <label htmlFor="alternatephone" className="form-label">Alternate Contact</label>
+                                    <input type="tel" id="alternatephone" name='alternatecontact' className="form-control" placeholder="Alternate Contact" value={formData.alternatecontact} onChange={handleChange}/>
                                 </div>
-                                <div className="review-form-name address-form">
-                                    <label htmlFor="useraddress" className="form-label">Address*</label>
-                                    <input type="text" id="useraddress" name="line1" className="form-control" placeholder="Enter your Address" value={formData.line1} onChange={handleChange}/>
+                            </div>
+                            <div className="review-form-name address-form">
+                                <label htmlFor="useraddress" className="form-label">Address*</label>
+                                <input type="text" id="useraddress" name="line1" className="form-control" placeholder="Enter your Address" value={formData.line1} onChange={handleChange}/>
+                            </div>
+                            <div className=" account-inner-form city-inner-form">
+                                <div className="review-form-name">
+                                    <label htmlFor="landmark" className="form-label">Landmark</label>
+                                    <input type="text" id="landmark" name="landmark" className="form-control" placeholder="Landmark" value={formData.landmark} onChange={handleChange}/>
                                 </div>
-                                <div className=" account-inner-form city-inner-form">
-                                    <div className="review-form-name">
-                                        <label htmlFor="landmark" className="form-label">Landmark</label>
-                                        <input type="text" id="landmark" name="landmark" className="form-control" placeholder="Landmark" value={formData.landmark} onChange={handleChange}/>
-                                    </div>
-                                    <div className="review-form-name">
-                                        <label htmlFor="pin" className="form-label">
-                                            Pin*</label>
-                                        <input type="number" id="pin" name="pin" className="form-control" placeholder="Pin" value={formData.pin} onChange={handleChange} onBlur={fillpindetails}/>
-                                    </div>
+                                <div className="review-form-name">
+                                    <label htmlFor="pin" className="form-label">
+                                        Pin*</label>
+                                    <input type="number" id="pin" name="pin" className="form-control" placeholder="Pin" value={formData.pin} onChange={handleChange} onBlur={fillpindetails}/>
                                 </div>
-                                <div className=" account-inner-form city-inner-form">
-                                    <div className="review-form-name">
-                                        <label htmlFor="city" className="form-label">City*</label>
-                                        <input type="text" id="city" className="form-control" placeholder="City" value={formData.city} disabled/>
-                                    </div>
-                                    <div className="review-form-name">
-                                        <label htmlFor="state" className="form-label">
-                                            State*</label>
-                                        <input type="text" id="state" className="form-control" placeholder="State" value={formData.state} disabled/>
-                                    </div>
-                                    <div className="review-form-name">
-                                        <label htmlFor="country" className="form-label">
-                                            Country*</label>
-                                        <input type="text" id="country" className="form-control" placeholder="Country" value={formData.country} disabled/>
-                                    </div>
+                            </div>
+                            <div className=" account-inner-form city-inner-form">
+                                <div className="review-form-name">
+                                    <label htmlFor="city" className="form-label">City*</label>
+                                    <input type="text" id="city" className="form-control" placeholder="City" value={formData.city} disabled/>
                                 </div>
-                                <div className='account-inner-form' style={{ marginTop: "15px" }}>
-                                    <button type="button" class="btn btn-danger" style={{ fontSize: "2.5rem" }} onClick={handleDelete}>Delete</button>
-                                    <button type="button" class="btn btn-success" style={{ fontSize: "2.5rem" }} onClick={handleUpdate}>Update</button>
+                                <div className="review-form-name">
+                                    <label htmlFor="state" className="form-label">
+                                        State*</label>
+                                    <input type="text" id="state" className="form-control" placeholder="State" value={formData.state} disabled/>
                                 </div>
+                                <div className="review-form-name">
+                                    <label htmlFor="country" className="form-label">
+                                        Country*</label>
+                                    <input type="text" id="country" className="form-control" placeholder="Country" value={formData.country} disabled/>
+                                </div>
+                            </div>
+                            <div className='account-inner-form' style={{ marginTop: "15px" }}>
+                                <button type="button" class="btn btn-danger" style={{ fontSize: "2.5rem" }} onClick={handleDelete}>Delete</button>
+                                <button type="button" class="btn btn-success" style={{ fontSize: "2.5rem" }} onClick={handleUpdate}>Update</button>
                             </div>
                         </div>
                     </div>
-                    {/* Modal ends here */}
-
                 </div>
+                {/* Modal ends here */}
+
             </div>
+        </div>
 
-        </>
+    </div>
+    </div>
+    </>
     )
-}
 
+}
 export default AddressListData
+
+ 
