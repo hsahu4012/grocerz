@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DataAppContext } from '../../DataContext';
 import axios from 'axios';
 import Loader from '../loader/Loader';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,6 +13,11 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const url = `${process.env.REACT_APP_API_URL}users/login`;
+  const [showPassword, setshowPassword]= useState(false);
+
+  const togglePasswordVisibility = () => {
+    setshowPassword(!showPassword);
+  };
 
   const initialValues = {
     username: '',
@@ -152,13 +159,18 @@ const Login = () => {
                             <label for='password' class='form-label'>
                               Password*
                             </label>
+                            <div className="input-group">
                             <Field
-                              type='password'
+                              type={showPassword ? "text" : "password"}
                               id='password'
                               name='password'
                               class='form-control'
                               placeholder='Password'
                             />
+                            <span className="input-group-text" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                              </span>
+                            </div>
                           </div>
                           <div class="review-form-name checkbox">
                           <div class="checkbox-item">

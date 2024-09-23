@@ -130,7 +130,7 @@ function Checkout() {
           `${process.env.REACT_APP_API_URL}cart/userCart/${userId}`
         );
         const items = response.data;
-        console.log('Itemsi', items);
+        // console.log('Itemsi', items);
         setCartItems(items);
       } else {
         const storedCartItems = localStorage.getItem('cart').length
@@ -153,7 +153,6 @@ function Checkout() {
             Number(item.discount) * item.quantity),
         0
       );
-      // console.log("Total Calculated:", total);
       setTotalAmount(total);
     } else {
       setTotalAmount(0);
@@ -162,6 +161,7 @@ function Checkout() {
 
   useEffect(() => {
     calculateTotal();
+
   }, [cartItems]);
 
   const fetchAddresses = async () => {
@@ -203,6 +203,7 @@ function Checkout() {
           userid: userId,
           addressId: selectedAddressId,
           paymentMode: paymentMode,
+          totalDiscount: Math.ceil(discountAmount)
         };
       } else {
         userData = await handleSubmit();
@@ -211,6 +212,7 @@ function Checkout() {
           userid: userData.uid,
           addressId: userData.aid,
           paymentMode: paymentMode,
+          totalDiscount: 0
         };
       }
       // Prepare data for checkout
@@ -274,6 +276,86 @@ function Checkout() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const [couponCode, setCouponCode] = useState('');
+  const [isCouponApplied, setIsCouponApplied] = useState('');
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [MaxdiscountAmount, setMaxDiscountAmount] = useState(0)
+  const [discountAmount, setDiscountAmount] = useState(0)
+  const [discountMsg, setDiscountMsg] = useState(false)
+
+  const verifyCouponCode = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}discount/discountbycc/${couponCode}`);
+      if (response.data.length > 0) {
+        const discountPercentage = response.data[0].percentage;
+        const fixedDiscount = response.data[0].amount;
+        const maxDiscountAmount = response.data[0].maxdiscount;
+        setDiscountPercentage(discountPercentage)
+        setMaxDiscountAmount(maxDiscountAmount)
+        calculateTotalDiscount(maxDiscountAmount, discountPercentage, fixedDiscount);
+        setIsCouponApplied(true);
+        setDiscountMsg(false)
+
+      } else {
+        setDiscountPercentage(0)
+        setIsCouponApplied(false);
+        setDiscountAmount(0)
+      }
+    } catch (error) {
+      console.error('Error fetching addresses', error);
+      setIsCouponApplied(false);
+    }
+  }
+
+  const calculateTotalDiscount = (DisAmount = 99999, DisPercentage, DiscAmount) => {
+    let finalDiscount = 0;
+    if (DiscAmount > 0) {
+      finalDiscount = DiscAmount;
+    }
+    else {
+      const discount = (DisPercentage / 100) * totalAmount;
+      finalDiscount = Math.min(discount, DisAmount);
+    }
+    setDiscountAmount(finalDiscount)
+  }
+
+
+  const orderCount = async () => {
+    try {
+      const userId = localStorage.getItem('userid') || '';
+      console.log('userid in side ordercount', userId)
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}orders/getOrderCountByUserId/${userId}`
+      );
+      if (data) {
+        const totalOrders = data.totalOrders
+        if (totalOrders === 0) {
+          setDiscountPercentage(5)
+          setMaxDiscountAmount(500);
+          console.log('totalAmount', totalAmount)
+          const discount = Number((5 / 100) * totalAmount);
+          // const finalDiscount = Number(Math.min(discount, discountAmount));
+          console.log('discount', discount)
+          setDiscountAmount(discount)
+          setIsCouponApplied(true);
+          setDiscountMsg(true)
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching addresses', error);
+      setIsCouponApplied(false);
+    }
+  }
+  useEffect(() => {
+    console.log('checking order count...')
+    orderCount();
+  }, [totalAmount])
+
+
+  useEffect(() => {
+    console.log('discount amount - ', discountAmount)
+  }, [discountAmount])
 
   return (
     <>
@@ -600,6 +682,46 @@ function Checkout() {
               <div className='col-lg-6'>
                 <div className='checkout-wrapper'>
                   <div className='account-section billing-section box-shadows'>
+                    {/* discount section  */}
+                    <div className="apply-coupon-section">
+                      <h5 className="wrapper-heading">Apply Coupon</h5>
+                      <div className="row mb-3 text-custom-font-1">
+                        <div className="col-6">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter coupon code"
+                            value={couponCode}
+                            onChange={(e) => setCouponCode(e.target.value)}
+                          />
+                        </div>
+                        <div className="col-6">
+                          <button
+                            className={couponCode ? 'btn btn-success w-100' : 'btn btn-secondary w-100 disabled'}
+                            type="button"
+                            onClick={verifyCouponCode}
+                          >
+                            Verify Code
+                          </button>
+                        </div>
+                        <div className="col-12">
+                          {isCouponApplied && (
+                            <div className="alert alert-success mt-2" role="alert">
+                              {discountMsg ? <strong >1st Order Discount Applied Successfully</strong> : <strong>Coupon Applied Successfully!</strong>}
+                              <span className="d-block">
+                                You Got <strong>&#8377; {Math.ceil(discountAmount)}</strong> | Max Discount - <strong>&#8377; {MaxdiscountAmount}</strong>.
+                              </span>
+                            </div>
+                          )}
+                          {/* {isCouponApplied === false && (
+                            <div className="alert alert-danger mt-2" role="alert">
+                              { }
+                            </div>
+                          )} */}
+                        </div>
+                      </div>
+                    </div>
+
                     <h5 className='wrapper-heading'>Order Summary</h5>
                     <div className='order-summery'>
                       {/* <div className="subtotal product-total">
@@ -628,6 +750,10 @@ function Checkout() {
                         <h5 class='wrapper-heading'>Delivery Charges</h5>
                         <h5 class='wrapper-heading'>&#8377; 0</h5>
                       </div>
+                      <div className='subtotal product-total'>
+                        <h5 class='wrapper-heading'>Discount</h5>
+                        <h5 class='wrapper-heading'>&#8377; {Math.ceil(discountAmount)}</h5>
+                      </div>
                       {/* <div className="subtotal product-total">
                                                 <h5 class="wrapper-heading">Packaging Charges</h5>
                                                 <h5 class="wrapper-heading">&#8377; 0</h5>
@@ -638,9 +764,9 @@ function Checkout() {
                                             </div> */}
 
                       <div class='subtotal total'>
-                        <h5 class='wrapper-heading'>Total</h5>
+                        <h5 class='wrapper-heading'>Payable Amount</h5>
                         <h5 class='wrapper-heading price'>
-                          &#8377;{totalAmount}
+                          &#8377; {Math.floor(totalAmount - discountAmount)}
                         </h5>
                       </div>
                       <h5 className='heading-custom-font-1'>

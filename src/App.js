@@ -22,7 +22,6 @@ import Login from './components/auth/Login';
 import Forgetpassword from './components/auth/Forgetpassword';
 import Contact from './components/Contact';
 import CustomProduct from './components/CustomProduct';
-import Forgetpassword from './components/auth/Forgetpassword';
 // import CategoryBack from "./components/Category_backup";
 import Category from './components/Category';
 import Address from './components/Address';
@@ -52,6 +51,10 @@ import ProductSearchList from './components/ProductSearchList';
 import OurTeam from './components/OurTeam';
 import Complainform from './components/Complainform';
 import Faq from './components/Faq';
+import Feedback from './components/Feedback';
+import Offers from './components/Offers';
+
+import PrivacyPolicy from './components/static/PrivacyPolicy.js';
 
 function App() {
   //temp code to keep server live
@@ -100,7 +103,7 @@ function App() {
           {/* <Route path="/category/:categoryid" element={<CategoryBack />} /> */}
           <Route path='/category/:category_id' element={<Productlist />} />
           <Route path='/product/:productid' element={<ProductDetails />} />
-          <Route path='/shopbybrand' element={<ShopByBrand />}/>
+          <Route path='/category/shopbybrand' element={<ShopByBrand />}/>
 
           <Route path='/cart' element={<ShopCart />} />
           <Route path='/wishlist' element={<Wishlist />} />
@@ -138,11 +141,17 @@ function App() {
           />
           <Route path='/productsearchlist' element={<ProductSearchList />} />
           <Route path='/Faq' element={<Faq />} />
+          <Route path='/offers' element={<Offers />} />
 
+          <Route path='/privacypolicy' element={<PrivacyPolicy />} />
+          
           <Route path='/' element={<Home />} />
+
+          
         </Routes>
         {/* <Home /> */}
         <Icon />
+        
         <Footer />
       </DataApp>
     </BrowserRouter>
