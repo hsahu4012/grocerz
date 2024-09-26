@@ -51,7 +51,6 @@ import ProductSearchList from './components/ProductSearchList';
 import OurTeam from './components/OurTeam';
 import Complainform from './components/Complainform';
 import Faq from './components/Faq';
-import Refund from './components/static/Refund';
 import Feedback from './components/Feedback';
 import Offers from './components/Offers';
 import PrivacyPolicy from './components/static/PrivacyPolicy.js';
