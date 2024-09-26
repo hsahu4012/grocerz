@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import loaderGif from '../assets/images/loader.gif';
 
 const Complainform = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,12 +23,12 @@ const Complainform = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}complains/addcomplain`,
         formData
       );
-
       setFormData({
         name: '',
         email: '',
@@ -35,7 +37,9 @@ const Complainform = () => {
         subject: '',
         complain_desc: '',
       });
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error('Error sending data:', error);
     }
   };
@@ -51,93 +55,111 @@ const Complainform = () => {
       </section>
 
       <div className='container mb-5 '>
-        <div className='row justify-content-center'>
-          <div className='col-lg-12'>
-            <div className='question-section login-section'>
-              <div className='review-form box-shadows shadow-lg p-4'>
-                <div className='review-form-text mb-4'></div>
-                <form onSubmit={handleSubmit}>
-                  <div className='account-inner-form'>
+        {loading && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '50vh',
+            }}
+          >
+            <img
+              src={loaderGif}
+              alt='Loading...'
+              style={{ width: '80px', height: '80px' }}
+            />
+          </div>
+        )}
+        {!loading && (
+          <div className='row justify-content-center'>
+            <div className='col-lg-12'>
+              <div className='question-section login-section'>
+                <div className='review-form box-shadows shadow-lg p-4'>
+                  <div className='review-form-text mb-4'></div>
+                  <form onSubmit={handleSubmit}>
+                    <div className='account-inner-form'>
+                      <div className='mb-3'>
+                        <input
+                          name='name'
+                          type='text'
+                          id='fname'
+                          className='form-control'
+                          placeholder='Name'
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                      <div className='mb-3'>
+                        <input
+                          name='email'
+                          type='email'
+                          id='email'
+                          className='form-control'
+                          placeholder='Email'
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                      <div className='mb-3'>
+                        <input
+                          name='mobile'
+                          type='text'
+                          id='mobile'
+                          className='form-control'
+                          placeholder='Mobile'
+                          value={formData.mobile}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                      <div className='mb-3'>
+                        <input
+                          name='orderid'
+                          type='text'
+                          id='orderid'
+                          className='form-control'
+                          placeholder='Order ID'
+                          value={formData.orderid}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className='mb-3'>
+                        <input
+                          name='subject'
+                          type='text'
+                          id='subject'
+                          className='form-control'
+                          placeholder='Subject'
+                          value={formData.subject}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
                     <div className='mb-3'>
-                      <input
-                        name='name'
-                        type='text'
-                        id='fname'
+                      <textarea
+                        name='complain_desc'
                         className='form-control'
-                        placeholder='Name'
-                        value={formData.name}
+                        placeholder='Write Message...........'
+                        id='floatingTextarea'
+                        rows='4'
+                        value={formData.complain_desc}
                         onChange={handleChange}
                         required
                       />
                     </div>
-                    <div className='mb-3'>
-                      <input
-                        name='email'
-                        type='email'
-                        id='email'
-                        className='form-control'
-                        placeholder='Email'
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className='mb-3'>
-                      <input
-                        name='mobile'
-                        type='text'
-                        id='mobile'
-                        className='form-control'
-                        placeholder='Mobile'
-                        value={formData.mobile}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className='mb-3'>
-                      <input
-                        name='orderid'
-                        type='text'
-                        id='orderid'
-                        className='form-control'
-                        placeholder='Order ID'
-                        value={formData.orderid}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className='mb-3'>
-                      <input
-                        name='subject'
-                        type='text'
-                        id='subject'
-                        className='form-control'
-                        placeholder='Subject'
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className='mb-3'>
-                    <textarea
-                      name='complain_desc'
-                      className='form-control'
-                      placeholder='Write Message...........'
-                      id='floatingTextarea'
-                      rows='4'
-                      value={formData.complain_desc}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <button type='submit' className='shop-btn login-btn'>
-                    Send Message
-                  </button>
-                </form>
+                    <button type='submit' className='shop-btn login-btn'>
+                      Send Message
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

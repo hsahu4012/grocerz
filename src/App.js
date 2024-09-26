@@ -49,6 +49,7 @@ import ProductSearchList from './components/ProductSearchList';
 import OurTeam from './components/OurTeam';
 import Complainform from './components/Complainform';
 import Faq from './components/Faq';
+import Refund from './components/static/Refund';
 
 function App() {
   //temp code to keep server live
@@ -132,6 +133,7 @@ function App() {
           />
           <Route path='/productsearchlist' element={<ProductSearchList />} />
           <Route path='/Faq' element={<Faq />} />
+          <Route path='/Refund' element={<Refund />} />
 
           <Route path='/' element={<Home />} />
         </Routes>

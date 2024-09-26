@@ -2,21 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import loaderGif from '../assets/images/loader.gif';
 
 const OurTeam = () => {
   const [teamMembers, setTeamMembers] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
+      setLoading(true);
       try {
         const url = `${process.env.REACT_APP_API_URL}ourteam/allourteam`;
         const response = await axios.get(url);
         setTeamMembers(response.data);
+        setLoading(false);
       } catch (error) {
         toast.error('Error fetching team members.');
         console.error(error);
+        setLoading(false);
       }
     };
 
@@ -53,61 +58,79 @@ const OurTeam = () => {
       <ToastContainer />
 
       <div className='container'>
-        <div className='row d-flex flex-wrap'>
-          {teamMembers.length > 0 ? (
-            teamMembers.map(member => (
-              <div
-                className='col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch'
-                key={member.id}
-              >
+        {loading && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '50vh',
+            }}
+          >
+            <img
+              src={loaderGif}
+              alt='Loading...'
+              style={{ width: '80px', height: '80px' }}
+            />
+          </div>
+        )}
+        {!loading && (
+          <div className='row d-flex flex-wrap'>
+            {teamMembers.length > 0 ? (
+              teamMembers.map(member => (
                 <div
-                  className='product-wrapper m-2 w-100 d-flex flex-column'
-                  data-aos='fade-up'
+                  className='col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch'
+                  key={member.id}
                 >
-                  <Link to={`/team/${member.id}`}>
-                    <div className='product-img'>
-                      <img
-                        src={
-                          member.image
-                            ? `${process.env.REACT_APP_IMAGE_URL}${member.image}`
-                            : 'default-image.jpg'
-                        }
-                        alt={member.name}
-                      />
-                    </div>
-                  </Link>
-                  <div className='product-info flex-grow-1'>
-                    <div className='product-description'>
-                      <div className='product-details'>{member.name}</div>
-                      <div className='price'>
-                        <span className='designation text-success'>
-                          Designation: {member.designation}
-                        </span>
+                  <div
+                    className='product-wrapper m-2 w-100 d-flex flex-column'
+                    data-aos='fade-up'
+                  >
+                    <Link to={`/team/${member.id}`}>
+                      <div className='product-img'>
+                        <img
+                          src={
+                            member.image
+                              ? `${process.env.REACT_APP_IMAGE_URL}${member.image}`
+                              : 'default-image.jpg'
+                          }
+                          alt={member.name}
+                        />
                       </div>
-                      <div className='price'>
-                        <span className='designation text-success'>
-                          Department: {member.department}
-                        </span>
+                    </Link>
+                    <div className='product-info flex-grow-1'>
+                      <div className='product-description'>
+                        <div className='product-details'>{member.name}</div>
+                        <div className='price'>
+                          <span className='designation text-success'>
+                            Designation: {member.designation}
+                          </span>
+                        </div>
+                        <div className='price'>
+                          <span className='designation text-success'>
+                            Department: {member.department}
+                          </span>
+                        </div>
+                        <p className='description'>{member.description}</p>
                       </div>
-                      <p className='description'>{member.description}</p>
-                    </div>
-                    <div className='product-cart-btn'>
-                      <button
-                        onClick={() => handleViewDetails(member)}
-                        className='product-btn'
-                        type='button'
-                      >
-                        View Details
-                      </button>
+                      <div className='product-cart-btn'>
+                        <button
+                          onClick={() => handleViewDetails(member)}
+                          className='product-btn'
+                          type='button'
+                        >
+                          View Details
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p>No team members found.</p>
-          )}
-        </div>
+              ))
+            ) : (
+              <p>No team members found.</p>
+            )}
+          </div>
+        )}
       </div>
 
       {showPopup && selectedMember && (
