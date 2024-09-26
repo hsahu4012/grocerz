@@ -1400,11 +1400,14 @@ const Header = () => {
                 <Link to='/home'>
                   <button class='shop-btn me-1'>Home</button>
                 </Link>
-                <Link to='/cart'>
-                  <button class='shop-btn me-1'>Cart</button>
+                <Link to='/offers'>
+                  <button class='shop-btn me-1'>Offers</button>
                 </Link>
                 <Link to='/contact'>
                   <button class='shop-btn me-1'>Contact</button>
+                </Link>
+                <Link to='/cart'>
+                  <button class='shop-btn me-1'>Cart</button>
                 </Link>
                 {loginstatus ? (
                   <>
@@ -1432,12 +1435,15 @@ const Header = () => {
                 <Link to='/home'>
                   <button class='shop-btn me-1 shop-btn-mobile'>Home</button>
                 </Link>
+                <Link to='/offers'>
+                  <button class='shop-btn me-1 shop-btn-mobile'>Offers</button>
+                </Link>
                 <Link to='/cart'>
                   <button class='shop-btn me-1 shop-btn-mobile'>Cart</button>
                 </Link>
-                <Link to='/contact'>
+                {/* <Link to='/contact'>
                   <button class='shop-btn me-1 shop-btn-mobile'>Contact</button>
-                </Link>
+                </Link> */}
                 {loginstatus ? (
                   <>
                     <Link to='/dashboard'>

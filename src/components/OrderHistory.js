@@ -294,7 +294,7 @@ const OrderHistory = () => {
                             </p>
                             <p>
                               <strong>Placed on - </strong> {order.order_date},{' '}
-                              {order.order_time}
+                              {order.order_time.substring(0,4) + ' ' + order.order_time.substring(8,12).toUpperCase()}
                             </p>
                             <p>
                               <strong>Order Status -</strong>{' '}
