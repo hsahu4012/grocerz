@@ -2,26 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import loaderGif from '../assets/images/loader.gif';
 
 const OurTeam = () => {
   const [teamMembers, setTeamMembers] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
-      setLoading(true);
       try {
         const url = `${process.env.REACT_APP_API_URL}ourteam/allourteam`;
         const response = await axios.get(url);
         setTeamMembers(response.data);
-        setLoading(false);
       } catch (error) {
         toast.error('Error fetching team members.');
         console.error(error);
-        setLoading(false);
       }
     };
 
@@ -58,23 +53,6 @@ const OurTeam = () => {
       <ToastContainer />
 
       <div className='container'>
-        {loading && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '50vh',
-            }}
-          >
-            <img
-              src={loaderGif}
-              alt='Loading...'
-              style={{ width: '80px', height: '80px' }}
-            />
-          </div>
-        )}
-        {!loading && (
           <div className='row d-flex flex-wrap'>
             {teamMembers.length > 0 ? (
               teamMembers.map(member => (
@@ -130,7 +108,6 @@ const OurTeam = () => {
               <p>No team members found.</p>
             )}
           </div>
-        )}
       </div>
 
       {showPopup && selectedMember && (
