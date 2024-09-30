@@ -30,11 +30,11 @@ export const marketCategory = [
     categoryname: 'Cosmetics',
     image: require('../assets/category/makeup.png'),
   },
-  {
-    category_id: 'hygie19570',
-    categoryname: 'Personal Care',
-    image: require('../assets/category/HygieneWellness.png'),
-  },
+  // {
+  //   category_id: 'hygie19570',
+  //   categoryname: 'Personal Care',
+  //   image: require('../assets/category/HygieneWellness.png'),
+  // },
 
   // {
   //   "category_id":"break52600",
@@ -76,6 +76,11 @@ export const marketCategory = [
     category_id: 'pooja9554',
     categoryname: 'Pooja Samagri',
     image: require('../assets/category/pooja.jpg'),
+  },
+  {
+    category_id: 'shopbybrand',
+    categoryname: 'Shop By Brand',
+    image: require('../assets/category/hero-img-1.webp'),
   },
   // {
   //   "category_id":"groom1229",
