@@ -108,7 +108,7 @@ const Footer = () => {
                     <div class='footer-link useful-link'>
                       <ul>
                         <li>
-                          <Link>Privacy Policy</Link>
+                          <Link to='/privacypolicy'>Privacy Policy</Link>
                         </li>
                         <li>
                           <Link>Refund & Return Policy</Link>

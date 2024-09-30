@@ -27,9 +27,9 @@ const Home = () => {
       <HomeSlider />
 
       {/* Section fot cards */}
-      <div className='grocery-section container'>
+      {/* <div className='grocery-section container'>
         <GrocerySection />
-      </div>
+      </div> */}
 
       {/* <section class="product flash-sale">
         <div class="container">
@@ -121,6 +121,30 @@ const Home = () => {
                   </div>
                 </Link>
               ))}
+
+
+
+            {/* <Link
+              to="/shopbybrand"
+            >
+              <div
+                class='product-wrapper'
+                data-aos='fade-right'
+                data-aos-duration='200'
+              >
+                <div class='wrapper-img'>
+                  <img
+                    src='assets/images/homepage-one/hero-img-1.webp'
+                    alt="Shop by brand"
+                    width={150}
+                    height={150}
+                  />
+                </div>
+                <div class='wrapper-info'>
+                  <a class='wrapper-details'>Shop By Brand</a>
+                </div>
+              </div>
+            </Link> */}
           </div>
 
           <HomeBottomSection />
