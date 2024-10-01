@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
 import Loader from './loader/Loader';
+import Modal from 'react-modal';
 
 const OrderDetail = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -18,6 +19,10 @@ const OrderDetail = () => {
   const [loading, setLoading] = useState(false);
   const [err, setError] = useState(false);
   const usertype = window.localStorage.getItem('usertype');
+
+  const [deliveryPartners, setDeliveryPartners] = useState([])
+  const [modal, setModal] = useState(false)
+  const [userid, setUserid] = useState('')
 
   // Fetch all categories
   const fetchCategoryData = async () => {
@@ -107,6 +112,35 @@ const OrderDetail = () => {
     }
   };
 
+  // Handle delivary staff list
+  const handleDeliveryStaff = async () => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}users/deliverypartners`;
+      const response = await axios.get(url);
+      setDeliveryPartners(response.data[0]);
+    } catch (error) {
+      setError('Error fetching Delivery Partners !');
+      console.error('Error fetching Delivery Partners:', error);
+    }
+    setModal(!modal);
+  }
+
+  // Update delivery partner in orders table
+  const fetchDeliveryPartner = async () => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}orders/updatedeliverypartner/${orderid}/${userid}`;
+      const response = await axios.put(url);
+      if(response.status === 200)
+      {
+        alert(response.data.message);
+      }
+      
+    } catch (error) {
+      console.error('Error updating delivery partner from order:', error);
+    }
+    setModal(!modal);
+  }
+  
   // Fetch categories on component mount
   useEffect(() => {
     fetchCategoryData();
@@ -342,11 +376,9 @@ const OrderDetail = () => {
                           </div>
                         ))}
                       </div>
-
                       <div className='heading-custom-font-1 my-5'>
                         Order Status : {order.delivery_status}{' '}
                       </div>
-
                       {usertype === 'admin' && (
                         <div className='text-center'>
                           <Link
@@ -355,6 +387,51 @@ const OrderDetail = () => {
                           >
                             Print Invoice
                           </Link>
+                        </div>
+                      )}
+                      {usertype === 'admin' && (
+                        <div className='text-center'>
+                          <Link className='shop-btn mx-1'>
+                            <button onClick={handleDeliveryStaff} style={{ color: 'white' }}>
+                              Assign delivery staff
+                            </button>
+                          </Link>
+                        </div>
+                      )}
+                      {modal && (
+                        <div className='popup-overlay'>
+                          <div className='popup-content'>
+                            <h3>Select Delivery Partner</h3>
+
+                            <select
+                              value={userid}
+                              onChange={e => 
+                                setUserid(e.target.value)                                                 
+                              }
+                            >
+                              <option value1=''>Select</option>
+                              {deliveryPartners.map(item => (
+                                <option
+                                  key={item.userid}
+                                  value={item.userid}>{item.name}
+                                </option>
+                              ))}
+                            </select>
+                            <button className='' onClick={fetchDeliveryPartner}>
+                              Add Delivery Partner
+                            </button>
+                            <button onClick={() => {
+                               setUserid('')
+                               setModal(!modal)                              
+                               }}>
+                              Close
+                            </button>
+                            {loading && (
+                              <div className='spinner-overlay'>
+                                <p className='spinner2'></p>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -370,6 +447,7 @@ const OrderDetail = () => {
           </div>
         </div>
       </section>
+
     </>
   );
 };
