@@ -233,7 +233,7 @@ const ProductSearchList = () => {
                                   setSingleProduct(product);
                                 }}
                               >
-                                Add to Orders
+                                Add to Pending Orders
                               </button>
                             )}
                             {showPopup && (

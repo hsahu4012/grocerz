@@ -192,10 +192,14 @@ const OrderDetail = () => {
                   {order ? (
                     <div className='card-body'>
                       <p>
-                        <strong>Order Date & Time :</strong> {order.order_date}{' '}
-                        {order.order_time} | <strong>Order ID :</strong>{' '}
-                        {order.order_id} | <strong>Order Number :</strong>{' '}
-                        {order.srno}
+                        <strong>
+                          Order Date & Time :</strong> 
+                          <span className='text-success'>{' '}{order.order_date}{' '}
+                        {order.order_time.substring(0,4) + ' ' + order.order_time.substring(8,12).toUpperCase()}</span> | {' '}
+                        <strong>Order ID :</strong>{' '}
+                        <span className='text-success'>{order.order_id}</span>{' '}|{' '}
+                         <strong>Order Number :</strong>{' '}
+                         <span className='text-success'>{order.srno}</span>
                       </p>
                       <div className='row my-5'>
                         <div className='col-sm-12 text-custom-font-1'>
