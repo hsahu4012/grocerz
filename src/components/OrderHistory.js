@@ -12,6 +12,8 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [deliverypartners, setDeliveryPartners] = useState([]);
+
   const handleOrderClick = orderid => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
   };
@@ -90,17 +92,30 @@ const OrderHistory = () => {
         `${process.env.REACT_APP_API_URL}${url}`
       );
       setOrders(response.data);
-      console.log('Orders ', orders);
     } catch (error) {
       console.error('Error fetching cart items', error);
     }
     setLoading(false);
   };
 
+  const fetchDeliveryPartnerName = async () => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}users/getdeliverypartnername`;
+      const response = await axios.get(url);
+      setDeliveryPartners(response.data);
+    } catch (error) {
+      console.error('Error fetching cart items', error);
+    }
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchOrders();
+    fetchDeliveryPartnerName();
   }, []);
+
+  // useEffect(() => {
+  //   fetchDeliveryPartnerName();
+  // }, [fetchDeliveryPartnerName]);
 
   const findClassNames = order_status => {
     if (order_status === 'Placed') {
@@ -153,6 +168,7 @@ const OrderHistory = () => {
                   </div>
                 ) : orders.length > 0 ? (
                   orders.map((order, index) => (
+
                     <div key={index} className='card mt-3'>
                       <div className={findClassNames(order.order_status)}>
                         <div className='row'>
@@ -294,7 +310,7 @@ const OrderHistory = () => {
                             </p>
                             <p>
                               <strong>Placed on - </strong> {order.order_date},{' '}
-                              {order.order_time.substring(0,4) + ' ' + order.order_time.substring(8,12).toUpperCase()}
+                              {order.order_time.substring(0, 4) + ' ' + order.order_time.substring(8, 12).toUpperCase()}
                             </p>
                             <p>
                               <strong>Order Status -</strong>{' '}
@@ -303,6 +319,14 @@ const OrderHistory = () => {
                             <p>
                               <strong>Delivery Status -</strong>{' '}
                               {order.delivery_status}
+                            </p>
+                            < p >
+                              <strong>Delivery Partner -</strong>{' '}
+                              
+                              {deliverypartners.map((partner, index) =>(
+                                  (order.delivery_partner === partner.userid) ? <span>{partner.userid}{'  '}{partner.name}</span> : <span>{' '}</span>
+                              ))
+                              }
                             </p>
                           </div>
                         </div>
@@ -316,7 +340,7 @@ const OrderHistory = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section >
     </>
   );
 };
