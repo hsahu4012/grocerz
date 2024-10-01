@@ -324,7 +324,7 @@ const OrderHistory = () => {
                               <strong>Delivery Partner -</strong>{' '}
                               
                               {deliverypartners.map((partner, index) =>(
-                                  (order.delivery_partner === partner.userid) ? <span>{partner.userid}{'  '}{partner.name}</span> : <span>{' '}</span>
+                                  (order.delivery_partner === partner.userid) ? <span>{'  '}{partner.name}</span> : <span>{' '}</span>
                               ))
                               }
                             </p>
