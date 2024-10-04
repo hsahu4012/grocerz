@@ -53,7 +53,6 @@ import Complainform from './components/Complainform';
 import Faq from './components/Faq';
 import Feedback from './components/Feedback';
 import Offers from './components/Offers';
-
 import PrivacyPolicy from './components/static/PrivacyPolicy.js';
 
 function App() {
@@ -141,6 +140,7 @@ function App() {
           />
           <Route path='/productsearchlist' element={<ProductSearchList />} />
           <Route path='/Faq' element={<Faq />} />
+          <Route path='/Refund' element={<Refund />} />
           <Route path='/offers' element={<Offers />} />
 
           <Route path='/privacypolicy' element={<PrivacyPolicy />} />
