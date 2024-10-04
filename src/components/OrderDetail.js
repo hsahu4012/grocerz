@@ -23,7 +23,9 @@ const OrderDetail = () => {
   const [deliveryPartners, setDeliveryPartners] = useState([])
   const [modal, setModal] = useState(false)
   const [userid, setUserid] = useState('')
+
   const [alertmodal, setAlertModal] = useState(false)
+
 
   // Fetch all categories
   const fetchCategoryData = async () => {
@@ -133,7 +135,11 @@ const OrderDetail = () => {
       const response = await axios.put(url);
       if(response.status === 200)
       {
+
+        alert(response.data.message);
+
         setAlertModal(true);
+
       }
       
     } catch (error) {
@@ -435,6 +441,7 @@ const OrderDetail = () => {
                           </div>
                         </div>
                       )}
+
                       {alertmodal && (
                         <div className='popup-overlay'>
                           <div className='popup-content'>
@@ -452,6 +459,7 @@ const OrderDetail = () => {
                           </div>
                         </div>
                       )}              
+
                     </div>
                   ) : (
                     <p>No order found.</p>
