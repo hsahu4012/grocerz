@@ -20,4 +20,5 @@ npx cap sync
 
 https://capacitorjs.com/
 https://ionicframework.com/
+https://ionic.io/
 https://www.youtube.com/watch?v=IwHt_QpIa8A&list=PLNPSRIjTB5Scq1_7yL-FMaxLnSv_D5AH2&index=6
