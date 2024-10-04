@@ -27,6 +27,9 @@ const OrderDetail = () => {
   const [modal, setModal] = useState(false)
   const [userid, setUserid] = useState('')
 
+  const [alertmodal, setAlertModal] = useState(false)
+
+
   // Fetch all categories
   const fetchCategoryData = async () => {
     try {
@@ -159,8 +162,13 @@ const OrderDetail = () => {
     try {
       const url = `${process.env.REACT_APP_API_URL}orders/updatedeliverypartner/${orderid}/${userid}`;
       const response = await axios.put(url);
-      if (response.status === 200) {
+      if(response.status === 200)
+      {
+
         alert(response.data.message);
+
+        setAlertModal(true);
+
       }
 
     } catch (error) {
@@ -488,6 +496,25 @@ const OrderDetail = () => {
                           </div>
                         </div>
                       )}
+
+                      {alertmodal && (
+                        <div className='popup-overlay'>
+                          <div className='popup-content'>
+                            <h3>Delivery Partner Assigned</h3>
+                            <button onClick={() => {
+                               setAlertModal(!alertmodal)                              
+                               }}>
+                              Ok
+                            </button>
+                            {loading && (
+                              <div className='spinner-overlay'>
+                                <p className='spinner2'></p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}              
+
                     </div>
                   ) : (
                     <p>No order found.</p>
