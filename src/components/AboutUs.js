@@ -8,11 +8,12 @@ const AboutUs = () => {
         <div className='container'>
           <div className='blog-bradcrum'>
             <span>
-              <a href='index-2.html'>Home</a>
+              
+              <Link to='/home'>Home </Link>
             </span>
             <span className='devider'>/</span>
             <span>   
-              <Link to='/aboutus'>About Us</Link>
+              <Link to='/aboutus'> About Us</Link>
             </span>
           </div>
           <div className='blog-heading about-heading'>
