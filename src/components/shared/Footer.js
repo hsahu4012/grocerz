@@ -84,7 +84,7 @@ const Footer = () => {
                     <div class='footer-link about-link'>
                       <ul>
                         <li>
-                          <Link>About Us</Link>
+                          <Link to='/aboutus'>About Us</Link>
                         </li>
                         <li>
                           <Link to='/contact'>Contact</Link>
