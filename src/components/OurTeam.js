@@ -53,61 +53,61 @@ const OurTeam = () => {
       <ToastContainer />
 
       <div className='container'>
-        <div className='row d-flex flex-wrap'>
-          {teamMembers.length > 0 ? (
-            teamMembers.map(member => (
-              <div
-                className='col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch'
-                key={member.id}
-              >
+          <div className='row d-flex flex-wrap'>
+            {teamMembers.length > 0 ? (
+              teamMembers.map(member => (
                 <div
-                  className='product-wrapper m-2 w-100 d-flex flex-column'
-                  data-aos='fade-up'
+                  className='col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch'
+                  key={member.id}
                 >
-                  <Link to={`/team/${member.id}`}>
-                    <div className='product-img'>
-                      <img
-                        src={
-                          member.image
-                            ? `${process.env.REACT_APP_IMAGE_URL}${member.image}`
-                            : 'default-image.jpg'
-                        }
-                        alt={member.name}
-                      />
-                    </div>
-                  </Link>
-                  <div className='product-info flex-grow-1'>
-                    <div className='product-description'>
-                      <div className='product-details'>{member.name}</div>
-                      <div className='price'>
-                        <span className='designation text-success'>
-                          Designation: {member.designation}
-                        </span>
+                  <div
+                    className='product-wrapper m-2 w-100 d-flex flex-column'
+                    data-aos='fade-up'
+                  >
+                    <Link to={`/team/${member.id}`}>
+                      <div className='product-img'>
+                        <img
+                          src={
+                            member.image
+                              ? `${process.env.REACT_APP_IMAGE_URL}${member.image}`
+                              : 'default-image.jpg'
+                          }
+                          alt={member.name}
+                        />
                       </div>
-                      <div className='price'>
-                        <span className='designation text-success'>
-                          Department: {member.department}
-                        </span>
+                    </Link>
+                    <div className='product-info flex-grow-1'>
+                      <div className='product-description'>
+                        <div className='product-details'>{member.name}</div>
+                        <div className='price'>
+                          <span className='designation text-success'>
+                            Designation: {member.designation}
+                          </span>
+                        </div>
+                        <div className='price'>
+                          <span className='designation text-success'>
+                            Department: {member.department}
+                          </span>
+                        </div>
+                        <p className='description'>{member.description}</p>
                       </div>
-                      <p className='description'>{member.description}</p>
-                    </div>
-                    <div className='product-cart-btn'>
-                      <button
-                        onClick={() => handleViewDetails(member)}
-                        className='product-btn'
-                        type='button'
-                      >
-                        View Details
-                      </button>
+                      <div className='product-cart-btn'>
+                        <button
+                          onClick={() => handleViewDetails(member)}
+                          className='product-btn'
+                          type='button'
+                        >
+                          View Details
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p>No team members found.</p>
-          )}
-        </div>
+              ))
+            ) : (
+              <p>No team members found.</p>
+            )}
+          </div>
       </div>
 
       {showPopup && selectedMember && (
