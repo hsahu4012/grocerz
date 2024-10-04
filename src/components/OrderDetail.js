@@ -20,8 +20,8 @@ const OrderDetail = () => {
   const [err, setError] = useState(false);
   const usertype = window.localStorage.getItem('usertype');
   const [productid, setproductid] = useState([]);
-const[quantity , setquantity] = useState([]);
-const [productPrices, setProductPrices] = useState([]);
+  const [quantity, setquantity] = useState([]);
+  const [productPrices, setProductPrices] = useState([]);
 
   const [deliveryPartners, setDeliveryPartners] = useState([])
   const [modal, setModal] = useState(false)
@@ -80,9 +80,9 @@ const [productPrices, setProductPrices] = useState([]);
       setOrderDetails(response.data);
       const orderDetails = response.data;
       const extractedProductIds = orderDetails.map(order => order.productid);
-    const extractedQuantities = orderDetails.map(order => order.quantity);
-    setproductid(extractedProductIds);
-    setquantity(extractedQuantities)
+      const extractedQuantities = orderDetails.map(order => order.quantity);
+      setproductid(extractedProductIds);
+      setquantity(extractedQuantities)
     } catch (error) {
       setError('Something went wrong please try again !');
       console.error('Error fetching order details:', error);
@@ -159,17 +159,16 @@ const [productPrices, setProductPrices] = useState([]);
     try {
       const url = `${process.env.REACT_APP_API_URL}orders/updatedeliverypartner/${orderid}/${userid}`;
       const response = await axios.put(url);
-      if(response.status === 200)
-      {
+      if (response.status === 200) {
         alert(response.data.message);
       }
-      
+
     } catch (error) {
       console.error('Error updating delivery partner from order:', error);
     }
     setModal(!modal);
   }
-  
+
   // Fetch categories on component mount
   useEffect(() => {
     fetchCategoryData();
@@ -222,13 +221,13 @@ const [productPrices, setProductPrices] = useState([]);
                     <div className='card-body'>
                       <p>
                         <strong>
-                          Order Date & Time :</strong> 
-                          <span className='text-success'>{' '}{order.order_date}{' '}
-                        {order.order_time.substring(0,4) + ' ' + order.order_time.substring(8,12).toUpperCase()}</span> | {' '}
+                          Order Date & Time :</strong>
+                        <span className='text-success'>{' '}{order.order_date}{' '}
+                          {order.order_time.substring(0, 4) + ' ' + order.order_time.substring(8, 12).toUpperCase()}</span> | {' '}
                         <strong>Order ID :</strong>{' '}
                         <span className='text-success'>{order.order_id}</span>{' '}|{' '}
-                         <strong>Order Number :</strong>{' '}
-                         <span className='text-success'>{order.srno}</span>
+                        <strong>Order Number :</strong>{' '}
+                        <span className='text-success'>{order.srno}</span>
                       </p>
                       <div className='row my-5'>
                         <div className='col-sm-12 text-custom-font-1'>
@@ -256,7 +255,7 @@ const [productPrices, setProductPrices] = useState([]);
                             Bill Details
                           </div>
                           <ul className='list-group text-custom-font-1'>
-                          <li className='list-group-item text-success'>
+                            <li className='list-group-item text-success'>
                               <strong>Original Price - &#8377; {totalOriginalPrice}</strong>
                             </li>
                             <li className='list-group-item text-success'>
@@ -363,72 +362,72 @@ const [productPrices, setProductPrices] = useState([]);
                             </div>
                           </div>
                         )}
-{orderDetails.map((item, index) => {
-  // Calculate discount for the product
-  const discount_product = productPrices[index] - item.price_final;
+                        {orderDetails.map((item, index) => {
+                          // Calculate discount for the product
+                          // const discount_product = productPrices[index] - item.price_final;
 
-  return (
-    <div
-      className="card mb-1"
-      key={index}
-      style={{ cursor: 'pointer' }}
-      onClick={() => navigate(`/product/${item.productid}`)}
-    >
-      <div className="card-body d-flex align-items-center">
-        <div className="col-md-1">
-          <span>
-            <strong>{index + 1}</strong>
-          </span>
-        </div>
-        <div className="col-md-2">
-          <img
-            src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`}
-            className="img-fluid"
-            alt={`${item.prod_name}`}
-          />
-        </div>
-        <div className="col-md-3">
-          <p>
-            <strong>{item.prod_name}</strong>
-          </p>
-        </div>
-        <div className="col-md-1">
-          <p>
-            <strong>&#8377;&nbsp;{productPrices[index]}</strong>
-          </p>
-        </div>
-        <div className="col-md-1">
-          <p>
-            <strong>Qty: {item.quantity}</strong>
-          </p>
-        </div>
-        <div className="col-md-1">
-          <p>
-            <strong>{discount_product}</strong>
-          </p>
-        </div>
-        <div className="col-md-1">
-          <p>
-            <strong>{parseInt(productPrices[index]) - parseInt(discount_product)}</strong>
-          </p>
-        </div>
-        {usertype === 'admin' && (
-          <div className="col-md-2">
-            <button
-              className="btn btn-danger"
-              onClick={(e) => {
-                e.stopPropagation();
-                removeItemFromOrder(item.productid);
-              }}
-            >
-              Remove
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-})}
+                          return (
+                            <div
+                              className="card mb-1"
+                              key={index}
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => navigate(`/product/${item.productid}`)}
+                            >
+                              <div className="card-body d-flex align-items-center">
+                                <div className="col-md-1">
+                                  <span>
+                                    <strong>{index + 1}</strong>
+                                  </span>
+                                </div>
+                                <div className="col-md-3">
+                                  <img
+                                    src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`}
+                                    className="img-fluid"
+                                    alt={`${item.prod_name}`}
+                                  />
+                                </div>
+                                <div className="col-md-3">
+                                  <p>
+                                    <strong>{item.prod_name}</strong>
+                                  </p>
+                                </div>
+                                <div className="col-md-1">
+                                  <p>
+                                    <strong>&#8377;&nbsp;{productPrices[index]}</strong>
+                                  </p>
+                                </div>
+                                <div className="col-md-1">
+                                  <p>
+                                    <strong>Qty: {item.quantity}</strong>
+                                  </p>
+                                </div>
+                                <div className="col-md-1">
+                                  <p>
+                                    <strong>{productPrices[index] - item.price_final}</strong>
+                                  </p>
+                                </div>
+                                <div className="col-md-1">
+                                  <p>
+                                    <strong>{item.price_final}</strong>
+                                  </p>
+                                </div>
+                                {usertype === 'admin' && (
+                                  <div className="col-md-2">
+                                    <button
+                                      className="btn btn-danger"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        removeItemFromOrder(item.productid);
+                                      }}
+                                    >
+                                      Remove
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
 
                       </div>
                       <div className='heading-custom-font-1 my-5'>
@@ -460,8 +459,8 @@ const [productPrices, setProductPrices] = useState([]);
 
                             <select
                               value={userid}
-                              onChange={e => 
-                                setUserid(e.target.value)                                                 
+                              onChange={e =>
+                                setUserid(e.target.value)
                               }
                             >
                               <option value1=''>Select</option>
@@ -476,9 +475,9 @@ const [productPrices, setProductPrices] = useState([]);
                               Add Delivery Partner
                             </button>
                             <button onClick={() => {
-                               setUserid('')
-                               setModal(!modal)                              
-                               }}>
+                              setUserid('')
+                              setModal(!modal)
+                            }}>
                               Close
                             </button>
                             {loading && (
