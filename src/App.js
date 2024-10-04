@@ -55,6 +55,7 @@ import Feedback from './components/Feedback';
 import Offers from './components/Offers';
 
 import PrivacyPolicy from './components/static/PrivacyPolicy.js';
+import TermsandCondition from './components/TermsandCondititon';
 
 function App() {
   //temp code to keep server live
@@ -144,6 +145,7 @@ function App() {
           <Route path='/offers' element={<Offers />} />
 
           <Route path='/privacypolicy' element={<PrivacyPolicy />} />
+          <Route path='/termsandcondition' element={<TermsandCondition />} />
           
           <Route path='/' element={<Home />} />
 

@@ -114,7 +114,7 @@ const Footer = () => {
                           <Link>Refund & Return Policy</Link>
                         </li>
                         <li>
-                          <Link>Terms & Conditions</Link>
+                          <Link to='/termsandcondition'>Terms & Conditions</Link>
                         </li>
                         <li>
                           <Link to='/Faq'>FAQ</Link>
