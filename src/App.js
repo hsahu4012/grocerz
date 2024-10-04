@@ -141,7 +141,6 @@ function App() {
           />
           <Route path='/productsearchlist' element={<ProductSearchList />} />
           <Route path='/Faq' element={<Faq />} />
-          <Route path='/Refund' element={<Refund />} />
           <Route path='/offers' element={<Offers />} />
 
           <Route path='/privacypolicy' element={<PrivacyPolicy />} />
