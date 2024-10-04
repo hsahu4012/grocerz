@@ -416,7 +416,8 @@ const OrderDetail = () => {
                                 </div>
                                 <div className="col-md-1">
                                   <p>
-                                    <strong>{item.price_final}</strong>
+                                    <strong>{item.price_final}</strong> 
+                                    
                                   </p>
                                 </div>
                                 {usertype === 'admin' && (
