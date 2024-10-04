@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import categoryImage1 from '../assets/img/categories/category-3.jpg';
+import categoryImage2 from '../assets/img/categories/category-5.jpg';
 
 const Offers = () => {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -52,178 +54,227 @@ const Offers = () => {
 
       <ToastContainer />
 
-      <div className='container'>
-        {/* Render design if only one discount is available */}
-        {teamMembers.length === 1 &&
-          teamMembers.map(member => (
-            <div className='d-flex justify-content-center' key={member.id}>
-              <div
-                className='d-flex flex-row align-items-center p-4'
-                style={{
-                  backgroundColor: 'rgba(189, 130, 238, 0.4)',
-                  width: '100%',
-                  maxWidth: '1200px', 
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                  display: 'flex',
-                }}
-              >
-                <div className='text-center mr-4'>
-                  {member.image && (
-                    <img
-                      src={`${process.env.REACT_APP_API_URL}${member.image}`}
-                      alt={member.discountname}
-                      width='150'
-                      className='img-fluid'
-                    />
-                  )}
-                </div>
-                <div>
-                  <h2>{member.discountname}</h2>
-                  <p>
-                    PROMOCODE: {member.discountid}
-                    <br />
-                    {member.amount > 0 && `Fixed Discount: ₹${member.amount}`}
-                    <br />
-                    {member.percentage > 0 &&
-                      `Percentage Discount: ${member.percentage}%`}
-                    <br />
-                    Valid Till: {member.enddate.substring(8, 10)}/
-                    {member.enddate.substring(5, 7)}/
-                    {member.enddate.substring(0, 4)}
-                  </p>
-                  {/* <div className='product-cart-btn mt-4'>
-                    <button
-                      onClick={() => handleViewDetails(member)}
-                      className='product-btn'
-                      type='button'
+      {/* Render container if only one discount is available */}
+      {teamMembers.length === 1 && (
+        <section class='product best-product mb-5'>
+          <div class='container'>
+            <div class='best-product-section'>
+              <div class='product-wrapper d-flex align-items-center'>
+                {teamMembers.map(member => (
+                  <>
+                    <div
+                      class='product-info'
+                      id='info-left'
+                      style={{ width: '50%' }}
+                      key={member.id}
                     >
-                      View Details
-                    </button>
-                  </div> */}
-                </div>
-              </div>
-            </div>
-          ))}
+                      <h3 class='wrapper-heading'>{member.discountname}</h3>
+                      <p class='wrapper-details'>
+                        PROMOCODE: {member.discountid}
+                        <br />
+                        {member.amount > 0 &&
+                          `Fixed Discount: ₹${member.amount}`}
+                        <br />
+                        {member.percentage > 0 &&
+                          `Percentage Discount: ${member.percentage}%`}
+                        <br />
+                        Valid Till: {member.enddate.substring(8, 10)}/
+                        {member.enddate.substring(5, 7)}/
+                        {member.enddate.substring(0, 4)}
+                      </p>
+                      <Link to='#' className='shop-btn' onClick={() => handleViewDetails(member)} >
+                        View Details
+                        <span>
+                          <svg
+                            width='8'
+                            height='14'
+                            viewBox='0 0 8 14'
+                            fill='none'
+                            xmlns='http://www.w3.org/2000/svg'
+                          >
+                            <rect
+                              x='1.45312'
+                              y='0.914062'
+                              width='9.25346'
+                              height='2.05632'
+                              transform='rotate(45 1.45312 0.914062)'
+                            />
+                            <rect
+                              x='8'
+                              y='7.45703'
+                              width='9.25346'
+                              height='2.05632'
+                              transform='rotate(135 8 7.45703)'
+                            />
+                          </svg>
+                        </span>
+                      </Link>
+                    </div>
 
-        {/* Render design if two discounts are available */}
-        {teamMembers.length === 2 && (
-          <div className='row justify-content-center'>
-            {teamMembers.map((member, index) => (
-              <div
-                className='col-md-5 d-flex justify-content-center mb-5 mt-5'
-                key={member.id}
-              >
-                <div
-                  className='d-flex flex-column align-items-center p-4'
-                  style={{
-                    backgroundColor:
-                      index === 0
-                        ? 'rgba(240, 146, 159, 0.4)'
-                        : 'rgba(104, 199, 236, 0.4)', // Different colors for each container
-                    border: '1px solid rgba(0, 0, 0, 0.1)', // Light border for contrast
-                    borderRadius: '4px',
-                    textAlign: 'center',
-                    width: '100%',
-                    minHeight: '300px', // Ensures both containers have the same height
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Light shadow for depth
-                  }}
-                >
-                  <div className='text-center mb-3'>
-                    {member.image && (
-                      <img
-                        src={`${process.env.REACT_APP_API_URL}${member.image}`}
-                        alt={member.discountname}
-                        width='120'
-                        className='img-fluid'
-                      />
-                    )}
-                  </div>
-                  <h3>{member.discountname}</h3>
-                  <p>
-                    PROMOCODE: {member.discountid}
-                    <br />
-                    {member.amount > 0 && `Fixed Discount: ₹${member.amount}`}
-                    <br />
-                    {member.percentage > 0 &&
-                      `Percentage Discount: ${member.percentage}%`}
-                    <br />
-                    Valid Till: {member.enddate.substring(8, 10)}/
-                    {member.enddate.substring(5, 7)}/
-                    {member.enddate.substring(0, 4)}
-                  </p>
-                  {/* <div className='product-cart-btn mt-4'>
-                    <button
-                      onClick={() => handleViewDetails(member)}
-                      className='product-btn'
-                      type='button'
-                    >
-                      View Details
-                    </button>
-                  </div> */}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Render design if three or more discounts are available */}
-        {teamMembers.length >= 3 && (
-          <div className='container'>
-            <div className='row justify-content-center'>
-              {teamMembers.map((member, index) => (
-                <div
-                  className='col-md-4 d-flex justify-content-center mb-5 mt-5'
-                  key={member.id}
-                >
-                  <div
-                    className='d-flex flex-column align-items-center p-4'
-                    style={{
-                      backgroundColor:
-                        index % 3 === 0
-                          ? 'rgba(240, 146, 159, 0.28)'
-                          : index % 3 === 1
-                            ? 'rgba(246, 240, 56, 0.4)'
-                            : 'rgba(255, 193, 102, 0.28)', // Different colors for each set of three containers
-                      border: '1px solid rgba(0, 0, 0, 0.1)', // Light border for contrast
-                      borderRadius: '8px',
-                      textAlign: 'center',
-                      width: '100%', // Full width within the column
-                      minHeight: '300px', // Ensures containers have the same height
-                      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Light shadow for depth
-                    }}
-                  >
-                    <div className='text-center mb-3'>
+                    <div class='text-center' style={{ width: '50%' }}>
                       {member.image && (
                         <img
                           src={`${process.env.REACT_APP_API_URL}${member.image}`}
                           alt={member.discountname}
-                          width='120'
-                          className='img-fluid'
+                          width='160'
+                          class='img-fluid'
                         />
                       )}
                     </div>
-                    <h3>{member.discountname}</h3>
-                    <p>
-                      PROMOCODE: {member.discountid}
-                      <br />
-                      {member.amount > 0 && `Fixed Discount: ₹${member.amount}`}
-                      <br />
-                      {member.percentage > 0 &&
-                        `Percentage Discount: ${member.percentage}%`}
-                      <br />
-                      Valid Till: {member.enddate.substring(8, 10)}/
-                      {member.enddate.substring(5, 7)}/
-                      {member.enddate.substring(0, 4)}
-                    </p>
-                    {/* <div className='product-cart-btn mt-4'>
-                    <button
-                      onClick={() => handleViewDetails(member)}
-                      className='product-btn'
-                      type='button'
+                  </>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <div className='container'>
+        {/* Render containers if two discounts are available */}
+        <div class='grocery-section mb-5'>
+          <div class='row g-5 justify-content-center'>
+            {teamMembers.length === 2 &&
+              teamMembers.map((member, index) => (
+                <div class='col-md-6' key={member.id}>
+                  <div
+                    class={`product-wrapper d-flex ${index === 0 ? 'wrapper-left' : 'wrapper-right'}`}
+                    style={{
+                      minHeight: '300px',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      backgroundImage: `url(${index === 0 ? categoryImage1 : categoryImage2})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  >
+                    <div
+                      class='wrapper-info d-flex flex-column justify-content-center'
+                      style={{ width: '50%' }}
                     >
-                      View Details
-                    </button>
-                  </div> */}
+                      <h3 class='wrapper-details'>{member.discountname}</h3>
+                      <p>
+                        PROMOCODE: {member.discountid}
+                        <br />
+                        {member.amount > 0 &&
+                          `Fixed Discount: ₹${member.amount}`}
+                        <br />
+                        {member.percentage > 0 &&
+                          `Percentage Discount: ${member.percentage}%`}
+                        <br />
+                        Valid Till: {member.enddate.substring(8, 10)}/
+                        {member.enddate.substring(5, 7)}/
+                        {member.enddate.substring(0, 4)}
+                      </p>
+                      <Link to='#' className='shop-btn' onClick={() => handleViewDetails(member)}>
+                        View Details
+                        <span>
+                          <svg
+                            width='8'
+                            height='14'
+                            viewBox='0 0 8 14'
+                            fill='none'
+                            xmlns='http://www.w3.org/2000/svg'
+                          >
+                            <rect
+                              x='1.45312'
+                              y='0.914062'
+                              width='9.25346'
+                              height='2.05632'
+                              transform='rotate(45 1.45312 0.914062)'
+                            />
+                            <rect
+                              x='8'
+                              y='7.45703'
+                              width='9.25346'
+                              height='2.05632'
+                              transform='rotate(135 8 7.45703)'
+                            />
+                          </svg>
+                        </span>
+                      </Link>
+                    </div>
+
+                    <div
+                      class='d-flex justify-content-center align-items-center'
+                      style={{ width: '50%' }}
+                    >
+                      {member.image && (
+                        <img
+                          src={`${process.env.REACT_APP_API_URL}${member.image}`}
+                          alt={member.discountname}
+                          width='160'
+                          class='img-fluid'
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+
+        {/* Render containers if three or more discounts are available */}
+        {teamMembers.length >= 3 && (
+          <div className='healthy-section mb-5'>
+            <div className='row gy-4 gx-5 gy-lg-0'>
+              {teamMembers.map((member, index) => (
+                <div className='col-lg-4 col-md-6' key={member.id}>
+                  <div
+                    className={`product-wrapper wrapper-${index + 1}`}
+                    data-aos='fade-up'
+                  >
+                    <div className='wrapper-img p-2'>
+                      {member.image && (
+                        <img
+                          src={`${process.env.REACT_APP_API_URL}${member.image}`}
+                          alt={member.discountname}
+                          style={{ display: 'block', margin: '0 auto', }}
+                        />
+                      )}
+                    </div>
+                    <div className='wrapper-info'>
+                      <h2 className='wrapper-details'>{member.discountname}</h2>
+                      <p>
+                        PROMOCODE: {member.discountid}
+                        <br />
+                        {member.amount > 0 &&
+                          `Fixed Discount: ₹${member.amount}`}
+                        <br />
+                        {member.percentage > 0 &&
+                          `Percentage Discount: ${member.percentage}%`}
+                        <br />
+                        Valid Till: {member.enddate.substring(8, 10)}/
+                        {member.enddate.substring(5, 7)}/
+                        {member.enddate.substring(0, 4)}
+                      </p>
+                      <Link to='#' className='shop-btn' onClick={() => handleViewDetails(member)}>
+                        View Details
+                        <span>
+                          <svg
+                            width='8'
+                            height='14'
+                            viewBox='0 0 8 14'
+                            fill='none'
+                            xmlns='http://www.w3.org/2000/svg'
+                          >
+                            <rect
+                              x='1.45312'
+                              y='0.914062'
+                              width='9.25346'
+                              height='2.05632'
+                              transform='rotate(45 1.45312 0.914062)'
+                            />
+                            <rect
+                              x='8'
+                              y='7.45703'
+                              width='9.25346'
+                              height='2.05632'
+                              transform='rotate(135 8 7.45703)'
+                            />
+                          </svg>
+                        </span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}
