@@ -10,6 +10,7 @@ const OrderDetail = () => {
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
+  const [quantity, setQuantity] = useState();
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -68,6 +69,17 @@ const OrderDetail = () => {
       setError('Error fetching products !');
       console.error('Error fetching products:', error);
     }
+  };
+
+  // update quantity in orderDetails list
+  const updateQuantity = (productId, newQuantity) => {
+    const updatedOrderDetails = orderDetails.map(item => {
+      if (item.productid === productId) {
+        return { ...item, quantity: newQuantity }; 
+      }
+      return item;
+    });
+    setOrderDetails(updatedOrderDetails); 
   };
 
   // Fetch order details
@@ -319,6 +331,31 @@ const OrderDetail = () => {
                                     ))}
                                 </select>
                               )}
+
+                              {/* Quantity Selection */}
+                              {selectedProduct && (
+                                <select
+                                  value={quantity}
+                                  onChange={e => {
+                                    const newQuantity = parseInt(
+                                      e.target.value
+                                    );
+                                    setQuantity(newQuantity); 
+                                    updateQuantity(
+                                      selectedProduct,
+                                      newQuantity
+                                    ); 
+                                  }}
+                                >
+                                  <option value=''>Select Quantity</option>
+                                  {[...Array(10)].map((_, i) => (
+                                    <option key={i + 1} value={i + 1}>
+                                      {i + 1}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
+
                               <button className='' onClick={handleAddProduct}>
                                 Add Product
                               </button>
@@ -361,6 +398,7 @@ const OrderDetail = () => {
                                 <p>
                                   <strong>Qty: {item.quantity}</strong>
                                 </p>
+
                                 <p>
                                   <strong>
                                     &#8377;&nbsp;{item.price_final}
