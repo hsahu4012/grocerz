@@ -20,12 +20,11 @@ const OrderDetail = () => {
   const [err, setError] = useState(false);
   const usertype = window.localStorage.getItem('usertype');
 
-  const [deliveryPartners, setDeliveryPartners] = useState([])
-  const [modal, setModal] = useState(false)
-  const [userid, setUserid] = useState('')
+  const [deliveryPartners, setDeliveryPartners] = useState([]);
+  const [modal, setModal] = useState(false);
+  const [userid, setUserid] = useState('');
 
-  const [alertmodal, setAlertModal] = useState(false)
-
+  const [alertmodal, setAlertModal] = useState(false);
 
   // Fetch all categories
   const fetchCategoryData = async () => {
@@ -126,28 +125,24 @@ const OrderDetail = () => {
       console.error('Error fetching Delivery Partners:', error);
     }
     setModal(!modal);
-  }
+  };
 
   // Update delivery partner in orders table
   const fetchDeliveryPartner = async () => {
     try {
       const url = `${process.env.REACT_APP_API_URL}orders/updatedeliverypartner/${orderid}/${userid}`;
       const response = await axios.put(url);
-      if(response.status === 200)
-      {
-
+      if (response.status === 200) {
         alert(response.data.message);
 
         setAlertModal(true);
-
       }
-      
     } catch (error) {
       console.error('Error updating delivery partner from order:', error);
     }
     setModal(!modal);
-  }
-  
+  };
+
   // Fetch categories on component mount
   useEffect(() => {
     fetchCategoryData();
@@ -198,14 +193,18 @@ const OrderDetail = () => {
                   {order ? (
                     <div className='card-body'>
                       <p>
-                        <strong>
-                          Order Date & Time :</strong> 
-                          <span className='text-success'>{' '}{order.order_date}{' '}
-                        {order.order_time.substring(0,4) + ' ' + order.order_time.substring(8,12).toUpperCase()}</span> | {' '}
-                        <strong>Order ID :</strong>{' '}
-                        <span className='text-success'>{order.order_id}</span>{' '}|{' '}
-                         <strong>Order Number :</strong>{' '}
-                         <span className='text-success'>{order.srno}</span>
+                        <strong>Order Date & Time :</strong>
+                        <span className='text-success'>
+                          {' '}
+                          {order.order_date}{' '}
+                          {order.order_time.substring(0, 4) +
+                            ' ' +
+                            order.order_time.substring(8, 12).toUpperCase()}
+                        </span>{' '}
+                        | <strong>Order ID :</strong>{' '}
+                        <span className='text-success'>{order.order_id}</span> |{' '}
+                        <strong>Order Number :</strong>{' '}
+                        <span className='text-success'>{order.srno}</span>
                       </p>
                       <div className='row my-5'>
                         <div className='col-sm-12 text-custom-font-1'>
@@ -387,22 +386,30 @@ const OrderDetail = () => {
                         Order Status : {order.delivery_status}{' '}
                       </div>
                       {usertype === 'admin' && (
-                        <div className='text-center'>
-                          <Link
-                            to={`/orderhistory/orderdetailsprint/${orderid}/customer`}
-                            className='shop-btn mx-1'
-                          >
-                            Print Invoice
-                          </Link>
-                        </div>
-                      )}
-                      {usertype === 'admin' && (
-                        <div className='text-center'>
-                          <Link className='shop-btn mx-1'>
-                            <button onClick={handleDeliveryStaff} style={{ color: 'white' }}>
-                              Assign delivery staff
+                        <div className='text-center my-3'>
+                          <div className='d-flex justify-content-center'>
+                            {/* Print Invoice Button */}
+                            <Link
+                              to={`/orderhistory/orderdetailsprint/${orderid}/customer`}
+                              className='shop-btn mx-1'
+                            >
+                              Print Invoice
+                            </Link>
+
+                            {/* Assign Delivery Staff Button */}
+                            <button
+                              className='shop-btn mx-1'
+                              onClick={handleDeliveryStaff}
+                              style={{ color: 'white' }}
+                            >
+                              Assign Delivery Staff
                             </button>
-                          </Link>
+
+                            {/* Back Button */}
+                            <Link to='/OrderHistory' className='shop-btn mx-1'>
+                              Back
+                            </Link>
+                          </div>
                         </div>
                       )}
                       {modal && (
@@ -412,25 +419,24 @@ const OrderDetail = () => {
 
                             <select
                               value={userid}
-                              onChange={e => 
-                                setUserid(e.target.value)                                                 
-                              }
+                              onChange={e => setUserid(e.target.value)}
                             >
                               <option value1=''>Select</option>
                               {deliveryPartners.map(item => (
-                                <option
-                                  key={item.userid}
-                                  value={item.userid}>{item.name}
+                                <option key={item.userid} value={item.userid}>
+                                  {item.name}
                                 </option>
                               ))}
                             </select>
                             <button className='' onClick={fetchDeliveryPartner}>
                               Add Delivery Partner
                             </button>
-                            <button onClick={() => {
-                               setUserid('')
-                               setModal(!modal)                              
-                               }}>
+                            <button
+                              onClick={() => {
+                                setUserid('');
+                                setModal(!modal);
+                              }}
+                            >
                               Close
                             </button>
                             {loading && (
@@ -446,9 +452,11 @@ const OrderDetail = () => {
                         <div className='popup-overlay'>
                           <div className='popup-content'>
                             <h3>Delivery Partner Assigned</h3>
-                            <button onClick={() => {
-                               setAlertModal(!alertmodal)                              
-                               }}>
+                            <button
+                              onClick={() => {
+                                setAlertModal(!alertmodal);
+                              }}
+                            >
                               Ok
                             </button>
                             {loading && (
@@ -458,22 +466,17 @@ const OrderDetail = () => {
                             )}
                           </div>
                         </div>
-                      )}              
-
+                      )}
                     </div>
                   ) : (
                     <p>No order found.</p>
                   )}
                 </div>
               </div>
-              <Link to='/OrderHistory' className='shop-btn'>
-                Back
-              </Link>
             </div>
           </div>
         </div>
       </section>
-
     </>
   );
 };
