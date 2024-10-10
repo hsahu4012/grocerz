@@ -39,6 +39,7 @@ const ShopCart = () => {
             price: item.price,
             image: item.image,
             discount: item.discount,
+            quantity: item.quantity,
           }))
           .sort((a, b) => {
             return a.prod_name.localeCompare(b.prod_name);
