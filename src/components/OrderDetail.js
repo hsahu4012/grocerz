@@ -10,7 +10,7 @@ const OrderDetail = () => {
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [quantity, setQuantity] = useState();
+  const [quantity, setQuantity] = useState('');
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -75,11 +75,11 @@ const OrderDetail = () => {
   const updateQuantity = (productId, newQuantity) => {
     const updatedOrderDetails = orderDetails.map(item => {
       if (item.productid === productId) {
-        return { ...item, quantity: newQuantity }; 
+        return { ...item, quantity: newQuantity };
       }
       return item;
     });
-    setOrderDetails(updatedOrderDetails); 
+    setOrderDetails(updatedOrderDetails);
   };
 
   // Fetch order details
@@ -104,15 +104,20 @@ const OrderDetail = () => {
       const productObj = products.find(
         product => product.productid === selectedProduct
       );
+      const productWithQuantity = {
+        ...productObj,
+        quantity: quantity, 
+      };
       const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
-      await axios.post(url, productObj);
+      await axios.post(url, productWithQuantity);
       fetchOrderDetails();
       setShowPopup(false);
     } catch (error) {
       setError('Something went wrong please try again !');
       console.error('Error adding product to order:', error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   // Handle removing product from order
@@ -334,26 +339,32 @@ const OrderDetail = () => {
 
                               {/* Quantity Selection */}
                               {selectedProduct && (
-                                <select
+                                <input
+                                  type='number'
                                   value={quantity}
                                   onChange={e => {
                                     const newQuantity = parseInt(
                                       e.target.value
                                     );
-                                    setQuantity(newQuantity); 
+                                    setQuantity(newQuantity);
                                     updateQuantity(
                                       selectedProduct,
                                       newQuantity
-                                    ); 
+                                    );
                                   }}
-                                >
-                                  <option value=''>Select Quantity</option>
-                                  {[...Array(10)].map((_, i) => (
-                                    <option key={i + 1} value={i + 1}>
-                                      {i + 1}
-                                    </option>
-                                  ))}
-                                </select>
+                                  min='1'
+                                  step='1'
+                                  placeholder='Select Quantity'
+                                  style={{
+                                    backgroundColor: '#f5f5f5',
+                                    width: '100%',
+                                    padding: '10px',
+                                    marginBottom: '15px',
+                                    border: '1px solid #ccc',
+                                    borderRadius: '4px',
+                                    fontSize: '15px',
+                                  }}
+                                />
                               )}
 
                               <button className='' onClick={handleAddProduct}>
