@@ -98,6 +98,32 @@ const OrderHistory = () => {
     setLoading(false);
   };
 
+  // for handling the payment mode
+  const handlePaymentModeChange = async (orderId, newPaymentMode) => {
+    setLoading(true);
+    try {
+      // const url = `http://localhost:4000/orders/updatePaymentMode/${orderId}`;
+      const url = process.env.REACT_APP_API_URL +'orders/updatePaymentMode/' + orderId;
+      
+      const response = await axios.put(
+        url,
+        { paymentmode: newPaymentMode }, 
+        {
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+        }
+      );
+  
+      fetchOrders(); 
+    } catch (error) {
+      console.error('Error updating payment mode', error);
+    }
+    setLoading(false);
+  };
+  
+  
+
   const fetchDeliveryPartnerName = async () => {
     try {
       const url = `${process.env.REACT_APP_API_URL}users/getdeliverypartnername`;
@@ -231,6 +257,8 @@ const OrderHistory = () => {
                                     </button>
                                   )}
 
+
+
                                   {order.delivery_status === 'Pending' && (
                                     <button
                                       className='mark-complete-btn'
@@ -302,8 +330,22 @@ const OrderHistory = () => {
                                   </button>
                                 </div>
                               )}
-                            </div>
 
+                              {usertype === 'admin' && (
+                                <div className='order-actions'>
+                                  <button
+                                    className='view-details-btn'
+                                    onClick={() => handlePaymentModeChange(order.order_id, 'cash')}>
+                                    Pay in Cash
+                                  </button>
+                                  <button
+                                    className='view-details-btn' onClick={() => handlePaymentModeChange(order.order_id, 'UPI')}>
+                                    Pay by UPI
+                                  </button>
+                                </div>
+                              )}
+
+                              </div>
                             <div className='text-end'></div>
                             <p>
                               <strong>Order ID - </strong> {order.order_id}
@@ -322,9 +364,9 @@ const OrderHistory = () => {
                             </p>
                             < p >
                               <strong>Delivery Partner -</strong>{' '}
-                              
-                              {deliverypartners.map((partner, index) =>(
-                                  (order.delivery_partner === partner.userid) ? <span>{'  '}{partner.name}</span> : <span>{' '}</span>
+
+                              {deliverypartners.map((partner, index) => (
+                                (order.delivery_partner === partner.userid) ? <span>{'  '}{partner.name}</span> : <span>{' '}</span>
                               ))
                               }
                             </p>
@@ -335,7 +377,7 @@ const OrderHistory = () => {
                   ))
                 ) : (
                   <p>No orders found.</p>
-                )}                
+                )}
               </div>
             </div>
           </div>
