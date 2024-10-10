@@ -58,6 +58,7 @@ const OurTeam = () => {
       <ToastContainer />
 
       <div className='container'>
+
         {loading && (
           <div
             style={{
