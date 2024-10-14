@@ -226,7 +226,7 @@ const Footer = () => {
                       </div>
                     </div>
                   </div>
-                  <div class='row my-5'>
+                  {/*<div class='row my-5'>
                     <div class='col-lg-2 col-sm-6 mx-3 my-2'>
                       <div class='details'>
                         <a href='https://www.google.com/search?q=Grocji&stick=H4sIAAAAAAAA_-NgU1I1qDC2NEgxBkLDtLQUC9MUcyugULJhqkWKoUVamomBkUVi6iJWXvei_OSsTIWg1JLEzBwAd50AZjkAAAA&hl=en&mat=CcbTUFLSmyXfElcBEKoLaVdfSCdC7LhLoExbYZ-0jAGLJe2CED_OkdEpqTuEA62oFaUjcfJUm6feiXg72XyPzI7kuhc2Te4QSNW0boLgUzISSAb5ujfS5tqgbDuukZVQ8vQ&authuser=0'>                          
@@ -252,7 +252,7 @@ const Footer = () => {
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </div>*/}
                 </div>
               </div>
             </div>
@@ -260,22 +260,6 @@ const Footer = () => {
             <div class='footer-bottom-section'>
               <div class='footer-social'>
                 <div class='social-items'>
-                  {/* <a href="#" target="_blank" class="social-icon instagram">
-                                        <span>
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M12.101 4.89551C12.6532 4.89551 13.101 4.44779 13.101 3.89551C13.101 3.34322 12.6532 2.89551 12.101 2.89551C11.5487 2.89551 11.101 3.34322 11.101 3.89551C11.101 4.44779 11.5487 4.89551 12.101 4.89551Z"
-                                                    fill="#ABABAB" />
-                                                <path
-                                                    d="M7.99939 11.9971C5.79939 11.9971 3.99939 10.1971 3.99939 7.99707C3.99939 5.79707 5.79939 3.99707 7.99939 3.99707C10.1994 3.99707 11.9994 5.79707 11.9994 7.99707C11.9994 10.1971 10.1994 11.9971 7.99939 11.9971ZM7.99939 5.99707C6.89939 5.99707 5.99939 6.89707 5.99939 7.99707C5.99939 9.09707 6.89939 9.99707 7.99939 9.99707C9.09939 9.99707 9.99939 9.09707 9.99939 7.99707C9.99939 6.89707 9.09939 5.99707 7.99939 5.99707Z"
-                                                    fill="#ABABAB" />
-                                                <path
-                                                    d="M11.9994 15.9971H3.99939C1.89939 15.9971 -0.000610352 14.0971 -0.000610352 11.9971V3.99707C-0.000610352 1.89707 1.89939 -0.00292969 3.99939 -0.00292969H11.9994C14.0994 -0.00292969 15.9994 1.89707 15.9994 3.99707V11.9971C15.9994 14.0971 14.0994 15.9971 11.9994 15.9971ZM3.99939 1.99707C3.09939 1.99707 1.99939 3.09707 1.99939 3.99707V11.9971C1.99939 12.9971 2.99939 13.9971 3.99939 13.9971H11.9994C12.8994 13.9971 13.9994 12.8971 13.9994 11.9971V3.99707C13.9994 3.09707 12.8994 1.99707 11.9994 1.99707H3.99939Z"
-                                                    fill="#ABABAB" />
-                                            </svg>
-                                        </span>
-                                    </a> */}
                   <a
                     href='https://www.facebook.com/grocji'
                     target='_blank'
@@ -296,7 +280,39 @@ const Footer = () => {
                       </svg>
                     </span>
                   </a>
-                  {/* <a href="#" class="social-icon youtube">
+                  <a href="https://www.instagram.com/groc_ji/" target="_blank" class="social-icon instagram">
+                                        <span>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M12.101 4.89551C12.6532 4.89551 13.101 4.44779 13.101 3.89551C13.101 3.34322 12.6532 2.89551 12.101 2.89551C11.5487 2.89551 11.101 3.34322 11.101 3.89551C11.101 4.44779 11.5487 4.89551 12.101 4.89551Z"
+                                                    fill="#ABABAB" />
+                                                <path
+                                                    d="M7.99939 11.9971C5.79939 11.9971 3.99939 10.1971 3.99939 7.99707C3.99939 5.79707 5.79939 3.99707 7.99939 3.99707C10.1994 3.99707 11.9994 5.79707 11.9994 7.99707C11.9994 10.1971 10.1994 11.9971 7.99939 11.9971ZM7.99939 5.99707C6.89939 5.99707 5.99939 6.89707 5.99939 7.99707C5.99939 9.09707 6.89939 9.99707 7.99939 9.99707C9.09939 9.99707 9.99939 9.09707 9.99939 7.99707C9.99939 6.89707 9.09939 5.99707 7.99939 5.99707Z"
+                                                    fill="#ABABAB" />
+                                                <path
+                                                    d="M11.9994 15.9971H3.99939C1.89939 15.9971 -0.000610352 14.0971 -0.000610352 11.9971V3.99707C-0.000610352 1.89707 1.89939 -0.00292969 3.99939 -0.00292969H11.9994C14.0994 -0.00292969 15.9994 1.89707 15.9994 3.99707V11.9971C15.9994 14.0971 14.0994 15.9971 11.9994 15.9971ZM3.99939 1.99707C3.09939 1.99707 1.99939 3.09707 1.99939 3.99707V11.9971C1.99939 12.9971 2.99939 13.9971 3.99939 13.9971H11.9994C12.8994 13.9971 13.9994 12.8971 13.9994 11.9971V3.99707C13.9994 3.09707 12.8994 1.99707 11.9994 1.99707H3.99939Z"
+                                                    fill="#ABABAB" />
+                                            </svg>
+                                        </span>
+                                    </a> 
+                                    <a href='https://www.google.com/search?q=Grocji&stick=H4sIAAAAAAAA_-NgU1I1qDC2NEgxBkLDtLQUC9MUcyugULJhqkWKoUVamomBkUVi6iJWXvei_OSsTIWg1JLEzBwAd50AZjkAAAA&hl=en&mat=CcbTUFLSmyXfElcBEKoLaVdfSCdC7LhLoExbYZ-0jAGLJe2CED_OkdEpqTuEA62oFaUjcfJUm6feiXg72XyPzI7kuhc2Te4QSNW0boLgUzISSAb5ujfS5tqgbDuukZVQ8vQ&authuser=0' target="_blank" class="social-icon google">                          
+                            <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 48 48">
+          <path fill="#ABABAB" d="M46.61 24.66c0-1.52-.13-2.93-.37-4.33H24v8.18h12.66c-.58 2.92-2.26 5.4-4.8 7.06v5.86h7.74c4.54-4.19 7.01-10.36 7.01-16.77z"/>
+          <path fill="#ABABAB" d="M24 48c6.48 0 11.89-2.16 15.85-5.86l-7.74-5.86c-2.18 1.46-4.97 2.34-8.11 2.34-6.23 0-11.5-4.2-13.37-9.86H2.76v6.13C6.72 42.3 14.88 48 24 48z"/>
+          <path fill="#ABABAB" d="M10.63 28.75A14.93 14.93 0 0 1 9.5 24c0-1.65.29-3.23.8-4.75V13.12H2.76A24 24 0 0 0 0 24c0 3.8.92 7.42 2.76 10.63l7.87-5.88z"/>
+          <path fill="#ABABAB" d="M24 9.53c3.54 0 6.71 1.22 9.22 3.61l6.85-6.85C34.89 2.82 29.61 0 24 0 14.88 0 6.72 5.7 2.76 13.12l7.87 5.88C12.5 13.73 17.77 9.53 24 9.53z"/>
+        </svg>
+                            </span>                          
+                        </a>
+
+
+
+
+
+
+                  {/*<a href="#" class="social-icon youtube">
                                         <span>
                                             <svg width="16" height="12" viewBox="0 0 16 12" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -306,8 +322,8 @@ const Footer = () => {
                                             </svg>
                                         </span>
                                     </a> */}
-                </div>
-                {/* <div class="copyright">
+               </div>
+                 {/*<div class="copyright">
                                     <p>©2024 All rights reserved</p>
                                 </div> */}
               </div>
