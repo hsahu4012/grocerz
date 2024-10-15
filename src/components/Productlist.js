@@ -318,7 +318,7 @@ const Productlist = () => {
                               )}
                               <span className='new-price'>
                                 &#8377; &nbsp;{product.price - product.discount}
-                              </span>
+                              </span>`
                             </div>
                           </div>
                           {product.stock_quantity <=0 && (
