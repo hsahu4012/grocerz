@@ -321,7 +321,7 @@ const Productlist = () => {
                               </span>
                             </div>
                           </div>
-                          {product.stock_quantity < 1 && (
+                          {product.stock_quantity <=0 && (
                             <p className='out-of-stock'>Out of Stock</p>
                           )}
                           {product.stock_quantity > 0 && (
