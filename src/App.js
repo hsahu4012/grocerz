@@ -131,7 +131,7 @@ function App() {
           <Route path='/mobilenoedit' element={<Mobilenoedit />} />
           <Route path='/changepassword' element={<ChangePassword />} />
           <Route path='/orderdetail' element={<OrderDetail />} />
-          <Route path='/deleteaccount' element={<DeActivateAccount />} />
+          <Route path='/deactivate_account' element={<DeActivateAccount />} />
           <Route
             path='/orderhistory/orderdetail/:orderid'
             element={<OrderDetail />}
