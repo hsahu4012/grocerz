@@ -82,7 +82,11 @@ const Offers = () => {
                         {member.enddate.substring(5, 7)}/
                         {member.enddate.substring(0, 4)}
                       </p>
-                      <Link to='#' className='shop-btn' onClick={() => handleViewDetails(member)} >
+                      <Link
+                        to='#'
+                        className='shop-btn'
+                        onClick={() => handleViewDetails(member)}
+                      >
                         View Details
                         <span>
                           <svg
@@ -131,33 +135,40 @@ const Offers = () => {
 
       <div className='container'>
         {/* Render containers if two discounts are available */}
-        <div class='grocery-section mb-5'>
-          <div class='row g-5 justify-content-center'>
+        <div className='grocery-section mb-5'>
+          <div className='row g-5 justify-content-center'>
             {teamMembers.length === 2 &&
               teamMembers.map((member, index) => (
-                <div class='col-md-6' key={member.id}>
+                <div className='col-md-6' key={member.id}>
                   <div
-                    class={`product-wrapper d-flex ${index === 0 ? 'wrapper-left' : 'wrapper-right'}`}
+                    className={`product-wrapper ${index === 0 ? 'wrapper-left' : 'wrapper-right'}`}
                     style={{
-                      minHeight: '300px',
+                      minHeight: '320px',
+                      display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      backgroundImage: `url(${index === 0 ? categoryImage1 : categoryImage2})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
+                      padding: '20px', 
+                      boxSizing: 'border-box',
                     }}
                   >
                     <div
-                      class='wrapper-info d-flex flex-column justify-content-center'
-                      style={{ width: '50%' }}
+                      className='wrapper-info d-flex flex-column justify-content-center'
+                      style={{
+                        width: '50%',
+                        textAlign: 'left',
+                        padding: '10px 20px', 
+                        boxSizing: 'border-box',
+                      }}
                     >
-                      <h3 class='wrapper-details'>{member.discountname}</h3>
-                      <p>
+                      <span className='wrapper-subtitle'>
+                        {member.discountname}
+                      </span>
+                      <h5 className='wrapper-details'>
                         PROMOCODE: {member.discountid}
-                        <br />
+                      </h5>
+                      <p>
                         {member.amount > 0 &&
                           `Fixed Discount: ₹${member.amount}`}
-                        <br />
                         {member.percentage > 0 &&
                           `Percentage Discount: ${member.percentage}%`}
                         <br />
@@ -165,7 +176,11 @@ const Offers = () => {
                         {member.enddate.substring(5, 7)}/
                         {member.enddate.substring(0, 4)}
                       </p>
-                      <Link to='#' className='shop-btn' onClick={() => handleViewDetails(member)}>
+                      <Link
+                        to='#'
+                        className='shop-btn'
+                        onClick={() => handleViewDetails(member)}
+                      >
                         View Details
                         <span>
                           <svg
@@ -194,16 +209,21 @@ const Offers = () => {
                       </Link>
                     </div>
 
+                    {/* Image Section */}
                     <div
-                      class='d-flex justify-content-center align-items-center'
-                      style={{ width: '50%' }}
+                      className='d-flex justify-content-center align-items-center'
+                      style={{
+                        width: '50%',
+                        padding: '10px', 
+                        boxSizing: 'border-box',
+                      }}
                     >
                       {member.image && (
                         <img
                           src={`${process.env.REACT_APP_API_URL}${member.image}`}
                           alt={member.discountname}
                           width='160'
-                          class='img-fluid'
+                          className='img-fluid'
                         />
                       )}
                     </div>
@@ -228,7 +248,7 @@ const Offers = () => {
                         <img
                           src={`${process.env.REACT_APP_API_URL}${member.image}`}
                           alt={member.discountname}
-                          style={{ display: 'block', margin: '0 auto', }}
+                          style={{ display: 'block', margin: '0 auto' }}
                         />
                       )}
                     </div>
@@ -247,7 +267,11 @@ const Offers = () => {
                         {member.enddate.substring(5, 7)}/
                         {member.enddate.substring(0, 4)}
                       </p>
-                      <Link to='#' className='shop-btn' onClick={() => handleViewDetails(member)}>
+                      <Link
+                        to='#'
+                        className='shop-btn'
+                        onClick={() => handleViewDetails(member)}
+                      >
                         View Details
                         <span>
                           <svg
