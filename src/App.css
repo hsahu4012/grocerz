@@ -495,3 +495,20 @@
   padding: 10px 50px 0px 50px;
   background-color: #eef0f3;
 }
+
+.deactivate-account-btn {
+  padding: 1.2rem 3.4rem;
+  margin: 4rem 0;
+  text-align: center;
+  border-radius: 0.4rem;
+  display: inline-block;
+  background: #c4342a; 
+  font-size: 1.4rem;
+  font-weight: 500;
+  position: relative;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  transition: all 0.3s;
+  overflow: hidden;
+  z-index: 1;
+}

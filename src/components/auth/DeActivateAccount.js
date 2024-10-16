@@ -1,0 +1,154 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import DashboardRoutes from '../DashboardRoutes';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+function DeActivateAccount() {
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const userid=localStorage.getItem('userid');
+  const navigate = useNavigate();
+
+  const url = `${process.env.REACT_APP_API_URL}users/deactivateaccount`;
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        url,
+        {
+          username: username,
+          password: password,
+        }
+      );
+
+      if (response.status === 200) {
+        setErrorMessage('');
+        setSuccessMessage('Your account has been deactivated successfully');
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      }else if(response.status == 400 || response.status ==401) {
+        setErrorMessage("User not found or already deactivated")
+      }
+    } catch (error) {
+        console.error('Error changing password', error);
+        setErrorMessage(error.response.data.message)
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+  <section className="blog about-blog">
+    <div className="container">
+      
+    </div>
+  </section>
+  
+  <section className="user-profile footer-padding">
+    <div className="container">
+      <div className="user-profile-section box-shadows">
+        <div className="user-dashboard">
+          {userid &&<DashboardRoutes />}
+          <div className="container mx-auto max-w-md my-3 mb-4 my-5 mt-8">
+            <h2 className="text-xl font-semibold mb-4">Deactivate Your Account</h2>
+            <p className="text-base text-gray-600 mb-5">
+              Enter your username, email, or mobile number, along with your password to deactivate your account. Your account will be deleted after 30 days of deactivation.
+            </p>
+            <div className="row align-items-center">
+              <div className="col-lg-6">
+                <div className="form-section">
+                  <form onSubmit={handleSubmit}>
+                    <div className="password form-item">
+                      <label
+                        htmlFor="username"
+                        className="form-label text-lg font-semibold h5"
+                      >
+                        Username, Email, or Mobile*
+                      </label>
+                      <input
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={e => setUserName(e.target.value)}
+                        className="form-control text-lg p-3 h5"
+                        placeholder="Enter your username, email, or mobile"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="re-password form-item mt-4">
+                      <label
+                        htmlFor="password"
+                        className="form-label text-lg font-semibold h5"
+                      >
+                        Password*
+                      </label>
+                      <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        className="form-control text-lg p-3 h5"
+                        placeholder="Enter your password"
+                        required
+                      />
+                    </div>
+
+                    {errorMessage && <div class='error-message'>{errorMessage}</div>}
+                    {successMessage && <div class='success-message'>{successMessage}</div>}
+                    <div className="form-btn d-flex gap-2 mt-4">
+                      <button
+                        type="submit"
+                        className="deactivate-account-btn text-lg p-3"
+                        disabled={loading}
+                      >
+                        Deactivate Account
+                      </button>
+                      <Link
+                        to="/dashboard"
+                        className="shop-btn cancel-btn text-lg p-3"
+                      >
+                        Cancel
+                      </Link>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              {/* Image section */}
+              <div className="col-lg-6">
+                <div className="reset-img text-end">
+                  <img
+                    src="assets/images/homepage-one/reset.webp"
+                    alt="reset"
+                    className="img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Informational Note */}
+            <div className="mt-5 text-gray-600">
+              <p className="text-sm">
+                By deactivating your account, you agree that your account will be permanently deleted after 30 days. If you change your mind, simply log in within this period to restore your account.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</>
+
+  );
+}
+
+export default DeActivateAccount;
