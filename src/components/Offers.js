@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import categoryImage1 from '../assets/img/categories/category-3.jpg';
-import categoryImage2 from '../assets/img/categories/category-5.jpg';
 
 const Offers = () => {
   const [teamMembers, setTeamMembers] = useState([]);
