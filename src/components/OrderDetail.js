@@ -459,6 +459,7 @@ const OrderDetail = () => {
                                 </div>
                                 <div className="col-md-1">
                                   <p>
+                                    
                                     <strong>{productPrices[index] - item.price_final}</strong>
                                   </p>
                                 </div>
