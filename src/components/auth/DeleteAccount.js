@@ -4,6 +4,7 @@ import DashboardRoutes from '../DashboardRoutes';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { DataAppContext } from '../../DataContext';
+import { ToastContainer, toast } from 'react-toastify';
 function DeleteAccount() {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -28,18 +29,17 @@ function DeleteAccount() {
       );
 
       if (response.status === 200) {
-        setErrorMessage('');
-        setSuccessMessage('Your account has been deleted successfully');
-        logout_user();
+        toast.success('Your account has been deleted successfully');
         setTimeout(() => {
+          logout_user();
           navigate('/');
-        }, 2000);
+        }, 3000);
       }else if(response.status == 400 || response.status ==401) {
-        setErrorMessage("User not found or already deleted")
+        toast.error("User not found or already deleted")
       }
     } catch (error) {
         console.error('Error changing password', error);
-        setErrorMessage(error.response.data.message)
+        toast.error(error.response.data.message)
     } finally {
       setLoading(false);
     }
@@ -47,6 +47,7 @@ function DeleteAccount() {
 
   return (
     <>
+     <ToastContainer />
   <section className="blog about-blog">
     <div className="container">
       
