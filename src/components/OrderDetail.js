@@ -10,7 +10,7 @@ const OrderDetail = () => {
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [quantity, setQuantity] = useState('');
+  const [Added_quantity, setQuantity] = useState('');
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -24,6 +24,9 @@ const OrderDetail = () => {
   const [deliveryPartners, setDeliveryPartners] = useState([])
   const [modal, setModal] = useState(false)
   const [userid, setUserid] = useState('')
+  const [productid, setproductid] = useState([]);
+  const [quantity, setquantity] = useState(' ');
+  const [productPrices, setProductPrices] = useState([]);
 
   const [alertmodal, setAlertModal] = useState(false);
 
