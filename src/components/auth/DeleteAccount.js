@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import DashboardRoutes from '../DashboardRoutes';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
-function DeActivateAccount() {
+import { DataAppContext } from '../../DataContext';
+function DeleteAccount() {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -12,8 +12,8 @@ function DeActivateAccount() {
   const [errorMessage, setErrorMessage] = useState('');
   const userid=localStorage.getItem('userid');
   const navigate = useNavigate();
-
-  const url = `${process.env.REACT_APP_API_URL}users/deactivateaccount`;
+  const { appstate, logout_user } = useContext(DataAppContext);
+  const url = `${process.env.REACT_APP_API_URL}users/deleteaccount`;
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -29,12 +29,13 @@ function DeActivateAccount() {
 
       if (response.status === 200) {
         setErrorMessage('');
-        setSuccessMessage('Your account has been deactivated successfully');
+        setSuccessMessage('Your account has been deleted successfully');
+        logout_user();
         setTimeout(() => {
           navigate('/');
         }, 2000);
       }else if(response.status == 400 || response.status ==401) {
-        setErrorMessage("User not found or already deactivated")
+        setErrorMessage("User not found or already deleted")
       }
     } catch (error) {
         console.error('Error changing password', error);
@@ -58,9 +59,9 @@ function DeActivateAccount() {
         <div className="user-dashboard">
           {userid &&<DashboardRoutes />}
           <div className="container mx-auto max-w-md my-3 mb-4 my-5 mt-8">
-            <h2 className="text-xl font-semibold mb-4">Deactivate Your Account</h2>
+            <h2 className="text-xl font-semibold mb-4">Delete Your Account</h2>
             <p className="text-base text-gray-600 mb-5">
-              Enter your username, email, or mobile number, along with your password to deactivate your account. Your account will be deleted after 30 days of deactivation.
+              Enter your username, email, or mobile number, along with your password to delete your account. Your account will be deleted after 30 days of deletion.
             </p>
             <div className="row align-items-center">
               <div className="col-lg-6">
@@ -110,7 +111,7 @@ function DeActivateAccount() {
                         className="deactivate-account-btn text-lg p-3"
                         disabled={loading}
                       >
-                        Deactivate Account
+                        Delete Account
                       </button>
                       <Link
                         to="/dashboard"
@@ -138,7 +139,7 @@ function DeActivateAccount() {
             {/* Informational Note */}
             <div className="mt-5 text-gray-600">
               <p className="text-sm">
-                By deactivating your account, you agree that your account will be permanently deleted after 30 days. If you change your mind, simply log in within this period to restore your account.
+                By deleting your account, you agree that your account will be permanently deleted after 30 days. If you change your mind, simply log in within this period to restore your account.
               </p>
             </div>
           </div>
@@ -151,4 +152,4 @@ function DeActivateAccount() {
   );
 }
 
-export default DeActivateAccount;
+export default DeleteAccount;

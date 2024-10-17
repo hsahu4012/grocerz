@@ -55,7 +55,7 @@ import Feedback from './components/Feedback';
 import Offers from './components/Offers';
 import PrivacyPolicy from './components/static/PrivacyPolicy.js';
 import TermsandCondition from './components/TermsandCondititon';
-import DeActivateAccount from './components/auth/DeActivateAccount.js';
+import DeleteAccount from './components/auth/DeleteAccount.js';
 
 function App() {
   //temp code to keep server live
@@ -131,7 +131,7 @@ function App() {
           <Route path='/mobilenoedit' element={<Mobilenoedit />} />
           <Route path='/changepassword' element={<ChangePassword />} />
           <Route path='/orderdetail' element={<OrderDetail />} />
-          <Route path='/deactivate_account' element={<DeActivateAccount />} />
+          <Route path='/deleteaccount' element={<DeleteAccount />} />
           <Route
             path='/orderhistory/orderdetail/:orderid'
             element={<OrderDetail />}
