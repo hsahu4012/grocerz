@@ -247,7 +247,12 @@ const ProductDetails = () => {
               <hr></hr>
               <div class='product-availability'>
                 <span>Availabillity : </span>
-                <span class='inner-text'>Available</span>
+                <span class='inner-text'>{product.stock_quantity <=0 && (
+                            <span className='text-danger'>Out of Stock</span>
+                          )}</span>
+                <span class='inner-text'>{product.stock_quantity >0 && (
+                            <span className=''>Available</span>
+                          )}</span>
               </div>
 
               <div class='product-quantity'>
