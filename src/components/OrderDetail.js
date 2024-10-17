@@ -10,6 +10,7 @@ const OrderDetail = () => {
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
+  const [quantity, setQuantity] = useState('');
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -19,16 +20,12 @@ const OrderDetail = () => {
   const [loading, setLoading] = useState(false);
   const [err, setError] = useState(false);
   const usertype = window.localStorage.getItem('usertype');
-  const [productid, setproductid] = useState([]);
-  const [quantity, setquantity] = useState([]);
-  const [productPrices, setProductPrices] = useState([]);
 
   const [deliveryPartners, setDeliveryPartners] = useState([])
   const [modal, setModal] = useState(false)
   const [userid, setUserid] = useState('')
 
-  const [alertmodal, setAlertModal] = useState(false)
-
+  const [alertmodal, setAlertModal] = useState(false);
 
   // Fetch all categories
   const fetchCategoryData = async () => {
@@ -72,6 +69,17 @@ const OrderDetail = () => {
       setError('Error fetching products !');
       console.error('Error fetching products:', error);
     }
+  };
+
+  // update quantity in orderDetails list
+  const updateQuantity = (productId, newQuantity) => {
+    const updatedOrderDetails = orderDetails.map(item => {
+      if (item.productid === productId) {
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    });
+    setOrderDetails(updatedOrderDetails);
   };
 
   // Fetch order details
@@ -122,15 +130,20 @@ const OrderDetail = () => {
       const productObj = products.find(
         product => product.productid === selectedProduct
       );
+      const productWithQuantity = {
+        ...productObj,
+        quantity: quantity, 
+      };
       const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
-      await axios.post(url, productObj);
+      await axios.post(url, productWithQuantity);
       fetchOrderDetails();
       setShowPopup(false);
     } catch (error) {
       setError('Something went wrong please try again !');
       console.error('Error adding product to order:', error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   // Handle removing product from order
@@ -155,27 +168,24 @@ const OrderDetail = () => {
       console.error('Error fetching Delivery Partners:', error);
     }
     setModal(!modal);
-  }
+  };
 
   // Update delivery partner in orders table
   const fetchDeliveryPartner = async () => {
     try {
       const url = `${process.env.REACT_APP_API_URL}orders/updatedeliverypartner/${orderid}/${userid}`;
       const response = await axios.put(url);
-      if(response.status === 200)
-      {
-
+      if (response.status === 200) {
         alert(response.data.message);
 
         setAlertModal(true);
-
       }
 
     } catch (error) {
       console.error('Error updating delivery partner from order:', error);
     }
     setModal(!modal);
-  }
+  };
 
   // Fetch categories on component mount
   useEffect(() => {
@@ -228,12 +238,16 @@ const OrderDetail = () => {
                   {order ? (
                     <div className='card-body'>
                       <p>
-                        <strong>
-                          Order Date & Time :</strong>
-                        <span className='text-success'>{' '}{order.order_date}{' '}
-                          {order.order_time.substring(0, 4) + ' ' + order.order_time.substring(8, 12).toUpperCase()}</span> | {' '}
-                        <strong>Order ID :</strong>{' '}
-                        <span className='text-success'>{order.order_id}</span>{' '}|{' '}
+                        <strong>Order Date & Time :</strong>
+                        <span className='text-success'>
+                          {' '}
+                          {order.order_date}{' '}
+                          {order.order_time.substring(0, 4) +
+                            ' ' +
+                            order.order_time.substring(8, 12).toUpperCase()}
+                        </span>{' '}
+                        | <strong>Order ID :</strong>{' '}
+                        <span className='text-success'>{order.order_id}</span> |{' '}
                         <strong>Order Number :</strong>{' '}
                         <span className='text-success'>{order.srno}</span>
                       </p>
@@ -356,6 +370,37 @@ const OrderDetail = () => {
                                     ))}
                                 </select>
                               )}
+
+                              {/* Quantity Selection */}
+                              {selectedProduct && (
+                                <input
+                                  type='number'
+                                  value={quantity}
+                                  onChange={e => {
+                                    const newQuantity = parseInt(
+                                      e.target.value
+                                    );
+                                    setQuantity(newQuantity);
+                                    updateQuantity(
+                                      selectedProduct,
+                                      newQuantity
+                                    );
+                                  }}
+                                  min='1'
+                                  step='1'
+                                  placeholder='Select Quantity'
+                                  style={{
+                                    backgroundColor: '#f5f5f5',
+                                    width: '100%',
+                                    padding: '10px',
+                                    marginBottom: '15px',
+                                    border: '1px solid #ccc',
+                                    borderRadius: '4px',
+                                    fontSize: '15px',
+                                  }}
+                                />
+                              )}
+
                               <button className='' onClick={handleAddProduct}>
                                 Add Product
                               </button>
@@ -443,22 +488,30 @@ const OrderDetail = () => {
                         Order Status : {order.delivery_status}{' '}
                       </div>
                       {usertype === 'admin' && (
-                        <div className='text-center'>
-                          <Link
-                            to={`/orderhistory/orderdetailsprint/${orderid}/customer`}
-                            className='shop-btn mx-1'
-                          >
-                            Print Invoice
-                          </Link>
-                        </div>
-                      )}
-                      {usertype === 'admin' && (
-                        <div className='text-center'>
-                          <Link className='shop-btn mx-1'>
-                            <button onClick={handleDeliveryStaff} style={{ color: 'white' }}>
-                              Assign delivery staff
+                        <div className='text-center my-3'>
+                          <div className='d-flex justify-content-center'>
+                            {/* Print Invoice Button */}
+                            <Link
+                              to={`/orderhistory/orderdetailsprint/${orderid}/customer`}
+                              className='shop-btn mx-1'
+                            >
+                              Print Invoice
+                            </Link>
+
+                            {/* Assign Delivery Staff Button */}
+                            <button
+                              className='shop-btn mx-1'
+                              onClick={handleDeliveryStaff}
+                              style={{ color: 'white' }}
+                            >
+                              Assign Delivery Staff
                             </button>
-                          </Link>
+
+                            {/* Back Button */}
+                            <Link to='/OrderHistory' className='shop-btn mx-1'>
+                              Back
+                            </Link>
+                          </div>
                         </div>
                       )}
                       {modal && (
@@ -474,19 +527,20 @@ const OrderDetail = () => {
                             >
                               <option value1=''>Select</option>
                               {deliveryPartners.map(item => (
-                                <option
-                                  key={item.userid}
-                                  value={item.userid}>{item.name}
+                                <option key={item.userid} value={item.userid}>
+                                  {item.name}
                                 </option>
                               ))}
                             </select>
                             <button className='' onClick={fetchDeliveryPartner}>
                               Add Delivery Partner
                             </button>
-                            <button onClick={() => {
-                              setUserid('')
-                              setModal(!modal)
-                            }}>
+                            <button
+                              onClick={() => {
+                                setUserid('');
+                                setModal(!modal);
+                              }}
+                            >
                               Close
                             </button>
                             {loading && (
@@ -502,9 +556,11 @@ const OrderDetail = () => {
                         <div className='popup-overlay'>
                           <div className='popup-content'>
                             <h3>Delivery Partner Assigned</h3>
-                            <button onClick={() => {
-                               setAlertModal(!alertmodal)                              
-                               }}>
+                            <button
+                              onClick={() => {
+                                setAlertModal(!alertmodal);
+                              }}
+                            >
                               Ok
                             </button>
                             {loading && (
@@ -514,22 +570,17 @@ const OrderDetail = () => {
                             )}
                           </div>
                         </div>
-                      )}              
-
+                      )}
                     </div>
                   ) : (
                     <p>No order found.</p>
                   )}
                 </div>
               </div>
-              <Link to='/OrderHistory' className='shop-btn'>
-                Back
-              </Link>
             </div>
           </div>
         </div>
       </section>
-
     </>
   );
 };
