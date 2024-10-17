@@ -34,7 +34,7 @@ const DataApp = props => {
     setAppState({ ...appstate, loginstatus: true });
   };
   const logout_user = () => {
-    console.log('logging out');
+    // console.log('logging out');
     localStorage.removeItem('jwttoken');
     localStorage.removeItem('userid');
     localStorage.removeItem('usertype');
@@ -44,7 +44,7 @@ const DataApp = props => {
   };
 
   const showhidemenu = () => {
-    console.log('showhidemenu');
+    // console.log('showhidemenu');
     setAppState({ ...appstate, showmenu: !appstate.showmenu });
   };
 
