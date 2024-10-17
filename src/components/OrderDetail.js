@@ -10,7 +10,7 @@ const OrderDetail = () => {
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [quantity, setQuantity] = useState('');
+  const [Added_quantity, setQuantity] = useState('');
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -21,9 +21,12 @@ const OrderDetail = () => {
   const [err, setError] = useState(false);
   const usertype = window.localStorage.getItem('usertype');
 
-  const [deliveryPartners, setDeliveryPartners] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [userid, setUserid] = useState('');
+  const [deliveryPartners, setDeliveryPartners] = useState([])
+  const [modal, setModal] = useState(false)
+  const [userid, setUserid] = useState('')
+  const [productid, setproductid] = useState([]);
+  const [quantity, setquantity] = useState(' ');
+  const [productPrices, setProductPrices] = useState([]);
 
   const [alertmodal, setAlertModal] = useState(false);
 
@@ -89,6 +92,11 @@ const OrderDetail = () => {
       const url = `${process.env.REACT_APP_API_URL}orderdetails/${orderid}`;
       const response = await axios.get(url);
       setOrderDetails(response.data);
+      const orderDetails = response.data;
+      const extractedProductIds = orderDetails.map(order => order.productid);
+      const extractedQuantities = orderDetails.map(order => order.quantity);
+      setproductid(extractedProductIds);
+      setquantity(extractedQuantities)
     } catch (error) {
       setError('Something went wrong please try again !');
       console.error('Error fetching order details:', error);
@@ -96,6 +104,27 @@ const OrderDetail = () => {
       setLoading(false);
     }
   };
+
+  const product_price = async () => {
+    try {
+      const prices = [];
+      for (let index = 0; index < productid.length; index++) {
+        const url = `${process.env.REACT_APP_API_URL}products/productByPId/${productid[index]}`;
+        const response = await axios.get(url);
+        const product_prices = response.data.price;
+        const total_product_price = product_prices * quantity[index];
+        prices.push(total_product_price);
+      }
+      setProductPrices(prices);
+    } catch (error) {
+      console.error('Error fetching product prices:', error);
+    }
+  };
+  useEffect(() => {
+    if (productid.length > 0 && quantity.length > 0) {
+      product_price();
+    }
+  }, [productid, quantity]);
 
   // Handle adding product to order
   const handleAddProduct = async () => {
@@ -154,6 +183,7 @@ const OrderDetail = () => {
 
         setAlertModal(true);
       }
+
     } catch (error) {
       console.error('Error updating delivery partner from order:', error);
     }
@@ -180,6 +210,7 @@ const OrderDetail = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const totalOriginalPrice = productPrices.reduce((acc, curr) => acc + curr, 0);
   const order = orderDetails.length > 0 ? orderDetails[0] : null;
 
   return (
@@ -249,6 +280,12 @@ const OrderDetail = () => {
                             Bill Details
                           </div>
                           <ul className='list-group text-custom-font-1'>
+                            <li className='list-group-item text-success'>
+                              <strong>Original Price - &#8377; {totalOriginalPrice}</strong>
+                            </li>
+                            <li className='list-group-item text-success'>
+                              <strong>Discount Price - &#8377; {totalOriginalPrice - order.paymentamount}</strong>
+                            </li>
                             <li className='list-group-item text-success'>
                               <strong>
                                 Final Payment Amount - {order.paymentamount}
@@ -381,55 +418,75 @@ const OrderDetail = () => {
                             </div>
                           </div>
                         )}
+                        {orderDetails.map((item, index) => {
+                          // Calculate discount for the product
+                          // const discount_product = productPrices[index] - item.price_final;
 
-                        {orderDetails.map((item, index) => (
-                          <div
-                            className='card mb-1'
-                            key={index}
-                            style={{ cursor: 'pointer' }}
-                            onClick={() =>
-                              navigate(`/product/${item.productid}`)
-                            }
-                          >
-                            <div className='card-body d-flex align-items-center'>
-                              <div className='col-md-3'>
-                                <span>
-                                  <strong>{index + 1}</strong>
-                                </span>
-                                <img
-                                  src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`}
-                                  className='img-fluid'
-                                  alt={`${process.env.REACT_APP_IMAGE_URL}${item.prod_name}`}
-                                />
-                              </div>
-                              <div className='col-md-9 d-flex justify-content-between align-items-center'>
-                                <p>
-                                  <strong>{item.prod_name}</strong>
-                                </p>
-                                <p>
-                                  <strong>Qty: {item.quantity}</strong>
-                                </p>
-
-                                <p>
-                                  <strong>
-                                    &#8377;&nbsp;{item.price_final}
-                                  </strong>
-                                </p>
+                          return (
+                            <div
+                              className="card mb-1"
+                              key={index}
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => navigate(`/product/${item.productid}`)}
+                            >
+                              <div className="card-body d-flex align-items-center">
+                                <div className="col-md-1">
+                                  <span>
+                                    <strong>{index + 1}</strong>
+                                  </span>
+                                </div>
+                                <div className="col-md-3">
+                                  <img
+                                    src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`}
+                                    className="img-fluid"
+                                    alt={`${item.prod_name}`}
+                                  />
+                                </div>
+                                <div className="col-md-3">
+                                  <p>
+                                    <strong>{item.prod_name}</strong>
+                                  </p>
+                                </div>
+                                <div className="col-md-1">
+                                  <p>
+                                    <strong>&#8377;&nbsp;{productPrices[index]}</strong>
+                                  </p>
+                                </div>
+                                <div className="col-md-1">
+                                  <p>
+                                    <strong>Qty: {item.quantity}</strong>
+                                  </p>
+                                </div>
+                                <div className="col-md-1">
+                                  <p>
+                                    
+                                    <strong>{productPrices[index] - item.price_final}</strong>
+                                  </p>
+                                </div>
+                                <div className="col-md-1">
+                                  <p>
+                                    <strong>{item.price_final}</strong> 
+                                    
+                                  </p>
+                                </div>
                                 {usertype === 'admin' && (
-                                  <button
-                                    onClick={e => {
-                                      e.stopPropagation();
-                                      removeItemFromOrder(item.productid);
-                                    }}
-                                    className='shop-btn'
-                                  >
-                                    Remove Product
-                                  </button>
+                                  <div className="col-md-2">
+                                    <button
+                                      className="btn btn-danger"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        removeItemFromOrder(item.productid);
+                                      }}
+                                    >
+                                      Remove
+                                    </button>
+                                  </div>
                                 )}
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
+
                       </div>
                       <div className='heading-custom-font-1 my-5'>
                         Order Status : {order.delivery_status}{' '}
@@ -468,7 +525,9 @@ const OrderDetail = () => {
 
                             <select
                               value={userid}
-                              onChange={e => setUserid(e.target.value)}
+                              onChange={e =>
+                                setUserid(e.target.value)
+                              }
                             >
                               <option value1=''>Select</option>
                               {deliveryPartners.map(item => (
