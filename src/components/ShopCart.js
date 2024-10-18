@@ -165,7 +165,27 @@ const ShopCart = () => {
   };
 
   return (
-    <section className='product-cart product footer-padding'>
+
+
+    
+    < >
+     <section class='blog about-blog'>
+        <div class='container'>
+          {/* <div class="blog-bradcrum">
+                <span><a href="/">Home</a></span>
+                <span class="devider">/</span>
+                <span><a href="#">Contact</a></span>
+            </div> */}
+          <div class='blog-heading about-heading'>
+            <h1 class='heading'>Users Cart</h1>
+          </div>
+        </div>
+      </section >
+
+
+     <section className='product-cart product footer-padding'>
+
+
       {loading && (
         <div
           style={{
@@ -182,6 +202,10 @@ const ShopCart = () => {
           />
         </div>
       )}
+      
+
+   
+
       {!loading && (
         <div className='container'>
           <div className='cart-section'>
@@ -348,7 +372,8 @@ const ShopCart = () => {
           </div>
         </div>
       </div> */}
-    </section>
+         </section>
+    </>
   );
 };
 
