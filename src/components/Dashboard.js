@@ -13,6 +13,8 @@ const Dashboard = () => {
   const [userDetails, setUserDetails] = useState(initialState);
   const [isEditing, setIsEditing] = useState(false);
   const [userOrders, setUserOrders] = useState(0);
+  const [totalSpendings, setTotalSpendings] = useState(0);
+  const [currentMonthSpendings, setCurrentMonthSpendings] = useState(0);
   const userid = localStorage.getItem('userid');
   const userRole = localStorage.getItem('role');
 
@@ -31,6 +33,18 @@ const Dashboard = () => {
         `${process.env.REACT_APP_API_URL}orders/getOrderCountByUserId/${userid}`
       );
       setUserOrders(userOrdersResponse.data.totalOrders);
+
+      const TotalSpendingResp = await axios.get(
+        `${process.env.REACT_APP_API_URL}orders/getTotalExpenseByUserId/${userid}`
+      );
+      setTotalSpendings(TotalSpendingResp.data.totalExpense);
+
+      const currentMonthSpendingResp = await axios.get(
+        `${process.env.REACT_APP_API_URL}orders/getCurrentMonthExpenseByUserId/${userid}`
+      );
+      setCurrentMonthSpendings(currentMonthSpendingResp.data.currentMonthSpendings);
+
+
     } catch (error) {
       console.error(error);
     }
@@ -112,15 +126,32 @@ const Dashboard = () => {
                           <div className='product-wrapper'>
                             <div className='wrapper-img'>
                               <span>
-                                <svg width={62} height={62} viewBox='0 0 62 62' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                                <svg width={62} height={62}  viewBox="0 0 320 512" fill='none' xmlns='http://www.w3.org/2000/svg'>
                                   <rect width={62} height={62} rx={4} fill='white' />
-                                  <path d='M45.2253 29.8816H44.4827L43.6701 26.3651C43.376 25.1043 42.2552 24.2217 40.9662 24.2217H36.8474V20.8453C36.8474 19.038 35.3764 17.5811 33.5831 17.5811H18.1724C16.4631 17.5811 15.0762 18.968 15.0762 20.6772V37.0967C15.0762 38.8058 16.4631 40.1928 18.1724 40.1928H19.2931C19.8955 42.1962 21.7448 43.6533 23.9304 43.6533C26.1159 43.6533 27.9792 42.1962 28.5816 40.1928C28.8455 40.1928 35.3459 40.1928 35.1942 40.1928C35.7966 42.1962 37.6459 43.6533 39.8315 43.6533C42.031 43.6533 43.8803 42.1962 44.4827 40.1928H45.2253C46.7663 40.1928 47.9992 38.96 47.9992 37.4179V32.6566C48.0004 31.1143 46.7675 29.8816 45.2253 29.8816ZM23.9304 39.1036C22.4764 39.1036 21.294 37.9211 21.294 36.4672C21.294 35.0133 22.4764 33.8309 23.9304 33.8309C25.3843 33.8309 26.5668 35.0133 26.5668 36.4672C26.5668 37.9211 25.3843 39.1036 23.9304 39.1036ZM35.0725 33.8309H33.4724V32.2308H36.8267V36.8267H35.0725V33.8309ZM39.8315 39.1036C38.3776 39.1036 37.1951 37.9211 37.1951 36.4672C37.1951 35.0133 38.3776 33.8309 39.8315 33.8309C41.2854 33.8309 42.4679 35.0133 42.4679 36.4672C42.4679 37.9211 41.2854 39.1036 39.8315 39.1036Z' />
+                                  <path d="M0 64C0 46.3 14.3 32 32 32l64 0 16 0 176 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-56.2 0c9.6 14.4 16.7 30.6 20.7 48l35.6 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-35.6 0c-13.2 58.3-61.9 103.2-122.2 110.9L274.6 422c14.4 10.3 17.7 30.3 7.4 44.6s-30.3 17.7-44.6 7.4L13.4 314C2.1 306-2.7 291.5 1.5 278.2S18.1 256 32 256l80 0c32.8 0 61-19.7 73.3-48L32 208c-17.7 0-32-14.3-32-32s14.3-32 32-32l153.3 0C173 115.7 144.8 96 112 96L96 96 32 96C14.3 96 0 81.7 0 64z"/>
                                 </svg>
                               </span>
                             </div>
                             <div className='wrapper-content'>
                               <p className='paragraph'>Total Spendings</p>
-                              <h3 className='heading'>{userOrders}</h3>
+                              <h3 className='heading'>{totalSpendings}</h3>
+                            </div>
+                          </div>
+                        </div>
+                        <div className='col-lg-4 col-sm-6'>
+                          <div className='product-wrapper'>
+                            <div className='wrapper-img'>
+                              <span>
+                                <svg width={62} height={62}  viewBox="0 0 320 512" fill='none' xmlns='http://www.w3.org/2000/svg'>
+                                  {/* <rect width={62} height={62} rx={4} fill='white' /> */}
+                                  <rect width={62} height={62} rx={4} />
+                                  <path d="M0 64C0 46.3 14.3 32 32 32l64 0 16 0 176 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-56.2 0c9.6 14.4 16.7 30.6 20.7 48l35.6 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-35.6 0c-13.2 58.3-61.9 103.2-122.2 110.9L274.6 422c14.4 10.3 17.7 30.3 7.4 44.6s-30.3 17.7-44.6 7.4L13.4 314C2.1 306-2.7 291.5 1.5 278.2S18.1 256 32 256l80 0c32.8 0 61-19.7 73.3-48L32 208c-17.7 0-32-14.3-32-32s14.3-32 32-32l153.3 0C173 115.7 144.8 96 112 96L96 96 32 96C14.3 96 0 81.7 0 64z"/>
+                                </svg>
+                              </span>
+                            </div>
+                            <div className='wrapper-content'>
+                              <p className='paragraph'>Current Month Spendings</p>
+                              <h3 className='heading'>{totalSpendings}</h3>
                             </div>
                           </div>
                         </div>

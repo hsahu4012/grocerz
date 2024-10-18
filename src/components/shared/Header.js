@@ -4,7 +4,7 @@ import { DataAppContext } from '../../DataContext';
 import logo from '../../assets/images/logo.png';
 import { marketCategory } from '../../utils/category';
 import axios from 'axios';
-
+import { jwtDecode } from 'jwt-decode';
 const Header = () => {
   const { appstate, logout_user } = useContext(DataAppContext);
   const navigate = useNavigate();
@@ -14,7 +14,17 @@ const Header = () => {
   const [wishlistcount, setWishlistcount] = useState([]);
   const [cartItemCount, setCartItemCount] = useState(0);
   const [category, setCategory] = useState(marketCategory);
-
+  
+  function handleAutoLogout(token) {
+    if (!token) return;
+    const decodedToken = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    if (decodedToken.exp < currentTime) {
+      logout_user();
+    }
+  }
+  const token = localStorage.getItem('jwttoken');
+  handleAutoLogout(token);
   const formatcategoryName = name => {
     return name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and convert to lowercase
   };
