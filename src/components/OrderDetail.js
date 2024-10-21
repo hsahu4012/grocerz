@@ -486,7 +486,7 @@ const OrderDetail = () => {
                             </div>
                           );
                         })}
-
+                        
                       </div>
                       <div className='heading-custom-font-1 my-5'>
                         Order Status : {order.delivery_status}{' '}
@@ -511,6 +511,17 @@ const OrderDetail = () => {
                               Assign Delivery Staff
                             </button>
 
+                            {/* Back Button */}
+                            <Link to='/OrderHistory' className='shop-btn mx-1'>
+                              Back
+                            </Link>
+                          </div>
+                        </div>
+                      )}
+
+                      {usertype === 'user' && (
+                        <div className='text-center my-3'>
+                          <div className='d-flex justify-content-center'>
                             {/* Back Button */}
                             <Link to='/OrderHistory' className='shop-btn mx-1'>
                               Back
