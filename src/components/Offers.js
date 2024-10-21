@@ -80,7 +80,7 @@ const Offers = () => {
                         {member.enddate.substring(5, 7)}/
                         {member.enddate.substring(0, 4)}
                       </p>
-                      <Link
+                      {/* <Link
                         to='#'
                         className='shop-btn'
                         onClick={() => handleViewDetails(member)}
@@ -110,7 +110,7 @@ const Offers = () => {
                             />
                           </svg>
                         </span>
-                      </Link>
+                      </Link> */}
                     </div>
 
                     <div class='text-center' style={{ width: '50%' }}>
@@ -174,7 +174,7 @@ const Offers = () => {
                         {member.enddate.substring(5, 7)}/
                         {member.enddate.substring(0, 4)}
                       </p>
-                      <Link
+                      {/* <Link
                         to='#'
                         className='shop-btn'
                         onClick={() => handleViewDetails(member)}
@@ -204,7 +204,7 @@ const Offers = () => {
                             />
                           </svg>
                         </span>
-                      </Link>
+                      </Link> */}
                     </div>
 
                     {/* Image Section */}
@@ -265,7 +265,7 @@ const Offers = () => {
                         {member.enddate.substring(5, 7)}/
                         {member.enddate.substring(0, 4)}
                       </p>
-                      <Link
+                      {/* <Link
                         to='#'
                         className='shop-btn'
                         onClick={() => handleViewDetails(member)}
@@ -295,7 +295,7 @@ const Offers = () => {
                             />
                           </svg>
                         </span>
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                 </div>
