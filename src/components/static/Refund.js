@@ -43,7 +43,7 @@ const Refund = () => {
           <div className='privacy-section'>
             <div className='policy'>
               <p className='policy-details pb-4'>
-                Thank you for shopping at HashedBit Innovations Pvt Ltd!<br /> 
+                Thank you for shopping at Gorcji!<br /> 
                 We offer refund and/or exchange within the first 30 days of your purchase. If 30 days have passed since your purchase, you will not be offered a refund and/or exchange of any kind.
               </p>
               <h5 className='intro-heading'>Eligibility for Refunds and Exchanges</h5>
@@ -58,7 +58,7 @@ const Refund = () => {
             <div className='policy'>
               <h5 className='intro-heading'>Exchanges (if applicable)</h5>
               <p className='policy-details'>
-                We only replace items if they are defective or damaged. If you need to exchange it for the same item, send us an email at info@hashedbit.com. We will inform you of the address for the product to be sent.
+                We only replace items if they are defective or damaged. If you need to exchange it for the same item, send us an email at grocji@gmail.com. We will inform you of the address for the product to be sent.
               </p>
             </div>
             <div className='policy'>
@@ -86,7 +86,7 @@ const Refund = () => {
               <h5 className='intro-heading'>Late or missing refunds</h5>
               <p className='policy-details'>
                 If you have not received a refund yet, first check your bank account again. Then contact your credit card company, it may take some time before your refund is officially posted.<br />
-                If you have done all of this and still have not received your refund, please contact us at info@hashedbit.com or 9599171535.
+                If you have done all of this and still have not received your refund, please contact us at grocji@gmail.com or 9599171535.
               </p>
             </div>
             <div className='policy'>
