@@ -510,6 +510,16 @@ const OrderDetail = () => {
                       <div className='heading-custom-font-1 my-5'>
                         Order Status : {order.delivery_status}{' '}
                       </div>
+                      {usertype === 'deliverypartner' && (
+                        <div className='text-center my-3'>
+                          <div className='d-flex justify-content-center'>
+                            {/* Add Cost Price  By Delivery Partner*/}
+                            <div className='shop-btn mx-1' onClick={() => setCostPriceModal(true)}>
+                              Add Cost Price
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       {usertype === 'admin' && (
                         <div className='text-center my-3'>
                           <div className='d-flex justify-content-center'>
