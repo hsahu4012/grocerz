@@ -334,12 +334,12 @@ const OrderHistory = () => {
                               {usertype === 'admin' && (
                                 <div className='order-actions'>
                                   <button
-                                    className='view-details-btn'
+                                    className='btn btn-warning'
                                     onClick={() => handlePaymentModeChange(order.order_id, 'cash')}>
                                     Pay in Cash
                                   </button>
                                   <button
-                                    className='view-details-btn' onClick={() => handlePaymentModeChange(order.order_id, 'UPI')}>
+                                    className='btn btn-warning' onClick={() => handlePaymentModeChange(order.order_id, 'UPI')}>
                                     Pay by UPI
                                   </button>
                                 </div>
