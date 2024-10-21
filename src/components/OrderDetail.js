@@ -4,7 +4,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
 import Loader from './loader/Loader';
 import Modal from 'react-modal';
-
+import { ToastContainer, toast } from 'react-toastify';
 const OrderDetail = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [category, setCategory] = useState('');
@@ -20,14 +20,14 @@ const OrderDetail = () => {
   const [loading, setLoading] = useState(false);
   const [err, setError] = useState(false);
   const usertype = window.localStorage.getItem('usertype');
-
+  const [costPrice, setCostprice] = useState([])
   const [deliveryPartners, setDeliveryPartners] = useState([])
   const [modal, setModal] = useState(false)
   const [userid, setUserid] = useState('')
   const [productid, setproductid] = useState([]);
   const [quantity, setquantity] = useState(' ');
   const [productPrices, setProductPrices] = useState([]);
-
+  const [costPriceModal, setCostPriceModal] = useState(false);
   const [alertmodal, setAlertModal] = useState(false);
 
   // Fetch all categories
@@ -144,6 +144,7 @@ const OrderDetail = () => {
     } catch (error) {
       setError('Something went wrong please try again !');
       console.error('Error adding product to order:', error);
+      toast.error('Something Went wrong please try again !');
     } finally {
       setLoading(false);
     }
@@ -157,6 +158,7 @@ const OrderDetail = () => {
       fetchOrderDetails(); // Refresh order details after removing product
     } catch (error) {
       console.error('Error removing product from order:', error);
+      toast.error('Something Went wrong please try again !');
     }
   };
 
@@ -169,6 +171,7 @@ const OrderDetail = () => {
     } catch (error) {
       setError('Error fetching Delivery Partners !');
       console.error('Error fetching Delivery Partners:', error);
+      toast.error('Something Went wrong please try again !');
     }
     setModal(!modal);
   };
@@ -213,8 +216,24 @@ const OrderDetail = () => {
   const totalOriginalPrice = productPrices.reduce((acc, curr) => acc + curr, 0);
   const order = orderDetails.length > 0 ? orderDetails[0] : null;
 
+    // Handle add cost price 
+    const handleCostPriceAdd = async () => {
+      try {
+        const url = `${process.env.REACT_APP_API_URL}orders/addcostamount/${orderid}`
+        const response = await axios.put(url,{costamount:costPrice});
+        if(response.status==200){
+          toast.success('Cost Price added!');
+        }
+      } catch (error) {
+        console.error('Error fetching Delivery Partners:', error);
+        toast.error('Something Went wrong please try again !');
+      }
+      setCostPriceModal(!costPriceModal);
+    };
+
   return (
     <>
+    <ToastContainer />
       <section className='blog about-blog'>
         <div className='container'>
           {loading && (
@@ -510,6 +529,10 @@ const OrderDetail = () => {
                             >
                               Assign Delivery Staff
                             </button>
+                            {/* Add Cost Price */}
+                            <div className='shop-btn mx-1' onClick={() => setCostPriceModal(true)}>
+                              Add Cost Price
+                            </div>
 
                             {/* Back Button */}
                             <Link to='/OrderHistory' className='shop-btn mx-1'>
@@ -575,6 +598,45 @@ const OrderDetail = () => {
                           </div>
                         </div>
                       )}
+                      {/* Add cost price modal */}
+                      {costPriceModal && (
+                        <div className='popup-overlay'>
+                          <div className='popup-content'>
+                            <h3>Enter Amount</h3>
+                            <input
+                              type='number'
+                              value={costPrice}
+                              onChange={e => {
+                                const newAmount = parseFloat(e.target.value);
+                                setCostprice(newAmount);
+                              }}
+                              min='0'
+                              step='0.01'
+                              placeholder='Enter Cost Amount'
+                              style={{
+                                backgroundColor: '#f5f5f5',
+                                width: '100%',
+                                padding: '10px',
+                                marginBottom: '15px',
+                                border: '1px solid #ccc',
+                                borderRadius: '4px',
+                                fontSize: '15px',
+                              }}
+                            />
+
+                            <button className='' onClick={handleCostPriceAdd}>
+                              Add Cost Amount
+                            </button>
+                            <button onClick={() => setCostPriceModal(false)}>Close</button>
+                            {loading && (
+                              <div className='spinner-overlay'>
+                                <p className='spinner2'></p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
                     </div>
                   ) : (
                     <p>No order found.</p>
