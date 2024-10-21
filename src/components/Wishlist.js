@@ -31,18 +31,21 @@ const Wishlist = () => {
 
   const handleCleanWishlist = async () => {
     const confirmDelete = window.confirm(
-      'Are you sure you want to delete all items from your wishlist?'
+      'Are you sure you want to permanently delete all items from your wishlist?'
     );
     if (confirmDelete) {
       try {
         setLoading(true);
         const url = `${process.env.REACT_APP_API_URL}wishlist/emptyWishList/${userid}`;
-        await axios.put(url);
-        setWishlistItems([]); 
+        
+        await axios.delete(url);  //hard delete
+        
+        setWishlistItems([]);
       } catch (error) {
         console.error('Error cleaning wishlist:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
   };
 
@@ -73,22 +76,25 @@ const Wishlist = () => {
     }
   };
 
-  const handleRemoveFromWishlist = async productid => {
-    try {
-      setLoading(true);
-      const removeFromWishlistUrl = `${process.env.REACT_APP_API_URL}wishlist/removeFromWishlist/${userid}/${productid}`;
-
-      // Call the Remove from Wishlist API
-      await axios.put(removeFromWishlistUrl);
-
-      // Update the wishlist state 
-      setWishlistItems(prevItems =>
-        prevItems.filter(item => item.productid !== productid)
-      );
-    } catch (error) {
-      console.error('Error removing from wishlist:', error);
-    } finally {
-      setLoading(false);
+  const handleRemoveFromWishlist = async (productid) => {
+    const confirmDelete = window.confirm(
+      'Are you sure you want to permanently remove this item from your wishlist?'
+    );
+    if (confirmDelete) {
+      try {
+        setLoading(true);
+        const url = `${process.env.REACT_APP_API_URL}wishlist/removeFromWishlist/${userid}/${productid}`;
+        
+        await axios.delete(url);  //hard delete
+        
+        setWishlistItems(prevItems => 
+          prevItems.filter(item => item.productid !== productid)
+        );
+      } catch (error) {
+        console.error('Error removing from wishlist:', error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
