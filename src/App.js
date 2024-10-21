@@ -51,10 +51,15 @@ import ProductSearchList from './components/ProductSearchList';
 import OurTeam from './components/OurTeam';
 import Complainform from './components/Complainform';
 import Faq from './components/Faq';
+
+import Refund from './components/static/Refund';
+
 import Feedback from './components/Feedback';
 import Offers from './components/Offers';
 import PrivacyPolicy from './components/static/PrivacyPolicy.js';
 import TermsandCondition from './components/TermsandCondititon';
+import DeleteAccount from './components/auth/DeleteAccount.js';
+
 
 function App() {
   //temp code to keep server live
@@ -130,6 +135,7 @@ function App() {
           <Route path='/mobilenoedit' element={<Mobilenoedit />} />
           <Route path='/changepassword' element={<ChangePassword />} />
           <Route path='/orderdetail' element={<OrderDetail />} />
+          <Route path='/deleteaccount' element={<DeleteAccount />} />
           <Route
             path='/orderhistory/orderdetail/:orderid'
             element={<OrderDetail />}
@@ -141,7 +147,11 @@ function App() {
           />
           <Route path='/productsearchlist' element={<ProductSearchList />} />
           <Route path='/Faq' element={<Faq />} />
+
+          <Route path='/Refund' element={<Refund />} />
+
           <Route path='/offers' element={<Offers />} />
+
 
           <Route path='/privacypolicy' element={<PrivacyPolicy />} />
           <Route path='/termsandcondition' element={<TermsandCondition />} />

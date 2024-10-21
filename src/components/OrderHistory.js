@@ -370,6 +370,10 @@ const OrderHistory = () => {
                               ))
                               }
                             </p>
+                            <p>
+                              <strong>Payment Mode -</strong>{' '}
+                              {order.paymentmode}
+                            </p>
                           </div>
                         </div>
                       </div>

@@ -39,7 +39,7 @@ const ShopByBrand = () => {
     setLoading(true);
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}products/allBrandsByOrders`);
-      setBrands(response.data);
+      setBrands(response.data.sort((a, b) => a.brand_name.localeCompare(b.brand_name)));
       if (response.data.length > 0) {
         const firstbrand_id = response.data[0].brand_id;
         setSelectedBrand(firstbrand_id);
