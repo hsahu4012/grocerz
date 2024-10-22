@@ -36,7 +36,7 @@ const Wishlist = () => {
     if (confirmDelete) {
       try {
         setLoading(true);
-        const url = `${process.env.REACT_APP_API_URL}wishlist/emptyWishList/${userid}`;
+        const url = `${process.env.REACT_APP_API_URL}wishlist/hardemptyWishList/${userid}`;
         
         await axios.delete(url);  //hard delete
         
@@ -83,7 +83,7 @@ const Wishlist = () => {
     if (confirmDelete) {
       try {
         setLoading(true);
-        const url = `${process.env.REACT_APP_API_URL}wishlist/removeFromWishlist/${userid}/${productid}`;
+        const url = `${process.env.REACT_APP_API_URL}wishlist/hardremoveFromWishlist/${userid}/${productid}`;
         
         await axios.delete(url);  //hard delete
         
