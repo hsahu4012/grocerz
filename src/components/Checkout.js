@@ -349,7 +349,7 @@ function Checkout() {
   }
   useEffect(() => {
     console.log('checking order count...')
-    orderCount();
+    //orderCount();
   }, [totalAmount])
 
 
