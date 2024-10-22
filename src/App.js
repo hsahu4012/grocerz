@@ -56,6 +56,10 @@ import Refund from './components/static/Refund';
 
 import Feedback from './components/Feedback';
 import Offers from './components/Offers';
+
+import AboutUs from './components/AboutUs';
+
+
 import PrivacyPolicy from './components/static/PrivacyPolicy.js';
 import TermsandCondition from './components/TermsandCondititon';
 import DeleteAccount from './components/auth/DeleteAccount.js';
@@ -126,6 +130,7 @@ function App() {
           <Route path='/customproduct' element={<CustomProduct />} />
           <Route path='/about' element={<About />} />
           <Route path='/ourteam' element={<OurTeam />} />
+          <Route path='/aboutus' element={<AboutUs />} />
 
           <Route path='/loginandsecurity' element={<LoginAndSecurityPage />} />
           <Route path='/address' element={<AddressList />} />
