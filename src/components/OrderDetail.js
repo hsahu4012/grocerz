@@ -131,16 +131,16 @@ const OrderDetail = () => {
     try {
       setLoading(true);
       const productObj = products.find(product => product.productid === selectedProduct);
-      
-      // Use Added_quantity instead of quantity to ensure it reflects the user input
+
+      // Add quantity to product
       const productWithQuantity = {
         ...productObj,
-        quantity: Added_quantity, // Use the manually set quantity
+        quantity: Added_quantity, 
       };
   
       const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
       await axios.post(url, productWithQuantity);
-      fetchOrderDetails(); // This should fetch and update the displayed quantities
+      fetchOrderDetails(); 
       setShowPopup(false);
     } catch (error) {
       setError('Something went wrong please try again !');
@@ -384,13 +384,12 @@ const OrderDetail = () => {
                               {selectedProduct && (
                                 <input
                                   type='number'
-                                  value={Added_quantity || ''} // Use Added_quantity here
+                                  value={Added_quantity || ''} 
                                   onChange={e => {
                                     const newQuantity = parseInt(
                                       e.target.value
                                     );
                                     if (newQuantity >= 1) {
-                                      // Ensure it's a positive integer
                                       setQuantity(newQuantity);
                                       updateQuantity(
                                         selectedProduct,
