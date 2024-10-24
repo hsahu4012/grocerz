@@ -224,6 +224,7 @@ function Checkout() {
         orderData
       );
       if (orderResponse.data.status === 'success') {
+        const orderId=orderResponse.data.orderid;
         // console.log('Order placed successfully.');
         const soldProductData = cartData.map(item => ({
           productid: item.productid,
@@ -236,9 +237,7 @@ function Checkout() {
         // console.log("soldProductCount,",soldProductCount)
         setLoader(false);
         localStorage.removeItem('cart');
-        navigate('/orderhistory', {
-          state: { orderId: orderResponse.data.orderid },
-        });
+        navigate(`/orderplaced/${orderId}`);
       }
     } catch (error) {
       setLoader(false);
