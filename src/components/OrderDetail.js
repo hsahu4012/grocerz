@@ -512,45 +512,59 @@ const OrderDetail = () => {
                       </div>
                       {usertype === 'deliverypartner' && (
                         <div className='text-center my-3'>
-                          <div className='d-flex justify-content-center'>
-                            {/* Add Cost Price  By Delivery Partner*/}
-                            <div className='shop-btn mx-1' onClick={() => setCostPriceModal(true)}>
-                              Add Cost Price
+                          <div className='col-12 col-md-auto my-2'>
+                              <div
+                                className='btn shop-btn w-100'
+                                onClick={() => setCostPriceModal(true)}
+                              >
+                                Add Cost Price
+                              </div>
                             </div>
-                          </div>
                         </div>
                       )}
                       {usertype === 'admin' && (
                         <div className='text-center my-3'>
-                          <div className='d-flex justify-content-center'>
+                          <div className='row justify-content-center'>
                             {/* Print Invoice Button */}
-                            <Link
-                              to={`/orderhistory/orderdetailsprint/${orderid}/customer`}
-                              className='shop-btn mx-1'
-                            >
-                              Print Invoice
-                            </Link>
+                            <div className='col-12 col-md-auto my-2'>
+                              <Link
+                                to={`/orderhistory/orderdetailsprint/${orderid}/customer`}
+                                className='shop-btn w-100'
+                              >
+                                Print Invoice
+                              </Link>
+                            </div>
 
                             {/* Assign Delivery Staff Button */}
-                            <button
-                              className='shop-btn mx-1'
-                              onClick={handleDeliveryStaff}
-                              style={{ color: 'white' }}
-                            >
-                              Assign Delivery Staff
-                            </button>
+                            <div className='col-12 col-md-auto my-2'>
+                              <button
+                                className='btn shop-btn w-100'
+                                onClick={handleDeliveryStaff}
+                              >
+                                Assign Delivery Staff
+                              </button>
+                            </div>
+
                             {/* Add Cost Price */}
-                            <div className='shop-btn mx-1' onClick={() => setCostPriceModal(true)}>
-                              Add Cost Price
+                            <div className='col-12 col-md-auto my-2'>
+                              <div
+                                className='btn shop-btn w-100'
+                                onClick={() => setCostPriceModal(true)}
+                              >
+                                Add Cost Price
+                              </div>
                             </div>
 
                             {/* Back Button */}
-                            <Link to='/OrderHistory' className='shop-btn mx-1'>
-                              Back
-                            </Link>
+                            <div className='col-12 col-md-auto my-2'>
+                              <Link to='/OrderHistory' className='shop-btn w-100'>
+                                Back
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       )}
+
 
                       {usertype === 'user' && (
                         <div className='text-center my-3'>
