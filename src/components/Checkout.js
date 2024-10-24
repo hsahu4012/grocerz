@@ -192,6 +192,7 @@ function Checkout() {
     const cartData = cartItems.map(item => ({
       productid: item.productid,
       quantity: item.quantity,
+      original_mrp:Number(item.price) * item.quantity,
       price_final:
         Number(item.price) * item.quantity -
         Number(item.discount) * item.quantity,
