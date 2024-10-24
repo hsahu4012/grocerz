@@ -119,7 +119,7 @@ function App() {
           <Route path='/wishlist' element={<Wishlist />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/paymentpage' element={<PaymentPage />} />
-          <Route path='/ordersuccess' element={<Dashboard />} />
+          <Route path='/ordersuccess/:orderid' element={<OrderSuccess />} />
           <Route path='/orderplaced/:orderid' element={<OrderPlaced />} />
           <Route path='/dashboard' element={<Dashboard />} />
 

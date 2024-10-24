@@ -17,6 +17,15 @@ const OrderHistory = () => {
   const handleOrderClick = orderid => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
   };
+
+  const handleOrderSuccess = orderid => {
+    navigate(`/ordersuccess/${orderid}`);
+  };
+
+  const preventClickPropagation = (event) => {
+    event.stopPropagation();
+  };
+
   const handleMarkComplete = async orderid => {
     setLoading(true);
     try {
@@ -195,7 +204,15 @@ const OrderHistory = () => {
                 ) : orders.length > 0 ? (
                   orders.map((order, index) => (
 
-                    <div key={index} className='card mt-3'>
+                    <div key={index} className='card mt-3'
+                    style={{
+                      cursor:  usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED' ? 'pointer' : 'default'
+                    }}
+                    onClick={() => {
+                      if ( usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED') {
+                        handleOrderSuccess(order.order_id);
+                      }
+                    }}>
                       <div className={findClassNames(order.order_status)}>
                         <div className='row'>
                           {/* <div className="col-md-3">
@@ -282,9 +299,10 @@ const OrderHistory = () => {
 
                                   <button
                                     className='view-details-btn'
-                                    onClick={() =>
+                                    onClick={(event) => {
+                                      preventClickPropagation(event);
                                       handleOrderClick(order.order_id)
-                                    }
+                                    }}
                                   >
                                     View Details
                                   </button>
@@ -322,9 +340,10 @@ const OrderHistory = () => {
                                 <div className='order-actions'>
                                   <button
                                     className='view-details-btn'
-                                    onClick={() =>
+                                    onClick={(event) => {
+                                      preventClickPropagation(event); 
                                       handleOrderClick(order.order_id)
-                                    }
+                                    }}
                                   >
                                     View Details
                                   </button>
