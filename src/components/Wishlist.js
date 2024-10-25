@@ -71,7 +71,7 @@ const Wishlist = () => {
       setWishlistItems(prevItems =>
         prevItems.filter(item => item.productid !== productid)
       );
-      updateWishlistCount(wishlistItems.length - 1);
+      updateWishlistCount(wishlistItems.length - 1);     //count update in wishlist icon badge
     } catch (error) {
       console.error('Error adding to cart and removing from wishlist:', error);
     } finally {
@@ -93,7 +93,7 @@ const Wishlist = () => {
         setWishlistItems(prevItems => 
           prevItems.filter(item => item.productid !== productid)
         );
-        updateWishlistCount(wishlistItems.length - 1); 
+        updateWishlistCount(wishlistItems.length - 1);   //count update in wishlist icon badge
       } catch (error) {
         console.error('Error removing from wishlist:', error);
       } finally {
