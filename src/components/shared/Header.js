@@ -12,7 +12,7 @@ const Header = () => {
   const userid = localStorage.getItem('userid');
   const [searchText, setSearchText] = useState('');
   const { wishlistCount, updateWishlistCount } = useContext(DataAppContext);
-  const [cartItemCount, setCartItemCount] = useState(0);
+  const { cartCount, updateCartCount} = useContext(DataAppContext);
   const [category, setCategory] = useState(marketCategory);
   
   function handleAutoLogout(token) {
@@ -66,7 +66,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setCartItemCount(() => {
+    updateCartCount(() => {
       const cart =
         localStorage.getItem('cart') &&
         JSON.parse(localStorage.getItem('cart'));
@@ -437,7 +437,7 @@ const Header = () => {
                                 fill="#F9FFFB"
                               /> */}
                             </svg>
-                            <span className='cartbadge'>{cartItemCount}</span>
+                            <span className='cartbadge'>{cartCount}</span>
                           </span>
                         </Link>
                       </div>
