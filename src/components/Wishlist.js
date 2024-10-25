@@ -1,69 +1,111 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { DataAppContext } from '../DataContext';
 import axios from 'axios';
 import DashboardRoutes from './DashboardRoutes';
-import Loader from './loader/Loader';
 import loaderGif from '../assets/images/loader.gif';
+
 const Wishlist = () => {
   const { isUserLoggedIn } = useContext(DataAppContext);
+  const { updateWishlistCount } = useContext(DataAppContext);
   const [wishlistItems, setWishlistItems] = useState([]);
-  const navigate = useNavigate();
   const userid = localStorage.getItem('userid');
   const [loading, setLoading] = useState(false);
 
-  const fetchWishlistItems = async () => {
+  const fetchWishlistItems = useCallback(async () => {
     setLoading(true);
     const url = `${process.env.REACT_APP_API_URL}wishlist/usersWishlist/${userid}`;
-
+  
     try {
       const response = await axios.get(url);
       setWishlistItems(response.data);
+      updateWishlistCount(response.data.length);
     } catch (error) {
       console.error('Error fetching wishlist items:', error);
     }
     setLoading(false);
-  };
-
+  }, [userid, updateWishlistCount]); 
+  
   useEffect(() => {
     fetchWishlistItems();
-  }, [userid]);
+  }, [fetchWishlistItems]);
+  
 
   const handleCleanWishlist = async () => {
     const confirmDelete = window.confirm(
-      'Are you sure you want to delete all items from your wishlist?'
+      'Are you sure you want to permanently delete all items from your wishlist?'
     );
     if (confirmDelete) {
       try {
         setLoading(true);
-        const url = `${process.env.REACT_APP_API_URL}wishlist/emptyWishList/${userid}`;
-        await axios.put(url);
+        const url = `${process.env.REACT_APP_API_URL}wishlist/hardemptyWishList/${userid}`;
+        
+        await axios.delete(url);  //hard delete
+        
         setWishlistItems([]);
       } catch (error) {
         console.error('Error cleaning wishlist:', error);
+      } finally {
+        setLoading(false);
       }
+    }
+  };
+
+  const handleAddToCart = async productid => {
+    try {
+      setLoading(true);
+      const addToCartUrl = `${process.env.REACT_APP_API_URL}cart/addToCart`;
+      const removeFromWishlistUrl = `${process.env.REACT_APP_API_URL}wishlist/hardremoveFromWishlist/${userid}/${productid}`;
+
+      // Add to Cart API call
+      await axios.post(addToCartUrl, {
+        userid,
+        productid,
+        quantity: 1, 
+      });
+
+      // Remove from Wishlist API call
+      await axios.delete(removeFromWishlistUrl);      //hard delete
+
+      // Update the wishlist state after removing the item
+      setWishlistItems(prevItems =>
+        prevItems.filter(item => item.productid !== productid)
+      );
+      updateWishlistCount(wishlistItems.length - 1);     //count update in wishlist icon badge
+    } catch (error) {
+      console.error('Error adding to cart and removing from wishlist:', error);
+    } finally {
       setLoading(false);
     }
   };
 
-  //const handleCleanWishlist = () => {
-  //  setWishlistItems([]);
-  // };
+  const handleRemoveFromWishlist = async (productid) => {
+    const confirmDelete = window.confirm(
+      'Are you sure you want to permanently remove this item from your wishlist?'
+    );
+    if (confirmDelete) {
+      try {
+        setLoading(true);
+        const url = `${process.env.REACT_APP_API_URL}wishlist/hardremoveFromWishlist/${userid}/${productid}`;
+        
+        await axios.delete(url);  //hard delete
+        
+        setWishlistItems(prevItems => 
+          prevItems.filter(item => item.productid !== productid)
+        );
+        updateWishlistCount(wishlistItems.length - 1);   //count update in wishlist icon badge
+      } catch (error) {
+        console.error('Error removing from wishlist:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
 
   return (
     <>
       <section className='blog about-blog'>
         <div className='container'>
-          {/* <div className="blog-bradcrum">
-            <span>
-              <Link to="/">Home</Link>
-            </span>
-            <span className="devider">/</span>
-            <span>
-              <Link to="/wishlist">Wishlist</Link>
-            </span>
-          </div> */}
-          {/* {loading && <Loader />} */}
           <div className='blog-heading about-heading'>
             <h1 className='heading'>User Wishlist</h1>
           </div>
@@ -124,13 +166,11 @@ const Wishlist = () => {
                                         src={`${process.env.REACT_APP_API_URL}${item.image}`}
                                         alt={item.prod_name}
                                       />
-                                      {/* <img src={item.image} alt={item.prod_name} /> */}
                                     </div>
                                     <div className='wrapper-content'>
                                       <h5 className='heading'>
                                         {item.prod_name}
-                                      </h5>{' '}
-                                      {/* Display product name */}
+                                      </h5>
                                     </div>
                                   </div>
                                 </td>
@@ -138,14 +178,27 @@ const Wishlist = () => {
                                   <div className='table-wrapper-center'>
                                     <h5 className='heading'>
                                       Rs. {item.price}
-                                    </h5>{' '}
-                                    {/* Display product price */}
+                                    </h5>
                                   </div>
                                 </td>
                                 <td className='table-wrapper'>
-                                  <div className='table-wrapper-center'>
-                                    <button>Move to Cart</button>
-                                    <span>{/* Action icons or buttons */}</span>
+                                  <div className='table-wrapper-center flex flex-col items-center'>
+                                    <button
+                                      className='shop-btn text-xs px-2 py-1 m-2'
+                                      onClick={() =>
+                                        handleAddToCart(item.productid)
+                                      }
+                                    >
+                                      Move to Cart
+                                    </button>
+                                    <button
+                                      className='shop-btn text-xs px-2 py-1'
+                                      onClick={() =>
+                                        handleRemoveFromWishlist(item.productid)
+                                      }
+                                    >
+                                      Remove from Wishlist
+                                    </button>
                                   </div>
                                 </td>
                               </tr>
@@ -156,7 +209,7 @@ const Wishlist = () => {
                       <div className='wishlist-btn'>
                         <Link
                           onClick={handleCleanWishlist}
-                          className='shop-btn shop-btn-red'
+                          className='shop-btn'
                         >
                           Clean Wishlist
                         </Link>

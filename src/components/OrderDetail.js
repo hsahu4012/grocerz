@@ -20,10 +20,12 @@ const OrderDetail = () => {
   const [loading, setLoading] = useState(false);
   const [err, setError] = useState(false);
   const usertype = window.localStorage.getItem('usertype');
+
   const [costPrice, setCostprice] = useState([])
   const [deliveryPartners, setDeliveryPartners] = useState([])
   const [modal, setModal] = useState(false)
   const [userid, setUserid] = useState('')
+
   const [productid, setproductid] = useState([]);
   const [quantity, setquantity] = useState(' ');
   const [productPrices, setProductPrices] = useState([]);
@@ -96,7 +98,7 @@ const OrderDetail = () => {
       const extractedProductIds = orderDetails.map(order => order.productid);
       const extractedQuantities = orderDetails.map(order => order.quantity);
       setproductid(extractedProductIds);
-      setquantity(extractedQuantities)
+      setquantity(extractedQuantities);
     } catch (error) {
       setError('Something went wrong please try again !');
       console.error('Error fetching order details:', error);
@@ -130,16 +132,17 @@ const OrderDetail = () => {
   const handleAddProduct = async () => {
     try {
       setLoading(true);
-      const productObj = products.find(
-        product => product.productid === selectedProduct
-      );
+      const productObj = products.find(product => product.productid === selectedProduct);
+
+      // Add quantity to product
       const productWithQuantity = {
         ...productObj,
-        quantity: quantity, 
+        quantity: Added_quantity, 
       };
+  
       const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
       await axios.post(url, productWithQuantity);
-      fetchOrderDetails();
+      fetchOrderDetails(); 
       setShowPopup(false);
     } catch (error) {
       setError('Something went wrong please try again !');
@@ -149,6 +152,7 @@ const OrderDetail = () => {
       setLoading(false);
     }
   };
+  
 
   // Handle removing product from order
   const removeItemFromOrder = async productid => {
@@ -186,7 +190,6 @@ const OrderDetail = () => {
 
         setAlertModal(true);
       }
-
     } catch (error) {
       console.error('Error updating delivery partner from order:', error);
     }
@@ -300,10 +303,15 @@ const OrderDetail = () => {
                           </div>
                           <ul className='list-group text-custom-font-1'>
                             <li className='list-group-item text-success'>
-                              <strong>Original Price - &#8377; {totalOriginalPrice}</strong>
+                              <strong>
+                                Original Price - &#8377; {totalOriginalPrice}
+                              </strong>
                             </li>
                             <li className='list-group-item text-success'>
-                              <strong>Discount Price - &#8377; {totalOriginalPrice - order.paymentamount}</strong>
+                              <strong>
+                                Discount Price - &#8377;{' '}
+                                {totalOriginalPrice - order.paymentamount}
+                              </strong>
                             </li>
                             <li className='list-group-item text-success'>
                               <strong>
@@ -397,16 +405,18 @@ const OrderDetail = () => {
                               {selectedProduct && (
                                 <input
                                   type='number'
-                                  value={quantity}
+                                  value={Added_quantity || ''} 
                                   onChange={e => {
                                     const newQuantity = parseInt(
                                       e.target.value
                                     );
-                                    setQuantity(newQuantity);
-                                    updateQuantity(
-                                      selectedProduct,
-                                      newQuantity
-                                    );
+                                    if (newQuantity >= 1) {
+                                      setQuantity(newQuantity);
+                                      updateQuantity(
+                                        selectedProduct,
+                                        newQuantity
+                                      );
+                                    }
                                   }}
                                   min='1'
                                   step='1'
@@ -443,56 +453,60 @@ const OrderDetail = () => {
 
                           return (
                             <div
-                              className="card mb-1"
+                              className='card mb-1'
                               key={index}
                               style={{ cursor: 'pointer' }}
-                              onClick={() => navigate(`/product/${item.productid}`)}
+                              onClick={() =>
+                                navigate(`/product/${item.productid}`)
+                              }
                             >
-                              <div className="card-body d-flex align-items-center">
-                                <div className="col-md-1">
+                              <div className='card-body d-flex align-items-center'>
+                                <div className='col-md-1'>
                                   <span>
                                     <strong>{index + 1}</strong>
                                   </span>
                                 </div>
-                                <div className="col-md-3">
+                                <div className='col-md-3'>
                                   <img
                                     src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`}
-                                    className="img-fluid"
+                                    className='img-fluid'
                                     alt={`${item.prod_name}`}
                                   />
                                 </div>
-                                <div className="col-md-3">
+                                <div className='col-md-3'>
                                   <p>
                                     <strong>{item.prod_name}</strong>
                                   </p>
                                 </div>
-                                <div className="col-md-1">
+                                <div className='col-md-1'>
                                   <p>
-                                    <strong>&#8377;&nbsp;{productPrices[index]}</strong>
+                                    <strong>
+                                      &#8377;&nbsp;{productPrices[index]}
+                                    </strong>
                                   </p>
                                 </div>
-                                <div className="col-md-1">
+                                <div className='col-md-1'>
                                   <p>
                                     <strong>Qty: {item.quantity}</strong>
                                   </p>
                                 </div>
-                                <div className="col-md-1">
+                                <div className='col-md-1'>
                                   <p>
-                                    
-                                    <strong>{productPrices[index] - item.price_final}</strong>
+                                    <strong>
+                                      {productPrices[index] - item.price_final}
+                                    </strong>
                                   </p>
                                 </div>
-                                <div className="col-md-1">
+                                <div className='col-md-1'>
                                   <p>
-                                    <strong>{item.price_final}</strong> 
-                                    
+                                    <strong>{item.price_final}</strong>
                                   </p>
                                 </div>
                                 {usertype === 'admin' && (
-                                  <div className="col-md-2">
+                                  <div className='col-md-2'>
                                     <button
-                                      className="btn btn-danger"
-                                      onClick={(e) => {
+                                      className='btn btn-danger'
+                                      onClick={e => {
                                         e.stopPropagation();
                                         removeItemFromOrder(item.productid);
                                       }}
@@ -505,52 +519,66 @@ const OrderDetail = () => {
                             </div>
                           );
                         })}
-                        
+
                       </div>
                       <div className='heading-custom-font-1 my-5'>
                         Order Status : {order.delivery_status}{' '}
                       </div>
                       {usertype === 'deliverypartner' && (
                         <div className='text-center my-3'>
-                          <div className='d-flex justify-content-center'>
-                            {/* Add Cost Price  By Delivery Partner*/}
-                            <div className='shop-btn mx-1' onClick={() => setCostPriceModal(true)}>
-                              Add Cost Price
+                          <div className='col-12 col-md-auto my-2'>
+                              <div
+                                className='btn shop-btn w-100'
+                                onClick={() => setCostPriceModal(true)}
+                              >
+                                Add Cost Price
+                              </div>
                             </div>
-                          </div>
                         </div>
                       )}
                       {usertype === 'admin' && (
                         <div className='text-center my-3'>
-                          <div className='d-flex justify-content-center'>
+                          <div className='row justify-content-center'>
                             {/* Print Invoice Button */}
-                            <Link
-                              to={`/orderhistory/orderdetailsprint/${orderid}/customer`}
-                              className='shop-btn mx-1'
-                            >
-                              Print Invoice
-                            </Link>
+                            <div className='col-12 col-md-auto my-2'>
+                              <Link
+                                to={`/orderhistory/orderdetailsprint/${orderid}/customer`}
+                                className='shop-btn w-100'
+                              >
+                                Print Invoice
+                              </Link>
+                            </div>
 
                             {/* Assign Delivery Staff Button */}
-                            <button
-                              className='shop-btn mx-1'
-                              onClick={handleDeliveryStaff}
-                              style={{ color: 'white' }}
-                            >
-                              Assign Delivery Staff
-                            </button>
+                            <div className='col-12 col-md-auto my-2'>
+                              <button
+                                className='btn shop-btn w-100'
+                                onClick={handleDeliveryStaff}
+                              >
+                                Assign Delivery Staff
+                              </button>
+                            </div>
+
                             {/* Add Cost Price */}
-                            <div className='shop-btn mx-1' onClick={() => setCostPriceModal(true)}>
-                              Add Cost Price
+                            <div className='col-12 col-md-auto my-2'>
+                              <div
+                                className='btn shop-btn w-100'
+                                onClick={() => setCostPriceModal(true)}
+                              >
+                                Add Cost Price
+                              </div>
                             </div>
 
                             {/* Back Button */}
-                            <Link to='/OrderHistory' className='shop-btn mx-1'>
-                              Back
-                            </Link>
+                            <div className='col-12 col-md-auto my-2'>
+                              <Link to='/OrderHistory' className='shop-btn w-100'>
+                                Back
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       )}
+
 
                       {usertype === 'user' && (
                         <div className='text-center my-3'>
@@ -569,9 +597,7 @@ const OrderDetail = () => {
 
                             <select
                               value={userid}
-                              onChange={e =>
-                                setUserid(e.target.value)
-                              }
+                              onChange={e => setUserid(e.target.value)}
                             >
                               <option value1=''>Select</option>
                               {deliveryPartners.map(item => (

@@ -43,6 +43,7 @@ import OrderHistory from './components/OrderHistory';
 import PaymentPage from './components/PaymentPage';
 import Dashboard from './components/Dashboard';
 import Productlist from './components/Productlist';
+import OrderPlaced from './components/OrderPlaced';
 import OrderSuccess from './components/OrderSuccess';
 import OrderDetailsPrint from './components/OrderDetailsPrint';
 
@@ -118,7 +119,8 @@ function App() {
           <Route path='/wishlist' element={<Wishlist />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/paymentpage' element={<PaymentPage />} />
-          <Route path='/ordersuccess' element={<Dashboard />} />
+          <Route path='/ordersuccess/:orderid' element={<OrderSuccess />} />
+          <Route path='/orderplaced/:orderid' element={<OrderPlaced />} />
           <Route path='/dashboard' element={<Dashboard />} />
 
           <Route path='/register' element={<Register />} />
