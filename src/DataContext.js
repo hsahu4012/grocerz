@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const DataAppContext = React.createContext();
@@ -11,8 +11,16 @@ const DataApp = props => {
     bgColor: 'white',
   };
   const [appstate, setAppState] = useState(initialValues);
+  const [wishlistCount, setWishlistCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
+  const updateWishlistCount = (count) => {
+    setWishlistCount(count);
+  };
+  const updateCartCount = (count) => {
+    setCartCount(count);
+  };
   const checkLogin = () => {
     let token = localStorage.getItem('jwttoken');
     if (token) {
@@ -50,7 +58,7 @@ const DataApp = props => {
 
   return (
     <DataAppContext.Provider
-      value={{ appstate, login, login_user, logout_user, showhidemenu }}
+      value={{ appstate, login, login_user, logout_user, showhidemenu , updateWishlistCount, wishlistCount, updateCartCount, cartCount }}
     >
       <div className='app-wrapper'>{props.children}</div>
     </DataAppContext.Provider>

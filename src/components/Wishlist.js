@@ -7,6 +7,7 @@ import loaderGif from '../assets/images/loader.gif';
 
 const Wishlist = () => {
   const { isUserLoggedIn } = useContext(DataAppContext);
+  const { updateWishlistCount } = useContext(DataAppContext);
   const [wishlistItems, setWishlistItems] = useState([]);
   const userid = localStorage.getItem('userid');
   const [loading, setLoading] = useState(false);
@@ -18,11 +19,12 @@ const Wishlist = () => {
     try {
       const response = await axios.get(url);
       setWishlistItems(response.data);
+      updateWishlistCount(response.data.length);
     } catch (error) {
       console.error('Error fetching wishlist items:', error);
     }
     setLoading(false);
-  }, [userid]); 
+  }, [userid, updateWishlistCount]); 
   
   useEffect(() => {
     fetchWishlistItems();
@@ -53,7 +55,7 @@ const Wishlist = () => {
     try {
       setLoading(true);
       const addToCartUrl = `${process.env.REACT_APP_API_URL}cart/addToCart`;
-      const removeFromWishlistUrl = `${process.env.REACT_APP_API_URL}wishlist/removeFromWishlist/${userid}/${productid}`;
+      const removeFromWishlistUrl = `${process.env.REACT_APP_API_URL}wishlist/hardremoveFromWishlist/${userid}/${productid}`;
 
       // Add to Cart API call
       await axios.post(addToCartUrl, {
@@ -63,12 +65,13 @@ const Wishlist = () => {
       });
 
       // Remove from Wishlist API call
-      await axios.put(removeFromWishlistUrl);
+      await axios.delete(removeFromWishlistUrl);      //hard delete
 
       // Update the wishlist state after removing the item
       setWishlistItems(prevItems =>
         prevItems.filter(item => item.productid !== productid)
       );
+      updateWishlistCount(wishlistItems.length - 1);     //count update in wishlist icon badge
     } catch (error) {
       console.error('Error adding to cart and removing from wishlist:', error);
     } finally {
@@ -90,6 +93,7 @@ const Wishlist = () => {
         setWishlistItems(prevItems => 
           prevItems.filter(item => item.productid !== productid)
         );
+        updateWishlistCount(wishlistItems.length - 1);   //count update in wishlist icon badge
       } catch (error) {
         console.error('Error removing from wishlist:', error);
       } finally {
