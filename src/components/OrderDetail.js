@@ -28,11 +28,14 @@ const OrderDetail = () => {
 
   const [productid, setproductid] = useState([]);
   const [quantity, setquantity] = useState(' ');
-  const [productPrices, setProductPrices] = useState([]);
+  // const [productPrices, setProductPrices] = useState([]);
   const [costPriceModal, setCostPriceModal] = useState(false);
   const [alertmodal, setAlertModal] = useState(false);
+const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
 
-  // Fetch all categories
+
+
+// Fetch all categories
   const fetchCategoryData = async () => {
     try {
       const url = `${process.env.REACT_APP_API_URL}category/allcategory`;
@@ -95,10 +98,19 @@ const OrderDetail = () => {
       const response = await axios.get(url);
       setOrderDetails(response.data);
       const orderDetails = response.data;
-      const extractedProductIds = orderDetails.map(order => order.productid);
-      const extractedQuantities = orderDetails.map(order => order.quantity);
-      setproductid(extractedProductIds);
-      setquantity(extractedQuantities);
+      const updatedOrderDetails = orderDetails.map(item => {
+        const totalOriginalPrice = item.original_mrp * item.quantity;
+        // const totalDiscount = (totalOriginalPrice - item.price_final)*item.quantity;
+        return { ...item, totalOriginalPrice};
+      }); console.log(totalOriginalPrice)
+      const totalOriginalPriceSum = updatedOrderDetails.reduce((acc, item) => acc + item.totalOriginalPrice, 0);
+      settotalOriginalPrice(totalOriginalPriceSum);
+      setOrderDetails(updatedOrderDetails);
+      setquantity(updatedOrderDetails.map(order => order.quantity));
+      // const extractedProductIds = orderDetails.map(order => order.productid);
+      // const extractedQuantities = orderDetails.map(order => order.quantity);
+      // setproductid(extractedProductIds);
+      // setquantity(extractedQuantities);
     } catch (error) {
       setError('Something went wrong please try again !');
       console.error('Error fetching order details:', error);
@@ -107,26 +119,26 @@ const OrderDetail = () => {
     }
   };
 
-  const product_price = async () => {
-    try {
-      const prices = [];
-      for (let index = 0; index < productid.length; index++) {
-        const url = `${process.env.REACT_APP_API_URL}products/productByPId/${productid[index]}`;
-        const response = await axios.get(url);
-        const product_prices = response.data.price;
-        const total_product_price = product_prices * quantity[index];
-        prices.push(total_product_price);
-      }
-      setProductPrices(prices);
-    } catch (error) {
-      console.error('Error fetching product prices:', error);
-    }
-  };
-  useEffect(() => {
-    if (productid.length > 0 && quantity.length > 0) {
-      product_price();
-    }
-  }, [productid, quantity]);
+  // const product_price = async () => {
+  //   try {
+  //     const prices = [];
+  //     for (let index = 0; index < productid.length; index++) {
+  //       const url = `${process.env.REACT_APP_API_URL}products/productByPId/${productid[index]}`;
+  //       const response = await axios.get(url);
+  //       const product_prices = response.data.price;
+  //       const total_product_price = product_prices * quantity[index];
+  //       prices.push(total_product_price);
+  //     }
+  //     setProductPrices(prices);
+  //   } catch (error) {
+  //     console.error('Error fetching product prices:', error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (productid.length > 0 && quantity.length > 0) {
+  //     product_price();
+  //   }
+  // }, [productid, quantity]);
 
   // Handle adding product to order
   const handleAddProduct = async () => {
@@ -216,7 +228,7 @@ const OrderDetail = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const totalOriginalPrice = productPrices.reduce((acc, curr) => acc + curr, 0);
+  // const totalOriginalPrice = productPrices.reduce((acc, curr) => acc + curr, 0);
   const order = orderDetails.length > 0 ? orderDetails[0] : null;
 
     // Handle add cost price 
@@ -481,7 +493,7 @@ const OrderDetail = () => {
                                 <div className='col-md-1'>
                                   <p>
                                     <strong>
-                                      &#8377;&nbsp;{productPrices[index]}
+                                      &#8377;&nbsp;{item.original_mrp}
                                     </strong>
                                   </p>
                                 </div>
@@ -493,7 +505,7 @@ const OrderDetail = () => {
                                 <div className='col-md-1'>
                                   <p>
                                     <strong>
-                                      {productPrices[index] - item.price_final}
+                                      {item.original_mrp - item.price_final}
                                     </strong>
                                   </p>
                                 </div>
