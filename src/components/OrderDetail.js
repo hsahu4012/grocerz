@@ -472,7 +472,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                                 <strong>Product Name</strong>
                               </div>
                               <div className="col-md-1">
-                                <strong>MRP</strong>
+                                <strong>Original MRP</strong>
                               </div>
                               <div className="col-md-1">
                                 <strong>Quantity</strong>
@@ -529,7 +529,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                                 </div>
                                 <div className='col-md-1'>
                                   <p>
-                                    <strong>Qty: {item.quantity}</strong>
+                                    <strong>{item.quantity}</strong>
                                   </p>
                                 </div>
                                 <div className='col-md-1'>
@@ -541,7 +541,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                                 </div>
                                 <div className='col-md-1'>
                                   <p>
-                                    <strong>{item.price_final}</strong>
+                                    <strong> &#8377;&nbsp;{item.price_final}</strong>
                                   </p>
                                 </div>
                                 {usertype === 'admin' && (
