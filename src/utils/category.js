@@ -80,7 +80,8 @@ export const marketCategory = [
   {
     category_id: 'shopbybrand',
     categoryname: 'Shop By Brand',
-    image: require('../assets/category/hero-img-1.webp'),
+    // image: require('../assets/category/hero-img-1.webp'),
+    image: require('../assets/category/2.png'),
   },
   // {
   //   "category_id":"groom1229",
