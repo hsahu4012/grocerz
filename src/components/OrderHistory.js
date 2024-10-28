@@ -15,7 +15,6 @@ const OrderHistory = () => {
   const [deliverypartners, setDeliveryPartners] = useState([]);
   const [username, setUsername] = useState('');
 
-  // fetching the username
   const fetchUsername = async (userid) => {
     try {
 
