@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes'; // Assuming you have this component
-
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
 const OrderDetailsPrint = () => {
-  const { orderid, usertype } = useParams();
+  const { orderid, usertype ,invoice} = useParams();
   const [orderDetails, setOrderDetails] = useState([]);
   const navigate = useNavigate();
-
+  
   const fetchOrderDetails = async () => {
     try {
       const response = await axios.get(
@@ -22,6 +23,7 @@ const OrderDetailsPrint = () => {
 
   useEffect(() => {
     fetchOrderDetails();
+    downloadInvoice();
     console.log(orderid, usertype);
   }, [orderid]);
 
@@ -34,6 +36,41 @@ const OrderDetailsPrint = () => {
   }, []);
 
   const order = orderDetails.length > 0 ? orderDetails[0] : null;
+
+  const downloadInvoice = () => {
+   try {
+    if(invoice === "invoice"){
+      const capture = document.querySelector(".card");
+      setTimeout(() => {
+          html2canvas(capture, { scale: 4 })
+              .then((canvas) => {
+                  const imgData = canvas.toDataURL("image/jpeg", 1.0);
+                  const pdf = new jsPDF("p", "mm", "a4");
+      
+                  const pdfWidth = pdf.internal.pageSize.getWidth() - 20;
+                  const pdfHeight = pdf.internal.pageSize.getHeight() -20 ;
+                  const canvasAspectRatio = canvas.width / canvas.height;
+                  const pdfAspectRatio = pdfWidth / pdfHeight;
+      
+                  let imgWidth, imgHeight;
+                  if (canvasAspectRatio > pdfAspectRatio) {
+                      imgWidth = pdfWidth;
+                      imgHeight = pdfWidth / canvasAspectRatio;
+                  } else {
+                      imgHeight = pdfHeight;
+                      imgWidth = pdfHeight * canvasAspectRatio;
+                  }
+      
+                  pdf.addImage(imgData, "JPEG", 10, 10, imgWidth, imgHeight);
+                  pdf.save("Invoice.pdf");
+                  navigate(`/orderhistory/orderdetail/${orderid}`);
+                });
+              }, 500);
+    }      
+   } catch (error) {
+      console.log(error);
+   }
+};
 
   return (
     <>

@@ -539,6 +539,21 @@ const OrderDetail = () => {
                       {usertype === 'admin' && (
                         <div className='text-center my-3'>
                           <div className='row justify-content-center'>
+                            
+                            {/* Download Invoice In PDF */}
+                            {order.delivery_status != "CANCELLED" ? (
+                                <div className='col-12 col-md-auto my-2'>
+                                  <Link
+                                    to={`/orderhistory/orderdetailsprint/${orderid}/customer/invoice`}
+                                    className='shop-btn w-100'
+                                   >
+                                    Download Invoice
+                                  </Link>
+                                 </div>) 
+                            : 
+                            (null)}
+                            
+
                             {/* Print Invoice Button */}
                             <div className='col-12 col-md-auto my-2'>
                               <Link
