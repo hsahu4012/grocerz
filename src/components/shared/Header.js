@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { DataAppContext } from '../../DataContext';
+import { DataAppContext} from '../../DataContext';
 import logo from '../../assets/images/logo.png';
 import { marketCategory } from '../../utils/category';
 import axios from 'axios';
@@ -11,8 +11,8 @@ const Header = () => {
   const { loginstatus } = appstate;
   const userid = localStorage.getItem('userid');
   const [searchText, setSearchText] = useState('');
-  const [wishlistcount, setWishlistcount] = useState([]);
-  const [cartItemCount, setCartItemCount] = useState(0);
+  const { wishlistCount, updateWishlistCount } = useContext(DataAppContext);
+  const { cartCount, updateCartCount} = useContext(DataAppContext);
   const [category, setCategory] = useState(marketCategory);
   
   function handleAutoLogout(token) {
@@ -66,7 +66,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setCartItemCount(() => {
+    updateCartCount(() => {
       const cart =
         localStorage.getItem('cart') &&
         JSON.parse(localStorage.getItem('cart'));
@@ -124,7 +124,7 @@ const Header = () => {
       if (userid) {
         const url = `${process.env.REACT_APP_API_URL}wishlist/usersWishlist/${userid}`;
         const response = await axios.get(url);
-        setWishlistcount(response.data.length);
+        updateWishlistCount(response.data.length);
       }
     } catch (error) {
       console.error('Error fetching cart items', error);
@@ -406,7 +406,7 @@ const Header = () => {
                               /> */}
                             </svg>
                             <span className='wishlistbadge'>
-                              {wishlistcount}
+                              {wishlistCount}
                             </span>
                           </span>
                         </Link>
@@ -437,7 +437,7 @@ const Header = () => {
                                 fill="#F9FFFB"
                               /> */}
                             </svg>
-                            <span className='cartbadge'>{cartItemCount}</span>
+                            <span className='cartbadge'>{cartCount}</span>
                           </span>
                         </Link>
                       </div>

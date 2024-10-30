@@ -7,6 +7,7 @@ import html2canvas from 'html2canvas';
 const OrderDetailsPrint = () => {
   const { orderid, usertype ,invoice} = useParams();
   const [orderDetails, setOrderDetails] = useState([]);
+  const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
   const navigate = useNavigate();
   
   const fetchOrderDetails = async () => {
@@ -15,7 +16,12 @@ const OrderDetailsPrint = () => {
         `${process.env.REACT_APP_API_URL}orderdetails/${orderid}`
       );
       setOrderDetails(response.data);
-      console.log('orderdeatilspage');
+      const orderDetails = response.data;
+      const totalOriginalMrp = orderDetails.reduce((total, item) => total + item.original_mrp, 0);
+      settotalOriginalPrice(totalOriginalMrp)
+      
+
+      // console.log('orderdeatilspage');
     } catch (error) {
       console.error("Error!! can't fetch orders", error);
     }
@@ -134,29 +140,47 @@ const OrderDetailsPrint = () => {
 
                       {usertype !== 'vendor' && (
                         <div className='row my-5'>
-                          <div className='col-sm-12'>
-                            <div className='heading-custom-font-1'>
-                              Bill Details
-                            </div>
-                            <ul className='list-group text-custom-font-1'>
-                              {/* <li className="list-group-item">Total Amount - {order.paymentamount}</li>
-                                                        <li className="list-group-item">Delivery Charge - 0</li>
-                                                        <li className="list-group-item">Promotional Discount - 0</li> */}
-                              <li className='list-group-item text-success'>
-                                <strong>
-                                  Final Payment Amount - {order.paymentamount}
-                                </strong>
-                              </li>
-                              <li className='list-group-item'>
-                                Payment Mode - {order.paymentmode}
-                              </li>
-                            </ul>
+                        <div className='col-sm-12'>
+                          <div className='heading-custom-font-1'>
+                            Bill Details
                           </div>
+                          <ul className='list-group text-custom-font-1'>
+                            <li className='list-group-item text-success'>
+                              <strong>
+                                Original Price - &#8377; {totalOriginalPrice}
+                              </strong>
+                            </li>
+                            <li className='list-group-item text-success'>
+                              <strong>
+                                Discount Price - &#8377;{' '}
+                                {totalOriginalPrice - order.paymentamount}
+                              </strong>
+                            </li>
+                            <li className='list-group-item text-success'>
+                              <strong>
+                                Final Payment Amount - {order.paymentamount}
+                              </strong>
+                            </li>
+                            <li className='list-group-item'>
+                              Payment Mode - {order.paymentmode}
+                            </li>
+                          </ul>
                         </div>
+                      </div>
                       )}
 
                       <div className='my-5'>
                         <div className='heading-custom-font-1'>Items List</div>
+                        <div className='card mb-1'>
+                          <div className='card-body d-flex align-items-center bg-light'>
+                            <div className='col-sm-12 d-flex justify-content-between align-items-center'>
+                              <p><strong>#</strong></p>
+                              <p><strong>Product Name</strong></p>
+                              <p><strong>Quantity</strong></p>
+                              {usertype !== 'vendor' && <p><strong>Price</strong></p>}
+                            </div>
+                          </div>
+                        </div>
                         {orderDetails.map((item, index) => {
                           return (
                             <div
@@ -174,10 +198,10 @@ const OrderDetailsPrint = () => {
                                     <strong>{index + 1}</strong>
                                   </p>
                                   <p>
-                                    <strong>Name - {item.prod_name}</strong>
+                                    <strong>{item.prod_name}</strong>
                                   </p>
                                   <p>
-                                    <strong>Quantity - {item.quantity}</strong>
+                                    <strong>{item.quantity}</strong>
                                   </p>
                                   {usertype !== 'vendor' && (
                                     <p>

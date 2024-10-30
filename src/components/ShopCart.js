@@ -1,6 +1,7 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useId, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { DataAppContext } from '../DataContext';
 // import Loader from "./loader/Loader";
 import loaderGif from '../assets/images/loader.gif';
 
@@ -10,6 +11,8 @@ const ShopCart = () => {
   const userid = localStorage.getItem('userid');
   const [loading, setLoading] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
+  const { updateCartCount } = useContext(DataAppContext);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,6 +35,7 @@ const ShopCart = () => {
         );
         const items = response.data;
         setCartItems(items);
+        updateCartCount(response.data.length);
         const sortedItems = items
           .map(item => ({
             productid: item.productid,
@@ -52,6 +56,7 @@ const ShopCart = () => {
             JSON.parse(localStorage.getItem('cart'))) ||
           [];
         setCartItems([...storedCartItems]);
+        updateCartCount(storedCartItems.length);
       }
     } catch (error) {
       console.error('Error fetching cart items', error);
@@ -82,6 +87,8 @@ const ShopCart = () => {
       setCartItems(prevItems =>
         prevItems.filter(item => item.productid !== productid)
       );
+      updateCartCount(cartItems.length - 1); 
+
       // Update localStorage as well
       const updatedCartItems = cartItems.filter(
         item => item.productid !== productid
@@ -165,9 +172,7 @@ const ShopCart = () => {
   };
 
   return (
-
-
-    
+   
     < >
      <section class='blog about-blog'>
         <div class='container'>
