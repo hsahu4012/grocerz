@@ -151,7 +151,7 @@ const Dashboard = () => {
                             </div>
                             <div className='wrapper-content'>
                               <p className='paragraph'>Current Month Spendings</p>
-                              <h3 className='heading'>{totalSpendings}</h3>
+                              <h3 className='heading'>{currentMonthSpendings}</h3>
                             </div>
                           </div>
                         </div>
