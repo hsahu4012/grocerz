@@ -4,6 +4,7 @@ import axios from 'axios';
 import temp_product_image from '../assets/products/p-img-29.webp';
 import Loader from './loader/Loader';
 import { ToastContainer, toast } from 'react-toastify';
+import Discount from './shared/Discount_tag';
 const Productlist = () => {
   const { category_id } = useParams();
   const [products, setProducts] = useState([]);
@@ -293,6 +294,10 @@ const Productlist = () => {
                   products.map(product => (
                     <div className='col-xl-4 col-sm-6' key={product.productid}>
                       <div className='product-wrapper m-2' data-aos='fade-up'>
+                        {
+                          product.discount > 0 &&
+                          (<Discount price={product.price} discount={product.discount} />)
+                        }
                         <Link to={`/product/${product.productid}`}>
                           <div className='product-img'>
                             <img
@@ -321,7 +326,7 @@ const Productlist = () => {
                               </span>`
                             </div>
                           </div>
-                          {product.stock_quantity <=0 && (
+                          {product.stock_quantity <= 0 && (
                             <p className='out-of-stock'>Out of Stock</p>
                           )}
                           {product.stock_quantity > 0 && (
