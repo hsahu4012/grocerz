@@ -512,3 +512,15 @@
   overflow: hidden;
   z-index: 1;
 }
+
+.dis_tag {
+  position: absolute;
+  left: 5%;
+  background-color: #34A853;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 83% 89%, 64% 100%, 40% 90%, 18% 100%, 0 90%);
+  z-index: 1;
+}
