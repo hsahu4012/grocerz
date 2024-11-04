@@ -8,30 +8,10 @@ import loaderGif from '../assets/images/loader.gif';
 const OrderHistory = () => {
   const userid = localStorage.getItem('userid');
   const usertype = localStorage.getItem('usertype');
-
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [deliverypartners, setDeliveryPartners] = useState([]);
-  const [username, setUsername] = useState('');
-
-  const fetchUsername = async (userid) => {
-    try {
-
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}users/getusername/${userid}`);
-      setUsername(response.data.username);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching username:', error);
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    if (userid) {
-      fetchUsername(userid);
-    }
-  }, [userid]);
-
   const handleOrderClick = orderid => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
   };
@@ -385,7 +365,7 @@ const OrderHistory = () => {
                               </div>
                             <div className='text-end'></div>
                             <p>
-                              <strong>Customer Name - </strong> {username}
+                              <strong>Customer Name - </strong> {order.name}
                             </p>
                             <p>
                               <strong>Order ID - </strong> {order.order_id}

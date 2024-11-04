@@ -102,7 +102,8 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
         const totalOriginalPrice = item.original_mrp * item.quantity;
         // const totalDiscount = (totalOriginalPrice - item.price_final)*item.quantity;
         return { ...item, totalOriginalPrice};
-      }); console.log(totalOriginalPrice)
+      }); 
+      // console.log(totalOriginalPrice)
       const totalOriginalPriceSum = updatedOrderDetails.reduce((acc, item) => acc + item.totalOriginalPrice, 0);
       settotalOriginalPrice(totalOriginalPriceSum);
       setOrderDetails(updatedOrderDetails);
@@ -321,7 +322,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                             </li>
                             <li className='list-group-item text-success'>
                               <strong>
-                                Discount Price - &#8377;{' '}
+                                Discount - &#8377;{' '}
                                 {totalOriginalPrice - order.paymentamount}
                               </strong>
                             </li>
@@ -459,6 +460,35 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                             </div>
                           </div>
                         )}
+                          <div className="card mb-1">
+                            <div className="card-body d-flex align-items-center bg-light">
+                              <div className="col-md-1">
+                                <strong>#</strong>
+                              </div>
+                              <div className="col-md-3">
+                                <strong>Image</strong>
+                              </div>
+                              <div className="col-md-3">
+                                <strong>Product Name</strong>
+                              </div>
+                              <div className="col-md-1">
+                                <strong>Original MRP</strong>
+                              </div>
+                              <div className="col-md-1">
+                                <strong>Quantity</strong>
+                              </div>
+                              <div className="col-md-1">
+                                <strong>Discount</strong>
+                              </div>
+                              <div className="col-md-1">
+                                <strong>Final Price</strong>
+                              </div>
+                              {usertype === 'admin' && (
+                                <div className="col-md-2">
+                                  <strong>Action</strong>
+                                </div>
+                              )}
+                            </div>
                         {orderDetails.map((item, index) => {
                           // Calculate discount for the product
                           // const discount_product = productPrices[index] - item.price_final;
@@ -499,7 +529,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                                 </div>
                                 <div className='col-md-1'>
                                   <p>
-                                    <strong>Qty: {item.quantity}</strong>
+                                    <strong>{item.quantity}</strong>
                                   </p>
                                 </div>
                                 <div className='col-md-1'>
@@ -511,7 +541,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                                 </div>
                                 <div className='col-md-1'>
                                   <p>
-                                    <strong>{item.price_final}</strong>
+                                    <strong> &#8377;&nbsp;{item.price_final}</strong>
                                   </p>
                                 </div>
                                 {usertype === 'admin' && (
@@ -531,7 +561,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                             </div>
                           );
                         })}
-
+                        </div>
                       </div>
                       <div className='heading-custom-font-1 my-5'>
                         Order Status : {order.delivery_status}{' '}
