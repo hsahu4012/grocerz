@@ -71,7 +71,7 @@ const OrderDetailsPrint = () => {
                   pdf.save("Invoice.pdf");
                   navigate(`/orderhistory/orderdetail/${orderid}`);
                 });
-              }, 500);
+              }, 2000);
     }      
    } catch (error) {
       console.log(error);
