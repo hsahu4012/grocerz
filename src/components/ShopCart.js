@@ -102,7 +102,7 @@ const ShopCart = () => {
   };
 
   const updateQuantity = async (productid, newQuantity) => {
-    setLoading(true);
+    setLoading(false);
     try {
       if (userid) {
         const response = await axios.put(
