@@ -152,6 +152,10 @@ function App() {
             path='/orderhistory/orderdetailsprint/:orderid/:usertype'
             element={<OrderDetailsPrint />}
           />
+          <Route
+            path='/orderhistory/orderdetailsprint/:orderid/:usertype/:invoice'
+            element={<OrderDetailsPrint />}
+          />
           <Route path='/productsearchlist' element={<ProductSearchList />} />
           <Route path='/Faq' element={<Faq />} />
 
