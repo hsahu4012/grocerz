@@ -12,16 +12,25 @@ const ShopByBrand = () => {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [loading, setLoading] = useState(false);
   const [cart, setCart] = useState([]);
+  const usertype = localStorage.getItem('usertype');
+  const [showPopup, setShowPopup] = useState(false);
+  const [orderIDs, setOrderIDs] = useState([]);
+  const [selectedorderIDs, setselectedOrderIDs] = useState();
+  const [singleProduct, setSingleProduct] = useState();
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   useEffect(() => {
-    const storedCart = (localStorage.getItem('cart') && JSON.parse(localStorage.getItem('cart'))) || [];
+    const storedCart =
+      (localStorage.getItem('cart') &&
+        JSON.parse(localStorage.getItem('cart'))) ||
+      [];
     setCart(storedCart);
   }, []);
 
   useEffect(() => {
     fetchBrands();
   }, []);
-  
+
   const connectwhatsapp = () => {
     const phoneNumber = '+918757499345';
     const message = `Hi. I want to place an order.`;
@@ -38,8 +47,12 @@ const ShopByBrand = () => {
   const fetchBrands = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}products/allBrandsByOrders`);
-      setBrands(response.data.sort((a, b) => a.brand_name.localeCompare(b.brand_name)));
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}products/allBrandsByOrders`
+      );
+      setBrands(
+        response.data.sort((a, b) => a.brand_name.localeCompare(b.brand_name))
+      );
       if (response.data.length > 0) {
         const firstbrand_id = response.data[0].brand_id;
         setSelectedBrand(firstbrand_id);
@@ -56,29 +69,34 @@ const ShopByBrand = () => {
   const fetchProducts = async (brand_id) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}products/brand/${brand_id}`); 
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}products/brand/${brand_id}`
+      );
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
     }
     setLoading(false);
   };
-  
-
-  const handleAddToCart = async (product) => {
+  const handleAddToCart = async product => {
     setLoading(true);
     const { productid, prod_name, price, image, discount } = product;
     try {
       const quantity = 1;
       const userid = localStorage.getItem('userid');
       if (userid) {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}cart/addToCart`, {
-          userid,
-          productid,
-          quantity,
-        });
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_URL}cart/addToCart`,
+          {
+            userid,
+            productid,
+            quantity,
+          }
+        );
         if (response.status === 200) {
-          let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+          let cart = localStorage.getItem('cart')
+            ? JSON.parse(localStorage.getItem('cart'))
+            : [];
           cart.push({ productid, prod_name, price, image, discount, quantity });
           localStorage.setItem('cart', JSON.stringify(cart));
           toast.success('Product added to cart successfully');
@@ -86,7 +104,9 @@ const ShopByBrand = () => {
           toast.error('Failed to add product to cart');
         }
       } else {
-        let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+        let cart = localStorage.getItem('cart')
+          ? JSON.parse(localStorage.getItem('cart'))
+          : [];
         const existingProduct = cart.find(item => item.productid === productid);
         if (existingProduct) {
           existingProduct.quantity += quantity;
@@ -103,14 +123,17 @@ const ShopByBrand = () => {
     setLoading(false);
   };
 
-  const addToWishlist = async (productid) => {
+  const addToWishlist = async productid => {
     setLoading(true);
     try {
       const userid = localStorage.getItem('userid');
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}wishlist/addToWishlist`, {
-        userid,
-        productid,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}wishlist/addToWishlist`,
+        {
+          userid,
+          productid,
+        }
+      );
       if (response.status === 200) {
         toast.success('Product added to wishlist successfully');
       } else {
@@ -122,8 +145,38 @@ const ShopByBrand = () => {
     }
     setLoading(false);
   };
+  const fetchOrderIDs = async () => {
+    setLoading(true);
+    try {
+      const url = process.env.REACT_APP_API_URL + 'orders/allorderIDs';
+      const response = await axios.get(url);
+      // console.log('orderIds response:', response.data);
+      setOrderIDs(response.data);
+    } catch (error) {
+      console.error('Error fetching orderIDs:', error);
+    }
+    setLoading(false);
+  };
+  const handleAddProduct = async productid => {
+    try {
+      setLoading(true);
+      const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${selectedorderIDs}`;
+      await axios.post(url, {
+        ...singleProduct,
+        quantity: selectedQuantity, // Pass selected quantity here
+      });
+      toast.success('Product added to order successfully'); 
+      setShowPopup(false);
+    } catch (error) {
+      console.error('Error adding product to order:', error);
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    fetchOrderIDs();
+  }, [showPopup]);
 
-  const isInCart = (productid) => {
+  const isInCart = productid => {
     return cart.some(item => item.productid === productid);
   };
 
@@ -159,7 +212,7 @@ const ShopByBrand = () => {
                                 }}
                               />
                               <label htmlFor={`brand-${brand.brand_id}`}>
-                                {brand.brand_name} 
+                                {brand.brand_name}
                               </label>
                             </li>
                           ))}
@@ -176,7 +229,9 @@ const ShopByBrand = () => {
                   onClick={connectwhatsapp}
                   className='shop-btn shop-btn-full'
                 >
-                  If your product is not listed<br />Order on WhatsApp
+                  If your product is not listed
+                  <br />
+                  Order on WhatsApp
                 </button>
               </div>
             </div>
@@ -190,7 +245,11 @@ const ShopByBrand = () => {
                         <Link to={`/product/${product.productid}`}>
                           <div className='product-img'>
                             <img
-                              src={product.image ? `${process.env.REACT_APP_IMAGE_URL}${product.image}` : temp_product_image}
+                              src={
+                                product.image
+                                  ? `${process.env.REACT_APP_IMAGE_URL}${product.image}`
+                                  : temp_product_image
+                              }
                               alt={product.prod_name}
                             />
                           </div>
@@ -233,9 +292,82 @@ const ShopByBrand = () => {
                                 className='product-btn wishlist-btn'
                                 onClick={() => addToWishlist(product.productid)}
                               >
-                                <i className='fa fa-heart-o'></i> Add to Wishlist
+                                <i className='fa fa-heart-o'></i> Add to
+                                Wishlist
                               </button>
-                            </div>
+                              {usertype === 'admin' && (
+                                <button
+                                  className='product-btn mt-2'
+                                  type='button'
+                                  onClick={() => {
+                                    setShowPopup(true);
+                                    setSingleProduct(product);
+                                  }}
+                                >
+                                  Add to Pending Orders
+                                </button>
+                              )}
+                              {showPopup && (
+                                <div className='popup-overlay'>
+                                  <div className='popup-content'>
+                                    <h3>Select Order ID</h3>
+                                    <select
+                                      value={selectedorderIDs}
+                                      onChange={e =>
+                                        setselectedOrderIDs(e.target.value)
+                                      }
+                                    >
+                                      <option value=''>Select Order ID</option>
+                                      {orderIDs.map(oid => (
+                                        <option
+                                          key={oid.order_id}
+                                          value={oid.order_id}
+                                        >
+                                          {oid.srno} - {oid.order_id}
+                                        </option>
+                                      ))}
+                                    </select>
+                                    <h3>Select Quantity</h3>
+                                    <select
+                                      value={selectedQuantity}
+                                      onChange={e =>
+                                        setSelectedQuantity(
+                                          Number(e.target.value)
+                                        )
+                                      }
+                                    >
+                                      <option value=''>Select Quantity</option>
+                                      {Array.from(
+                                        { length: product.stock_quantity },
+                                        (_, index) => index + 1
+                                      ).map(quantity => (
+                                        <option
+                                          key={quantity}
+                                          value={quantity}
+                                        >
+                                          {quantity}
+                                        </option>
+                                      ))}
+
+                                    </select>
+                                  
+                                    
+
+                                    <button
+                                      className=''
+                                      onClick={handleAddProduct}
+                                    >
+                                      Add Product
+                                    </button>
+                                    <button onClick={() => setShowPopup(false)}>
+                                      Close
+                                    </button>
+                                    {/* {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>} */}
+                                    {/* {err && <p className=''>{err}</p>} */}
+                                  </div>
+                                </div>
+                              )}
+                            </div> 
                           )}
                         </div>
                       </div>
