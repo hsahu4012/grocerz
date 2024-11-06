@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import qr from '../assets/images/hashedbitqr.jpg';
 import axios from 'axios';
 import GuestAddess from './GuestAddess';
-import Loader from './loader/Loader';
+// import Loader from './loader/Loader';
 import loaderGif from '../assets/images/loader.gif';
 
 function Checkout() {

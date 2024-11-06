@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import temp_product_image from '../assets/products/p-img-29.webp';
-import Loader from './loader/Loader';
+// import Loader from './loader/Loader';
+// import loaderGif from '../assets/images/loaderGif'
+import loaderGif from '../assets/images/loader.gif'
 import { ToastContainer, toast } from 'react-toastify';
 import Discount from './shared/Discount_tag';
 
@@ -184,7 +186,25 @@ const ShopByBrand = () => {
       <ToastContainer />
       <section className='shop spad product product-sidebar footer-padding'>
         <div className='container'>
-          {loading && <Loader />}
+          {loading && 
+            <div
+              style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '50vh',
+              }}
+              >
+              <img
+              src={loaderGif}
+              alt='Loading...'
+              style={{
+              width: '80px',
+              height: '80px',
+              }}
+              />
+            </div>
+          }
           <div className='row'>
             <div className='col-lg-3'>
               <div className='sidebar' data-aos='fade-right'>
