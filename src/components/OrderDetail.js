@@ -626,6 +626,14 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                               </div>
                             </div>
 
+
+                              {/* Chat with Customer button */}
+                            <div className='col-12 col-md-auto my-2'>
+                              <div className='btn shop-btn w-100'>
+                              Chat with Customer
+                              </div>
+                            </div>
+                            
                             {/* Back Button */}
                             <div className='col-12 col-md-auto my-2'>
                               <Link to='/OrderHistory' className='shop-btn w-100'>

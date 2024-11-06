@@ -90,6 +90,15 @@ const OrderSuccess = () => {
                           <p>
                             <strong>Order Status - </strong> {orderDetails.order_status}
                           </p>
+                          <p>
+                            <strong> Customer support Number - </strong>
+                          </p>
+                          <p>
+                            <strong>Delivery Staff Name - </strong> 
+                          </p>
+                          <p>
+                            <strong>Delivery Staff Number - </strong> 
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -114,6 +123,10 @@ const OrderSuccess = () => {
                           onClick={() => navigate('/feedback')}
                         >
                           Submit Feedback
+                        </button>
+                        <button
+                          className='view-details-btn'>
+                          Chat with Customer Support
                         </button>
                       </div>
                       </p>
