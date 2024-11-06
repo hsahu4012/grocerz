@@ -199,7 +199,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
       const url = `${process.env.REACT_APP_API_URL}orders/updatedeliverypartner/${orderid}/${userid}`;
       const response = await axios.put(url);
       if (response.status === 200) {
-        alert(response.data.message);
+        //alert(response.data.message);
 
         setAlertModal(true);
       }
