@@ -1,6 +1,7 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useId, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { DataAppContext } from '../DataContext';
 // import Loader from "./loader/Loader";
 import loaderGif from '../assets/images/loader.gif';
 
@@ -10,6 +11,8 @@ const ShopCart = () => {
   const userid = localStorage.getItem('userid');
   const [loading, setLoading] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
+  const { updateCartCount } = useContext(DataAppContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,6 +35,7 @@ const ShopCart = () => {
         );
         const items = response.data;
         setCartItems(items);
+        updateCartCount(response.data.length);
         const sortedItems = items
           .map(item => ({
             productid: item.productid,
@@ -52,6 +56,7 @@ const ShopCart = () => {
             JSON.parse(localStorage.getItem('cart'))) ||
           [];
         setCartItems([...storedCartItems]);
+        updateCartCount(storedCartItems.length);
       }
     } catch (error) {
       console.error('Error fetching cart items', error);
@@ -82,6 +87,8 @@ const ShopCart = () => {
       setCartItems(prevItems =>
         prevItems.filter(item => item.productid !== productid)
       );
+      updateCartCount(cartItems.length - 1);
+
       // Update localStorage as well
       const updatedCartItems = cartItems.filter(
         item => item.productid !== productid
@@ -95,7 +102,7 @@ const ShopCart = () => {
   };
 
   const updateQuantity = async (productid, newQuantity) => {
-    setLoading(true);
+    setLoading(false);
     try {
       if (userid) {
         const response = await axios.put(
@@ -143,25 +150,21 @@ const ShopCart = () => {
     }
   };
   const clearCart = async () => {
-    const confirmDelete = window.confirm(
-      'Are you sure you want to delete all items from your cart?'
-    );
-    if (confirmDelete) {
-      try {
-        setLoading(true);
-        const url = `${process.env.REACT_APP_API_URL}cart/emptyCart/${userid}`;
-        const response = await axios.put(url);
-        if (response.status === 200) {
-          setCartItems([]);
-        } else {
-          setMessage('There was an error clearing the cart!');
-        }
-      } catch (error) {
-        console.error('Error cleaning cart:', error);
+    try {
+      setLoading(true);
+      const url = `${process.env.REACT_APP_API_URL}cart/emptyCart/${userid}`;
+      const response = await axios.put(url);
+      if (response.status === 200) {
+        setCartItems([]);
+      } else {
         setMessage('There was an error clearing the cart!');
       }
-      setLoading(false);
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      setMessage('There was an error clearing the cart!');
     }
+    setLoading(false);
+    setIsModalOpen(false);
   };
 
   return (
@@ -178,7 +181,25 @@ const ShopCart = () => {
           </div>
         </div>
       </section>
+      </section>
 
+      <section className='product-cart product footer-padding'>
+        {loading && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '50vh',
+            }}
+          >
+            <img
+              src={loaderGif}
+              alt='Loading...'
+              style={{ width: '80px', height: '80px' }}
+            />
+          </div>
+        )}
       <section className='product-cart product footer-padding'>
         {loading && (
           <div
@@ -309,21 +330,24 @@ const ShopCart = () => {
               </table>
             </div>
 
-            <div className='wishlist-btn cart-btn'>
-              <button className='clean-btn shop-btn' onClick={clearCart}>
-                Clear Cart
-              </button>
-              <button className='shop-btn'>Total - {totalCost}</button>
-              {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
-              <Link to='/checkout' className='shop-btn'>
-                Proceed to Checkout
-              </Link>
+              <div className='wishlist-btn cart-btn'>
+                <button
+                className='clean-btn shop-btn'
+                onClick={() => setIsModalOpen(true)}
+              >
+                  Clear Cart
+                </button>
+                <button className='shop-btn'>Total - {totalCost}</button>
+                {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
+                <Link to='/checkout' className='shop-btn'>
+                  Proceed to Checkout
+                </Link>
+              </div>
+              {message && <p>{message}</p>}
             </div>
-            {message && <p>{message}</p>}
-          </div>
-        )}
-        <div>
-          {/* <div className="col-lg-6 col-md-6 col-sm-6">
+          )}
+          <div>
+            {/* <div className="col-lg-6 col-md-6 col-sm-6">
           <div className="cart__btn update__btn">
             <Link to="#">
               <span className="icon_loading" /> Update cart
@@ -331,7 +355,9 @@ const ShopCart = () => {
           </div>
         </div> */}
         </div>
+        </div>
 
+        {/* <div class="row">
         {/* <div class="row">
         <div class="col-lg-6">
           <div class="discount__content">
@@ -356,6 +382,20 @@ const ShopCart = () => {
         </div>
       </div> */}
       </section>
+      {isModalOpen && (
+        <div className='popup-overlay'>
+          <div className='popup-content'>
+            <h3>Are you sure you want to delete all items from your cart?</h3>
+            <button onClick={clearCart}>Yes, Clear Cart</button>
+            <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+            {loading && (
+              <div className='spinner-overlay'>
+                <p className='spinner2'></p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -8,12 +8,10 @@ import loaderGif from '../assets/images/loader.gif';
 const OrderHistory = () => {
   const userid = localStorage.getItem('userid');
   const usertype = localStorage.getItem('usertype');
-
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [deliverypartners, setDeliveryPartners] = useState([]);
-
   const handleOrderClick = orderid => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
   };
@@ -108,29 +106,34 @@ const OrderHistory = () => {
   };
 
   // for handling the payment mode
+  const [hidePaymentButtons, setHidePaymentButtons] = useState({});
+
   const handlePaymentModeChange = async (orderId, newPaymentMode) => {
     setLoading(true);
     try {
-      // const url = `http://localhost:4000/orders/updatePaymentMode/${orderId}`;
-      const url = process.env.REACT_APP_API_URL +'orders/updatePaymentMode/' + orderId;
-      
-      const response = await axios.put(
+      const url = process.env.REACT_APP_API_URL + 'orders/updatePaymentMode/' + orderId;
+
+      await axios.put(
         url,
-        { paymentmode: newPaymentMode }, 
+        { paymentmode: newPaymentMode },
         {
           headers: {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
           },
         }
       );
-  
-      fetchOrders(); 
+
+      setHidePaymentButtons((prevState) => ({
+        ...prevState,
+        [orderId]: true,
+      }));
+      
+      fetchOrders();
     } catch (error) {
       console.error('Error updating payment mode', error);
     }
     setLoading(false);
   };
-  
   
 
   const fetchDeliveryPartnerName = async () => {
@@ -352,20 +355,32 @@ const OrderHistory = () => {
 
                               {usertype === 'admin' && (
                                 <div className='order-actions'>
-                                  <button
-                                    className='btn btn-warning'
-                                    onClick={() => handlePaymentModeChange(order.order_id, 'cash')}>
-                                    Pay in Cash
-                                  </button>
-                                  <button
-                                    className='btn btn-warning' onClick={() => handlePaymentModeChange(order.order_id, 'UPI')}>
-                                    Pay by UPI
-                                  </button>
+                                  {!hidePaymentButtons[order.order_id] ? (
+                                    <>
+                                      <button
+                                        id={`pay-cash-${order.order_id}`}
+                                        className='btn btn-warning'
+                                        onClick={() => handlePaymentModeChange(order.order_id, 'cash')}
+                                      >
+                                        Pay in Cash
+                                      </button>
+                                      <button
+                                        id={`pay-upi-${order.order_id}`}
+                                        className='btn btn-warning'
+                                        onClick={() => handlePaymentModeChange(order.order_id, 'UPI')}
+                                      >
+                                        Pay by UPI
+                                      </button>
+                                    </>
+                                  ) : null} {/* No message displayed after payment mode is selected */}
                                 </div>
                               )}
 
-                              </div>
+                            </div>
                             <div className='text-end'></div>
+                            <p>
+                              <strong>Customer Name - </strong> {order.name}
+                            </p>
                             <p>
                               <strong>Order ID - </strong> {order.order_id}
                             </p>
