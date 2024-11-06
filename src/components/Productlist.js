@@ -20,6 +20,7 @@ const Productlist = () => {
   const [singleProduct, setSingleProduct] = useState();
   const usertype = localStorage.getItem('usertype');
   const [cart, setCart] = useState([]);
+  const [productQuantity,setProductQuantity] = useState(0)
 
   useEffect(() => {
     // Fetch the cart from local storage when the component mounts
@@ -197,7 +198,8 @@ const Productlist = () => {
     try {
       setLoading(true);
       const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${selectedorderIDs}`;
-      await axios.post(url, singleProduct);
+      // await axios.post(url, singleProduct);
+      await axios.post(url, { ...singleProduct, quantity: productQuantity });
       setShowPopup(false);
     } catch (error) {
       console.error('Error adding product to order:', error);
@@ -416,7 +418,7 @@ const Productlist = () => {
                                 <div className='popup-overlay'>
                                   <div className='popup-content'>
                                     <h3>Select Order ID</h3>
-                                    <select
+                                    {/* <select
                                       value={selectedorderIDs}
                                       onChange={e =>
                                         setselectedOrderIDs(e.target.value)
@@ -431,7 +433,32 @@ const Productlist = () => {
                                           {oid.srno} - {oid.order_id}
                                         </option>
                                       ))}
-                                    </select>
+                                    </select> */}
+                                    <div className='quantity-added'>
+                                      <select
+                                        value={selectedorderIDs}
+                                        onChange={e =>
+                                          setselectedOrderIDs(e.target.value)
+                                        }
+                                      >
+                                        <option value=''>Select Order ID</option>
+                                        {orderIDs.map(oid => (
+                                          <option
+                                            key={oid.order_id}
+                                            value={oid.order_id}
+                                          >
+                                            {oid.srno} - {oid.order_id}
+                                          </option>
+                                        ))}
+                                      </select>
+                                      <input type='number' value={productQuantity} onChange={(e) => setProductQuantity(e.target.value)} style={{
+                                        border: '2px solid #000',
+                                        width:'100%',
+                                        height:'40px',
+                                        padding:'10px',
+                                        fontSize: '2rem'
+                                        }} placeholder='Enter Amount'/>
+                                    </div>
                                     <button
                                       className=''
                                       onClick={handleAddProduct}
