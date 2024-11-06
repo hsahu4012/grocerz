@@ -4,6 +4,7 @@ import axios from 'axios';
 import temp_product_image from '../assets/products/p-img-29.webp';
 import Loader from './loader/Loader';
 import { ToastContainer, toast } from 'react-toastify';
+import Discount from './shared/Discount_tag';
 
 const ShopByBrand = () => {
   const { brand_id } = useParams();
@@ -69,16 +70,14 @@ const ShopByBrand = () => {
   const fetchProducts = async (brand_id) => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}products/brand/${brand_id}`
-      );
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}products/brand/${brand_id}`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
     }
     setLoading(false);
   };
-  const handleAddToCart = async product => {
+  const handleAddToCart = async (product) => {
     setLoading(true);
     const { productid, prod_name, price, image, discount } = product;
     try {
@@ -242,6 +241,11 @@ const ShopByBrand = () => {
                   products.map(product => (
                     <div className='col-xl-4 col-sm-6' key={product.productid}>
                       <div className='product-wrapper m-2' data-aos='fade-up'>
+                        {
+                          product.discount > 0 &&
+                          (<Discount price={product.price} discount={product.discount} />)
+                        }
+
                         <Link to={`/product/${product.productid}`}>
                           <div className='product-img'>
                             <img

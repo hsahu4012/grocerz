@@ -5,6 +5,7 @@ import Loader from './loader/Loader';
 import dress1 from '../assets/img/product/women/dress1.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Discount from './shared/Discount_tag';
 const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState('xs');
   const [selectedColor, setSelectedColor] = useState('red');
@@ -195,6 +196,11 @@ const ProductDetails = () => {
           </div>
           <div class='col-md-6'>
             <div class='product-info-content'>
+
+              {
+                product.discount > 0 &&
+                (<Discount price={product.price} discount={product.discount} />)
+              }
               {/* <span class="wrapper-subtitle">Vegetable</span> */}
               <h3 class='wrapper-heading'>{product.prod_name}</h3>
               {/* <div class="ratings">
@@ -247,12 +253,12 @@ const ProductDetails = () => {
               <hr></hr>
               <div class='product-availability'>
                 <span>Availabillity : </span>
-                <span class='inner-text'>{product.stock_quantity <=0 && (
-                            <span className='text-danger'>Out of Stock</span>
-                          )}</span>
-                <span class='inner-text'>{product.stock_quantity >0 && (
-                            <span className=''>Available</span>
-                          )}</span>
+                <span class='inner-text'>{product.stock_quantity <= 0 && (
+                  <span className='text-danger'>Out of Stock</span>
+                )}</span>
+                <span class='inner-text'>{product.stock_quantity > 0 && (
+                  <span className=''>Available</span>
+                )}</span>
               </div>
 
               <div class='product-quantity'>
