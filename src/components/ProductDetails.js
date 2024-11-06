@@ -5,6 +5,7 @@ import Loader from './loader/Loader';
 import dress1 from '../assets/img/product/women/dress1.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SimilarProducts from './SimilarProducts';
 import Discount from './shared/Discount_tag';
 const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState('xs');
@@ -645,6 +646,7 @@ const ProductDetails = () => {
 
         </div>
       </section> */}
+      <SimilarProducts />
     </>
   );
 };
