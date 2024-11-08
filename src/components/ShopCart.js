@@ -181,7 +181,7 @@ const ShopCart = () => {
           </div>
         </div>
       </section>
-      </section>
+      
 
       <section className='product-cart product footer-padding'>
         {loading && (
@@ -200,6 +200,7 @@ const ShopCart = () => {
             />
           </div>
         )}
+        </section>
       <section className='product-cart product footer-padding'>
         {loading && (
           <div
@@ -355,7 +356,7 @@ const ShopCart = () => {
           </div>
         </div> */}
         </div>
-        </div>
+        {/* </div> */}
 
         {/* <div class="row">
         {/* <div class="row">
