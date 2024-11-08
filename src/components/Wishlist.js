@@ -180,7 +180,7 @@ const Wishlist = () => {
                     </div>
                   </section>
                 ) : (
-                  <div className='blog-item' data-aos='fade-up'>
+                  <div className='blog-item'>
                     <div className='cart-img'>
                       <img src='assets/images/homepage-one/empty-cart.webp' alt='Empty Cart' />
                     </div>
