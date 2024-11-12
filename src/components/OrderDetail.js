@@ -31,11 +31,12 @@ const OrderDetail = () => {
   // const [productPrices, setProductPrices] = useState([]);
   const [costPriceModal, setCostPriceModal] = useState(false);
   const [alertmodal, setAlertModal] = useState(false);
-const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
+  const [totalOriginalPrice, settotalOriginalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
 
 
-// Fetch all categories
+  // Fetch all categories
   const fetchCategoryData = async () => {
     try {
       const url = `${process.env.REACT_APP_API_URL}category/allcategory`;
@@ -97,12 +98,19 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
       const url = `${process.env.REACT_APP_API_URL}orderdetails/${orderid}`;
       const response = await axios.get(url);
       setOrderDetails(response.data);
+
+      let total = 0;
+      response.data.map(item => {
+        total = total + (item.price * item.quantity);
+      })
+      setTotalPrice(total);
+
       const orderDetails = response.data;
       const updatedOrderDetails = orderDetails.map(item => {
         const totalOriginalPrice = item.original_mrp * item.quantity;
         // const totalDiscount = (totalOriginalPrice - item.price_final)*item.quantity;
         return { ...item, totalOriginalPrice};
-      }); 
+      });
       // console.log(totalOriginalPrice)
       const totalOriginalPriceSum = updatedOrderDetails.reduce((acc, item) => acc + item.totalOriginalPrice, 0);
       settotalOriginalPrice(totalOriginalPriceSum);
@@ -150,12 +158,11 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
       // Add quantity to product
       const productWithQuantity = {
         ...productObj,
-        quantity: Added_quantity, 
+        quantity: Added_quantity,
       };
-  
       const url = `${process.env.REACT_APP_API_URL}orderdetails/addProductInToOrder/${orderid}`;
       await axios.post(url, productWithQuantity);
-      fetchOrderDetails(); 
+      fetchOrderDetails();
       setShowPopup(false);
     } catch (error) {
       setError('Something went wrong please try again !');
@@ -165,8 +172,6 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
       setLoading(false);
     }
   };
-  
-
   // Handle removing product from order
   const removeItemFromOrder = async productid => {
     try {
@@ -317,13 +322,13 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                           <ul className='list-group text-custom-font-1'>
                             <li className='list-group-item text-success'>
                               <strong>
-                                Original Price - &#8377; {totalOriginalPrice}
+                                Original Price - &#8377; {totalPrice}
                               </strong>
                             </li>
                             <li className='list-group-item text-success'>
                               <strong>
                                 Discount - &#8377;{' '}
-                                {totalOriginalPrice - order.paymentamount}
+                                {totalPrice - order.paymentamount}
                               </strong>
                             </li>
                             <li className='list-group-item text-success'>
@@ -418,7 +423,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                               {selectedProduct && (
                                 <input
                                   type='number'
-                                  value={Added_quantity || ''} 
+                                  value={Added_quantity || ''}
                                   onChange={e => {
                                     const newQuantity = parseInt(
                                       e.target.value
@@ -523,7 +528,7 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                                 <div className='col-md-1'>
                                   <p>
                                     <strong>
-                                      &#8377;&nbsp;{item.original_mrp}
+                                      &#8377;&nbsp;{item.price}
                                     </strong>
                                   </p>
                                 </div>
@@ -535,7 +540,8 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                                 <div className='col-md-1'>
                                   <p>
                                     <strong>
-                                      {item.original_mrp - item.price_final}
+                                      {/* {item.original_mrp - item.price_final} */}
+                                      {item.price * item.quantity - item.price_final}
                                     </strong>
                                   </p>
                                 </div>
@@ -581,20 +587,18 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                       {usertype === 'admin' && (
                         <div className='text-center my-3'>
                           <div className='row justify-content-center'>
-                            
                             {/* Download Invoice In PDF */}
                             {order.delivery_status != "CANCELLED" ? (
                                 <div className='col-12 col-md-auto my-2'>
                                   <Link
                                     to={`/orderhistory/orderdetailsprint/${orderid}/customer/invoice`}
                                     className='shop-btn w-100'
-                                   >
+                                  >
                                     Download Invoice
                                   </Link>
-                                 </div>) 
-                            : 
+                                </div>)
+                              :
                             (null)}
-                            
 
                             {/* Print Invoice Button */}
                             <div className='col-12 col-md-auto my-2'>
@@ -627,13 +631,13 @@ const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
                             </div>
 
 
-                              {/* Chat with Customer button */}
+                          {/* Chat with Customer button */}
                             <div className='col-12 col-md-auto my-2'>
                               <div className='btn shop-btn w-100'>
                               Chat with Customer
                               </div>
                             </div>
-                            
+
                             {/* Back Button */}
                             <div className='col-12 col-md-auto my-2'>
                               <Link to='/OrderHistory' className='shop-btn w-100'>
