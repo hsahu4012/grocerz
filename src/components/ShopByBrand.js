@@ -78,8 +78,8 @@ const ShopByBrand = () => {
     setLoading(false);
   };
   const handleAddToCart = async (product) => {
-    setLoading(true);
     const { productid, prod_name, price, image, discount } = product;
+    setLoading(productid);
     try {
       const quantity = 1;
       const userid = localStorage.getItem('userid');
@@ -289,7 +289,7 @@ const ShopByBrand = () => {
                                   onClick={() => handleAddToCart(product)}
                                   disabled={product.stock_quantity < 1}
                                 >
-                                  {loading ? 'Adding...' : 'Add to Cart'}
+                                  {loading === product.productid ? 'Adding...' : 'Add to Cart'}
                                 </button>
                               )}
                               <button
