@@ -14,11 +14,8 @@ const Header = () => {
   const { wishlistCount, updateWishlistCount } = useContext(DataAppContext);
   const { cartCount, updateCartCount} = useContext(DataAppContext);
   const [category, setCategory] = useState(marketCategory);
+  
   const [totalOrders, setTotalOrders] = useState(0);
-
-  const [loading, setLoading] = useState(false);
-
-  // Get usertype from localStorage
   const userType = localStorage.getItem('usertype');
 
   useEffect(() => {
@@ -28,24 +25,17 @@ const Header = () => {
   }, [userType]);
 
   const fetchTotalOrders = async () => {
-    setLoading(true);
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}orders/getTotalOrders`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('jwttoken')}` // Assuming JWT token is stored
-        }
-      });
-
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}orders/getTotalOrders`);
       if (response.status === 200) {
         setTotalOrders(response.data.totalOrders);
       }
     } catch (error) {
       console.error('Error fetching total orders:', error);
-    } finally {
-      setLoading(false);
     }
   };
-  
+
+
   function handleAutoLogout(token) {
     if (!token) return;
     const decodedToken = jwtDecode(token);
@@ -382,18 +372,14 @@ const Header = () => {
                   Search
                 </button>
               </div>
-              {/* Render total orders only for admin */}
-      {userType === 'admin' && (
-        <div className="total-orders">
-          {loading ? (
-            <p>Loading total orders...</p>
-          ) : (
-            <>
-              <strong>Total Orders:</strong> {totalOrders}
-            </>
-          )}
-        </div>
-      )}
+
+              {userType === 'admin' && (
+                  <div className="total-orders">
+                    <strong>Total Orders:</strong> <strong>{totalOrders}</strong>
+                  </div>
+                )}
+
+
               <div class='header-cart-items'>
                 {/* <div class="header-compaire">
                   <a href="compaire.html" class="cart-item">
