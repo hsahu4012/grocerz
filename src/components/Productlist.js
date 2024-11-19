@@ -451,13 +451,7 @@ const Productlist = () => {
                                           </option>
                                         ))}
                                       </select>
-                                      <input type='number' value={productQuantity} onChange={(e) => setProductQuantity(e.target.value)} style={{
-                                        border: '2px solid #000',
-                                        width:'100%',
-                                        height:'40px',
-                                        padding:'10px',
-                                        fontSize: '2rem'
-                                        }} placeholder='Enter Amount'/>
+                                      <input className='quantity-input' type='number' value={productQuantity} onChange={(e) => setProductQuantity(e.target.value)} placeholder='Enter Amount'/>
                                     </div>
                                     <button
                                       className=''
