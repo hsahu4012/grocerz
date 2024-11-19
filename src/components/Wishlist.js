@@ -116,9 +116,11 @@ const Wishlist = () => {
               <DashboardRoutes />
               <div>
                 {loading ? (
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', marginLeft: '300px' }}>
-                    <img src={loaderGif} alt='Loading...' style={{ width: '80px', height: '80px' }} />
-                  </div>
+                  <div className='loader-div'>
+                  <img className='loader-img'
+                    src={loaderGif}
+                    alt='Loading...'/>
+                </div>
                 ) : wishlistItems.length > 0 ? (
                   <section className='cart product wishlist footer-padding' data-aos='fade-up'>
                     <div className='container'>

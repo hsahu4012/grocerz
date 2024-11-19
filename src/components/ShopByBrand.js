@@ -187,23 +187,11 @@ const ShopByBrand = () => {
       <section className='shop spad product product-sidebar footer-padding'>
         <div className='container'>
           {loading && 
-            <div
-              style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '50vh',
-              }}
-              >
-              <img
+            <div className='loader-div'>
+            <img className='loader-img'
               src={loaderGif}
-              alt='Loading...'
-              style={{
-              width: '80px',
-              height: '80px',
-              }}
-              />
-            </div>
+              alt='Loading...'/>
+          </div>
           }
           <div className='row'>
             <div className='col-lg-3'>
