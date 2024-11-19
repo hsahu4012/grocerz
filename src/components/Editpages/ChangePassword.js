@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function ChangePasswordPage() {
-  const [currentPassword, setCurrentPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -33,7 +33,8 @@ function ChangePasswordPage() {
         url,
         {
           userid: userid,
-          password: newPassword,
+          oldPassword: oldPassword,
+          newPassword: newPassword,
         },
         {
           headers: {
@@ -45,7 +46,7 @@ function ChangePasswordPage() {
       if (response.status === 200) {
         setErrorMessage('');
         setSuccessMessage('Password updated successfully!');
-        setCurrentPassword('');
+        setOldPassword('');
         setNewPassword('');
         setConfirmPassword('');
         setTimeout(() => {
@@ -55,7 +56,7 @@ function ChangePasswordPage() {
     } catch (error) {
       console.error('Error changing password', error);
       if (error.response && error.response.status === 401) {
-        setErrorMessage('Current password is incorrect.');
+        setErrorMessage('Old password is incorrect.');
       } else if (error.response && error.response.data) {
         setErrorMessage(error.response.data.message);
       } else if (error.message === 'Network Error') {
@@ -88,22 +89,24 @@ function ChangePasswordPage() {
                   <div className='col-lg-6'>
                     <div className='form-section'>
                       <form onSubmit={handleSubmit}>
-                        {/* <div className="currentpass form-item">
+                        <div className="form-item">
                           <label
-                            htmlFor="currentPassword"
+                            htmlFor="oldPassword"
                             className="form-label input-lg text-lg font-semibold h5"
                           >
-                            Current Password*
+                            
+                          Old Password*
                           </label>
                           <input
                             type={showPassword ? "text" : "password"}
-                            id="currentPassword"
-                            value={currentPassword}
-                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            id="oldPassword"
+                            value={oldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
                             className="form-control text-lg p-3 h5"
                             placeholder="******"
+                            required
                           />
-                        </div> */}
+                        </div>
                         <div className='password form-item'>
                           <label
                             htmlFor='newPassword'
@@ -118,6 +121,7 @@ function ChangePasswordPage() {
                             onChange={e => setNewPassword(e.target.value)}
                             className='form-control text-lg p-3 h5'
                             placeholder='******'
+                            required
                           />
                         </div>
                         <div className='re-password form-item'>
@@ -134,6 +138,7 @@ function ChangePasswordPage() {
                             onChange={e => setConfirmPassword(e.target.value)}
                             className='form-control text-lg p-3 h5'
                             placeholder='******'
+                            required
                           />
                         </div>
                         <div className='show-password-checkbox'>
@@ -151,12 +156,12 @@ function ChangePasswordPage() {
                           </label>
                         </div>
                         {errorMessage && (
-                          <div className='text-red-500 mb-4 text-lg'>
+                          <div className='text-danger mb-4 text-lg'>
                             {errorMessage}
                           </div>
                         )}
                         {successMessage && (
-                          <div className='text-green-500 mb-4 text-lg'>
+                          <div className='text-success mb-4 text-lg'>
                             {successMessage}
                           </div>
                         )}
