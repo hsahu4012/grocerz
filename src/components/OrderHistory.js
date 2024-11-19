@@ -408,6 +408,10 @@ const OrderHistory = () => {
                               }
                             </p>
                             <p>
+                              <strong >Cost Amount -</strong>{' '}
+                              <span>₹{order.costamount}</span>
+                            </p>
+                            <p>
                               <strong>Payment Mode -</strong>{' '}
                               {order.paymentmode}
                             </p>
