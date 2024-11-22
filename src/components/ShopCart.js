@@ -219,9 +219,6 @@ const ShopCart = () => {
           </div>
         )}
 
-        {(!loading && cartItems.length >0)?
-      (
-        <>
         {!loading && (
         <div className='container'>
           <div className='cart-section'>
@@ -252,7 +249,9 @@ const ShopCart = () => {
                     </div>
                   </td>
                 </tr>
-                {cartItems.map(item => (
+                {(cartItems.length >0 && !loading)?(
+                  <>
+                  {cartItems.map(item => (
                   <tr className='table-row ticket-row' key={item.productid}>
                     <td className='table-wrapper wrapper-product'>
                       <div className='wrapper'>
@@ -330,9 +329,18 @@ const ShopCart = () => {
                     </td>
                   </tr>
                 ))}
+                  </>
+                ):(
+                  <></>
+                )}
               </tbody>
             </table>
           </div>
+          {cartItems.length===0 && !loading && <div className='container d-flex flex-column justify-content-center align-items-center'>
+              <img  src="assets/images/homepage-one/empty-cart.webp" width={400} height={400} alt="" />
+              <h3 className='p-3'>Cart is Empty</h3>
+            </div>
+          }
 
             <div className='wishlist-btn cart-btn'>
               <button
@@ -350,16 +358,8 @@ const ShopCart = () => {
             {message && <p>{message}</p>}
           </div>
         )}
-        </>):(
-            <>
-            {!loading && <div className='container d-flex flex-column justify-content-center align-items-center'>
-              <img  src="assets/images/homepage-one/empty-cart.webp" width={400} height={400} alt="" />
-              <h3 className='p-3'>Cart is Empty</h3>
-            </div>
-          }
-            </>
-            )  
-      }
+        
+
           <div>
             {/* <div className="col-lg-6 col-md-6 col-sm-6">
           <div className="cart__btn update__btn">
