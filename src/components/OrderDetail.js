@@ -31,8 +31,9 @@ const OrderDetail = () => {
   // const [productPrices, setProductPrices] = useState([]);
   const [costPriceModal, setCostPriceModal] = useState(false);
   const [alertmodal, setAlertModal] = useState(false);
-  const [totalOriginalPrice, settotalOriginalPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
+const [costAmount, setCostAmount] = useState(0);
 
 
 
@@ -125,6 +126,15 @@ const OrderDetail = () => {
       console.error('Error fetching order details:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchCostAmount = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}orders/getcostamount/${orderid}`);
+      setCostAmount(response.data.costamount || 0);
+    } catch (error) {
+      console.error('Error fetching cost amount:', error);
     }
   };
 
@@ -231,6 +241,11 @@ const OrderDetail = () => {
   }, [subcategory]);
 
   useEffect(() => {
+    fetchOrderDetails();
+    fetchCostAmount();
+  }, [orderid]);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
@@ -331,6 +346,13 @@ const OrderDetail = () => {
                                 {totalPrice - order.paymentamount}
                               </strong>
                             </li>
+                            {usertype === 'admin' && (
+                              <li className='list-group-item text-success'>
+                                <strong>
+                                  Cost Price - &#8377; {costAmount}
+                                </strong>
+                              </li>
+                            )}
                             <li className='list-group-item text-success'>
                               <strong>
                                 Final Payment Amount - {order.paymentamount}

@@ -15,6 +15,27 @@ const Header = () => {
   const { cartCount, updateCartCount} = useContext(DataAppContext);
   const [category, setCategory] = useState(marketCategory);
   
+  const [totalOrders, setTotalOrders] = useState(0);
+  const userType = localStorage.getItem('usertype');
+
+  useEffect(() => {
+    if (userType === 'admin') {
+      fetchTotalOrders();
+    }
+  }, [userType]);
+
+  const fetchTotalOrders = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}orders/getTotalOrders`);
+      if (response.status === 200) {
+        setTotalOrders(response.data.totalOrders);
+      }
+    } catch (error) {
+      console.error('Error fetching total orders:', error);
+    }
+  };
+
+
   function handleAutoLogout(token) {
     if (!token) return;
     const decodedToken = jwtDecode(token);
@@ -351,6 +372,14 @@ const Header = () => {
                   Search
                 </button>
               </div>
+
+              {userType === 'admin' && (
+                  <div className="total-orders">
+                    <strong>Total Orders:</strong> <strong>{totalOrders}</strong>
+                  </div>
+                )}
+
+
               <div class='header-cart-items'>
                 {/* <div class="header-compaire">
                   <a href="compaire.html" class="cart-item">

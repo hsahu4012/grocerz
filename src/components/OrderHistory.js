@@ -155,7 +155,10 @@ const OrderHistory = () => {
   //   fetchDeliveryPartnerName();
   // }, [fetchDeliveryPartnerName]);
 
-  const findClassNames = order_status => {
+  const findClassNames = (order_status,delivery_status) => {
+    if (order_status === 'COMPLETED' && delivery_status === 'DELIVERED') {
+      return 'card-body bg-opacity-25 bg-info';
+    }
     if (order_status === 'Placed') {
       return 'card-body bg-warning bg-opacity-25';
     }
@@ -216,7 +219,7 @@ const OrderHistory = () => {
                         handleOrderSuccess(order.order_id);
                       }
                     }}>
-                      <div className={findClassNames(order.order_status)}>
+                      <div className={findClassNames(order.order_status,order.delivery_status)}>
                         <div className='row'>
                           {/* <div className="col-md-3">
                             <img src="https://picsum.photos/500/200" className="img-fluid" alt="dummy" />
@@ -403,6 +406,10 @@ const OrderHistory = () => {
                                 (order.delivery_partner === partner.userid) ? <span>{'  '}{partner.name}</span> : <span>{' '}</span>
                               ))
                               }
+                            </p>
+                            <p>
+                              <strong >Cost Amount -</strong>{' '}
+                              <span>₹{order.costamount}</span>
                             </p>
                             <p>
                               <strong>Payment Mode -</strong>{' '}
