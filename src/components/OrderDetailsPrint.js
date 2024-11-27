@@ -9,6 +9,7 @@ const OrderDetailsPrint = () => {
   const [orderDetails, setOrderDetails] = useState([]);
   const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
   const navigate = useNavigate();
+  const [totalPrice, setTotalPrice] = useState(0);
   
   const fetchOrderDetails = async () => {
     try {
@@ -16,6 +17,13 @@ const OrderDetailsPrint = () => {
         `${process.env.REACT_APP_API_URL}orderdetails/${orderid}`
       );
       setOrderDetails(response.data);
+
+      let total = 0;
+      response.data.map(item => {
+        total = total + (item.price * item.quantity);
+      })
+      setTotalPrice(total);
+      
       const orderDetails = response.data;
       const totalOriginalMrp = orderDetails.reduce((total, item) => total + item.original_mrp, 0);
       settotalOriginalPrice(totalOriginalMrp)
@@ -147,13 +155,13 @@ const OrderDetailsPrint = () => {
                           <ul className='list-group text-custom-font-1'>
                             <li className='list-group-item text-success'>
                               <strong>
-                                Original Price - &#8377; {totalOriginalPrice}
+                                Original Price - &#8377; {totalPrice}
                               </strong>
                             </li>
                             <li className='list-group-item text-success'>
                               <strong>
                                 Discount Price - &#8377;{' '}
-                                {totalOriginalPrice - order.paymentamount}
+                                {totalPrice - order.paymentamount}
                               </strong>
                             </li>
                             <li className='list-group-item text-success'>
