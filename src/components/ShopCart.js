@@ -183,7 +183,7 @@ const ShopCart = () => {
       </section>
       
 
-      <section className='product-cart product footer-padding'>
+      {/* <section className='product-cart product footer-padding'>
         {loading && (
           <div
             style={{
@@ -200,7 +200,7 @@ const ShopCart = () => {
             />
           </div>
         )}
-        </section>
+        </section> */}
       <section className='product-cart product footer-padding'>
         {loading && (
           <div
@@ -330,7 +330,15 @@ const ShopCart = () => {
                 </tbody>
               </table>
             </div>
-
+            {localStorage.getItem('usertype') === 'admin' && cartItems.length === 0 && (
+              <div className = 'cart-section'> 
+                <img className='rounded mx-auto d-block'
+                src='../../assets/images/homepage-one/empty-cart.webp' 
+                /> 
+                <h4 className='text-center'>Cart is Empty</h4>    
+              </div>
+              )
+            }
               <div className='wishlist-btn cart-btn'>
                 <button
                 className='clean-btn shop-btn'
