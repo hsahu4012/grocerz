@@ -60,20 +60,11 @@ const OurTeam = () => {
       <div className='container'>
 
         {loading && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '50vh',
-            }}
-          >
-            <img
-              src={loaderGif}
-              alt='Loading...'
-              style={{ width: '80px', height: '80px' }}
-            />
-          </div>
+          <div className='loader-div'>
+          <img className='loader-img'
+            src={loaderGif}
+            alt='Loading...'/>
+        </div>
         )}
         {!loading && (
           <div className='row d-flex flex-wrap'>

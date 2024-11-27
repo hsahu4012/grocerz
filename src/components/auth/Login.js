@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DataAppContext } from '../../DataContext';
 import axios from 'axios';
 import Loader from '../loader/Loader';
+import loaderGif from '../../assets/images/loader.gif'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -116,7 +117,12 @@ const Login = () => {
     <>
       <section class='login product footer-padding'>
         <div class='container'>
-          {loading && <Loader />}
+          {loading && <div className='loader-div'>
+                                        <img className='loader-img'
+                                          src={loaderGif}
+                                          alt='Loading...'/>
+                                      </div>
+                                        }
           <Formik initialValues={initialValues} onSubmit={submitLogin}>
             {({ isSubmitting }) => (
               <Form class='login-section'>

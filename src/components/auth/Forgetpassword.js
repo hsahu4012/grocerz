@@ -3,6 +3,7 @@ import { Formik, Field, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Loader from '../loader/Loader';
+import loaderGif from '../../assets/images/loader.gif'
 
 const Forgetpassword = () => {
   const [loading, setLoading] = useState(false);
@@ -29,7 +30,11 @@ const Forgetpassword = () => {
     <>
       <section className='login product footer-padding'>
         <div className='container'>
-          {loading && <Loader />}
+          {loading && <div className='loader-div'>
+                                      <img className='loader-img'
+                                        src={loaderGif}
+                                        alt='Loading...'/>
+                                    </div>}
           <Formik
             initialValues={{ email: '' }}  
             onSubmit={handleSubmit}
