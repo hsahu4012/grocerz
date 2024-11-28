@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import temp_product_image from '../assets/products/p-img-29.webp';
-import Loader from './loader/Loader';
+// import Loader from './loader/Loader';
+import loaderGif from '../assets/images/loader.gif'
 import { ToastContainer, toast } from 'react-toastify';
 import Discount from './shared/Discount_tag';
 const Productlist = () => {
@@ -233,7 +234,13 @@ const Productlist = () => {
       <ToastContainer />
       <section className='shop spad product product-sidebar footer-padding'>
         <div className='container'>
-          {loading && <Loader />}
+          {loading && 
+            <div className='loader-div'>
+            <img className='loader-img'
+              src={loaderGif}
+              alt='Loading...'/>
+          </div>
+          }
           <div className='row'>
             <div className='col-lg-3'>
               <div className='sidebar' data-aos='fade-right'>
@@ -332,7 +339,7 @@ const Productlist = () => {
                           {product.stock_quantity >0 && (
                             <div className='product-cart-btn'>
                               <div className='row'>
-                                <div className='col-6'>
+                                <div className='col-6 w-75'>
                                   {isInCart(product.productid) ? (
                                     <Link
                                       to={'/cart'}
@@ -348,23 +355,12 @@ const Productlist = () => {
                                       type='button'
                                     >
                                       <span>
-                                        <svg
-                                          width='24'
-                                          height='23'
-                                          viewBox='0 0 24 23'
-                                          fill='none'
-                                          xmlns='http://www.w3.org/2000/svg'
-                                        >
-                                          <path
-                                            d='M16.1568 8.1772C16.0284 7.84626 15.7343 7.81766 14.2887 7.81766H13.0875V7.2947C13.0875 6.48165 12.9716 5.91374 12.6899 5.32949C12.1804 4.2713 11.3272 3.5318 10.2213 3.1886C9.68279 3.02517 8.87923 2.95572 8.39047 3.02926C7.03602 3.24172 5.88039 4.09562 5.29223 5.31315C5.00642 5.90966 4.89045 6.48165 4.89045 7.2947V7.82175H3.68511C2.23954 7.82175 1.94546 7.85035 1.81705 8.19354C1.75078 8.41008 1.12948 13.0637 0.864385 15.0697C0.632431 16.8184 0.417045 18.469 0.259648 19.711C-0.0137267 21.8519 -0.00544266 21.8846 0.00284141 21.9214V21.9255C0.0401198 22.0644 0.408761 22.428 0.520596 22.5342L1.00521 23H16.9438L17.3041 22.6854C17.4657 22.5424 18 22.0562 18 21.8152C18 21.6517 16.1899 8.27117 16.1568 8.1772ZM16.6911 21.5046C16.687 21.5332 16.6538 21.619 16.5958 21.6803L16.513 21.7702H1.46498L1.2496 21.5414L2.09871 15.2863C2.39694 13.0596 2.66203 11.1189 2.81943 9.95855C2.88984 9.45193 2.92298 9.19453 2.93955 9.06788C3.49872 9.06379 5.94252 9.0597 8.98278 9.0597H15.0302L15.0384 9.10465C15.1047 9.4315 16.6621 21.141 16.6911 21.5046ZM6.1372 7.82175V7.35598C6.1372 7.04139 6.17862 6.6083 6.22418 6.40811C6.46856 5.38669 7.30111 4.5573 8.34077 4.29173C8.77568 4.1855 9.48811 4.22228 9.92302 4.37753H9.92717C10.3828 4.5287 10.7556 4.77384 11.0994 5.14972C11.6544 5.74623 11.8408 6.28145 11.8408 7.27018V7.82175H6.1372Z'
-                                            fill='black'
-                                          />
-                                        </svg>
+                                        Add to Cart
                                       </span>
                                     </button>
                                   )}
                                 </div>
-                                <div className='col-6'>
+                                <div className='col-6 w-25'>
                                   {userid && (
                                     <button
                                       onClick={() =>

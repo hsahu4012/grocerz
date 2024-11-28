@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import Loader from './loader/Loader';
+// import Loader from './loader/Loader';
+import loaderGif from '../assets/images/loader.gif'
 import dress1 from '../assets/img/product/women/dress1.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -173,7 +174,25 @@ const ProductDetails = () => {
 
       <ToastContainer />
       <div class='product-info-section'>
-        {loading && <Loader />}
+        {loading && 
+          <div
+              style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '50vh',
+              }}
+              >
+              <img
+              src={loaderGif}
+              alt='Loading...'
+              style={{
+              width: '80px',
+              height: '80px',
+              }}
+              />
+            </div>
+        }
         <div class='row '>
           <div class='col-md-6'>
             <div class='product-info-img' data-aos='fade-right'>
