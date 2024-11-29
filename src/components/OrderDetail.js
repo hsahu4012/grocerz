@@ -5,6 +5,7 @@ import DashboardRoutes from './DashboardRoutes';
 import loaderGif from '../assets/images/loader.gif';
 import Modal from 'react-modal';
 import { ToastContainer, toast } from 'react-toastify';
+import hashedbitqr from '../assets/images/hashedbitqr.jpg';
 const OrderDetail = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [category, setCategory] = useState('');
@@ -369,27 +370,43 @@ const findClassNames = (order_status,delivery_status) => {
                         <strong>Order Number :</strong>{' '}
                         <span className='text-success'>{order.srno}</span>
                       </p>
-                      <div className='row my-5'>
-                        <div className='col-sm-12 text-custom-font-1'>
+                      <div className="row my-2">
+                        <div className="col-lg-8 col-md-7 col-sm-12"
+                        >
                           <div className='heading-custom-font-1'>
                             Shipping Address
                           </div>
+                          <p className="mb-2">
                           <strong>Name :</strong> {order.name}
-                          <p>
+                          </p>
+                          <p className="mb-2">
                             <strong>Address :</strong> {order.line1},{' '}
                             {order.city}
                           </p>
-                          <p>
+                          <p className="mb-2">
                             <strong>Landmark :</strong> {order.landmark}
                           </p>
+                          <p className="mb-2">
                           <span>
                             <strong>Contact: </strong>
                             {order.contact}, {order.alternatecontact}
                           </span>
+                          </p>
+                        </div>
+                        <div className="col-lg-4 col-md-5 col-sm-12 d-flex justify-content-end align-items-start pt-0 mt-0 ">
+                        <div className="pt-0 mt-0 ">
+                             <img
+                                src={hashedbitqr}
+                                alt="Shipping Preview"
+                                className="img-fluid rounded"
+                                width={175}
+                                height={175}
+                            />
+                        </div>
                         </div>
                       </div>
 
-                      <div className='row my-5'>
+                      <div className='row '>
                         <div className='col-sm-12'>
                           <div className='heading-custom-font-1'>
                             Bill Details
