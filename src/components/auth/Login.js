@@ -130,6 +130,12 @@ const Login = () => {
                   <div class='col-lg-6'>
                     <div class='login-form'>
                       <div class='review-form  box-shadows'>
+                      <div class='login-btn text-center my-1'>
+                            <a class='shop-btn'
+                             href="https://api.whatsapp.com/send?phone=918757499345&text=I would like to request login credentials">
+                            Get Login Credential From Whatsapp
+                            </a>                         
+                      </div>
                         <div class='d-flex justify-content-around mb-5'>
                           <span class='shop-account'>
                             Dont't have an account?
