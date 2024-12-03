@@ -35,7 +35,8 @@ const OrderPlaced = () => {
 
   useEffect(() => {
     if (!userid) {
-      navigate('/login');
+      //navigate('/login');
+      navigate(`/ordersuccess/${orderid}`);
       return;
     }
     window.scrollTo(0, 0);
