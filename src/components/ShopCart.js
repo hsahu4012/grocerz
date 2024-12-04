@@ -1,10 +1,9 @@
-import React, { useEffect, useId, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { DataAppContext } from '../DataContext';
 // import Loader from "./loader/Loader";
 import loaderGif from '../assets/images/loader.gif';
-
 const ShopCart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [message, setMessage] = useState('');
@@ -331,15 +330,16 @@ const ShopCart = () => {
               <img  src="assets/images/homepage-one/empty-cart.webp" width={400} height={400} alt="" />
               <h3 className='p-3'>Cart is Empty</h3>
             </div>
-            {localStorage.getItem('usertype') === 'admin' && cartItems.length === 0 && (
-              <div className = 'cart-section'> 
-                <img className='rounded mx-auto d-block'
-                src='../../assets/images/homepage-one/empty-cart.webp' 
-                /> 
-                <h4 className='text-center'>Cart is Empty</h4>    
-              </div>
-              )
-            }
+          }
+           {localStorage.getItem('usertype') === 'admin' && cartItems.length === 0 && (
+            <div className="cart-section">
+              <img 
+                className="rounded mx-auto d-block"
+                src="assets/images/homepage-one/empty-cart.webp" width={400} height={400} alt="" 
+              />
+              <h4 className="text-center">Cart is Empty</h4>
+            </div>
+          )}
               <div className='wishlist-btn cart-btn'>
                 <button
                 className='clean-btn shop-btn'
