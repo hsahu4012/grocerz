@@ -183,7 +183,7 @@ const ShopCart = () => {
       </section>
       
 
-      <section className='product-cart product footer-padding'>
+      {/* <section className='product-cart product footer-padding'>
         {loading && (
           <div className='loader-div'>
           <img className='loader-img'
@@ -191,7 +191,7 @@ const ShopCart = () => {
             alt='Loading...'/>
         </div>
         )}
-        </section>
+        </section> */}
       <section className='product-cart product footer-padding'>
         {loading && (
           <div
@@ -331,21 +331,28 @@ const ShopCart = () => {
               <img  src="assets/images/homepage-one/empty-cart.webp" width={400} height={400} alt="" />
               <h3 className='p-3'>Cart is Empty</h3>
             </div>
-          }
-
-            <div className='wishlist-btn cart-btn'>
-              <button
-              className='clean-btn shop-btn'
-              onClick={() => setIsModalOpen(true)}
-            >
-                Clear Cart
-              </button>
-              <button className='shop-btn'>Total - {totalCost}</button>
-              {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
-              <Link to='/checkout' className='shop-btn'>
-                Proceed to Checkout
-              </Link>
-            </div>
+            {localStorage.getItem('usertype') === 'admin' && cartItems.length === 0 && (
+              <div className = 'cart-section'> 
+                <img className='rounded mx-auto d-block'
+                src='../../assets/images/homepage-one/empty-cart.webp' 
+                /> 
+                <h4 className='text-center'>Cart is Empty</h4>    
+              </div>
+              )
+            }
+              <div className='wishlist-btn cart-btn'>
+                <button
+                className='clean-btn shop-btn'
+                onClick={() => setIsModalOpen(true)}
+              >
+                  Clear Cart
+                </button>
+                <button className='shop-btn'>Total - {totalCost}</button>
+                {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
+                <Link to='/checkout' className='shop-btn'>
+                  Proceed to Checkout
+                </Link>
+              </div>
             {message && <p>{message}</p>}
           </div>
         )}
