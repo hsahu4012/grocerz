@@ -174,7 +174,7 @@ const Wishlist = () => {
                           </tbody>
                         </table>
                       </div>
-                      <div className='wishlist-btn'>
+                      <div className='wishlist-btn mt-4'>
                         <Link onClick={handleCleanWishlist} className='shop-btn'>
                           Clean Wishlist
                         </Link>

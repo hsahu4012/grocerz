@@ -309,7 +309,7 @@ const ShopCart = () => {
                         className=' wishlist-btn cart-btn'
                         onClick={() => removeFromCart(item.productid)}
                       >
-                        <button onClick={() => removeFromCart} className='shop-btn remove' >Remove Now</button>
+                        <button onClick={() => removeFromCart} className='shop-btn remove clean-btn' >Remove Now</button>
                         <div>
                           <Link to='/checkout' className='shop-btn'>
                             Buy Now
@@ -327,7 +327,7 @@ const ShopCart = () => {
             </table>
           </div>
           {cartItems.length===0 && !loading && <div className='container d-flex flex-column justify-content-center align-items-center'>
-              <img  src="assets/images/homepage-one/empty-cart.webp" width={400} height={400} alt="" />
+              <img  src="assets/images/homepage-one/empty-cart.webp" width={150} height={150} alt="" />
               <h3 className='p-3'>Cart is Empty</h3>
             </div>
           }
@@ -335,12 +335,12 @@ const ShopCart = () => {
             <div className="cart-section">
               <img 
                 className="rounded mx-auto d-block"
-                src="assets/images/homepage-one/empty-cart.webp" width={400} height={400} alt="" 
+                src="assets/images/homepage-one/empty-cart.webp" width={150} height={150} alt="" 
               />
               <h4 className="text-center">Cart is Empty</h4>
             </div>
           )}
-              <div className='wishlist-btn cart-btn'>
+              <div className='wishlist-btn cart-btn mt-4'>
                 <button
                 className='clean-btn shop-btn'
                 onClick={() => setIsModalOpen(true)}

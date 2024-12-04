@@ -303,9 +303,9 @@ const ShopByBrand = () => {
                                 </button>
                               )}
                               </div>
-                              <div className='col-4 w-25'> 
+                              <div className='col-4 w-25 mt-4'> 
                               <button
-                                className='product-btn wishlist-btn mb-2'
+                                className='product-btn wishlist-btn'
                                 onClick={() => addToWishlist(product.productid)}
                               >
                                 <span>
@@ -327,7 +327,7 @@ const ShopByBrand = () => {
                               </div>
                               {usertype === 'admin' && (
                                 <button
-                                  className='product-btn mt-2'
+                                  className='product-btn pending-add-btn'
                                   type='button'
                                   onClick={() => {
                                     setShowPopup(true);

@@ -258,7 +258,7 @@ button {
 
 .product-wrapper {
   width: 100%;
-  height: 48rem;
+  height: 42rem;
   padding: 0 0 2rem 0;
   border-radius: 4px;
   background-color: #ffffff;
@@ -3882,7 +3882,7 @@ table .ticket-row:hover {
   align-items: center;
   justify-content: flex-end;
   gap: 2rem;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
 }
 .wishlist-btn .shop-btn {
   margin: 0;
@@ -5902,4 +5902,8 @@ table .ticket-row:hover {
     gap: 10px;
     padding-left: 10px;
   } */
+}
+
+.pending-add-btn {
+  padding: 0.3rem 1.6rem 0.3rem 1.6rem;
 }

@@ -387,18 +387,18 @@ const Productlist = () => {
                                   )}
                                 </div>
                               </div>
-                              <Link to="/checkout">
+                              {/* <Link to="/checkout">
                                 <button
                                   className='product-btn mb-2'
                                   type='button'
                                 >
                                   Buy Now
                                 </button>
-                              </Link>
+                              </Link> */}
                               {/* conditional buttons */}
                               {usertype === 'admin' && (
                                 <button
-                                  className='product-btn mt-2'
+                                  className='product-btn pending-add-btn'
                                   type='button'
                                   onClick={() => {
                                     setShowPopup(true);

@@ -178,7 +178,7 @@ const OrderDetailsPrint = () => {
                     )}
                     <div className='my-5'>
                       <h4 className='heading-custom-font-1'>Items List</h4>
-                      <div className='table-responsive'>
+                      <div className='table-responsive text-custom-font-1'>
                         <table className='table table-striped table-bordered'>
                           <thead className='bg-light'>
                             <tr>

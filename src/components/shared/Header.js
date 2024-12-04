@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { DataAppContext} from '../../DataContext';
+import { DataAppContext } from '../../DataContext';
 import logo from '../../assets/images/logo.png';
 import { marketCategory } from '../../utils/category';
 import axios from 'axios';
@@ -12,15 +12,15 @@ const Header = () => {
   const userid = localStorage.getItem('userid');
   const [searchText, setSearchText] = useState('');
   const { wishlistCount, updateWishlistCount } = useContext(DataAppContext);
-  const { cartCount, updateCartCount} = useContext(DataAppContext);
+  const { cartCount, updateCartCount } = useContext(DataAppContext);
   const [category, setCategory] = useState(marketCategory);
-  
+
   const [totalOrders, setTotalOrders] = useState(0);
   const userType = localStorage.getItem('usertype');
 
   useEffect(() => {
     if (userType === 'admin') {
-      fetchTotalOrders();
+      //fetchTotalOrders();
     }
   }, [userType]);
 
@@ -373,11 +373,11 @@ const Header = () => {
                 </button>
               </div>
 
-              {userType === 'admin' && (
-                  <div className="total-orders">
-                    <strong>Total Orders:</strong> <strong>{totalOrders}</strong>
-                  </div>
-                )}
+              {/* {userType === 'admin' && (
+                <div className="total-orders">
+                  <strong>Total Orders:</strong> <strong>{totalOrders}</strong>
+                </div>
+              )} */}
 
 
               <div class='header-cart-items'>

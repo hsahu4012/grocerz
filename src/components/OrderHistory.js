@@ -157,7 +157,10 @@ const OrderHistory = () => {
 
   const findClassNames = (order_status,delivery_status) => {
     if (order_status === 'COMPLETED' && delivery_status === 'DELIVERED') {
-      return 'card-body bg-opacity-25 bg-info';
+      return 'card-body bg-opacity-25 bg-success';
+    }
+    if (delivery_status === 'DELIVERED') {
+      return 'card-body bg-info bg-opacity-25';
     }
     if (order_status === 'Placed') {
       return 'card-body bg-warning bg-opacity-25';

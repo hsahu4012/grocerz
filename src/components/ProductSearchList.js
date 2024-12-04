@@ -169,7 +169,7 @@ const ProductSearchList = () => {
               {searchedProducts.length > 0 ? (
                 searchedProducts.map(product => (
                   <div
-                    className='col-lg-3 col-md-4 col-sm-6'
+                    className='col-xl-3 col-lg-3 col-md-4 col-sm-6'
                     key={product.productid}
                   >
                     <div className='product-wrapper' data-aos='fade-up'>
@@ -257,7 +257,7 @@ const ProductSearchList = () => {
                             </div>
                             {usertype === 'admin' && (
                               <button
-                                className='product-btn mt-2'
+                                className='product-btn pending-add-btn'
                                 type='button'
                                 onClick={() => {
                                   setShowPopup(true);
