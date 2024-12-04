@@ -534,3 +534,14 @@
   width: 80px;
   height: 80px,
 }
+.qr-image {
+  max-width: 175px;
+  max-height: 175px;
+  margin: 0 auto; 
+}
+
+@media (min-width: 768px) {
+  .qr-image {
+    margin-right: 0;
+  }
+}
