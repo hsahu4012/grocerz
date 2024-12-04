@@ -40,6 +40,7 @@ import Wishlist from './components/Wishlist';
 
 import OrderDetail from './components/OrderDetail';
 import OrderHistory from './components/OrderHistory';
+import OrderHistory2 from './components/OrderHistory2.js';
 import PaymentPage from './components/PaymentPage';
 import Dashboard from './components/Dashboard';
 import Productlist from './components/Productlist';
@@ -148,6 +149,7 @@ function App() {
             element={<OrderDetail />}
           />
           <Route path='/orderhistory' element={<OrderHistory />} />
+          <Route path='/orderhistory2' element={<OrderHistory2 />} />
           <Route
             path='/orderhistory/orderdetailsprint/:orderid/:usertype'
             element={<OrderDetailsPrint />}
