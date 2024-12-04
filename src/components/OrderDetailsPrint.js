@@ -4,6 +4,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes'; // Assuming you have this component
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
+import hashedbitqr from '../assets/images/hashedbitqr.jpg';
 const OrderDetailsPrint = () => {
   const { orderid, usertype ,invoice} = useParams();
   const [orderDetails, setOrderDetails] = useState([]);
@@ -145,7 +146,6 @@ const OrderDetailsPrint = () => {
                           </div>
                         </div>
                       )}
-
                       {usertype !== 'vendor' && (
                         <div className='row my-5'>
                         <div className='col-sm-12'>
@@ -160,7 +160,7 @@ const OrderDetailsPrint = () => {
                             </li>
                             <li className='list-group-item text-success'>
                               <strong>
-                                Discount Price - &#8377;{' '}
+                                Discount - &#8377;{' '}
                                 {totalPrice - order.paymentamount}
                               </strong>
                             </li>
@@ -176,7 +176,6 @@ const OrderDetailsPrint = () => {
                         </div>
                       </div>
                       )}
-
                       <div className="my-5">
                         <h4 className="heading-custom-font-1">Items List</h4>
                         <div className="table-responsive">
@@ -185,8 +184,8 @@ const OrderDetailsPrint = () => {
                               <tr>
                                 <th>#</th>
                                 <th>Product Name</th>
-                                <th>Original MRP</th>
                                 <th>Quantity</th>
+                                <th>Original MRP</th>
                                 <th>Discount</th>
                                 {usertype !== "vendor" && <th>Price</th>}
                               </tr>
@@ -200,9 +199,9 @@ const OrderDetailsPrint = () => {
                                 >
                                   <td><strong>{index + 1}</strong></td>
                                   <td><strong>{item.prod_name}</strong></td>
-                                  <td><strong>&#8377;&nbsp;{item.original_mrp}</strong></td>
                                   <td><strong>{item.quantity}</strong></td>
-                                  <td><strong>{item.totaldiscount}</strong></td>
+                                  <td><strong>&#8377;&nbsp;{item.original_mrp}</strong></td>
+                                  <td><strong>{item.original_mrp-item.price_final}</strong></td>
                                   {usertype !== "vendor" && (
                                     <td><strong>&#8377;&nbsp;{item.price_final}</strong></td>
                                   )}

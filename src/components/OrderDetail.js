@@ -615,10 +615,10 @@ const findClassNames = (order_status,delivery_status) => {
                                 <strong>Product Name</strong>
                               </div>
                               <div className="col-md-1">
-                                <strong>Original MRP</strong>
+                                <strong>Quantity</strong>
                               </div>
                               <div className="col-md-1">
-                                <strong>Quantity</strong>
+                                <strong>Original MRP</strong>
                               </div>
                               <div className="col-md-1">
                                 <strong>Discount</strong>
@@ -666,13 +666,15 @@ const findClassNames = (order_status,delivery_status) => {
                                 <div className='col-md-1'>
                                   <p>
                                     <strong>
-                                      &#8377;&nbsp;{item.price}
+                                      &#8377;&nbsp;{item.quantity}
                                     </strong>
                                   </p>
                                 </div>
                                 <div className='col-md-1'>
                                   <p>
-                                    <strong>{item.quantity}</strong>
+                                    <strong>
+                                      &#8377;&nbsp;{item.price}
+                                    </strong>
                                   </p>
                                 </div>
                                 <div className='col-md-1'>
