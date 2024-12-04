@@ -114,105 +114,116 @@ const OrderDetailsPrint = () => {
                 <div className='card'>
                   {order ? (
                     <div className='card-body'>
-                      <p>
-                        <strong>
-                          Order Date & Time :</strong> 
-                          <span className='text-success'>{' '}{order.order_date}{' '}
-                        {order.order_time.substring(0,4) + ' ' + order.order_time.substring(8,12).toUpperCase()}</span> | {' '}
-                        <strong>Order ID :</strong>{' '}
-                        <span className='text-success'>{order.order_id}</span>{' '}|{' '}
-                         <strong>Order Number :</strong>{' '}
-                         <span className='text-success'>{order.srno}</span>
-                      </p>
-
-                      {usertype !== 'vendor' && (
-                        <div className='row my-5'>
-                          <div className='col-sm-12 text-custom-font-1'>
-                            <div className='heading-custom-font-1'>
-                              Shipping Address
+                    <div className='row'>
+                      <div className='col-md-8'>
+                        <p>
+                          <strong>Order Date & Time :</strong>{' '}
+                          <span className='text-success'>
+                            {' '}
+                            {order.order_date}{' '}
+                            {order.order_time.substring(0, 4) +
+                              ' ' +
+                              order.order_time.substring(8, 12).toUpperCase()}
+                          </span>{' '}
+                          |{' '}
+                          <strong>Order ID :</strong>{' '}
+                          <span className='text-success'>{order.order_id}</span>{' '}|{' '}
+                          <strong>Order Number :</strong>{' '}
+                          <span className='text-success'>{order.srno}</span>
+                        </p>
+                        {usertype !== 'vendor' && (
+                          <div className='row my-5'>
+                            <div className='col-sm-12 text-custom-font-1'>
+                              <div className='heading-custom-font-1'>Shipping Address</div>
+                              <strong>Name :</strong> {order.name}
+                              <p>
+                                <strong>Address :</strong> {order.line1}, {order.city}
+                              </p>
+                              <p>
+                                <strong>Landmark :</strong> {order.landmark}
+                              </p>
+                              <span>
+                                <strong>Contact:</strong> {order.contact}, {order.alternatecontact}
+                              </span>
                             </div>
-                            <strong>Name :</strong> {order.name}
-                            <p>
-                              <strong>Address :</strong> {order.line1},{' '}
-                              {order.city}
-                            </p>
-                            <p>
-                              <strong>Landmark :</strong> {order.landmark}
-                            </p>
-                            <span>
-                              <strong>Contact: </strong>
-                              {order.contact}, {order.alternatecontact}
-                            </span>
                           </div>
-                        </div>
-                      )}
-                      {usertype !== 'vendor' && (
-                        <div className='row my-5'>
+                        )}
+                      </div>                  
+                      <div className='col-md-4 text-end'>
+                        <img
+                          src={hashedbitqr}
+                          alt='Shipping Preview'
+                          className='img-fluid rounded qr-image'
+                        />
+                      </div>
+                    </div>
+                    {usertype !== 'vendor' && (
+                      <div className='row my-5'>
                         <div className='col-sm-12'>
-                          <div className='heading-custom-font-1'>
-                            Bill Details
-                          </div>
+                          <div className='heading-custom-font-1'>Bill Details</div>
                           <ul className='list-group text-custom-font-1'>
                             <li className='list-group-item text-success'>
-                              <strong>
-                                Original Price - &#8377; {totalPrice}
-                              </strong>
+                              <strong>Original Price - &#8377; {totalPrice}</strong>
                             </li>
                             <li className='list-group-item text-success'>
-                              <strong>
-                                Discount - &#8377;{' '}
-                                {totalPrice - order.paymentamount}
-                              </strong>
+                              <strong>Discount - &#8377; {totalPrice - order.paymentamount}</strong>
                             </li>
                             <li className='list-group-item text-success'>
-                              <strong>
-                                Final Payment Amount - {order.paymentamount}
-                              </strong>
+                              <strong>Final Payment Amount - &#8377; {order.paymentamount}</strong>
                             </li>
-                            <li className='list-group-item'>
-                              Payment Mode - {order.paymentmode}
-                            </li>
+                            <li className='list-group-item'>Payment Mode - {order.paymentmode}</li>
                           </ul>
                         </div>
                       </div>
-                      )}
-                      <div className="my-5">
-                        <h4 className="heading-custom-font-1">Items List</h4>
-                        <div className="table-responsive">
-                          <table className="table table-striped table-bordered">
-                            <thead className="bg-light">
-                              <tr>
-                                <th>#</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Original MRP</th>
-                                <th>Discount</th>
-                                {usertype !== "vendor" && <th>Price</th>}
+                    )}
+                    <div className='my-5'>
+                      <h4 className='heading-custom-font-1'>Items List</h4>
+                      <div className='table-responsive'>
+                        <table className='table table-striped table-bordered'>
+                          <thead className='bg-light'>
+                            <tr>
+                              <th>#</th>
+                              <th>Product Name</th>
+                              <th>Quantity</th>
+                              <th>Original MRP</th>
+                              <th>Discount</th>
+                              {usertype !== 'vendor' && <th>Price</th>}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {orderDetails.map((item, index) => (
+                              <tr
+                                key={index}
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => handleProductClick(item.productid)}
+                              >
+                                <td>
+                                  <strong>{index + 1}</strong>
+                                </td>
+                                <td>
+                                  <strong>{item.prod_name}</strong>
+                                </td>
+                                <td>
+                                  <strong>{item.quantity}</strong>
+                                </td>
+                                <td>
+                                  <strong>&#8377;&nbsp;{item.original_mrp}</strong>
+                                </td>
+                                <td>
+                                  <strong>{item.original_mrp - item.price_final}</strong>
+                                </td>
+                                {usertype !== 'vendor' && (
+                                  <td>
+                                    <strong>&#8377;&nbsp;{item.price_final}</strong>
+                                  </td>
+                                )}
                               </tr>
-                            </thead>
-                            <tbody>
-                              {orderDetails.map((item, index) => (
-                                <tr
-                                  key={index}
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => handleProductClick(item.productid)}
-                                >
-                                  <td><strong>{index + 1}</strong></td>
-                                  <td><strong>{item.prod_name}</strong></td>
-                                  <td><strong>{item.quantity}</strong></td>
-                                  <td><strong>&#8377;&nbsp;{item.original_mrp}</strong></td>
-                                  <td><strong>{item.original_mrp-item.price_final}</strong></td>
-                                  {usertype !== "vendor" && (
-                                    <td><strong>&#8377;&nbsp;{item.price_final}</strong></td>
-                                  )}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
-
                     </div>
+                  </div>
                   ) : (
                     <p>No order found.</p>
                   )}
