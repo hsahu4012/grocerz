@@ -177,53 +177,42 @@ const OrderDetailsPrint = () => {
                       </div>
                       )}
 
-                      <div className='my-5'>
-                        <div className='heading-custom-font-1'>Items List</div>
-                        <div className='card mb-1'>
-                          <div className='card-body d-flex align-items-center bg-light'>
-                            <div className='col-sm-12 d-flex justify-content-between align-items-center'>
-                              <p><strong>#</strong></p>
-                              <p><strong>Product Name</strong></p>
-                              <p><strong>Quantity</strong></p>
-                              {usertype !== 'vendor' && <p><strong>Price</strong></p>}
-                            </div>
-                          </div>
-                        </div>
-                        {orderDetails.map((item, index) => {
-                          return (
-                            <div
-                              className='card mb-1'
-                              key={index}
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => handleProductClick(item.productid)}
-                            >
-                              <div className='card-body d-flex align-items-center'>
-                                {/* <div className="col-md-3">
-                                                                    <img src="https://picsum.photos/50" className="img-fluid" alt="dummy" />
-                                                                </div> */}
-                                <div className='col-sm-12 d-flex justify-content-between align-items-center'>
-                                  <p>
-                                    <strong>{index + 1}</strong>
-                                  </p>
-                                  <p>
-                                    <strong>{item.prod_name}</strong>
-                                  </p>
-                                  <p>
-                                    <strong>{item.quantity}</strong>
-                                  </p>
-                                  {usertype !== 'vendor' && (
-                                    <p>
-                                      <strong>
-                                        &#8377;&nbsp;{item.price_final}
-                                      </strong>
-                                    </p>
+                      <div className="my-5">
+                        <h4 className="heading-custom-font-1">Items List</h4>
+                        <div className="table-responsive">
+                          <table className="table table-striped table-bordered">
+                            <thead className="bg-light">
+                              <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Original MRP</th>
+                                <th>Quantity</th>
+                                <th>Discount</th>
+                                {usertype !== "vendor" && <th>Price</th>}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {orderDetails.map((item, index) => (
+                                <tr
+                                  key={index}
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => handleProductClick(item.productid)}
+                                >
+                                  <td><strong>{index + 1}</strong></td>
+                                  <td><strong>{item.prod_name}</strong></td>
+                                  <td><strong>&#8377;&nbsp;{item.original_mrp}</strong></td>
+                                  <td><strong>{item.quantity}</strong></td>
+                                  <td><strong>{item.totaldiscount}</strong></td>
+                                  {usertype !== "vendor" && (
+                                    <td><strong>&#8377;&nbsp;{item.price_final}</strong></td>
                                   )}
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
+
                     </div>
                   ) : (
                     <p>No order found.</p>
