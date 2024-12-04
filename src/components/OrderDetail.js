@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import hashedbitqr from '../assets/images/hashedbitqr.jpg';
 const OrderDetail = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [showDiscountPopup, setShowDiscountPopup] = useState(false);
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
@@ -34,8 +35,9 @@ const OrderDetail = () => {
   const [costPriceModal, setCostPriceModal] = useState(false);
   const [alertmodal, setAlertModal] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
-const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
-const [costAmount, setCostAmount] = useState(0);
+  const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
+  const [costAmount, setCostAmount] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
 
 const handleOrderClick = order_id => {
   navigate(`/orderhistory/orderdetail/${order_id}`);
@@ -175,6 +177,33 @@ const findClassNames = (order_status,delivery_status) => {
       console.error('Error fetching order details:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAddDiscount = async () => {
+    try {
+      setLoading(true);
+  
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}orders/updateDiscount/${orderid}`, {
+        totaldiscount: discountAmount,
+      });
+  
+      if (response.status === 200) {
+        toast.success('Discount applied successfully!');
+        await fetchOrderDetails();
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast.error(error.response.data.message);
+      } else if (error.response && error.response.status === 404) {
+        toast.error('Order not found!');
+      } else {
+        toast.error('Failed to apply discount!');
+      }
+      console.error('Error applying discount:', error);
+    } finally {
+      setLoading(false);
+      setShowDiscountPopup(false);
     }
   };
 
@@ -435,8 +464,10 @@ const findClassNames = (order_status,delivery_status) => {
                                 Final Payment Amount - {order.paymentamount}
                               </strong>
                             </li>
-                            <li className='list-group-item'>
-                              Payment Mode - {order.paymentmode}
+                            <li className='list-group-item text-success'>
+                              <strong>
+                                Payment Mode - {order.paymentmode}
+                              </strong>
                             </li>
                           </ul>
                         </div>
@@ -445,12 +476,20 @@ const findClassNames = (order_status,delivery_status) => {
                       <div className='my-5'>
                         <div className='heading-custom-font-1'>Items List</div>
                         {usertype === 'admin' && (
-                          <div
-                            className='shop-btn mx-1'
-                            onClick={() => setShowPopup(true)}
-                          >
-                            Add Product to existing order
-                          </div>
+                          <>
+                            <div
+                              className='btn shop-btn mx-1'
+                              onClick={() => setShowPopup(true)}
+                            >
+                              Add Product to existing order
+                            </div>
+                            <div
+                              className='btn shop-btn mx-4'
+                              onClick={() => setShowDiscountPopup(true)}
+                            >
+                              Provide Additional Discount
+                            </div>
+                          </>
                         )}
                         {showPopup && (
                           <div className='popup-overlay'>
@@ -550,10 +589,10 @@ const findClassNames = (order_status,delivery_status) => {
                                 />
                               )}
 
-                              <button className='' onClick={handleAddProduct}>
+                              <button className='btn shop-btn' onClick={handleAddProduct}>
                                 Add Product
                               </button>
-                              <button onClick={() => setShowPopup(false)}>
+                              <button className='btn shop-btn' onClick={() => setShowPopup(false)}>
                                 Close
                               </button>
                               {loading && (
@@ -774,10 +813,10 @@ const findClassNames = (order_status,delivery_status) => {
                                 </option>
                               ))}
                             </select>
-                            <button className='' onClick={fetchDeliveryPartner}>
+                            <button className='btn shop-btn' onClick={fetchDeliveryPartner}>
                               Add Delivery Partner
                             </button>
-                            <button
+                            <button className='btn shop-btn'
                               onClick={() => {
                                 setUserid('');
                                 setModal(!modal);
@@ -813,6 +852,39 @@ const findClassNames = (order_status,delivery_status) => {
                           </div>
                         </div>
                       )}
+                      {/* Add Discount Modal */}
+                      {showDiscountPopup && (
+                        <div className='popup-overlay'>
+                          <div className='popup-content'>
+                            <h3>Provide Additional Discount</h3>
+                            <input
+                              type='number'
+                              onChange={e => setDiscountAmount(parseFloat(e.target.value) || 0)}
+                              min='0'
+                              step='0.01'
+                              placeholder='Enter Discount Amount'
+                              style={{
+                                backgroundColor: '#f5f5f5',
+                                width: '100%',
+                                padding: '10px',
+                                marginBottom: '15px',
+                                border: '1px solid #ccc',
+                                borderRadius: '4px',
+                                fontSize: '15px',
+                              }}
+                            />
+                            <button className='btn shop-btn' onClick={handleAddDiscount}>
+                              Add Discount
+                            </button>
+                            <button className='btn shop-btn' onClick={() => setShowDiscountPopup(false)}>Close</button>
+                            {loading && (
+                              <div className='spinner-overlay'>
+                                <p className='spinner2'></p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
                       {/* Add cost price modal */}
                       {costPriceModal && (
                         <div className='popup-overlay'>
@@ -839,10 +911,10 @@ const findClassNames = (order_status,delivery_status) => {
                               }}
                             />
 
-                            <button className='' onClick={handleCostPriceAdd}>
+                            <button className='btn shop-btn' onClick={handleCostPriceAdd}>
                               Add Cost Amount
                             </button>
-                            <button onClick={() => setCostPriceModal(false)}>Close</button>
+                            <button className='btn shop-btn' onClick={() => setCostPriceModal(false)}>Close</button>
                             {loading && (
                               <div className='spinner-overlay'>
                                 <p className='spinner2'></p>
