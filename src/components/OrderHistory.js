@@ -352,21 +352,21 @@ const OrderHistory = () => {
 
                               {usertype === 'admin' && (
                                 <div className='order-actions'>
-                                  {!hidePaymentButtons[order.order_id] ? (
+                                  {(order.paymentmode === 'DUE - COD/QR/UPI') ? (
                                     <>
                                       <button
                                         id={`pay-cash-${order.order_id}`}
-                                        className='btn btn-warning'
-                                        onClick={() => handlePaymentModeChange(order.order_id, 'cash')}
+                                        className=' view-details-btn pay-button'
+                                        onClick={() => handlePaymentModeChange(order.order_id, 'Cash')}
                                       >
-                                        Pay in Cash
+                                        Cash
                                       </button>
                                       <button
                                         id={`pay-upi-${order.order_id}`}
-                                        className='btn btn-warning'
+                                        className=' view-details-btn pay-button'
                                         onClick={() => handlePaymentModeChange(order.order_id, 'UPI')}
                                       >
-                                        Pay by UPI
+                                        UPI
                                       </button>
                                     </>
                                   ) : null} {/* No message displayed after payment mode is selected */}

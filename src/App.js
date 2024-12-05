@@ -71,7 +71,7 @@ function App() {
   //temp code to keep server live
   // const callApiQsList = async () => {
   //   try {
-  //     const url = process.env.REACT_APP_API_URL + 'category/allCategory';
+  //     const url = process.env.REACT_APP_API_URL + 'settings/allsettings';
   //     const response = await axios.get(url);
   //   }
   //   catch (error) { console.log(error); }
@@ -80,6 +80,8 @@ function App() {
   // useEffect(() => {
   //   setInterval(() => callApiQsList(), 100000)
   // }, [])
+
+
   //temp code to keep server live
   // const App = () => {
   //   const [loading, setLoading] = useState(false);

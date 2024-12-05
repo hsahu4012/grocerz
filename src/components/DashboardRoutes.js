@@ -106,7 +106,7 @@ const DashboardRoutes = () => {
           </span>
           <span className='text'>Order</span>
         </Link>
-        <Link
+        {/* <Link
           to='/OrderHistory2'
           className={
             window.location.pathname === '/OrderHistory2'
@@ -128,7 +128,7 @@ const DashboardRoutes = () => {
             </svg>
           </span>
           <span className='text'>All Orders 2 </span>
-        </Link>
+        </Link> */}
         <Link
           to='/wishlist'
           className={

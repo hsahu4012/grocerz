@@ -491,6 +491,11 @@ button {
   z-index: 2;
 }
 
+.modal-wrapper {
+  margin-left: 33vw;
+  margin-top: 10vh;
+}
+
 .modal-wrapper .anywhere-away {
   position: fixed;
   top: 0;
@@ -5906,4 +5911,34 @@ table .ticket-row:hover {
 
 .pending-add-btn {
   padding: 0.3rem 1.6rem 0.3rem 1.6rem;
+}
+
+@media (max-width: 575px) {
+  .sidebar-section.box-shadows {
+    padding: 1rem 2rem;
+  }
+  .sidebar h3 {
+    text-align: center;
+  }
+  .sidebar-section .sidebar-wrapper .wrapper-heading {
+    margin-bottom: 2px;
+  }
+  .sidebar-section .sidebar-wrapper .sidebar-item .sidebar-list {
+    gap: 0.5rem;
+  }
+  .sidebar-section .sidebar-wrapper .sidebar-item .sidebar-list li {
+    background-color: #dddddd;
+  }
+  .wa-button-list-page {
+    margin: 1rem 0rem;
+  }
+
+  .modal-wrapper {
+    margin-left: 0vw;
+    margin-top: 0vh;
+  }
+
+  .login-section .review-form {
+    padding: 1rem;
+  }
 }

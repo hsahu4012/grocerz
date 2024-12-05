@@ -288,7 +288,7 @@ const Productlist = () => {
               <div class='login-btn'>
                 <button
                   onClick={connectwhatsapp}
-                  class='shop-btn shop-btn-full'
+                  class='shop-btn shop-btn-full wa-button-list-page'
                 >
                   If your product is not listed<br></br>Order on WhatsApp
                 </button>

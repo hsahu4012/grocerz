@@ -192,7 +192,7 @@ function Checkout() {
     const cartData = cartItems.map(item => ({
       productid: item.productid,
       quantity: item.quantity,
-      original_mrp:Number(item.price) * item.quantity,
+      original_mrp: Number(item.price) * item.quantity,
       price_final:
         Number(item.price) * item.quantity -
         Number(item.discount) * item.quantity,
@@ -224,7 +224,7 @@ function Checkout() {
         orderData
       );
       if (orderResponse.data.status === 'success') {
-        const orderId=orderResponse.data.orderid;
+        const orderId = orderResponse.data.orderid;
         // console.log('Order placed successfully.');
         const soldProductData = cartData.map(item => ({
           productid: item.productid,
@@ -359,13 +359,14 @@ function Checkout() {
 
   return (
     <>
+
       <section className='blog about-blog'>
         <div className='container'>
-          {/* {loading && <Loader />}
-                    <div className="blog-heading about-heading">
-                        <h1 className="heading">Checkout</h1>
-                        <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
-                    </div> */}
+          {/* {loading && <Loader />} */}
+          <div className="blog-heading about-heading">
+            <h1 className="heading">Checkout</h1>
+            {/* <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} /> */}
+          </div>
           {loading && (
             <div
               style={{
@@ -464,16 +465,14 @@ function Checkout() {
                           <div
                             className='modal-wrapper'
                             style={{
-                              display: isModalOpen ? 'block' : 'none',
-                              marginLeft: '33vw',
-                              marginTop: '10vh',
+                              display: isModalOpen ? 'block' : 'none'
                             }}
                           >
                             <div
                               className='anywhere-away'
                               onClick={modalAction}
                             ></div>
-                            <div className='login-section account-section modal-main col-4'>
+                            <div className='login-section account-section modal-main'>
                               <div className='review-form'>
                                 <div
                                   className='review-content'
@@ -536,7 +535,7 @@ function Checkout() {
                                       onChange={handleChange}
                                     />
                                   </div>
-                                  <div className='review-form-name'>
+                                  {/* <div className='review-form-name'>
                                     <label
                                       htmlFor='alternatephone'
                                       className='form-label'
@@ -551,7 +550,7 @@ function Checkout() {
                                       placeholder='Alternate Contact'
                                       onChange={handleChange}
                                     />
-                                  </div>
+                                  </div> */}
                                 </div>
                                 <div className='account-inner-form'>
                                   <div className='review-form-name'>
@@ -642,7 +641,7 @@ function Checkout() {
                                     />
                                   </div>
 
-                                  <div className='review-form-name'>
+                                  {/* <div className='review-form-name'>
                                     <label
                                       htmlFor='country'
                                       className='form-label'
@@ -659,7 +658,7 @@ function Checkout() {
                                       onChange={handleChange}
                                       disabled
                                     />
-                                  </div>
+                                  </div> */}
                                 </div>
                                 <div className='login-btn text-center'>
                                   <button
@@ -686,7 +685,7 @@ function Checkout() {
                     <div className="apply-coupon-section">
                       <h5 className="wrapper-heading">Apply Coupon</h5>
                       <div className="row mb-3 text-custom-font-1">
-                        <div className="col-6">
+                        {/* <div className="col-6">
                           <input
                             type="text"
                             className="form-control"
@@ -703,7 +702,7 @@ function Checkout() {
                           >
                             Verify Code
                           </button>
-                        </div>
+                        </div> */}
                         <div className="col-12">
                           {isCouponApplied && (
                             <div className="alert alert-success mt-2" role="alert">
