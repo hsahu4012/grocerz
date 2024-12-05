@@ -5,7 +5,7 @@
 5) deploy on server | delete old files, upload and unzip
 PROD - https://www.grocji.com/
 DEV - 
-6) also cut and keep the zip folder in deployed on local repo
+6) also cut and keep the zip folder in deployed on local repo, upload on hb gmail 2 drive
 7) revert local changes of env and app.js
 8) update changelog and commit to master
 9) test on live

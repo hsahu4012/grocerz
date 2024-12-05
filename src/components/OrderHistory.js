@@ -127,14 +127,14 @@ const OrderHistory = () => {
         ...prevState,
         [orderId]: true,
       }));
-      
+
       fetchOrders();
     } catch (error) {
       console.error('Error updating payment mode', error);
     }
     setLoading(false);
   };
-  
+
 
   const fetchDeliveryPartnerName = async () => {
     try {
@@ -155,7 +155,7 @@ const OrderHistory = () => {
   //   fetchDeliveryPartnerName();
   // }, [fetchDeliveryPartnerName]);
 
-  const findClassNames = (order_status,delivery_status) => {
+  const findClassNames = (order_status, delivery_status) => {
     if (order_status === 'COMPLETED' && delivery_status === 'DELIVERED') {
       return 'card-body bg-opacity-25 bg-success';
     }
@@ -197,23 +197,23 @@ const OrderHistory = () => {
                 <h3>All Orders</h3>
                 {loading ? (
                   <div className='loader-div'>
-                  <img className='loader-img'
-                    src={loaderGif}
-                    alt='Loading...'/>
-                </div>
+                    <img className='loader-img'
+                      src={loaderGif}
+                      alt='Loading...' />
+                  </div>
                 ) : orders.length > 0 ? (
                   orders.map((order, index) => (
 
                     <div key={index} className='card mt-3'
-                    style={{
-                      cursor:  usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED' ? 'pointer' : 'default'
-                    }}
-                    onClick={() => {
-                      if ( usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED') {
-                        handleOrderSuccess(order.order_id);
-                      }
-                    }}>
-                      <div className={findClassNames(order.order_status,order.delivery_status)}>
+                      style={{
+                        cursor: usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED' ? 'pointer' : 'default'
+                      }}
+                      onClick={() => {
+                        if (usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED') {
+                          handleOrderSuccess(order.order_id);
+                        }
+                      }}>
+                      <div className={findClassNames(order.order_status, order.delivery_status)}>
                         <div className='row'>
                           {/* <div className="col-md-3">
                             <img src="https://picsum.photos/500/200" className="img-fluid" alt="dummy" />
@@ -341,7 +341,7 @@ const OrderHistory = () => {
                                   <button
                                     className='view-details-btn'
                                     onClick={(event) => {
-                                      preventClickPropagation(event); 
+                                      preventClickPropagation(event);
                                       handleOrderClick(order.order_id)
                                     }}
                                   >
@@ -352,7 +352,7 @@ const OrderHistory = () => {
 
                               {usertype === 'admin' && (
                                 <div className='order-actions'>
-                                  {(order.paymentmode === 'DUE - COD/QR/UPI') ? (
+                                  {(order.paymentmode === 'DUE - COD/QR/UPI' && order.delivery_status !== 'CANCELLED') ? (
                                     <>
                                       <button
                                         id={`pay-cash-${order.order_id}`}

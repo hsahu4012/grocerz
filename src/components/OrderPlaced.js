@@ -34,11 +34,11 @@ const OrderPlaced = () => {
   };
 
   useEffect(() => {
-    if (!userid) {
-      //navigate('/login');
-      navigate(`/ordersuccess/${orderid}`);
-      return;
-    }
+    // if (!userid) {
+    //   navigate('/login');
+    //   navigate(`/ordersuccess/${orderid}`);
+    //   return;
+    // }
     window.scrollTo(0, 0);
     fetchOrderDetails();
   }, [orderid, userid, navigate]);
