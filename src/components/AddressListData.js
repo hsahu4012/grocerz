@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { act, useEffect, useState } from 'react';
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
 const AddressListData = () => {
-
     const userid = localStorage.getItem('userid');
     const [addresses, setAddresses] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
     const [id, setId] = useState(0);
+    const[error, setError] = useState('');
     const [formData, setFormData] = useState({
         name: "",
         line1: "",
@@ -20,7 +21,10 @@ const AddressListData = () => {
         contact: "",
         alternatecontact: "",
     })
-
+    const [originalFormData, setOriginalFormData] = useState(null);
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+    const [actionType, setActionType] = useState('');
+    const [isNotFoundModalOpen, setIsNotFoundModalOpen] = useState(false);
     const fetchAddresses = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}address/getByuserId/${userid}`);
@@ -56,23 +60,88 @@ const AddressListData = () => {
                 contact: "",
                 alternatecontact: "",
             })
+            setOriginalFormData(null);
         }
-        console.log(document.body.style.overflow)
+        // console.log(document.body.style.overflow)
     };
+    // const handleDelete = async () => {
+    //     try {
+    //         const confirmed = window.confirm("Are you sure you want to delete this address?");
+    //         if (confirmed) {
+    //             await axios.put(`${process.env.REACT_APP_API_URL}address/deleteAddress/${id}`);
+    //             modalAction();
+    //             fetchAddresses();
+    //             setId(0);
+    //         }
+    //     } catch (err) {
+    //         console.log(err);
+    //     }   
+    // };
 
     const handleDelete = async () => {
+        try{
+            await axios.put(`${process.env.REACT_APP_API_URL}address/deleteAddress/${id}`);
+            modalAction();
+            fetchAddresses();
+            setId(0);
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
+    const handleUpdate = async () => {
+        if(
+            formData.name.trim() === "" ||
+            formData.line1.trim() === "" ||
+            formData.city.trim() === "" ||
+            formData.state.trim() === "" ||
+            formData.country.trim() === "" ||
+            formData.pin.trim() === "" ||
+            formData.contact.trim() === ""
+        ){
+            setAlertMessage("Please fill in all mandatory fields.");
+            setIsAlertModalOpen(true);
+            return;
+        }
+        if(JSON.stringify(formData) === JSON.stringify(originalFormData)){
+            setIsNotFoundModalOpen(true);
+            return;
+        }
+
+        // Check if pin code is a number
+        if (isNaN(formData.pin.trim())) {
+            setAlertMessage("Pin code must be a number.");
+            setIsAlertModalOpen(true);
+            return;
+        }
+        
+
+        // Check if contact numbers are 10 digits
+        if (
+            !/^\d{10}$/.test(formData.contact.trim()) ||
+            (formData.alternatecontact.trim() !== '' && !/^\d{10}$/.test(formData.alternatecontact.trim()))
+        ) {
+            setAlertMessage("Contact numbers must be 10 digits.");
+            setIsAlertModalOpen(true);
+            return;
+        }
+       
+        openConfirmationModal("update")
+    };
+    const handleUpdateRequest = async ()=>{
         try {
-            const confirmed = window.confirm("Are you sure you want to delete this address?");
-            if (confirmed) {
-                await axios.put(`${process.env.REACT_APP_API_URL}address/deleteAddress/${id}`);
-                modalAction();
-                fetchAddresses();
-                setId(0);
-            }
+            const response= await axios.put(`${process.env.REACT_APP_API_URL}address/updateAddress/${id}`, formData);
+            modalAction();
+            fetchAddresses();
+            setId(0);
         } catch (err) {
             console.log(err);
         }
-    };
+    }
+            
+        
+        
 
     const getDetails = async (addressid) => {
         try {
@@ -89,6 +158,17 @@ const AddressListData = () => {
                 contact: data.contact,
                 alternatecontact: data.alternatecontact
             });
+            setOriginalFormData({
+                name: data.name,
+                line1: data.line1,
+                landmark: data.landmark,
+                city: data.city,
+                state: data.state,
+                country: data.country,
+                pin: data.pin,
+                contact: data.contact,
+                alternatecontact: data.alternatecontact
+            })
         } catch (err) {
             console.log(err);
         }
@@ -96,68 +176,119 @@ const AddressListData = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        if((name === "contact" || name === "alternatecontact") && !/^\d*$/.test(value) ){
+            setAlertMessage("Please enter a valid contact number.");
+            setIsAlertModalOpen(true);
+            return;
+        }
         setFormData((prevState) => ({
             ...prevState,
             [name]: value,
         }));
     };
 
+    const closeAlertModal = () => {
+        setIsAlertModalOpen(false);
+        setAlertMessage('');
+    };
+
     const fillpindetails = () => {
-        // if(pin === "0000")
-             {
-            setFormData((prevState) => ({
+        if(formData.pin === '848210'){
+            setError('');
+            setFormData(prevState => ({
                 ...prevState,
-                city: "test", 
-                state: "test",
-                country: "test",   
+                city: 'Rosera',
+                state: 'Bihar',
+                country: 'India',
             }))
+        }else{
+           setAlertMessage("Sorry! We do not serve in this area.");
+           setIsAlertModalOpen(true);
         }
+
+        // if(pin === "0000")
+        //      {
+        //     setFormData((prevState) => ({
+        //         ...prevState,
+        //         city: "test", 
+        //         state: "test",
+        //         country: "test",   
+        //     }))
+        // }
     }
 
-    const handleUpdate = async () => {
-        if (
-            formData.name.trim() === "" ||
-            formData.line1.trim() === "" ||
-            formData.city.trim() === "" ||
-            formData.state.trim() === "" ||
-            formData.country.trim() === "" ||
-            formData.pin.trim() === "" ||
-            formData.contact.trim() === ""
+    // const handleUpdate = async () => {
+    //     if (
+    //         formData.name.trim() === "" ||
+    //         formData.line1.trim() === "" ||
+    //         formData.city.trim() === "" ||
+    //         formData.state.trim() === "" ||
+    //         formData.country.trim() === "" ||
+    //         formData.pin.trim() === "" ||
+    //         formData.contact.trim() === ""
       
-          ) {
-            alert("Please fill in all mandatory fields.");
-            return;
-          }
+    //       ) {
+    //         alert("Please fill in all mandatory fields.");
+    //         return;
+    //       }
       
-          // Check if pin code is a number
-          if (isNaN(formData.pin.trim())) {
-            alert("Pin code must be a number.");
-            return;
-          }
+    //       // Check if pin code is a number
+    //       if (isNaN(formData.pin.trim())) {
+    //         alert("Pin code must be a number.");
+    //         return;
+    //       }
       
-          // Check if contact numbers are 10 digits
-          if (
-            !/^\d{10}$/.test(formData.contact.trim())
-            //!/^\d{10}$/.test(formData.alternatecontact.trim())
-          ) {
-            alert("Contact numbers must be 10-digit numbers.");
-            return;
-          }
-        try {
-            const confirm = window.confirm("Are you sure you want to update this address?");
-            if (confirm) {
-            const response = await axios.put(`${process.env.REACT_APP_API_URL}address/updateAddress/${id}`, formData);
-            modalAction();
-            fetchAddresses();
-            setId(0);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    //       // Check if contact numbers are 10 digits
+    //       if (
+    //         !/^\d{10}$/.test(formData.contact.trim())
+    //         //!/^\d{10}$/.test(formData.alternatecontact.trim())
+    //       ) {
+    //         alert("Contact numbers must be 10-digit numbers.");
+    //         return;
+    //       }
+    //       if(formData.alternatecontact.trim() !== '' && !/^\d{10}$/.test(formData.alternatecontact.trim())){
+    //         alert("Alternate contact numbers must be 10-digit numbers.");
+    //         return;
+    //       }
+    //     try {
+    //         const confirm = window.confirm("Are you sure you want to update this address?");
+    //         if (confirm) {
+    //         const response = await axios.put(`${process.env.REACT_APP_API_URL}address/updateAddress/${id}`, formData);
+    //         modalAction();
+    //         fetchAddresses();
+    //         setId(0);
+    //         }
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
     useEffect(() => {
         fetchAddresses()
     }, [])
+
+    const openConfirmationModal = (actionType) => {
+        setActionType(actionType);
+        setIsConfirmModalOpen(true);
+    }
+
+    const closeConfirmationModal = () => {
+        setIsConfirmModalOpen(false);
+        setActionType('');
+    }
+
+    const closeNotFoundModal = () => {
+        setIsNotFoundModalOpen(false);
+    }
+
+    const confirmAction = () => {
+        if (actionType === 'delete') {
+            handleDelete();
+        }else if (actionType === 'update') {
+            handleUpdateRequest();
+        }
+        closeConfirmationModal();
+        
+    }
 
     return (
         <>
@@ -174,8 +305,7 @@ const AddressListData = () => {
                 </div> */}
 
 
-               <div className="col-lg-12 container">
-                <h5>Saved Addresses</h5>
+               <div className="col-lg-12 container">               
                 <div className='row card-deck '>
                 {
                     addresses.map((address, index) => (
@@ -194,7 +324,6 @@ const AddressListData = () => {
                         </>
                     ))
                 }
-
                 {/* Edit address-modal */}
                 <div className={`modal-wrapper submit ${isModalOpen ? 'active' : ''}`}>
                     <div onClick={modalAction} className="anywhere-away"></div>
@@ -255,13 +384,42 @@ const AddressListData = () => {
                                 </div>
                             </div>
                             <div className='account-inner-form' style={{ marginTop: "15px" }}>
-                                <button type="button" class="btn btn-danger" style={{ fontSize: "2.5rem" }} onClick={handleDelete}>Delete</button>
+                                <button type="button" class="btn btn-danger" style={{ fontSize: "2.5rem" }} onClick={()=>openConfirmationModal("delete")}>Delete</button>
                                 <button type="button" class="btn btn-success" style={{ fontSize: "2.5rem" }} onClick={handleUpdate}>Update</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* Modal ends here */}
+
+                {isAlertModalOpen && (
+                    <div className='popup-overlay'>
+                        <div className='popup-content'>
+                            <h3>{alertMessage}</h3>
+                            <button type="button" className="btn btn-primary btn-lg " onClick={closeAlertModal}>Ok</button>
+                        </div>
+                    </div>
+                    )}
+
+                    {isConfirmModalOpen && (
+                        <div className='popup-overlay'>
+                            <div className='popup-content'>
+                                <h3>
+                                    {actionType === 'update' ? 'Are you sure you want to update this address?' : 'Are you sure you want to delete this address?'}
+                                </h3>
+                                <button type="button" className="btn btn-danger btn-lg me-3 " onClick={confirmAction}>Yes</button>
+                                <button type="button" className="btn btn-secondary btn-lg" onClick={closeConfirmationModal}>No</button>
+                            </div>
+                        </div>
+                        )}
+                        {isNotFoundModalOpen && (
+                            <div className='popup-overlay'>
+                                <div className='popup-content'>
+                                    <h3>No changes were made to the address</h3>
+                                    <button type="button" className="btn btn-primary btn-lg " onClick={closeNotFoundModal}>Ok</button>
+                                </div>
+                            </div>
+                            )}
+                {/* Modal ends here */} 
 
             </div>
         </div>
@@ -269,9 +427,6 @@ const AddressListData = () => {
     </div>
     </div>
     </>
-    )
-
+  );
 }
-export default AddressListData
-
- 
+export default AddressListData;
