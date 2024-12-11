@@ -38,7 +38,7 @@ const Contact = () => {
         message: '',
       });
     } catch (error) {
-      console.error('Error sending data:', error);
+      // console.error('Error sending data:', error);
     }
   };
 
@@ -47,6 +47,26 @@ const Contact = () => {
     const message = `Hi.`;
     const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
     window.open(whatsappLink, '_blank').focus();
+  };
+  const [currentPhoneIndex, setCurrentPhoneIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const phoneNumbers = ['+918757499345', '+918757499344'];
+  const handlePhoneClick = () => {
+    setShowModal(true); // Show the modal
+  };
+  const proceedWithCall = () => {
+    const currentNumber = phoneNumbers[currentPhoneIndex];
+    window.location.href = `tel:${currentNumber}`;
+
+    // Update index for next click (wrap around if at the end)
+    const newIndex = (currentPhoneIndex + 1) % phoneNumbers.length;
+    setCurrentPhoneIndex(newIndex);
+    setShowModal(false);
+  };
+
+  const handleEmailClick = () => {
+    const emailAddress = 'grocji@gmail.com';
+    window.location.href = `mailto:${emailAddress}`;
   };
 
   return (
@@ -201,7 +221,11 @@ const Contact = () => {
                     <div class='contact-wrapper'>
                       <div class='row gy-5'>
                         <div class='col-sm-6'>
-                          <div class='wrapper phone'>
+                          <div
+                            class='wrapper phone'
+                            role='button'
+                            onClick={handlePhoneClick}
+                          >
                             <div class='wrapper-img'>
                               <span>
                                 <svg
@@ -247,7 +271,11 @@ const Contact = () => {
                           </div>
                         </div>
                         <div class='col-sm-6'>
-                          <div class='wrapper phone'>
+                          <div
+                            class='wrapper phone'
+                            role='button'
+                            onClick={handleEmailClick}
+                          >
                             <div class='wrapper-img'>
                               <span>
                                 <svg
@@ -458,6 +486,22 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      {/* Modal */}
+      {showModal && (
+        <div className="modal fade show" tabIndex="-1" style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+        <div className="modal-dialog modal-dialog-centered"> 
+          <div className="modal-content">
+            <div className="modal-body">
+              <p className="text-dark fs-3">Do you want to proceed with the call?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-primary fs-3" onClick={proceedWithCall}>Confirm</button>
+              <button type="button" className="btn btn-danger fs-3" onClick={()=>setShowModal(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      )}
     </>
   );
 };
