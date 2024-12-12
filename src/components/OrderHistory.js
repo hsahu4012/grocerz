@@ -5,6 +5,9 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
 import loaderGif from '../assets/images/loader.gif';
+
+import { FcNext } from "react-icons/fc";
+
 const OrderHistory = () => {
   const userid = localStorage.getItem('userid');
   const usertype = localStorage.getItem('usertype');
@@ -12,6 +15,27 @@ const OrderHistory = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [deliverypartners, setDeliveryPartners] = useState([]);
+
+  const [size,setSize] = useState(10)
+  const [array, setArray] = useState(() => Array(10).fill(undefined));
+  const [start,setStart] = useState(0)
+  const [end,setEnd] = useState(10)
+  const [upper,setUpper] = useState(10)
+
+  useEffect(() => {
+    console.log("useEffect = ",array); 
+    setArray(orders.slice(start,end))
+    setUpper(start+array.length)
+  },[start,end]) 
+  useEffect(() => {
+    setUpper(start+array.length)
+  },[array]) 
+  useEffect(() => {
+    if (orders.length > 0) {
+      setArray(orders.slice(0, 10));
+    }
+  }, [orders]);
+
   const handleOrderClick = orderid => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
   };
@@ -99,6 +123,8 @@ const OrderHistory = () => {
         `${process.env.REACT_APP_API_URL}${url}`
       );
       setOrders(response.data);
+      setArray(orders.slice(0,10)) 
+      // console.log("array in start = ",array); 
     } catch (error) {
       console.error('Error fetching cart items', error);
     }
@@ -174,6 +200,37 @@ const OrderHistory = () => {
     return 'card-body bg-warning bg-opacity-25';
   };
 
+  async function handlePrev()
+  {
+    if(start==0 ) return
+
+    setStart(start-size)
+    setEnd(end-size)
+
+    console.log(array);
+  }
+
+
+  async function handleNext()
+  {
+    if(end==orders.length) return 
+    if(end+size>orders.length)
+    {
+      if(end>orders.length || end==orders.length) return 
+
+      setEnd(end+size)
+      setStart(start+size)
+    }
+    else
+    {
+      setEnd(end+size)
+      setStart(start+size)
+    }
+
+ 
+    console.log(array);
+  }
+
   return (
     <>
       <section className='blog about-blog'>
@@ -194,7 +251,44 @@ const OrderHistory = () => {
             <div className='user-dashboard'>
               <DashboardRoutes />
               <div className='container'>
-                <h3>All Orders</h3>
+                <div className='d-flex justify-content-between'>
+                  <div>
+                    <h3>
+                      All Orders
+                    </h3>
+                  </div>
+                  <div className='fs-3'> 
+                    {start+1} - {upper}
+                  </div>
+                  <div className='d-flex gap-4'>
+                    <div>
+                      {start===0 ? 
+                      (
+                        <div></div>
+                      )
+                      : 
+                      (
+                        <button onClick={handlePrev} className='btn btn-primary fs-3'>
+                          prev
+                        </button>
+                      ) 
+                      }
+                      
+                    </div>
+                    <div>
+                      {end>=orders.length ? 
+                      (
+                        <div></div>
+                      ) : 
+                      (
+                        <button onClick={handleNext} className='btn btn-primary fs-3'>
+                          next
+                        </button>
+                      )
+                      }
+                    </div>
+                  </div>
+                </div>
                 {loading ? (
                   <div className='loader-div'>
                     <img className='loader-img'
@@ -202,11 +296,10 @@ const OrderHistory = () => {
                       alt='Loading...' />
                   </div>
                 ) : orders.length > 0 ? (
-                  orders.map((order, index) => (
-
-                    <div key={index} className='card mt-3'
+                  array.map((order, index) => (
+                    <div key={index} className='card mt-3  h-50vh overflow-y-auto'
                       style={{
-                        cursor: usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED' ? 'pointer' : 'default'
+                        cursor: usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED' ? 'pointer' : 'default',
                       }}
                       onClick={() => {
                         if (usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED') {
@@ -417,6 +510,7 @@ const OrderHistory = () => {
                 ) : (
                   <p>No orders found.</p>
                 )}
+                
               </div>
             </div>
           </div>
