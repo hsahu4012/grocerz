@@ -183,7 +183,6 @@ const ProductCard = ({ product, isInCart }) => {
                   Buy Now
                 </button>
               </Link>
-              {/* conditional buttons */}
               {usertype === 'admin' && (
                 <button
                   className='product-btn pending-add-btn'
