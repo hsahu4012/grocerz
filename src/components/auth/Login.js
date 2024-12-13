@@ -135,17 +135,6 @@ const Login = () => {
                             Get Login Credential From Whatsapp
                             </a>                         
                       </div>
-                        <div class='d-flex justify-content-around mb-5'>
-                          <span class='shop-account'>
-                            Dont't have an account?
-                            <Link to='/register'>
-                              {' '}
-                              <button class='btn btn-warning btn-lg ps-5  ps-5 pe-5   '>
-                                Register
-                              </button>
-                            </Link>
-                          </span>
-                        </div>
                         <div class='review-form-text'>
                           <h5 class='comment-title'>Log In</h5>
                           <img
@@ -202,10 +191,17 @@ const Login = () => {
                           >
                             Log In
                           </button>
+                          <div class='d-flex justify-content-around mb-5'>
                           <span class='shop-account'>
-                            Dont't have an account ?
-                            <Link to='/register'>Sign Up Free</Link>
+                            Dont't have an account?
+                            <Link to='/register'>
+                              {' '}
+                              <button class='btn btn-warning btn-lg ps-5  ps-5 pe-5   '>
+                                Register
+                              </button>
+                            </Link>
                           </span>
+                        </div>
                         </div>
                       </div>
                     </div>
