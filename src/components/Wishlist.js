@@ -127,7 +127,10 @@ const Wishlist = () => {
                       <div className='cart-section wishlist-section'>
                         <table>
                           <tbody>
-                            <tr className='table-row table-top-row'>
+                            <tr className='table-row table-top-row '>
+                              <td className='table-wrapper wrapper-product '>
+                                <h5 className=' table-heading text-center'>Sr.No</h5>
+                              </td>
                               <td className='table-wrapper wrapper-product'>
                                 <h5 className='table-heading'>PRODUCT</h5>
                               </td>
@@ -144,6 +147,13 @@ const Wishlist = () => {
                             </tr>
                             {wishlistItems.map((item, index) => (
                               <tr key={index} className='table-row ticket-row'>
+                                <td className='table-wrapper wrapper-product'>
+                                  <div className='wrapper'>
+                                    <div className='wrapper-content text-center'>
+                                      <h5 className='heading'>{index + 1}</h5>
+                                    </div>
+                                  </div>
+                                </td>
                                 <td className='table-wrapper wrapper-product'>
                                   <div className='wrapper'>
                                     <div className='wrapper-img'>
