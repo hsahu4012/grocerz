@@ -325,100 +325,109 @@ const AddressListData = () => {
                     ))
                 }
                 {/* Edit address-modal */}
-                <div className={`modal-wrapper submit ${isModalOpen ? 'active' : ''}`}>
-                    <div onClick={modalAction} className="anywhere-away"></div>
-                    <div className="login-section account-section modal-main">
-                        <div className="review-form">
-                            <div className="review-content">
-                                <h5 className="comment-title">Add Your Address</h5>
-                                <div className="close-btn">
-                                    <img src="./assets/images/homepage-one/close-btn.png" onClick={modalAction} alt="close-btn" />
-                                </div>
-                            </div>
-                            <div className=" account-inner-form">
-                                <div className="review-form-name">
-                                    <label htmlFor="name" className="form-label">
+                <div className={`modal fade  ${isModalOpen ? 'show d-block' : ''}`} id='addressModal' tabindex="-1" aria-hidden={!isModalOpen}>
+                  <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-body"> 
+                            <div className="d-flex justify-content-between align-items-center">
+                              <h5 className="m-0">Edit Address</h5>
+                              <img src='assets/images/homepage-one/close.png' className='cursor-pointer' onClick={modalAction}></img>
+                           </div>  
+                                <div className="form-group">  
+                                    <label htmlFor="name" className="form-label fs-4">
                                         Name*</label>
-                                    <input type="text" id="name" name="name" className="form-control" placeholder="Name" value={formData.name} onChange={handleChange}/>
+                                    <input type="text" id="name" name="name" className="form-control fs-5" placeholder="Name" value={formData.name} onChange={handleChange}/>
+                                </div>
+                                 <div className="row">
+                                <div className="form-group col-md-6 "> 
+                                    <label htmlFor="userphone" className="form-label fs-4">Contact*</label>
+                                    <input type="tel" id="userphone" name="contact" className="form-control fs-5" placeholder="Contact" value={formData.contact} onChange={handleChange}/>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="alternatephone" className="form-label fs-4">Alternate Contact</label>
+                                    <input type="tel" id="alternatephone" name='alternatecontact' className="form-control fs-5" placeholder="Alternate Contact" value={formData.alternatecontact} onChange={handleChange}/>
                                 </div>
                             </div>
-                            <div className=" account-inner-form">
-                                <div className="review-form-name">
-                                    <label htmlFor="userphone" className="form-label">Contact*</label>
-                                    <input type="tel" id="userphone" name="contact" className="form-control" placeholder="Contact" value={formData.contact} onChange={handleChange}/>
-                                </div>
-                                <div className="review-form-name">
-                                    <label htmlFor="alternatephone" className="form-label">Alternate Contact</label>
-                                    <input type="tel" id="alternatephone" name='alternatecontact' className="form-control" placeholder="Alternate Contact" value={formData.alternatecontact} onChange={handleChange}/>
-                                </div>
+                            <div className="form-group">
+                                <label htmlFor="useraddress" className="form-label fs-4">Address*</label>
+                                <input type="text" id="useraddress" name="line1" className="form-control fs-5" placeholder="Enter your Address" value={formData.line1} onChange={handleChange}/>
                             </div>
-                            <div className="review-form-name address-form">
-                                <label htmlFor="useraddress" className="form-label">Address*</label>
-                                <input type="text" id="useraddress" name="line1" className="form-control" placeholder="Enter your Address" value={formData.line1} onChange={handleChange}/>
-                            </div>
-                            <div className=" account-inner-form city-inner-form">
-                                <div className="review-form-name">
-                                    <label htmlFor="landmark" className="form-label">Landmark</label>
-                                    <input type="text" id="landmark" name="landmark" className="form-control" placeholder="Landmark" value={formData.landmark} onChange={handleChange}/>
+                            <div className="form-group">
+                                    <label htmlFor="landmark" className="form-label fs-4">Landmark</label>
+                                    <input type="text" id="landmark" name="landmark" className="form-control fs-5" placeholder="Landmark" value={formData.landmark} onChange={handleChange}/>
                                 </div>
-                                <div className="review-form-name">
-                                    <label htmlFor="pin" className="form-label">
+                                <div className="form-group">
+                                    <label htmlFor="pin" className="form-label fs-4">
                                         Pin*</label>
-                                    <input type="number" id="pin" name="pin" className="form-control" placeholder="Pin" value={formData.pin} onChange={handleChange} onBlur={fillpindetails}/>
+                                    <input type="number" id="pin" name="pin" className="form-control fs-5" placeholder="Pin" value={formData.pin} onChange={handleChange} onBlur={fillpindetails}/>
                                 </div>
-                            </div>
-                            <div className=" account-inner-form city-inner-form">
-                                <div className="review-form-name">
-                                    <label htmlFor="city" className="form-label">City*</label>
-                                    <input type="text" id="city" className="form-control" placeholder="City" value={formData.city} disabled/>
+                            <div className='row'>
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="city" className="form-label fs-4">City*</label>
+                                    <input type="text" id="city" className="form-control fs-5" placeholder="City" value={formData.city} disabled/>
                                 </div>
-                                <div className="review-form-name">
-                                    <label htmlFor="state" className="form-label">
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="state" className="form-label fs-4">
                                         State*</label>
-                                    <input type="text" id="state" className="form-control" placeholder="State" value={formData.state} disabled/>
+                                    <input type="text" id="state" className="form-control fs-5" placeholder="State" value={formData.state} disabled/>
                                 </div>
-                                <div className="review-form-name">
-                                    <label htmlFor="country" className="form-label">
+                                <div className="form-group col-md-4">
+                                    <label htmlFor="country" className="form-label fs-4">
                                         Country*</label>
-                                    <input type="text" id="country" className="form-control" placeholder="Country" value={formData.country} disabled/>
+                                    <input type="text" id="country" className="form-control fs-5" placeholder="Country" value={formData.country} disabled/>
                                 </div>
                             </div>
-                            <div className='account-inner-form' style={{ marginTop: "15px" }}>
-                                <button type="button" class="btn btn-danger" style={{ fontSize: "2.5rem" }} onClick={()=>openConfirmationModal("delete")}>Delete</button>
-                                <button type="button" class="btn btn-success" style={{ fontSize: "2.5rem" }} onClick={handleUpdate}>Update</button>
+                        </div>
+                            <div className='modal-footer'>
+                                <button type="button" class="btn btn-danger btn-lg  fs-3 px-4"  onClick={()=>openConfirmationModal("delete")}>Delete</button>
+                                <button type="button" class="btn btn-success btn-lg  fs-3 px-4"  onClick={handleUpdate}>Update</button>
                             </div>
+                        </div>
+                   </div>
+                </div>
+                
+                <div className={`modal fade show ${isConfirmModalOpen ? 'show d-block' : ''}`} id="confirmationModal"  aria-hidden={!isConfirmModalOpen}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                <p className='fs-3'>Are you sure you want to {actionType} this address?</p>
+                            </div>
+                                <div className='modal-footer'>
+                                   <button className="btn btn-danger btn-lg fs-4" onClick={confirmAction}>Confirm</button>
+                                   <button className="btn btn-secondary btn-lg fs-4" onClick={closeConfirmationModal}>Cancel</button>
+                                </div>
+                        </div>
+                    </div>
+               </div>
+
+             <div className={`modal fade ${isAlertModalOpen ? 'show d-block' : ''}`} tabIndex="-1" aria-hidden={!isAlertModalOpen}>
+                  <div className="modal-dialog modal-dialog-centered">
+                      <div className="modal-content">
+                         <div className="modal-body">
+                             <p className='fs-3'>{alertMessage}</p>
+                           </div>
+                           <div className='modal-footer'>
+                             <button className="btn btn-danger btn-lg fs-4"  onClick={closeAlertModal}>Close</button>
+                            </div> 
                         </div>
                     </div>
                 </div>
+                
 
-                {isAlertModalOpen && (
-                    <div className='popup-overlay'>
-                        <div className='popup-content'>
-                            <h3>{alertMessage}</h3>
-                            <button type="button" className="btn btn-primary btn-lg " onClick={closeAlertModal}>Ok</button>
-                        </div>
-                    </div>
-                    )}
-
-                    {isConfirmModalOpen && (
-                        <div className='popup-overlay'>
-                            <div className='popup-content'>
-                                <h3>
-                                    {actionType === 'update' ? 'Are you sure you want to update this address?' : 'Are you sure you want to delete this address?'}
-                                </h3>
-                                <button type="button" className="btn btn-danger btn-lg me-3 " onClick={confirmAction}>Yes</button>
-                                <button type="button" className="btn btn-secondary btn-lg" onClick={closeConfirmationModal}>No</button>
-                            </div>
-                        </div>
-                        )}
-                        {isNotFoundModalOpen && (
-                            <div className='popup-overlay'>
-                                <div className='popup-content'>
-                                    <h3>No changes were made to the address</h3>
-                                    <button type="button" className="btn btn-primary btn-lg " onClick={closeNotFoundModal}>Ok</button>
+                        
+                        <div className={`modal fade ${isNotFoundModalOpen ? 'show d-block' : ''}`} tabIndex="-1" aria-hidden={!isNotFoundModalOpen}>
+                            <div className="modal-dialog modal-dialog-centered">
+                               <div className="modal-content">
+                                   <div className="modal-body">
+                                       <p className='fs-3'>No changes made to the address.</p>
+                                   </div>
+                                  <div className='modal-footer'>
+                                     <button className="btn btn-danger btn-lg fs-4" onClick={closeNotFoundModal}>Close</button>
+                                   </div>                                   
                                 </div>
                             </div>
-                            )}
+                        </div>
+                           
                 {/* Modal ends here */} 
 
             </div>
