@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { DataAppContext } from '../DataContext';
-// import Loader from "./loader/Loader";
 import loaderGif from '../assets/images/loader.gif';
 const ShopCart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -76,28 +77,28 @@ const ShopCart = () => {
     setTotalCost(total);
   };
 
-  const removeFromCart = async productid => {
-    setLoading(true);
+const removeFromCart = async (productid) => {
+    setLoading(false);
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}cart/removeProduct/${userid}/${productid}`
       );
-      setMessage(response.data.message || 'Removed from cart');
-      setCartItems(prevItems =>
-        prevItems.filter(item => item.productid !== productid)
-      );
-      updateCartCount(cartItems.length - 1);
 
-      // Update localStorage as well
-      const updatedCartItems = cartItems.filter(
-        item => item.productid !== productid
-      );
-      localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+      if (response.status === 200) {
+        toast.success('Product successfully removed from cart');
+        const updatedCartItems = cartItems.filter(item => item.productid !== productid);
+        setCartItems(updatedCartItems);
+        updateCartCount(updatedCartItems.length);
+        localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+      } else {
+        toast.error('Failed to remove product from cart');
+      }
     } catch (error) {
-      setMessage('There was an error removing product from the cart!');
+      toast.error('An error occurred while removing the product');
       console.error('Error removing from cart:', error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const updateQuantity = async (productid, newQuantity) => {
@@ -408,6 +409,8 @@ const ShopCart = () => {
           </div>
         </div>
       )}
+      
+       <ToastContainer />
     </>
   );
 };
