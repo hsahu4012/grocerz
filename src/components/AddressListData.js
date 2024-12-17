@@ -47,7 +47,7 @@ const AddressListData = () => {
         }
         else
             document.body.style.overflow = '';
-            document.body.style.height = '';
+            // document.body.style.height = '';
         if(!isModalOpen){
             setId(0);
             setFormData({
