@@ -12,7 +12,7 @@ const OrderDetail = () => {
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [Added_quantity, setQuantity] = useState('');
+  const [Added_quantity, setQuantity] = useState(1);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -669,7 +669,7 @@ const OrderDetail = () => {
                                   <div className='col-md-1'>
                                     <p>
                                       <strong>
-                                        &#8377;&nbsp;{item.quantity}
+                                        {item.quantity}
                                       </strong>
                                     </p>
                                   </div>

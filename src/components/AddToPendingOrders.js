@@ -4,7 +4,7 @@ const AddToPendingOrders = ({ setShowPopup, singleProduct }) => {
   const [orderIDs, setOrderIDs] = useState([]);
   const [selectedorderIDs, setselectedOrderIDs] = useState();
   const [loading, setLoading] = useState(false);
-  const [selectedQuantity, setSelectedQuantity] = useState();
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [err, setErr] = useState('');
   const fetchOrderIDs = async () => {
     setLoading(true);
@@ -63,8 +63,8 @@ const AddToPendingOrders = ({ setShowPopup, singleProduct }) => {
             </option>
           ))}
         </select>
-        <h3>Select Quantity</h3>
-        <select
+        {/* <h3>Select Quantity</h3> */}
+        {/* <select
           value={selectedQuantity}
           onChange={e =>
             setSelectedQuantity(
@@ -72,7 +72,6 @@ const AddToPendingOrders = ({ setShowPopup, singleProduct }) => {
             )
           }
         >
-          <option value=''>Select Quantity</option>
           {singleProduct?.stock_quantity
             ? Array.from(
               { length: singleProduct.stock_quantity },
@@ -84,8 +83,21 @@ const AddToPendingOrders = ({ setShowPopup, singleProduct }) => {
             ))
             : null}
 
-        </select>
-
+        </select> */}
+        <h3>Enter Quantity</h3>
+        <input
+          className='form-control w-full font-3xl'
+          type="number"
+          value={selectedQuantity}
+          onChange={e => {
+            const value = Number(e.target.value);
+            if (value > 0 && value <= (singleProduct?.stock_quantity || 0)) {
+              setSelectedQuantity(value);
+            }
+          }}
+          min="1"
+          max={singleProduct?.stock_quantity || 0}
+        />
 
 
         <button
