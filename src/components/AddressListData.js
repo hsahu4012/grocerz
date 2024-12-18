@@ -41,13 +41,13 @@ const AddressListData = () => {
 
     const modalAction = () => {
         setIsModalOpen(!isModalOpen);
-        if(document.body.style.overflow === ''){
-          document.body.style.overflow = 'hidden';
-          document.body.style.height = '100vh';
-        }
-        else
-            document.body.style.overflow = '';
-            // document.body.style.height = '';
+        // if(document.body.style.overflow === ''){
+        //   document.body.style.overflow = 'hidden';
+        //   document.body.style.height = '100vh';
+        // }
+        // else
+        //     document.body.style.overflow = '';
+        //     document.body.style.height = '';
         if(!isModalOpen){
             setId(0);
             setFormData({
