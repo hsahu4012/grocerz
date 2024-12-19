@@ -209,7 +209,7 @@ const Dashboard = () => {
                           <p>Phone: <input type="text" name="mobile" value={userDetails.mobile} onChange={handleInputChange} className='form-control'/></p>
                           </div>
                           <button type='submit' className='shop-btn' onClick={updateUserDetails}>Update</button>
-                          <button type='submit' className='shop-btn mx-3' style={{backgroundColor:'#DC3545'}} onClick={() => setIsEditing(false)}>Cancel</button>
+                          <button type='submit' className='shop-btn mx-3 bg-danger' onClick={() => setIsEditing(false)}>Cancel</button>
                         </div>
                         ) : (
                         <div>
