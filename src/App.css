@@ -550,6 +550,32 @@
   }
 }
 
+.custom-card {
+  width: 100%;
+  height: 200px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.no-image-box {
+  width: 100%;
+  height: 200px; 
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.no-image-box span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #236cad;
+  text-align: center;
+  padding: 10px;
+}
+
 .star {
   transition: color 0.2s;
   transform: scale(3);
