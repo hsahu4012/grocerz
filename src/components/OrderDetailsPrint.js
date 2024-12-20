@@ -4,11 +4,13 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes'; // Assuming you have this component
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
+import hashedbitqr from '../assets/images/hashedbitqr.jpg';
 const OrderDetailsPrint = () => {
   const { orderid, usertype ,invoice} = useParams();
   const [orderDetails, setOrderDetails] = useState([]);
   const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
   const navigate = useNavigate();
+  const [totalPrice, setTotalPrice] = useState(0);
   
   const fetchOrderDetails = async () => {
     try {
@@ -16,6 +18,13 @@ const OrderDetailsPrint = () => {
         `${process.env.REACT_APP_API_URL}orderdetails/${orderid}`
       );
       setOrderDetails(response.data);
+
+      let total = 0;
+      response.data.map(item => {
+        total = total + (item.price * item.quantity);
+      })
+      setTotalPrice(total);
+      
       const orderDetails = response.data;
       const totalOriginalMrp = orderDetails.reduce((total, item) => total + item.original_mrp, 0);
       settotalOriginalPrice(totalOriginalMrp)
@@ -46,7 +55,7 @@ const OrderDetailsPrint = () => {
   const downloadInvoice = () => {
    try {
     if(invoice === "invoice"){
-      const capture = document.querySelector(".card");
+      const capture = document.querySelector(".order-print");
       setTimeout(() => {
           html2canvas(capture, { scale: 4 })
               .then((canvas) => {
@@ -98,125 +107,124 @@ const OrderDetailsPrint = () => {
         <div className='container'>
           <div className='user-profile-section box-shadows'>
             <div className='user-dashboard'>
-              <div className='container mt-5'>
+              <div className='container mt-5 order-print'>
                 <h2 className='mb-4 main-heading-custom-font-1'>
                   Grocji Order Summary - {order && order.srno}
                 </h2>
                 <div className='card'>
                   {order ? (
                     <div className='card-body'>
-                      <p>
-                        <strong>
-                          Order Date & Time :</strong> 
-                          <span className='text-success'>{' '}{order.order_date}{' '}
-                        {order.order_time.substring(0,4) + ' ' + order.order_time.substring(8,12).toUpperCase()}</span> | {' '}
-                        <strong>Order ID :</strong>{' '}
-                        <span className='text-success'>{order.order_id}</span>{' '}|{' '}
-                         <strong>Order Number :</strong>{' '}
-                         <span className='text-success'>{order.srno}</span>
-                      </p>
-
-                      {usertype !== 'vendor' && (
-                        <div className='row my-5'>
-                          <div className='col-sm-12 text-custom-font-1'>
-                            <div className='heading-custom-font-1'>
-                              Shipping Address
+                    <div className='row'>
+                      <div className='col-md-8'>
+                        <p>
+                          <strong>Order Date & Time :</strong>{' '}
+                          <span className='text-success'>
+                            {' '}
+                            {order.order_date}{' '}
+                            {order.order_time.substring(0, 4) +
+                              ' ' +
+                              order.order_time.substring(8, 12).toUpperCase()}
+                          </span>{' '}
+                          |{' '}
+                          <strong>Order ID :</strong>{' '}
+                          <span className='text-success'>{order.order_id}</span>{' '}|{' '}
+                          <strong>Order Number :</strong>{' '}
+                          <span className='text-success'>{order.srno}</span>
+                        </p>
+                        {usertype !== 'vendor' && (
+                          <div className='row my-5'>
+                            <div className='col-sm-12 text-custom-font-1'>
+                              <div className='heading-custom-font-1'>Shipping Address</div>
+                              <strong>Name :</strong> {order.name}
+                              <p>
+                                <strong>Address :</strong> {order.line1}, {order.city}
+                              </p>
+                              <p>
+                                <strong>Landmark :</strong> {order.landmark}
+                              </p>
+                              <span>
+                                <strong>Contact:</strong> {order.contact}, {order.alternatecontact}
+                              </span>
                             </div>
-                            <strong>Name :</strong> {order.name}
-                            <p>
-                              <strong>Address :</strong> {order.line1},{' '}
-                              {order.city}
-                            </p>
-                            <p>
-                              <strong>Landmark :</strong> {order.landmark}
-                            </p>
-                            <span>
-                              <strong>Contact: </strong>
-                              {order.contact}, {order.alternatecontact}
-                            </span>
                           </div>
-                        </div>
-                      )}
-
-                      {usertype !== 'vendor' && (
-                        <div className='row my-5'>
+                        )}
+                      </div>                  
+                      <div className='col-md-4 text-end'>
+                        <img
+                          src={hashedbitqr}
+                          alt='Shipping Preview'
+                          className='img-fluid rounded qr-image'
+                        />
+                      </div>
+                    </div>
+                    {usertype !== 'vendor' && (
+                      <div className='row my-5'>
                         <div className='col-sm-12'>
-                          <div className='heading-custom-font-1'>
-                            Bill Details
-                          </div>
+                          <div className='heading-custom-font-1'>Bill Details</div>
                           <ul className='list-group text-custom-font-1'>
                             <li className='list-group-item text-success'>
-                              <strong>
-                                Original Price - &#8377; {totalOriginalPrice}
-                              </strong>
+                              <strong>Original Price - &#8377; {totalPrice}</strong>
                             </li>
                             <li className='list-group-item text-success'>
-                              <strong>
-                                Discount Price - &#8377;{' '}
-                                {totalOriginalPrice - order.paymentamount}
-                              </strong>
+                              <strong>Discount - &#8377; {totalPrice - order.paymentamount}</strong>
                             </li>
                             <li className='list-group-item text-success'>
-                              <strong>
-                                Final Payment Amount - {order.paymentamount}
-                              </strong>
+                              <strong>Final Payment Amount - &#8377; {order.paymentamount}</strong>
                             </li>
-                            <li className='list-group-item'>
-                              Payment Mode - {order.paymentmode}
-                            </li>
+                            <li className='list-group-item'>Payment Mode - {order.paymentmode}</li>
                           </ul>
                         </div>
                       </div>
-                      )}
-
-                      <div className='my-5'>
-                        <div className='heading-custom-font-1'>Items List</div>
-                        <div className='card mb-1'>
-                          <div className='card-body d-flex align-items-center bg-light'>
-                            <div className='col-sm-12 d-flex justify-content-between align-items-center'>
-                              <p><strong>#</strong></p>
-                              <p><strong>Product Name</strong></p>
-                              <p><strong>Quantity</strong></p>
-                              {usertype !== 'vendor' && <p><strong>Price</strong></p>}
-                            </div>
-                          </div>
-                        </div>
-                        {orderDetails.map((item, index) => {
-                          return (
-                            <div
-                              className='card mb-1'
-                              key={index}
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => handleProductClick(item.productid)}
-                            >
-                              <div className='card-body d-flex align-items-center'>
-                                {/* <div className="col-md-3">
-                                                                    <img src="https://picsum.photos/50" className="img-fluid" alt="dummy" />
-                                                                </div> */}
-                                <div className='col-sm-12 d-flex justify-content-between align-items-center'>
-                                  <p>
-                                    <strong>{index + 1}</strong>
-                                  </p>
-                                  <p>
-                                    <strong>{item.prod_name}</strong>
-                                  </p>
-                                  <p>
-                                    <strong>{item.quantity}</strong>
-                                  </p>
-                                  {usertype !== 'vendor' && (
-                                    <p>
-                                      <strong>
-                                        &#8377;&nbsp;{item.price_final}
-                                      </strong>
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
+                    )}
+                    <div className='my-5'>
+                      <h4 className='heading-custom-font-1'>Items List</h4>
+                      <div className='table-responsive text-custom-font-1'>
+                        <table className='table table-striped table-bordered'>
+                          <thead className='bg-light'>
+                            <tr>
+                              <th>#</th>
+                              <th>Product Name</th>
+                              <th>Quantity</th>
+                              <th>Original MRP</th>
+                              <th>Discount</th>
+                              {usertype !== 'vendor' && <th>Price</th>}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {orderDetails.map((item, index) => (
+                              <tr
+                                key={index}
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => handleProductClick(item.productid)}
+                              >
+                                <td>
+                                  <strong>{index + 1}</strong>
+                                </td>
+                                <td>
+                                  <strong>{item.prod_name}</strong>
+                                </td>
+                                <td>
+                                  <strong>{item.quantity}</strong>
+                                </td>
+                                <td>
+                                  <strong>&#8377;&nbsp;{item.price * item.quantity}</strong>
+                                </td>
+                                <td>
+                                  {/* <strong>{item.original_mrp - item.price_final}</strong> */}
+                                  <strong>{item.price * item.quantity - item.price_final}</strong>
+                                </td>
+                                {usertype !== 'vendor' && (
+                                  <td>
+                                    <strong>&#8377;&nbsp;{item.price_final}</strong>
+                                  </td>
+                                )}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
                     </div>
+                  </div>
                   ) : (
                     <p>No order found.</p>
                   )}

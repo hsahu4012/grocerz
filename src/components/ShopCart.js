@@ -1,10 +1,10 @@
-import React, { useEffect, useId, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { DataAppContext } from '../DataContext';
-// import Loader from "./loader/Loader";
 import loaderGif from '../assets/images/loader.gif';
-
 const ShopCart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [message, setMessage] = useState('');
@@ -77,28 +77,28 @@ const ShopCart = () => {
     setTotalCost(total);
   };
 
-  const removeFromCart = async productid => {
-    setLoading(true);
+const removeFromCart = async (productid) => {
+    setLoading(false);
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}cart/removeProduct/${userid}/${productid}`
       );
-      setMessage(response.data.message || 'Removed from cart');
-      setCartItems(prevItems =>
-        prevItems.filter(item => item.productid !== productid)
-      );
-      updateCartCount(cartItems.length - 1);
 
-      // Update localStorage as well
-      const updatedCartItems = cartItems.filter(
-        item => item.productid !== productid
-      );
-      localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+      if (response.status === 200) {
+        toast.success('Product successfully removed from cart');
+        const updatedCartItems = cartItems.filter(item => item.productid !== productid);
+        setCartItems(updatedCartItems);
+        updateCartCount(updatedCartItems.length);
+        localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+      } else {
+        toast.error('Failed to remove product from cart');
+      }
     } catch (error) {
-      setMessage('There was an error removing product from the cart!');
+      toast.error('An error occurred while removing the product');
       console.error('Error removing from cart:', error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const updateQuantity = async (productid, newQuantity) => {
@@ -181,7 +181,17 @@ const ShopCart = () => {
           </div>
         </div>
       </section>
+      
 
+      {/* <section className='product-cart product footer-padding'>
+        {loading && (
+          <div className='loader-div'>
+          <img className='loader-img'
+            src={loaderGif}
+            alt='Loading...'/>
+        </div>
+        )}
+        </section> */}
       <section className='product-cart product footer-padding'>
         {loading && (
           <div
@@ -201,143 +211,156 @@ const ShopCart = () => {
         )}
 
         {!loading && (
-          <div className='container'>
-            <div className='cart-section'>
-              <table>
-                <tbody>
-                  <tr className='table-row table-top-row'>
+        <div className='container'>
+          <div className='cart-section'>
+            <table>
+              <tbody>
+                <tr className='table-row table-top-row'>
+                  <td className='table-wrapper wrapper-product'>
+                    <h5 className='table-heading'>PRODUCT</h5>
+                  </td>
+                  <td className='table-wrapper'>
+                    <div className='table-wrapper-center'>
+                      <h5 className='table-heading'>PRICE</h5>
+                    </div>
+                  </td>
+                  <td className='table-wrapper'>
+                    <div className='table-wrapper-center'>
+                      <h5 className='table-heading'>QUANTITY</h5>
+                    </div>
+                  </td>
+                  <td className='table-wrapper wrapper-total'>
+                    <div className='table-wrapper-center'>
+                      <h5 className='table-heading'>TOTAL</h5>
+                    </div>
+                  </td>
+                  <td className='table-wrapper'>
+                    <div className='table-wrapper-center'>
+                      <h5 className='table-heading'>ACTION</h5>
+                    </div>
+                  </td>
+                </tr>
+                {(cartItems.length >0 && !loading)?(
+                  <>
+                  {cartItems.map(item => (
+                  <tr className='table-row ticket-row' key={item.productid}>
                     <td className='table-wrapper wrapper-product'>
-                      <h5 className='table-heading'>PRODUCT</h5>
-                    </td>
-                    <td className='table-wrapper'>
-                      <div className='table-wrapper-center'>
-                        <h5 className='table-heading'>PRICE</h5>
+                      <div className='wrapper'>
+                        <div className='wrapper-img'>
+                          <img
+                            src={`${process.env.REACT_APP_API_URL}${item.image}`}
+                            alt='Product'
+                          />
+                        </div>
+                        <div className='wrapper-content'>
+                          {/* <h5 className="heading">{item.prod_name || 'Product Name - ' + item.productid}</h5> */}
+                          <h5 className='heading'>
+                            <Link
+                              className='heading'
+                              to={`/product/${item.productid}`}
+                            >
+                              {item.prod_name ||
+                                'Product Name - ' + item.productid}
+                            </Link>
+                          </h5>
+                        </div>
                       </div>
                     </td>
                     <td className='table-wrapper'>
                       <div className='table-wrapper-center'>
-                        <h5 className='table-heading'>QUANTITY</h5>
+                        <h5 className='heading main-price'>
+                          Rs. {item.price - Number(item.discount)}
+                        </h5>
+                      </div>
+                    </td>
+                    <td className='table-wrapper'>
+                      <div className='table-wrapper-center'>
+                        <div className='quantity'>
+                          <span
+                            className='minus'
+                            onClick={() =>
+                              decrementQuantity(item.productid, item.quantity)
+                            }
+                          >
+                            -
+                          </span>
+                          <span className='number'>{item.quantity}</span>
+                          <span
+                            className='plus'
+                            onClick={() =>
+                              incrementQuantity(item.productid, item.quantity)
+                            }
+                          >
+                            +
+                          </span>
+                        </div>
                       </div>
                     </td>
                     <td className='table-wrapper wrapper-total'>
                       <div className='table-wrapper-center'>
-                        <h5 className='table-heading'>TOTAL</h5>
+                        <h5 className='heading total-price'>
+                          Rs.{' '}
+                          {item.price * item.quantity -
+                            Number(item.discount) * item.quantity}
+                        </h5>
                       </div>
                     </td>
                     <td className='table-wrapper'>
-                      <div className='table-wrapper-center'>
-                        <h5 className='table-heading'>ACTION</h5>
+                      <div
+                        className=' wishlist-btn cart-btn'
+                        onClick={() => removeFromCart(item.productid)}
+                      >
+                        <button onClick={() => removeFromCart} className='shop-btn remove clean-btn' >Remove Now</button>
+                        <div>
+                          <Link to='/checkout' className='shop-btn'>
+                            Buy Now
+                          </Link>
+                        </div>
                       </div>
                     </td>
                   </tr>
-                  {cartItems.map(item => (
-                    <tr className='table-row ticket-row' key={item.productid}>
-                      <td className='table-wrapper wrapper-product'>
-                        <div className='wrapper'>
-                          <div className='wrapper-img'>
-                            <img
-                              src={`${process.env.REACT_APP_API_URL}${item.image}`}
-                              alt='Product'
-                            />
-                          </div>
-                          <div className='wrapper-content'>
-                            {/* <h5 className="heading">{item.prod_name || 'Product Name - ' + item.productid}</h5> */}
-                            <h5 className='heading'>
-                              <Link
-                                className='heading'
-                                to={`/product/${item.productid}`}
-                              >
-                                {item.prod_name ||
-                                  'Product Name - ' + item.productid}
-                              </Link>
-                            </h5>
-                          </div>
-                        </div>
-                      </td>
-                      <td className='table-wrapper'>
-                        <div className='table-wrapper-center'>
-                          <h5 className='heading main-price'>
-                            Rs. {item.price - Number(item.discount)}
-                          </h5>
-                        </div>
-                      </td>
-                      <td className='table-wrapper'>
-                        <div className='table-wrapper-center'>
-                          <div className='quantity'>
-                            <span
-                              className='minus'
-                              onClick={() =>
-                                decrementQuantity(item.productid, item.quantity)
-                              }
-                            >
-                              -
-                            </span>
-                            <span className='number'>{item.quantity}</span>
-                            <span
-                              className='plus'
-                              onClick={() =>
-                                incrementQuantity(item.productid, item.quantity)
-                              }
-                            >
-                              +
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td className='table-wrapper wrapper-total'>
-                        <div className='table-wrapper-center'>
-                          <h5 className='heading total-price'>
-                            Rs.{' '}
-                            {item.price * item.quantity -
-                              Number(item.discount) * item.quantity}
-                          </h5>
-                        </div>
-                      </td>
-                      <td className='table-wrapper'>
-                        <div
-                          className='table-wrapper-center'
-                          onClick={() => removeFromCart(item.productid)}
-                        >
-                          <span>
-                            <svg
-                              width='10'
-                              height='10'
-                              viewBox='0 0 10 10'
-                              fill='none'
-                              xmlns='http://www.w3.org/2000/svg'
-                            >
-                              <path
-                                d='M9.7 0.3C9.3 -0.1 8.7 -0.1 8.3 0.3L5 3.6L1.7 0.3C1.3 -0.1 0.7 -0.1 0.3 0.3C-0.1 0.7 -0.1 1.3 0.3 1.7L3.6 5L0.3 8.3C-0.1 8.7 -0.1 9.3 0.3 9.7C0.7 10.1 1.3 10.1 1.7 9.7L5 6.4L8.3 9.7C8.7 10.1 9.3 10.1 9.7 9.7C10.1 9.3 10.1 8.7 9.7 8.3L6.4 5L9.7 1.7C10.1 1.3 10.1 0.7 9.7 0.3Z'
-                                fill='#AAAAAA'
-                              ></path>
-                            </svg>
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                ))}
+                  </>
+                ):(
+                  <></>
+                )}
+              </tbody>
+            </table>
+          </div>
+          {cartItems.length===0 && !loading && <div className='container d-flex flex-column justify-content-center align-items-center'>
+              <img  src="assets/images/homepage-one/empty-cart.webp" width={150} height={150} alt="" />
+              <h3 className='p-3'>Cart is Empty</h3>
             </div>
-
-            <div className='wishlist-btn cart-btn'>
-              <button
+          }
+           {localStorage.getItem('usertype') === 'admin' && cartItems.length === 0 && (
+            <div className="cart-section">
+              <img 
+                className="rounded mx-auto d-block"
+                src="assets/images/homepage-one/empty-cart.webp" width={150} height={150} alt="" 
+              />
+              <h4 className="text-center">Cart is Empty</h4>
+            </div>
+          )}
+              <div className='wishlist-btn cart-btn mt-4'>
+                <button
                 className='clean-btn shop-btn'
                 onClick={() => setIsModalOpen(true)}
               >
-                Clear Cart
-              </button>
-              <button className='shop-btn'>Total - {totalCost}</button>
-              {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
-              <Link to='/checkout' className='shop-btn'>
-                Proceed to Checkout
-              </Link>
-            </div>
+                  Clear Cart
+                </button>
+                <button className='shop-btn'>Total - {totalCost}</button>
+                {/* <Link to="#" className="shop-btn update-btn">Update Cart</Link> */}
+                <Link to='/checkout' className='shop-btn'>
+                  Proceed to Checkout
+                </Link>
+              </div>
             {message && <p>{message}</p>}
           </div>
         )}
-        <div>
-          {/* <div className="col-lg-6 col-md-6 col-sm-6">
+        
+
+          <div>
+            {/* <div className="col-lg-6 col-md-6 col-sm-6">
           <div className="cart__btn update__btn">
             <Link to="#">
               <span className="icon_loading" /> Update cart
@@ -345,7 +368,9 @@ const ShopCart = () => {
           </div>
         </div> */}
         </div>
+        {/* </div> */}
 
+        {/* <div class="row">
         {/* <div class="row">
         <div class="col-lg-6">
           <div class="discount__content">
@@ -384,6 +409,8 @@ const ShopCart = () => {
           </div>
         </div>
       )}
+      
+       <ToastContainer />
     </>
   );
 };

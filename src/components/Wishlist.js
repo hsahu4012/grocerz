@@ -116,16 +116,21 @@ const Wishlist = () => {
               <DashboardRoutes />
               <div>
                 {loading ? (
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', marginLeft: '300px' }}>
-                    <img src={loaderGif} alt='Loading...' style={{ width: '80px', height: '80px' }} />
-                  </div>
+                  <div className='loader-div'>
+                  <img className='loader-img'
+                    src={loaderGif}
+                    alt='Loading...'/>
+                </div>
                 ) : wishlistItems.length > 0 ? (
                   <section className='cart product wishlist footer-padding' data-aos='fade-up'>
                     <div className='container'>
                       <div className='cart-section wishlist-section'>
                         <table>
                           <tbody>
-                            <tr className='table-row table-top-row'>
+                            <tr className='table-row table-top-row '>
+                              <td className='table-wrapper wrapper-product '>
+                                <h5 className=' table-heading text-center'>Sr.No</h5>
+                              </td>
                               <td className='table-wrapper wrapper-product'>
                                 <h5 className='table-heading'>PRODUCT</h5>
                               </td>
@@ -142,6 +147,13 @@ const Wishlist = () => {
                             </tr>
                             {wishlistItems.map((item, index) => (
                               <tr key={index} className='table-row ticket-row'>
+                                <td className='table-wrapper wrapper-product'>
+                                  <div className='wrapper'>
+                                    <div className='wrapper-content text-center'>
+                                      <h5 className='heading'>{index + 1}</h5>
+                                    </div>
+                                  </div>
+                                </td>
                                 <td className='table-wrapper wrapper-product'>
                                   <div className='wrapper'>
                                     <div className='wrapper-img'>
@@ -172,7 +184,7 @@ const Wishlist = () => {
                           </tbody>
                         </table>
                       </div>
-                      <div className='wishlist-btn'>
+                      <div className='wishlist-btn mt-4'>
                         <Link onClick={handleCleanWishlist} className='shop-btn'>
                           Clean Wishlist
                         </Link>
@@ -180,7 +192,7 @@ const Wishlist = () => {
                     </div>
                   </section>
                 ) : (
-                  <div className='blog-item' data-aos='fade-up'>
+                  <div className='blog-item'>
                     <div className='cart-img'>
                       <img src='assets/images/homepage-one/empty-cart.webp' alt='Empty Cart' />
                     </div>

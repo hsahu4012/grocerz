@@ -5,36 +5,17 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
 import loaderGif from '../assets/images/loader.gif';
-
-import { FcNext } from "react-icons/fc";
-
-const OrderHistory = () => {
+const OrderHistory2 = () => {
   const userid = localStorage.getItem('userid');
   const usertype = localStorage.getItem('usertype');
   const [orders, setOrders] = useState([]);
+  const [customOrders, setCustomOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [deliverypartners, setDeliveryPartners] = useState([]);
-
-  const [size,setSize] = useState(10)
-  const [array, setArray] = useState(() => Array(10).fill(undefined));
-  const [start,setStart] = useState(0)
-  const [end,setEnd] = useState(10)
-  const [upper,setUpper] = useState(10)
-
-  useEffect(() => {
-    console.log("useEffect = ",array); 
-    setArray(orders.slice(start,end))
-    setUpper(start+array.length)
-  },[start,end]) 
-  useEffect(() => {
-    setUpper(start+array.length)
-  },[array]) 
-  useEffect(() => {
-    if (orders.length > 0) {
-      setArray(orders.slice(0, 10));
-    }
-  }, [orders]);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(0);
+  const [count, setCount] = useState(0);
 
   const handleOrderClick = orderid => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
@@ -122,15 +103,28 @@ const OrderHistory = () => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}${url}`
       );
-      setOrders(response.data);
-      setArray(orders.slice(0,10)) 
-      // console.log("array in start = ",array); 
+      
+      setCount(response.data.length);
+     
+      setCustomOrders(response.data);
+      setMax(50);
+      setMin(0);     
+     
     } catch (error) {
       console.error('Error fetching cart items', error);
     }
     setLoading(false);
   };
 
+  const handlePrev = () =>{
+    setMax(min);
+    (min - 50) < 0 ? setMin(0) : setMin(min - 50);
+  }
+  const handleNext = () => {    
+    const maxval = max;
+    (max + 50) < count ? setMax(max + 50) : setMax(count);
+    setMin(maxval);
+  }
   // for handling the payment mode
   const [hidePaymentButtons, setHidePaymentButtons] = useState({});
 
@@ -153,14 +147,14 @@ const OrderHistory = () => {
         ...prevState,
         [orderId]: true,
       }));
-
+      
       fetchOrders();
     } catch (error) {
       console.error('Error updating payment mode', error);
     }
     setLoading(false);
   };
-
+  
 
   const fetchDeliveryPartnerName = async () => {
     try {
@@ -173,21 +167,15 @@ const OrderHistory = () => {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchOrders();
+    fetchOrders();    
     fetchDeliveryPartnerName();
   }, []);
+ 
+  useEffect(() => {
+    setOrders(customOrders.slice(min, max));
+  },[customOrders, min]);
 
-  // useEffect(() => {
-  //   fetchDeliveryPartnerName();
-  // }, [fetchDeliveryPartnerName]);
-
-  const findClassNames = (order_status, delivery_status) => {
-    if (order_status === 'COMPLETED' && delivery_status === 'DELIVERED') {
-      return 'card-body bg-opacity-25 bg-success';
-    }
-    if (delivery_status === 'DELIVERED') {
-      return 'card-body bg-info bg-opacity-25';
-    }
+  const findClassNames = order_status => {
     if (order_status === 'Placed') {
       return 'card-body bg-warning bg-opacity-25';
     }
@@ -200,37 +188,6 @@ const OrderHistory = () => {
     return 'card-body bg-warning bg-opacity-25';
   };
 
-  async function handlePrev()
-  {
-    if(start==0 ) return
-
-    setStart(start-size)
-    setEnd(end-size)
-
-    console.log(array);
-  }
-
-
-  async function handleNext()
-  {
-    if(end==orders.length) return 
-    if(end+size>orders.length)
-    {
-      if(end>orders.length || end==orders.length) return 
-
-      setEnd(end+size)
-      setStart(start+size)
-    }
-    else
-    {
-      setEnd(end+size)
-      setStart(start+size)
-    }
-
- 
-    console.log(array);
-  }
-
   return (
     <>
       <section className='blog about-blog'>
@@ -241,7 +198,7 @@ const OrderHistory = () => {
             <span><a href="OrderHistory">Orders</a></span>
           </div> */}
           <div className='blog-heading about-heading'>
-            <h1 className='heading'>Orders</h1>
+            <h1 className='heading'>Orders Page 2</h1>
           </div>
         </div>
       </section>
@@ -251,62 +208,51 @@ const OrderHistory = () => {
             <div className='user-dashboard'>
               <DashboardRoutes />
               <div className='container'>
-                <div className='d-flex justify-content-between'>
-                  <div>
-                    <h3>
-                      All Orders
-                    </h3>
-                  </div>
-                  <div className='fs-3'> 
-                    {start+1} - {upper}
-                  </div>
-                  <div className='d-flex gap-4'>
-                    <div>
-                      {start===0 ? 
-                      (
-                        <div></div>
-                      )
-                      : 
-                      (
-                        <button onClick={handlePrev} className='btn btn-primary fs-3'>
-                          prev
-                        </button>
-                      ) 
-                      }
-                      
+                <div className='row'>
+                    <div className='col-6'>
+                        <h3>All Orders</h3>
                     </div>
-                    <div>
-                      {end>=orders.length ? 
-                      (
-                        <div></div>
-                      ) : 
-                      (
-                        <button onClick={handleNext} className='btn btn-primary fs-3'>
-                          next
-                        </button>
-                      )
-                      }
+                    <div className="col-6 d-grid gap-2 d-md-flex justify-content-md-end h5">
+                        {count != 0 ? (<span className='fs-2 py-3'>{customOrders[min].srno} to {customOrders[max-1].srno}</span>) 
+                         : (<span className='fs-2 py-3'></span>) }
+                        <button className='btn btn-primary fs-4' 
+                        onClick={() => {
+                            handlePrev();                                                       
+                        }} disabled = {min == 0}>Prev</button>                        
+                        <button className="btn btn-primary fs-4" 
+                        onClick={() => {
+                          handleNext();
+                        }} disabled = {max == count}>Next</button>
                     </div>
-                  </div>
-                </div>
+                </div>                
                 {loading ? (
-                  <div className='loader-div'>
-                    <img className='loader-img'
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '50vh',
+                    }}
+                  >
+                    <img
                       src={loaderGif}
-                      alt='Loading...' />
+                      alt='Loading...'
+                      style={{ width: '80px', height: '80px' }}
+                    />
                   </div>
                 ) : orders.length > 0 ? (
-                  array.map((order, index) => (
-                    <div key={index} className='card mt-3  h-50vh overflow-y-auto'
-                      style={{
-                        cursor: usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED' ? 'pointer' : 'default',
-                      }}
-                      onClick={() => {
-                        if (usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED') {
-                          handleOrderSuccess(order.order_id);
-                        }
-                      }}>
-                      <div className={findClassNames(order.order_status, order.delivery_status)}>
+                  orders.map((order, index) => (
+
+                    <div key={index} className='card mt-3'
+                    style={{
+                      cursor:  usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED' ? 'pointer' : 'default'
+                    }}
+                    onClick={() => {
+                      if ( usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED') {
+                        handleOrderSuccess(order.order_id);
+                      }
+                    }}>
+                      <div className={findClassNames(order.order_status)}>
                         <div className='row'>
                           {/* <div className="col-md-3">
                             <img src="https://picsum.photos/500/200" className="img-fluid" alt="dummy" />
@@ -434,7 +380,7 @@ const OrderHistory = () => {
                                   <button
                                     className='view-details-btn'
                                     onClick={(event) => {
-                                      preventClickPropagation(event);
+                                      preventClickPropagation(event); 
                                       handleOrderClick(order.order_id)
                                     }}
                                   >
@@ -445,21 +391,21 @@ const OrderHistory = () => {
 
                               {usertype === 'admin' && (
                                 <div className='order-actions'>
-                                  {(order.paymentmode === 'DUE - COD/QR/UPI' && order.delivery_status !== 'CANCELLED') ? (
+                                  {!hidePaymentButtons[order.order_id] ? (
                                     <>
                                       <button
                                         id={`pay-cash-${order.order_id}`}
-                                        className=' view-details-btn pay-button'
-                                        onClick={() => handlePaymentModeChange(order.order_id, 'Cash')}
+                                        className='btn btn-warning'
+                                        onClick={() => handlePaymentModeChange(order.order_id, 'cash')}
                                       >
-                                        Cash
+                                        Pay in Cash
                                       </button>
                                       <button
                                         id={`pay-upi-${order.order_id}`}
-                                        className=' view-details-btn pay-button'
+                                        className='btn btn-warning'
                                         onClick={() => handlePaymentModeChange(order.order_id, 'UPI')}
                                       >
-                                        UPI
+                                        Pay by UPI
                                       </button>
                                     </>
                                   ) : null} {/* No message displayed after payment mode is selected */}
@@ -495,10 +441,6 @@ const OrderHistory = () => {
                               }
                             </p>
                             <p>
-                              <strong >Cost Amount -</strong>{' '}
-                              <span>₹{order.costamount}</span>
-                            </p>
-                            <p>
                               <strong>Payment Mode -</strong>{' '}
                               {order.paymentmode}
                             </p>
@@ -510,7 +452,6 @@ const OrderHistory = () => {
                 ) : (
                   <p>No orders found.</p>
                 )}
-                
               </div>
             </div>
           </div>
@@ -520,4 +461,4 @@ const OrderHistory = () => {
   );
 };
 
-export default OrderHistory;
+export default OrderHistory2;

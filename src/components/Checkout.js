@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import qr from '../assets/images/hashedbitqr.jpg';
 import axios from 'axios';
 import GuestAddess from './GuestAddess';
-import Loader from './loader/Loader';
+// import Loader from './loader/Loader';
 import loaderGif from '../assets/images/loader.gif';
+
 
 function Checkout() {
   // Setting up single button to place order
@@ -22,6 +23,7 @@ function Checkout() {
     landmark: '',
   });
   const [error, setError] = useState('');
+
   const handleSubmit = async () => {
     // Check if mandatory fields are empty
     if (
@@ -192,7 +194,7 @@ function Checkout() {
     const cartData = cartItems.map(item => ({
       productid: item.productid,
       quantity: item.quantity,
-      original_mrp:Number(item.price) * item.quantity,
+      original_mrp: Number(item.price) * item.quantity,
       price_final:
         Number(item.price) * item.quantity -
         Number(item.discount) * item.quantity,
@@ -224,7 +226,7 @@ function Checkout() {
         orderData
       );
       if (orderResponse.data.status === 'success') {
-        const orderId=orderResponse.data.orderid;
+        const orderId = orderResponse.data.orderid;
         // console.log('Order placed successfully.');
         const soldProductData = cartData.map(item => ({
           productid: item.productid,
@@ -359,13 +361,14 @@ function Checkout() {
 
   return (
     <>
+
       <section className='blog about-blog'>
         <div className='container'>
-          {/* {loading && <Loader />}
-                    <div className="blog-heading about-heading">
-                        <h1 className="heading">Checkout</h1>
-                        <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} />
-                    </div> */}
+          {/* {loading && <Loader />} */}
+          <div className="blog-heading about-heading">
+            <h1 className="heading">Checkout</h1>
+            {/* <img src={loaderGif} alt="Loading..." style={{ width: '80px', height: '80px' }} /> */}
+          </div>
           {loading && (
             <div
               style={{
@@ -457,223 +460,137 @@ function Checkout() {
                             />
                           </>
                         )}
-                        <form onSubmit={handleSubmit}>
-                          {/* <a href="#" className="shop-btn" onClick={modalAction}>Open in Modal - Add New Address</a> */}
-                          {/* <Link to="/addressnew" className="shop-btn">Add New Address</Link> */}
-
-                          <div
-                            className='modal-wrapper'
-                            style={{
-                              display: isModalOpen ? 'block' : 'none',
-                              marginLeft: '33vw',
-                              marginTop: '10vh',
-                            }}
-                          >
-                            <div
-                              className='anywhere-away'
-                              onClick={modalAction}
-                            ></div>
-                            <div className='login-section account-section modal-main col-4'>
-                              <div className='review-form'>
-                                <div
-                                  className='review-content'
-                                  style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    height: '6em',
-                                  }}
-                                >
-                                  <h5
-                                    className='comment-title'
-                                    style={{
-                                      marginTop: '1.67em',
-                                      marginBottom: '1.67em',
-                                    }}
-                                  >
-                                    Add Your Address
-                                  </h5>
-                                  <div className='close-btn'>
-                                    <img
-                                      src='assets/images/homepage-one/close-btn.png'
-                                      onClick={modalAction}
-                                      alt='close-btn'
-                                    />
-                                  </div>
+                   <form onSubmit={handleSubmit}>
+                      <div
+                        className={`modal fade ${isModalOpen ? 'show d-block' : 'd-none'}`}
+                        tabIndex="-1"
+                        role="dialog"
+                        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+                      >
+                        <div className="modal-dialog modal-dialog-centered" role="document">
+                          <div className="modal-content">
+                          <div className="d-flex justify-content-between align-items-center">
+                             <h5 className="m-0 ms-3">Add Your Address</h5>
+                             <img src='assets/images/homepage-one/close-btn.png' onClick={modalAction} alt="close-btn" className="me-3 mt-2 cursor-pointer img-hover" />
+                          </div>
+                            <div className="modal-body">
+                              <div className="mb-3">
+                                <label htmlFor="name" className="form-label fs-4">
+                                  Name*
+                                </label>
+                                <input
+                                  type="text"
+                                  id="name"
+                                  className="form-control fs-4"
+                                  name="name"
+                                  placeholder="Name"
+                                  onChange={handleChange}
+                                />
+                              </div>
+                              <div className="mb-3">
+                                <label htmlFor="userphone" className="form-label fs-4">
+                                  Contact*
+                                </label>
+                                <input
+                                  type="tel"
+                                  id="userphone"
+                                  className="form-control fs-4"
+                                  name="contact"
+                                  placeholder="Contact"
+                                  onChange={handleChange}
+                                />
+                              </div>
+                              <div className="mb-3">
+                                <label htmlFor="useraddress" className="form-label fs-4">
+                                  Address*
+                                </label>
+                                <input
+                                  type="text"
+                                  id="useraddress"
+                                  className="form-control fs-4"
+                                  name="line1"
+                                  placeholder="Enter your Address"
+                                  onChange={handleChange}
+                                />
+                              </div>
+                              <div className="row">
+                                <div className="col-md-6 mb-3 fs-4">
+                                  <label htmlFor="landmark" className="form-label fs-4">
+                                    Landmark
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="landmark"
+                                    className="form-control fs-4"
+                                    name="landmark"
+                                    placeholder="Landmark"
+                                    onChange={handleChange}
+                                  />
                                 </div>
-                                <div className='account-inner-form'>
-                                  <div className='review-form-name'>
-                                    <label
-                                      htmlFor='name'
-                                      className='form-label'
-                                    >
-                                      Name*
-                                    </label>
-                                    <input
-                                      type='text'
-                                      id='name'
-                                      className='form-control'
-                                      name='name'
-                                      placeholder='Name'
-                                      onChange={handleChange}
-                                    />
-                                  </div>
+                                <div className="col-md-6 mb-3">
+                                  <label htmlFor="zip" className="form-label fs-4">
+                                    Pin*
+                                  </label>
+                                  <input
+                                    type="number"
+                                    id="zip"
+                                    className="form-control fs-4"
+                                    name="pin"
+                                    placeholder="Pin"
+                                    onChange={handleChange}
+                                    onBlur={fillpindetails}
+                                  />
                                 </div>
-                                <div className='account-inner-form'>
-                                  <div className='review-form-name'>
-                                    <label
-                                      htmlFor='userphone'
-                                      className='form-label'
-                                    >
-                                      Contact*
-                                    </label>
-                                    <input
-                                      type='tel'
-                                      id='userphone'
-                                      className='form-control'
-                                      name='contact'
-                                      placeholder='Contact'
-                                      onChange={handleChange}
-                                    />
-                                  </div>
-                                  <div className='review-form-name'>
-                                    <label
-                                      htmlFor='alternatephone'
-                                      className='form-label'
-                                    >
-                                      Alternate Contact
-                                    </label>
-                                    <input
-                                      type='tel'
-                                      id='alternatephone'
-                                      className='form-control'
-                                      name='alternatecontact'
-                                      placeholder='Alternate Contact'
-                                      onChange={handleChange}
-                                    />
-                                  </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-md-6 mb-3">
+                                  <label htmlFor="city" className="form-label fs-4">
+                                    City*
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="city"
+                                    value={formData.city}
+                                    className="form-control fs-4"
+                                    name="city"
+                                    placeholder="City"
+                                    onChange={handleChange}
+                                    disabled
+                                  />
                                 </div>
-                                <div className='account-inner-form'>
-                                  <div className='review-form-name'>
-                                    <label
-                                      htmlFor='useraddress'
-                                      className='form-label'
-                                    >
-                                      Address*
-                                    </label>
-                                    <input
-                                      type='text'
-                                      id='useraddress'
-                                      className='form-control'
-                                      name='line1'
-                                      placeholder='Enter your Address'
-                                      onChange={handleChange}
-                                    />
-                                  </div>
-                                </div>
-                                <div className='account-inner-form'>
-                                  <div className='review-form-name'>
-                                    <label
-                                      htmlFor='landmark'
-                                      className='form-label'
-                                    >
-                                      Landmark
-                                    </label>
-                                    <input
-                                      type='text'
-                                      id='landmark'
-                                      className='form-control'
-                                      name='landmark'
-                                      placeholder='Landmark'
-                                      onChange={handleChange}
-                                    />
-                                  </div>
-                                  <div className='review-form-name'>
-                                    <label htmlFor='zip' className='form-label'>
-                                      Pin*
-                                    </label>
-                                    <input
-                                      type='number'
-                                      id='zip'
-                                      className='form-control'
-                                      name='pin'
-                                      placeholder='Pin'
-                                      onChange={handleChange}
-                                      onBlur={fillpindetails}
-                                    />
-                                  </div>
-                                </div>
-                                <div className='account-inner-form'>
-                                  <div className='review-form-name'>
-                                    <label
-                                      htmlFor='city'
-                                      className='form-label'
-                                    >
-                                      City*
-                                    </label>
-                                    <input
-                                      type='text'
-                                      id='city'
-                                      value={formData.city}
-                                      className='form-control'
-                                      name='city'
-                                      placeholder='City'
-                                      onChange={handleChange}
-                                      disabled
-                                    />
-                                  </div>
-
-                                  <div className='review-form-name'>
-                                    <label
-                                      htmlFor='state'
-                                      className='form-label'
-                                    >
-                                      State*
-                                    </label>
-                                    <input
-                                      type='text'
-                                      id='state'
-                                      value={formData.state}
-                                      className='form-control'
-                                      name='state'
-                                      placeholder='State'
-                                      onChange={handleChange}
-                                      disabled
-                                    />
-                                  </div>
-
-                                  <div className='review-form-name'>
-                                    <label
-                                      htmlFor='country'
-                                      className='form-label'
-                                    >
-                                      Country*
-                                    </label>
-                                    <input
-                                      type='text'
-                                      id='country'
-                                      value={formData.country}
-                                      className='form-control'
-                                      name='country'
-                                      placeholder='Country'
-                                      onChange={handleChange}
-                                      disabled
-                                    />
-                                  </div>
-                                </div>
-                                <div className='login-btn text-center'>
-                                  <button
-                                    type='submit'
-                                    onClick={modalAction}
-                                    className='shop-btn'
-                                  >
-                                    Add Address
-                                  </button>
+                                <div className="col-md-6 mb-3">
+                                  <label htmlFor="state" className="form-label fs-4">
+                                    State*
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="state"
+                                    value={formData.state}
+                                    className="form-control fs-4"
+                                    name="state"
+                                    placeholder="State"
+                                    onChange={handleChange}
+                                    disabled
+                                  />
                                 </div>
                               </div>
                             </div>
+                            <div className="modal-footer">
+                              <button 
+                                className="btn btn-danger btn-lg px-4 fs-3"
+                                onClick={modalAction}
+                              >
+                                Close
+                              </button>
+                              <button  className="btn btn-primary btn-lg  px-4 fs-3">
+                                Add Address
+                              </button>
+                            </div>
                           </div>
-                        </form>
+                        </div>
+                      </div>
+                    </form>
+
                       </div>
                     </div>
                   </div>
@@ -686,7 +603,7 @@ function Checkout() {
                     <div className="apply-coupon-section">
                       <h5 className="wrapper-heading">Apply Coupon</h5>
                       <div className="row mb-3 text-custom-font-1">
-                        <div className="col-6">
+                        {/* <div className="col-6">
                           <input
                             type="text"
                             className="form-control"
@@ -703,7 +620,7 @@ function Checkout() {
                           >
                             Verify Code
                           </button>
-                        </div>
+                        </div> */}
                         <div className="col-12">
                           {isCouponApplied && (
                             <div className="alert alert-success mt-2" role="alert">

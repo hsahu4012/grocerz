@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import Loader from './loader/Loader';
+// import Loader from './loader/Loader';
+import loaderGif from '../assets/images/loader.gif'
 import dress1 from '../assets/img/product/women/dress1.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,25 +29,25 @@ const ProductDetails = () => {
   }, []);
 
   const [product, setProduct] = useState({
-    image:
-      'https://cdn.pixabay.com/photo/2016/12/06/09/30/blank-1886001_640.png',
-    image1:
-      'https://5.imimg.com/data5/HB/VQ/MY-44811379/men-black-plain-t-shirt.jpg',
-    image2:
-      'https://assets.ajio.com/medias/sys_master/root/20231012/O3AN/65281d84afa4cf41f53f4650/-473Wx593H-466701145-black-MODEL2.jpg',
-    image3:
-      'https://cdn11.bigcommerce.com/s-o7vdfbtasz/images/stencil/500x659/products/358/1048/i-once-lived-in-fargo-really-fargo-stuff-black-back__82397.1541002551.jpg?c=2',
-    prod_name: 'Essential structured blazer',
-    brand: 'Brand: SKMEIMore Men Watches from SKMEI',
-    description:
-      'Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur magni lores eos qui ratione voluptatem sequi nesciunt.',
-    specification:
-      'Traditionally, it has short sleeves and a round neckline, known as a crew neck, which lacks a collar. T-shirts are generally made of stretchy, light, and inexpensive fabric and are easy to clean.',
-    reviews:
-      "The most famous of T-shirts styles are crew necks, also known as classic T-shirts. These are T-shirts with a round circular neck. They provide excellent flexibility, and fit comfortably on your body giving you a toned appearance. They work well if you've got a long and narrow face with slightly sloped shoulders.",
-    disc_price: '75$',
-    price: '83$',
-    shipping: 'Free Shipping',
+    // image:
+    //   'https://cdn.pixabay.com/photo/2016/12/06/09/30/blank-1886001_640.png',
+    // image1:
+    //   'https://5.imimg.com/data5/HB/VQ/MY-44811379/men-black-plain-t-shirt.jpg',
+    // image2:
+    //   'https://assets.ajio.com/medias/sys_master/root/20231012/O3AN/65281d84afa4cf41f53f4650/-473Wx593H-466701145-black-MODEL2.jpg',
+    // image3:
+    //   'https://cdn11.bigcommerce.com/s-o7vdfbtasz/images/stencil/500x659/products/358/1048/i-once-lived-in-fargo-really-fargo-stuff-black-back__82397.1541002551.jpg?c=2',
+    // prod_name: 'Essential structured blazer',
+    // brand: 'Brand: SKMEIMore Men Watches from SKMEI',
+    // description:
+    //   'Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur magni lores eos qui ratione voluptatem sequi nesciunt.',
+    // specification:
+    //   'Traditionally, it has short sleeves and a round neckline, known as a crew neck, which lacks a collar. T-shirts are generally made of stretchy, light, and inexpensive fabric and are easy to clean.',
+    // reviews:
+    //   "The most famous of T-shirts styles are crew necks, also known as classic T-shirts. These are T-shirts with a round circular neck. They provide excellent flexibility, and fit comfortably on your body giving you a toned appearance. They work well if you've got a long and narrow face with slightly sloped shoulders.",
+    // disc_price: '75$',
+    // price: '83$',
+    // shipping: 'Free Shipping',
   });
 
   //tabchange
@@ -163,7 +164,7 @@ const ProductDetails = () => {
                 {product.categoryname}{' '}
               </a>
             </span>
-            <span class='devider'>/</span>
+            <span class='devider'></span>
           </div>
           <div className='blog-heading about-heading'>
             <h1 className='heading'>{product.prod_name}</h1>
@@ -173,7 +174,25 @@ const ProductDetails = () => {
 
       <ToastContainer />
       <div class='product-info-section'>
-        {loading && <Loader />}
+        {loading && 
+          <div
+              style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '50vh',
+              }}
+              >
+              <img
+              src={loaderGif}
+              alt='Loading...'
+              style={{
+              width: '80px',
+              height: '80px',
+              }}
+              />
+            </div>
+        }
         <div class='row '>
           <div class='col-md-6'>
             <div class='product-info-img' data-aos='fade-right'>

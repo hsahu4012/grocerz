@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
 import loaderGif from '../assets/images/loader.gif';
-
+import { useNavigate } from 'react-router-dom';
 const Address = () => {
   const userid = localStorage.getItem('userid');
   const [formData, setFormData] = useState({
@@ -23,9 +23,21 @@ const Address = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [formError, setFormError] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState(''); 
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = e => {
     const { name, value } = e.target;
+    if(name === 'alternatecontact' && value !== '' && !/^\d*$/.test(value)) {
+      setModalMessage('Alternate contact numbers must be 10-digit numbers.');
+      setShowModal(true);
+      return;
+    }else{
+      setFormError('');
+    }
     setFormData(prevState => ({
       ...prevState,
       [name]: value,
@@ -45,13 +57,15 @@ const Address = () => {
       formData.pin.trim() === '' ||
       formData.contact.trim() === ''
     ) {
-      alert('Please fill in all mandatory fields.');
+      setModalMessage('Please fill in all mandatory fields.');
+      setShowModal(true);
       return;
     }
 
     // Check if pin code is a number
     if (isNaN(formData.pin.trim())) {
-      alert('Pin code must be a number.');
+      setModalMessage('Pin code must be a number.');
+      setShowModal(true);
       return;
     }
 
@@ -60,13 +74,22 @@ const Address = () => {
       !/^\d{10}$/.test(formData.contact.trim())
       //!/^\d{10}$/.test(formData.alternatecontact.trim())
     ) {
-      alert('Contact numbers must be 10-digit numbers.');
+      setModalMessage('Contact numbers must be 10-digit numbers.');
+      setShowModal(true);
       return;
     }
 
-    setLoading(true);
+    if (formData.alternatecontact.trim() !== '' && !/^\d{10}$/.test(formData.alternatecontact.trim())) {
+      setModalMessage('Alternate contact numbers must be 10-digit numbers.');
+      setShowModal(true);
+      return;
+    }
+    setShowConfirmationModal(true);
+  };
 
-    try {
+  const handleConfirmSubmission = async () => {
+    setLoading(true);
+        try {
       // Make POST request to the API endpoint
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}address/addAddress`,
@@ -89,14 +112,21 @@ const Address = () => {
         alternatecontact: '',
         landmark: '',
       });
+      navigate('/address');
       // Handle success, maybe redirect user or show a success message
     } catch (error) {
       console.error('API error:', error);
+      setModalMessage('Something went wrong. Please try again later.');
+      setShowModal(true);
       // Handle error, maybe show an error message to the user
     }
     setLoading(false);
+    setShowConfirmationModal(false);
   };
 
+  const handleCancelSubmission = () => {
+    setShowConfirmationModal(false);
+  }
   const fillpindetails = () => {
     if (formData.pin === '848210') {
       setError('');
@@ -158,23 +188,11 @@ const Address = () => {
                                 <div className='row'>
                                   <div className='col-lg-12'>
                                     {loading ? (
-                                      <div
-                                        style={{
-                                          display: 'flex',
-                                          justifyContent: 'center',
-                                          alignItems: 'center',
-                                          height: '50vh',
-                                        }}
-                                      >
-                                        <img
-                                          src={loaderGif}
-                                          alt='Loading...'
-                                          style={{
-                                            width: '80px',
-                                            height: '80px',
-                                          }}
-                                        />
-                                      </div>
+                                      <div className='loader-div'>
+                                      <img className='loader-img'
+                                        src={loaderGif}
+                                        alt='Loading...'/>
+                                    </div>
                                     ) : (
                                       <form
                                         onSubmit={handleSubmit}
@@ -362,6 +380,25 @@ const Address = () => {
           </div>
         </div>
       </section>
+
+      {showConfirmationModal && (
+        <div className='popup-overlay'>
+          <div className='popup-content'>
+            <h3>Are you sure you want to add this address</h3>
+            <button onClick={handleCancelSubmission}>Cancel</button>
+            <button onClick={handleConfirmSubmission}>Confirm</button>
+          </div>
+
+        </div>
+      )}
+          {showModal && (
+            <div className='popup-overlay'>
+              <div className='popup-content'>
+                <h3>{modalMessage}</h3>
+                <button onClick={() => setShowModal(false)}>Close</button>
+              </div>
+            </div>
+          )}
     </>
   );
 };

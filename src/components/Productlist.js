@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import temp_product_image from '../assets/products/p-img-29.webp';
-import Loader from './loader/Loader';
+// import Loader from './loader/Loader';
+import loaderGif from '../assets/images/loader.gif'
 import { ToastContainer, toast } from 'react-toastify';
 import Discount from './shared/Discount_tag';
+import ProductCard from './ProductCard';
 const Productlist = () => {
   const { category_id } = useParams();
   const [products, setProducts] = useState([]);
@@ -235,10 +237,16 @@ const Productlist = () => {
       <ToastContainer />
       <section className='shop spad product product-sidebar footer-padding'>
         <div className='container'>
-          {loading && <Loader />}
+          {loading &&
+            <div className='loader-div'>
+              <img className='loader-img'
+                src={loaderGif}
+                alt='Loading...' />
+            </div>
+          }
           <div className='row'>
             <div className='col-lg-3'>
-              <div className='sidebar' data-aos='fade-right'>
+              {/* <div className='sidebar' data-aos='fade-right'>
                 <div className='sidebar-section box-shadows'>
                   {subcategories.length > 0 && (
                     <div className='sidebar-wrapper'>
@@ -278,12 +286,56 @@ const Productlist = () => {
                     </div>
                   )}
                 </div>
+              </div> */}
+
+              <div className='sidebar'>
+                <div className='sidebar-section box-shadows'>
+                  {subcategories.length > 0 && (
+                    <div className='sidebar-wrapper text-custom-font-1'>
+                      <h3 className='wrapper-heading'>Subcategories</h3>
+                      <div className='sidebar-item'>
+                        {/* <ul className='sidebar-list'> */}
+                        {subcategories.map(subcategory => (
+                          <div
+                            key={subcategory.subcategory_id}
+                            type='radio'
+                            id={`subcategory-${subcategory.subcategory_id}`}
+                            name='subcategory'
+                            className={selectedSubcategory ===
+                              subcategory.subcategory_id ? 'sidebar-sub-category sidebar-sub-category-selected' : 'sidebar-sub-category'}
+                            checked={
+                              selectedSubcategory ===
+                              subcategory.subcategory_id
+                            }
+                            onClick={() => {
+                              storeSelectedSubcategory(
+                                subcategory.subcategory_id
+                              );
+                              //setSubcategoryName(subcategory.subcategoryname);
+                              fetchProducts(
+                                category_id,
+                                subcategory.subcategory_id
+                              );
+                            }}
+                          >
+                            <label
+                              htmlFor={`subcategory-${subcategory.subcategory_id}`}
+                            >
+                              {subcategory.subcategoryname}
+                            </label>
+                          </div>
+                        ))}
+                        {/* </ul> */}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div class='login-btn'>
                 <button
                   onClick={connectwhatsapp}
-                  class='shop-btn shop-btn-full'
+                  class='shop-btn shop-btn-full wa-button-list-page'
                 >
                   If your product is not listed<br></br>Order on WhatsApp
                 </button>
@@ -418,7 +470,7 @@ const Productlist = () => {
                                 <div className='popup-overlay'>
                                   <div className='popup-content'>
                                     <h3>Select Order ID</h3>
-                                    {/* <select
+                                    <select
                                       value={selectedorderIDs}
                                       onChange={e =>
                                         setselectedOrderIDs(e.target.value)
@@ -433,26 +485,7 @@ const Productlist = () => {
                                           {oid.srno} - {oid.order_id}
                                         </option>
                                       ))}
-                                    </select> */}
-                                    <div className='quantity-added'>
-                                      <select
-                                        value={selectedorderIDs}
-                                        onChange={e =>
-                                          setselectedOrderIDs(e.target.value)
-                                        }
-                                      >
-                                        <option value=''>Select Order ID</option>
-                                        {orderIDs.map(oid => (
-                                          <option
-                                            key={oid.order_id}
-                                            value={oid.order_id}
-                                          >
-                                            {oid.srno} - {oid.order_id}
-                                          </option>
-                                        ))}
-                                      </select>
-                                      <input className='quantity-input' type='number' value={productQuantity} onChange={(e) => setProductQuantity(e.target.value)} placeholder='Enter Amount'/>
-                                    </div>
+                                    </select>
                                     <button
                                       className=''
                                       onClick={handleAddProduct}

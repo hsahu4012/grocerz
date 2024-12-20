@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import temp_product_image from '../assets/products/p-img-29.webp';
-import Loader from './loader/Loader';
+// import Loader from './loader/Loader';
+// import loaderGif from '../assets/images/loaderGif'
+import loaderGif from '../assets/images/loader.gif'
 import { ToastContainer, toast } from 'react-toastify';
 import Discount from './shared/Discount_tag';
 
@@ -78,8 +80,8 @@ const ShopByBrand = () => {
     setLoading(false);
   };
   const handleAddToCart = async (product) => {
-    setLoading(true);
     const { productid, prod_name, price, image, discount } = product;
+    setLoading(productid);
     try {
       const quantity = 1;
       const userid = localStorage.getItem('userid');
@@ -184,7 +186,13 @@ const ShopByBrand = () => {
       <ToastContainer />
       <section className='shop spad product product-sidebar footer-padding'>
         <div className='container'>
-          {loading && <Loader />}
+          {loading && 
+            <div className='loader-div'>
+            <img className='loader-img'
+              src={loaderGif}
+              alt='Loading...'/>
+          </div>
+          }
           <div className='row'>
             <div className='col-lg-3'>
               <div className='sidebar' data-aos='fade-right'>
@@ -279,29 +287,47 @@ const ShopByBrand = () => {
                           )}
                           {product.stock_quantity > 0 && (
                             <div className='product-cart-btn'>
+                              <div className='row'>
+                              <div className='col-8 w-75'>
                               {isInCart(product.productid) ? (
-                                <Link to={'/cart'} className='product-btn mb-2'>
+                                <Link to={'/cart'} className='product-btn mt-4'>
                                   Go to Cart
                                 </Link>
                               ) : (
                                 <button
-                                  className='product-btn'
+                                  className='product-btn mt-4'
                                   onClick={() => handleAddToCart(product)}
                                   disabled={product.stock_quantity < 1}
                                 >
-                                  {loading ? 'Adding...' : 'Add to Cart'}
+                                  {loading === product.productid ? 'Adding...' : 'Add to Cart'}
                                 </button>
                               )}
+                              </div>
+                              <div className='col-4 w-25 mt-4'> 
                               <button
                                 className='product-btn wishlist-btn'
                                 onClick={() => addToWishlist(product.productid)}
                               >
-                                <i className='fa fa-heart-o'></i> Add to
-                                Wishlist
+                                <span>
+                                        <svg
+                                          width='28'
+                                          height='23'
+                                          viewBox='0 0 28 23'
+                                          fill='none'
+                                          xmlns='http://www.w3.org/2000/svg'
+                                        >
+                                          <path
+                                            d='M4.97214 5.02422C3.71435 5.18246 2.6616 5.7007 1.7705 6.60267C0.970091 7.40971 0.489057 8.26421 0.213053 9.37586C-0.275867 11.3024 0.0789948 13.2013 1.25398 14.9855C2.00708 16.1288 2.98097 17.1772 4.76711 18.7754C5.90266 19.7921 9.36848 22.7591 9.53802 22.858C9.69574 22.953 9.75488 22.9648 10.09 22.9648C10.4252 22.9648 10.4843 22.953 10.642 22.858C10.8116 22.7591 14.2853 19.7881 15.413 18.7754C17.207 17.1692 18.173 16.1249 18.9261 14.9855C20.1011 13.2013 20.4559 11.3024 19.967 9.37586C19.691 8.26421 19.21 7.40971 18.4096 6.60267C17.6131 5.7996 16.7614 5.33674 15.6456 5.09938C15.0857 4.9807 14.0526 4.96883 13.5637 5.0796C12.1995 5.3763 11.1546 6.0607 10.2004 7.27916L10.09 7.41762L9.98357 7.27916C9.04122 6.08443 8.01212 5.40004 6.69913 5.09938C6.30878 5.00839 5.4098 4.96883 4.97214 5.02422ZM6.28907 6.23081C7.40885 6.42861 8.37487 7.0774 9.13979 8.14948C9.26991 8.33542 9.43156 8.55696 9.49465 8.64795C9.78643 9.05937 10.3936 9.05937 10.6854 8.64795C10.7485 8.55696 10.9102 8.33542 11.0403 8.14948C12.0851 6.68575 13.5401 5.9974 15.1251 6.21498C16.8837 6.4563 18.2558 7.69058 18.7802 9.50641C19.1942 10.9424 19.0128 12.4497 18.2597 13.8066C17.6289 14.942 16.5761 16.1328 14.7427 17.7824C13.8555 18.5776 10.1255 21.7978 10.09 21.7978C10.0506 21.7978 6.33638 18.5895 5.4374 17.7824C2.61823 15.2466 1.50633 13.6642 1.23821 11.8088C1.06472 10.6101 1.31312 9.32047 1.91639 8.30377C2.82326 6.77278 4.58968 5.9341 6.28907 6.23081Z'
+                                            fill='black'
+                                          />                                          
+                                        </svg>
+                                      </span> 
                               </button>
+                              </div>
+                              </div>
                               {usertype === 'admin' && (
                                 <button
-                                  className='product-btn mt-2'
+                                  className='product-btn pending-add-btn'
                                   type='button'
                                   onClick={() => {
                                     setShowPopup(true);

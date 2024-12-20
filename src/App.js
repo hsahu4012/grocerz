@@ -40,6 +40,7 @@ import Wishlist from './components/Wishlist';
 
 import OrderDetail from './components/OrderDetail';
 import OrderHistory from './components/OrderHistory';
+import OrderHistory2 from './components/OrderHistory2.js';
 import PaymentPage from './components/PaymentPage';
 import Dashboard from './components/Dashboard';
 import Productlist from './components/Productlist';
@@ -70,15 +71,17 @@ function App() {
   //temp code to keep server live
   // const callApiQsList = async () => {
   //   try {
-  //     const url = process.env.REACT_APP_API_URL + 'category/allCategory';
+  //     const url = process.env.REACT_APP_API_URL + 'settings/allsettings';
   //     const response = await axios.get(url);
   //   }
   //   catch (error) { console.log(error); }
   // }
 
   // useEffect(() => {
-  //   setInterval(() => callApiQsList(), 100000)
+  //   setInterval(() => callApiQsList(), 10000)
   // }, [])
+
+
   //temp code to keep server live
   // const App = () => {
   //   const [loading, setLoading] = useState(false);
@@ -148,6 +151,7 @@ function App() {
             element={<OrderDetail />}
           />
           <Route path='/orderhistory' element={<OrderHistory />} />
+          <Route path='/orderhistory2' element={<OrderHistory2 />} />
           <Route
             path='/orderhistory/orderdetailsprint/:orderid/:usertype'
             element={<OrderDetailsPrint />}
