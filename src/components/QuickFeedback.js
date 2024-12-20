@@ -47,16 +47,9 @@ const QuickFeedback = () => {
                         {stars.map((star, index) => (
                           <span
                             key={index}
-                            className='cursor-pointer fs-4 mx-3'
-                            style={{
-                              color:
-                                hover >= star || rating >= star
-                                  ? '#f39c12'
-                                  : '#6c757d',
-                              transition: 'color 0.2s',
-                              transform: 'scale(2)',
-                              cursor: 'pointer',
-                            }}
+                            className={`star ${
+                              hover >= star || rating >= star ? 'star-active' : 'star-inactive'
+                            }`}
                             onClick={() => handleRating(star)}
                             onMouseEnter={() => setHover(star)}
                             onMouseLeave={() => setHover(0)}
