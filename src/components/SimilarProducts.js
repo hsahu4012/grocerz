@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import temp_product_image from '../assets/products/p-img-29.webp';
+import ProductCard from './ProductCard';
 
 const SimilarProducts = () => {
   const userid = localStorage.getItem('userid');
@@ -130,121 +131,7 @@ const SimilarProducts = () => {
         <div className='row'>
           {similarProducts.length > 0 ? (
             productsToDisplay.map((product) => (
-                <div className='col-xl-3 col-sm-5' key={product.productid}>
-                <div className='product-wrapper m-1' data-aos='fade-up'>
-                  <Link to={`/product/${product.productid}`}>
-                    <div className='product-img'>
-                      <img
-                        src={
-                          product.image
-                            ? `${process.env.REACT_APP_IMAGE_URL}${product.image}`
-                            : temp_product_image
-                        }
-                        alt={product.prod_name}
-                      />
-                    </div>
-                  </Link>
-                  <div className='product-info'>
-                    <div className='product-description'>
-                      <div className='product-details'>
-                        {product.prod_name}
-                      </div>
-                      <div className='price'>
-                        {product.discount !== 0 && (
-                          <span className='price-cut'>
-                            &#8377; &nbsp;{product.price}
-                          </span>
-                        )}
-                        <span className='new-price'>
-                          &#8377; &nbsp;{product.price - product.discount}
-                        </span>`
-                      </div>
-                    </div>
-                    {product.stock_quantity <=0 && (
-                      <p className='out-of-stock'>Out of Stock</p>
-                    )}
-                    {product.stock_quantity > 0 && (
-                      <div className='product-cart-btn'>
-                        {/* conditional buttons */}
-                        {isInCart(product.productid) ? (
-                          <Link
-                            to={'/cart'}
-                            className='product-btn mb-2'
-                            type='button'
-                          >
-                            Go to Cart
-                          </Link>
-                        ) : (
-                          <button
-                            onClick={() => handleAddToCart(product)}
-                            className='product-btn mb-2'
-                            type='button'
-                          >
-                            Add to Cart
-                          </button>
-                        )}
-                        {userid && (
-                          <button
-                            onClick={() =>
-                              addToWishlist(product.productid)
-                            }
-                            className='product-btn'
-                            type='button'
-                          >
-                            Add to Wishlist
-                          </button>
-                        )}
-                        {usertype === 'admin' && (
-                          <button
-                            className='product-btn mt-2'
-                            type='button'
-                            onClick={() => {
-                              setShowPopup(true);
-                              setSingleProduct(product);
-                            }}
-                          >
-                            Add to Pending Orders
-                          </button>
-                        )}
-                        {showPopup && (
-                          <div className='popup-overlay'>
-                            <div className='popup-content'>
-                              <h3>Select Order ID</h3>
-                              <select
-                                value={selectedorderIDs}
-                                onChange={e =>
-                                  setselectedOrderIDs(e.target.value)
-                                }
-                              >
-                                <option value=''>Select Order ID</option>
-                                {orderIDs.map(oid => (
-                                  <option
-                                    key={oid.order_id}
-                                    value={oid.order_id}
-                                  >
-                                    {oid.srno} - {oid.order_id}
-                                  </option>
-                                ))}
-                              </select>
-                              <button
-                                className=''
-                                onClick={handleAddProduct}
-                              >
-                                Add Product
-                              </button>
-                              <button onClick={() => setShowPopup(false)}>
-                                Close
-                              </button>
-                              {/* {loading && <div className='spinner-overlay'><p className='spinner2'></p></div>} */}
-                              {/* {err && <p className=''>{err}</p>} */}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+                <ProductCard product={product} isInCart={isInCart}/>
             ))
           ) : (
             <p>No similar products found</p>

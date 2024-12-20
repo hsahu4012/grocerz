@@ -82,7 +82,7 @@ const Dashboard = () => {
   const fetchTotalDiscount = async (userid) => {
     try {
       // http://localhost:4000/orders/getTotalDiscountByUserId/${userid} 
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}getTotalDiscountByUserId/${userid}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}orders/getTotalDiscountByUserId/${userid}`);
       setTotalDiscount(response.data.totalDiscount);
       
     } catch (error) {
@@ -117,13 +117,13 @@ const Dashboard = () => {
                 <div className='tab-pane fade show active' id='v-pills-home' role='tabpanel' aria-labelledby='v-pills-home-tab'>
                   <div className='user-profile'>
                     <div className='user-title'>
-                      <p className='paragraph'>Hello {userDetails.name} </p>
-                      <h5 className='heading'>Welcome to your Profile </h5>
+                      {/* <p className='paragraph'>Hello  </p> */}
+                      <h5 className='heading'>Welcome {userDetails.name} </h5>
                     </div>
 
                     <div className='profile-section'>
                       <div className='row g-5'>
-                        <div className='col-lg-4 col-sm-6'>
+                        <div className='col-lg-3 col-sm-6'>
                           <div className='product-wrapper'>
                             <div className='wrapper-img'>
                               <span>
@@ -142,7 +142,7 @@ const Dashboard = () => {
                           </div>
                         </div>
 
-                        <div className='col-lg-4 col-sm-6'>
+                        <div className='col-lg-3 col-sm-6'>
                           <div className='product-wrapper'>
                             <div className='wrapper-img'>
                               <span>
@@ -158,7 +158,7 @@ const Dashboard = () => {
                             </div>
                           </div>
                         </div>
-                        <div className='col-lg-4 col-sm-6'>
+                        <div className='col-lg-3 col-sm-6'>
                           <div className='product-wrapper'>
                             <div className='wrapper-img'>
                               <span>
@@ -170,13 +170,13 @@ const Dashboard = () => {
                               </span>
                             </div>
                             <div className='wrapper-content'>
-                              <p className='paragraph'>Current Month Spendings</p>
+                              <p className='paragraph'>This Month</p>
                               <h3 className='heading'>{currentMonthSpendings}</h3>
                             </div>
                           </div>
                         </div>
 
-                        <div className='col-lg-4 col-sm-6'>
+                        <div className='col-lg-3 col-sm-6'>
                           <div className='product-wrapper'>
                             <div className='wrapper-img'>
                               <span>
@@ -194,7 +194,7 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
-                      <div className='col-lg-12 review-form'>
+                      <div className='col-lg-12 review-form mt-4'>
                             <div className="seller-info">
                               <h5 className="heading">Personal Information</h5>
                               {isEditing ? (
@@ -208,8 +208,8 @@ const Dashboard = () => {
                           <div className='checkout__form__input'>
                           <p>Phone: <input type="text" name="mobile" value={userDetails.mobile} onChange={handleInputChange} className='form-control'/></p>
                           </div>
-                          <button type='submit' class='shop-btn' onClick={updateUserDetails}>Update</button>
-                          <button type='submit' class='shop-btn-red' onClick={() => setIsEditing(false)}>Cancel</button>
+                          <button type='submit' className='shop-btn' onClick={updateUserDetails}>Update</button>
+                          <button type='submit' className='shop-btn mx-3 bg-danger' onClick={() => setIsEditing(false)}>Cancel</button>
                         </div>
                         ) : (
                         <div>

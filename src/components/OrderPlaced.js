@@ -34,11 +34,11 @@ const OrderPlaced = () => {
   };
 
   useEffect(() => {
-    if (!userid) {
-      //navigate('/login');
-      navigate(`/ordersuccess/${orderid}`);
-      return;
-    }
+    // if (!userid) {
+    //   navigate('/login');
+    //   navigate(`/ordersuccess/${orderid}`);
+    //   return;
+    // }
     window.scrollTo(0, 0);
     fetchOrderDetails();
   }, [orderid, userid, navigate]);
@@ -90,7 +90,7 @@ const OrderPlaced = () => {
                   <div >
                     <div className="text-center mt-10 text-custom-font-1">
 
-                      <div col-12>
+                      {/* <div col-12>
                         Order Id - {order.srno || 'N/A'}
                       </div>
 
@@ -104,55 +104,54 @@ const OrderPlaced = () => {
 
                       <div col-12>
                         Delivery Status - {order.delivery_status || 'N/A'}
-                      </div>
+                      </div> */}
 
 
-                      {/* <table className='table table-responsive'>
+                      <table className='table table-borderd table-striped'>
                         <tbody>
-                          <tr className='table-row table-top-row'>
-                            <td className='table-wrapper wrapper-product'>
-                              <h4 className='table-heading'>Order Id</h4>
-                            </td>
-                            <td className='table-wrapper'>
-                              <h4 className='table-heading'>{order.order_id || 'N/A'}</h4>
-                            </td>
-                          </tr>
-
-                          <tr className='table-row table-top-row'>
-                            <td className='table-wrapper'>
-                              <div className='table-wrapper-center'>
-                                <h4 className='table-heading'>Total Amount</h4>
-                              </div>
-                            </td>
-                            <td className='table-wrapper'>
-                              <h4 className='table-heading'>{order.paymentamount || 'N/A'}</h4>
+                          <tr className='fs-3'>
+                            <th className=''>
+                              Order Id
+                            </th>
+                            <td className=''>
+                              {order.order_id || 'N/A'}
                             </td>
                           </tr>
 
-                          <tr className='table-row table-top-row'>
-                            <td className='table-wrapper'>
-                              <div className='table-wrapper-center'>
-                                <h4 className='table-heading'>Placed On</h4>
-                              </div>
-                            </td>
-                            <td className='table-wrapper'>
-                              <h4 className='table-heading'>{order.order_date}{' | '}
-                                {order.order_time}</h4>
+                          <tr className='fs-3'>
+                            <th className=''>
+                                Total Amount
+    
+                            </th>
+                            <td className=''>
+                              {order?.paymentamount || 'N/A'}
                             </td>
                           </tr>
 
-                          <tr className='table-row table-top-row'>
-                            <td className='table-wrapper'>
-                              <div className='table-wrapper-center'>
-                                <h4 className='table-heading'> Delivery Status</h4>
-                              </div>
+                          <tr className='fs-3'>
+                            <th className=''>
+                            
+                                Placed On
+                              
+                            </th>
+                            <td className=''>
+                              {order.order_date}{' | '}
+                                {order.order_time}
                             </td>
-                            <td className='table-wrapper'>
-                              <h4 className='table-heading'>{order.delivery_status || 'N/A'}</h4>
+                          </tr>
+
+                          <tr className='fs-3'>
+                            <th className=''>
+                              
+                                 Delivery Status
+                              
+                            </th>
+                            <td className=''>
+                              {order.delivery_status || 'N/A'}
                             </td>
                           </tr>
                         </tbody>
-                      </table> */}
+                      </table>
 
 
                       <p className="fw-semibold text-center mt-4">
@@ -160,16 +159,18 @@ const OrderPlaced = () => {
                         Thank you for shopping with us. Your order details will be emailed to you shortly.
 
                       </p>
-                      <div className="mt-4">
-                        <button className='clean-btn shop-btn mr-3 my-5 px-5 mx-5'>
-                          <Link to="/orderhistory" className="text-white">View Order History</Link>
-                        </button>
-                      </div>
+                      <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center mt-4'style={{height:'150px'}}>
 
-                      <div class='login-btn text-center my-1'>
-                        <a class='shop-btn' target='_blank' href="https://api.whatsapp.com/send?phone=918757499345&text=I would like to request login credentials">
+                        <div className=''style={{height:'70px'}}>
+                          <Link to="/orderhistory" className="shop-btn btn-success px-4">View Order History</Link>
+                        </div>
+                      
+
+                      <div className=''style={{height:'70px'}}>
+                        <a className='shop-btn px-4' rel='noreferrer' target='_blank' href="https://api.whatsapp.com/send?phone=918757499345&text=I would like to request login credentials">
                           Get Login Credential From Whatsapp
                         </a>
+                      </div>
                       </div>
                     </div>
                   </div>

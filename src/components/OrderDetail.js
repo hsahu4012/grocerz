@@ -12,7 +12,7 @@ const OrderDetail = () => {
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [Added_quantity, setQuantity] = useState('');
+  const [Added_quantity, setQuantity] = useState(1);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -35,58 +35,61 @@ const OrderDetail = () => {
   const [costPriceModal, setCostPriceModal] = useState(false);
   const [alertmodal, setAlertModal] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
+  const [totalOriginalPrice, settotalOriginalPrice] = useState(0);
   const [costAmount, setCostAmount] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
 
-const handleOrderClick = order_id => {
-  navigate(`/orderhistory/orderdetail/${order_id}`);
-};
+  const handleOrderClick = order_id => {
+    navigate(`/orderhistory/orderdetail/${order_id}`);
+  };
 
-const fetchUseridFromOrderHistory = async () => {
-  try {
-    setLoading(true);
-    const allOrdersResponse = await axios.get(
-      `${process.env.REACT_APP_API_URL}orders/allOrders`
-    );
-    const currentOrder = allOrdersResponse.data.find(
-      (order) => order.order_id === orderid
-    );
+  const fetchUseridFromOrderHistory = async () => {
+    try {
+      setLoading(true);
+      const allOrdersResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}orders/allOrders`
+      );
+      const currentOrder = allOrdersResponse.data.find(
+        (order) => order.order_id === orderid
+      );
 
-    if (currentOrder) {
-      if (usertype === 'admin') {
-        const oldOrdersResponse = await axios.get(
-          `${process.env.REACT_APP_API_URL}orders/getByuserId/${currentOrder.userid}`
-        );
-        const filteredOrders = oldOrdersResponse.data.filter(
-          (order) => order.order_id !== orderid
-        );
-        setOldOrders(filteredOrders);
+      if (currentOrder) {
+        if (usertype === 'admin') {
+          const oldOrdersResponse = await axios.get(
+            `${process.env.REACT_APP_API_URL}orders/getByuserId/${currentOrder.userid}`
+          );
+          const filteredOrders = oldOrdersResponse.data.filter(
+            (order) => order.order_id !== orderid
+          );
+          setOldOrders(filteredOrders);
+        }
       }
+    } catch (err) {
+      console.error('Error fetching userid', err);
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error('Error fetching userid', err);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
 
-const findClassNames = (order_status,delivery_status) => {
-  if (order_status === 'COMPLETED' && delivery_status === 'DELIVERED') {
-    return 'card-body bg-opacity-25 bg-info';
-  }
-  if (order_status === 'Placed') {
+  const findClassNames = (order_status, delivery_status) => {
+    if (order_status === 'COMPLETED' && delivery_status === 'DELIVERED') {
+      return 'card-body bg-opacity-25 bg-success';
+    }
+    if (delivery_status === 'DELIVERED') {
+      return 'card-body bg-info bg-opacity-25';
+    }
+    if (order_status === 'Placed') {
+      return 'card-body bg-warning bg-opacity-25';
+    }
+    if (order_status === 'CANCELLED') {
+      return 'card-body bg-danger bg-opacity-25';
+    }
+    if (order_status === 'COMPLETED') {
+      return 'card-body bg-success bg-opacity-25';
+    }
     return 'card-body bg-warning bg-opacity-25';
-  }
-  if (order_status === 'CANCELLED') {
-    return 'card-body bg-danger bg-opacity-25';
-  }
-  if (order_status === 'COMPLETED') {
-    return 'card-body bg-success bg-opacity-25';
-  }
-  return 'card-body bg-warning bg-opacity-25';
-};
+  };
 
   // Fetch all categories
   const fetchCategoryData = async () => {
@@ -161,7 +164,7 @@ const findClassNames = (order_status,delivery_status) => {
       const updatedOrderDetails = orderDetails.map(item => {
         const totalOriginalPrice = item.original_mrp * item.quantity;
         // const totalDiscount = (totalOriginalPrice - item.price_final)*item.quantity;
-        return { ...item, totalOriginalPrice};
+        return { ...item, totalOriginalPrice };
       });
       // console.log(totalOriginalPrice)
       const totalOriginalPriceSum = updatedOrderDetails.reduce((acc, item) => acc + item.totalOriginalPrice, 0);
@@ -183,11 +186,11 @@ const findClassNames = (order_status,delivery_status) => {
   const handleAddDiscount = async () => {
     try {
       setLoading(true);
-  
+
       const response = await axios.put(`${process.env.REACT_APP_API_URL}orders/updateDiscount/${orderid}`, {
         totaldiscount: discountAmount,
       });
-  
+
       if (response.status === 200) {
         toast.success('Discount applied successfully!');
         await fetchOrderDetails();
@@ -334,24 +337,24 @@ const findClassNames = (order_status,delivery_status) => {
   // const totalOriginalPrice = productPrices.reduce((acc, curr) => acc + curr, 0);
   const order = orderDetails.length > 0 ? orderDetails[0] : null;
 
-    // Handle add cost price 
-    const handleCostPriceAdd = async () => {
-      try {
-        const url = `${process.env.REACT_APP_API_URL}orders/addcostamount/${orderid}`
-        const response = await axios.put(url,{costamount:costPrice});
-        if(response.status==200){
-          toast.success('Cost Price added!');
-        }
-      } catch (error) {
-        console.error('Error fetching Delivery Partners:', error);
-        toast.error('Something Went wrong please try again !');
+  // Handle add cost price 
+  const handleCostPriceAdd = async () => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}orders/addcostamount/${orderid}`
+      const response = await axios.put(url, { costamount: costPrice });
+      if (response.status == 200) {
+        toast.success('Cost Price added!');
       }
-      setCostPriceModal(!costPriceModal);
-    };
+    } catch (error) {
+      console.error('Error fetching Delivery Partners:', error);
+      toast.error('Something Went wrong please try again !');
+    }
+    setCostPriceModal(!costPriceModal);
+  };
 
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <section className='blog about-blog'>
         <div className='container'>
           <div className='blog-heading about-heading'>
@@ -387,7 +390,6 @@ const findClassNames = (order_status,delivery_status) => {
                     />
                   </div>
                 ) : order ? (
-                  // order present
                     <div className='card-body'>
                       <p>
                         <strong>Order Date & Time :</strong>
@@ -410,7 +412,7 @@ const findClassNames = (order_status,delivery_status) => {
                             Shipping Address
                           </div>
                           <p className="mb-2">
-                          <strong>Name :</strong> {order.name}
+                            <strong>Name :</strong> {order.name}
                           </p>
                           <p className="mb-2">
                             <strong>Address :</strong> {order.line1},{' '}
@@ -420,22 +422,22 @@ const findClassNames = (order_status,delivery_status) => {
                             <strong>Landmark :</strong> {order.landmark}
                           </p>
                           <p className="mb-2">
-                          <span>
-                            <strong>Contact: </strong>
-                            {order.contact}, {order.alternatecontact}
-                          </span>
+                            <span>
+                              <strong>Contact: </strong>
+                              {order.contact}, {order.alternatecontact}
+                            </span>
                           </p>
                         </div>
                         <div className="col-lg-4 col-md-5 col-sm-12 d-flex justify-content-end align-items-start pt-0 mt-0 ">
-                        <div className="pt-0 mt-0 ">
-                             <img
-                                src={hashedbitqr}
-                                alt="Shipping Preview"
-                                className="img-fluid rounded"
-                                width={175}
-                                height={175}
+                          <div className="pt-0 mt-0 ">
+                            <img
+                              src={hashedbitqr}
+                              alt="Shipping Preview"
+                              className="img-fluid rounded"
+                              width={175}
+                              height={175}
                             />
-                        </div>
+                          </div>
                         </div>
                       </div>
 
@@ -607,110 +609,110 @@ const findClassNames = (order_status,delivery_status) => {
                             </div>
                           </div>
                         )}
-                          <div className="card mb-1">
-                            <div className="card-body d-flex align-items-center bg-light">
-                              <div className="col-md-1">
-                                <strong>#</strong>
-                              </div>
-                              <div className="col-md-3">
-                                <strong>Image</strong>
-                              </div>
-                              <div className="col-md-3">
-                                <strong>Product Name</strong>
-                              </div>
-                              <div className="col-md-1">
-                                <strong>Quantity</strong>
-                              </div>
-                              <div className="col-md-1">
-                                <strong>Original MRP</strong>
-                              </div>
-                              <div className="col-md-1">
-                                <strong>Discount</strong>
-                              </div>
-                              <div className="col-md-1">
-                                <strong>Final Price</strong>
-                              </div>
-                              {usertype === 'admin' && (
-                                <div className="col-md-2">
-                                  <strong>Action</strong>
-                                </div>
-                              )}
+                        <div className="card mb-1">
+                          <div className="card-body d-flex align-items-center bg-light">
+                            <div className="col-md-1">
+                              <strong>#</strong>
                             </div>
-                        {orderDetails.map((item, index) => {
-                          // Calculate discount for the product
-                          // const discount_product = productPrices[index] - item.price_final;
+                            <div className="col-md-3">
+                              <strong>Image</strong>
+                            </div>
+                            <div className="col-md-3">
+                              <strong>Product Name</strong>
+                            </div>
+                            <div className="col-md-1">
+                              <strong>Quantity</strong>
+                            </div>
+                            <div className="col-md-1">
+                              <strong>Original MRP</strong>
+                            </div>
+                            <div className="col-md-1">
+                              <strong>Discount</strong>
+                            </div>
+                            <div className="col-md-1">
+                              <strong>Final Price</strong>
+                            </div>
+                            {usertype === 'admin' && (
+                              <div className="col-md-2">
+                                <strong>Action</strong>
+                              </div>
+                            )}
+                          </div>
+                          {orderDetails.map((item, index) => {
+                            // Calculate discount for the product
+                            // const discount_product = productPrices[index] - item.price_final;
 
-                          return (
-                            <div
-                              className='card mb-1'
-                              key={index}
-                              style={{ cursor: 'pointer' }}
-                              onClick={() =>
-                                navigate(`/product/${item.productid}`)
-                              }
-                            >
-                              <div className='card-body d-flex align-items-center'>
-                                <div className='col-md-1'>
-                                  <span>
-                                    <strong>{index + 1}</strong>
-                                  </span>
-                                </div>
-                                <div className='col-md-3'>
-                                  <img
-                                    src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`}
-                                    className='img-fluid'
-                                    alt={`${item.prod_name}`}
-                                  />
-                                </div>
-                                <div className='col-md-3'>
-                                  <p>
-                                    <strong>{item.prod_name}</strong>
-                                  </p>
-                                </div>
-                                <div className='col-md-1'>
-                                  <p>
-                                    <strong>
-                                      &#8377;&nbsp;{item.quantity}
-                                    </strong>
-                                  </p>
-                                </div>
-                                <div className='col-md-1'>
-                                  <p>
-                                    <strong>
-                                      &#8377;&nbsp;{item.price}
-                                    </strong>
-                                  </p>
-                                </div>
-                                <div className='col-md-1'>
-                                  <p>
-                                    <strong>
-                                      {/* {item.original_mrp - item.price_final} */}
-                                      {item.price * item.quantity - item.price_final}
-                                    </strong>
-                                  </p>
-                                </div>
-                                <div className='col-md-1'>
-                                  <p>
-                                    <strong> &#8377;&nbsp;{item.price_final}</strong>
-                                  </p>
-                                </div>
-                                {usertype === 'admin' && (
-                                  <div className='col-md-2'>
-                                    <button
-                                      className='btn btn-danger'
-                                      onClick={e => {
-                                        e.stopPropagation();
-                                        removeItemFromOrder(item.productid);
-                                      }}
-                                    >
-                                      Remove
-                                    </button>
+                            return (
+                              <div
+                                className='card mb-1'
+                                key={index}
+                                style={{ cursor: 'pointer' }}
+                                onClick={() =>
+                                  navigate(`/product/${item.productid}`)
+                                }
+                              >
+                                <div className='card-body d-flex align-items-center'>
+                                  <div className='col-md-1'>
+                                    <span>
+                                      <strong>{index + 1}</strong>
+                                    </span>
                                   </div>
-                                )}
+                                  <div className='col-md-3'>
+                                    <img
+                                      src={`${process.env.REACT_APP_IMAGE_URL}${item.image}`}
+                                      className='img-fluid'
+                                      alt={`${item.prod_name}`}
+                                    />
+                                  </div>
+                                  <div className='col-md-3'>
+                                    <p>
+                                      <strong>{item.prod_name}</strong>
+                                    </p>
+                                  </div>
+                                  <div className='col-md-1'>
+                                    <p>
+                                      <strong>
+                                        {item.quantity}
+                                      </strong>
+                                    </p>
+                                  </div>
+                                  <div className='col-md-1'>
+                                    <p>
+                                      <strong>
+                                        &#8377;&nbsp;{item.price * item.quantity}
+                                      </strong>
+                                    </p>
+                                  </div>
+                                  <div className='col-md-1'>
+                                    <p>
+                                      <strong>
+                                        {/* {item.original_mrp - item.price_final} */}
+                                        {item.price * item.quantity - item.price_final}
+                                      </strong>
+                                    </p>
+                                  </div>
+                                  <div className='col-md-1'>
+                                    <p>
+                                      <strong> &#8377;&nbsp;{item.price_final}</strong>
+                                    </p>
+                                  </div>
+                                  {usertype === 'admin' && (
+                                    <div className='col-md-2'>
+                                      <button
+                                        className='btn btn-danger'
+                                        onClick={e => {
+                                          e.stopPropagation();
+                                          removeItemFromOrder(item.productid);
+                                        }}
+                                      >
+                                        Remove
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
                         </div>
                       </div>
                       <div className='heading-custom-font-1 my-5'>
@@ -719,13 +721,13 @@ const findClassNames = (order_status,delivery_status) => {
                       {usertype === 'deliverypartner' && (
                         <div className='text-center my-3'>
                           <div className='col-12 col-md-auto my-2'>
-                              <div
-                                className='btn shop-btn w-100'
-                                onClick={() => setCostPriceModal(true)}
-                              >
-                                Add Cost Price
-                              </div>
+                            <div
+                              className='btn shop-btn w-100'
+                              onClick={() => setCostPriceModal(true)}
+                            >
+                              Add Cost Price
                             </div>
+                          </div>
                         </div>
                       )}
                       {usertype === 'admin' && (
@@ -733,16 +735,16 @@ const findClassNames = (order_status,delivery_status) => {
                           <div className='row justify-content-center'>
                             {/* Download Invoice In PDF */}
                             {order.delivery_status !== "CANCELLED" ? (
-                                <div className='col-12 col-md-auto my-2'>
-                                  <Link
-                                    to={`/orderhistory/orderdetailsprint/${orderid}/customer/invoice`}
-                                    className='shop-btn w-100'
-                                  >
-                                    Download Invoice
-                                  </Link>
-                                </div>)
+                              <div className='col-12 col-md-auto my-2'>
+                                <Link
+                                  to={`/orderhistory/orderdetailsprint/${orderid}/customer/invoice`}
+                                  className='shop-btn w-100'
+                                >
+                                  Download Invoice
+                                </Link>
+                              </div>)
                               :
-                            (null)}
+                              (null)}
 
                             {/* Print Invoice Button */}
                             <div className='col-12 col-md-auto my-2'>
@@ -775,10 +777,10 @@ const findClassNames = (order_status,delivery_status) => {
                             </div>
 
 
-                          {/* Chat with Customer button */}
+                            {/* Chat with Customer button */}
                             <div className='col-12 col-md-auto my-2'>
                               <div className='btn shop-btn w-100'>
-                              Chat with Customer
+                                Chat with Customer
                               </div>
                             </div>
 
@@ -932,47 +934,10 @@ const findClassNames = (order_status,delivery_status) => {
 
                     </div>
                   ) : (
-                    // no order found 
-                    // <p>No order found.</p>
-                    <div className='row '>
-                    <div className='col-sm-12'>
-                      <div className='heading-custom-font-1'>
-                        Bill Details
-                      </div>
-                      <ul className='list-group text-custom-font-1'>
-                        <li className='list-group-item text-success'>
-                          <strong>
-                            Original Price - &#8377; 0
-                          </strong>
-                        </li>
-                        <li className='list-group-item text-success'>
-                          <strong>
-                            Discount - &#8377;{' '}
-                            0
-                          </strong>
-                        </li>
-                        {usertype === 'admin' && (
-                          <li className='list-group-item text-success'>
-                            <strong>
-                              Cost Price - &#8377; 0
-                            </strong>
-                          </li>
-                        )}
-                        <li className='list-group-item text-success'>
-                          <strong>
-                            Final Payment Amount - 0
-                          </strong>
-                        </li>
-                        <li className='list-group-item text-success'>
-                          <strong>
-                            Payment Mode - N/A
-                          </strong>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                    <p>No order found.</p>
                   )}
                 </div>
+
             {usertype === 'admin' && (
               <section className="mt-5 old-orders-section">
                 <h2 className='mb-2 main-heading-custom-font-1'>
@@ -997,74 +962,74 @@ const findClassNames = (order_status,delivery_status) => {
                 ) : oldOrders.length > 0 ? (
                   oldOrders.map((order, index) => (
 
-                    <div key={index} className='card mb-3'>
-                      <div className={findClassNames(order.order_status,order.delivery_status)}>
-                        <div className='row'>
-                          <div className='col-sm-12'>
-                            <div className='order-card'>
-                              <div className='order-details'>
-                                <h5 className='card-title'>
-                                  <strong>
-                                    Order NO - {order.srno}. Total ₹
-                                    {order.paymentamount}
-                                  </strong>
-                                </h5>
+                          <div key={index} className='card mb-3'>
+                            <div className={findClassNames(order.order_status, order.delivery_status)}>
+                              <div className='row'>
+                                <div className='col-sm-12'>
+                                  <div className='order-card'>
+                                    <div className='order-details'>
+                                      <h5 className='card-title'>
+                                        <strong>
+                                          Order NO - {order.srno}. Total ₹
+                                          {order.paymentamount}
+                                        </strong>
+                                      </h5>
+                                    </div>
+
+                                    <button
+                                      className='view-details-btn'
+                                      onClick={() =>
+                                        handleOrderClick(order.order_id)
+                                      }>
+                                      View Details
+                                    </button>
+                                  </div>
+                                  <div className='text-end'></div>
+                                  <p>
+                                    <strong>Customer Name - </strong> {order.name}
+                                  </p>
+                                  <p>
+                                    <strong>Order ID - </strong> {order.order_id}
+                                  </p>
+                                  <p>
+                                    <strong>Placed on - </strong> {order.order_date},{' '}
+                                    {order.order_time.substring(0, 4) + ' ' + order.order_time.substring(8, 12).toUpperCase()}
+                                  </p>
+                                  <p>
+                                    <strong>Order Status -</strong>{' '}
+                                    {order.order_status}
+                                  </p>
+                                  <p>
+                                    <strong>Delivery Status -</strong>{' '}
+                                    {order.delivery_status}
+                                  </p>
+                                  < p >
+                                    <strong>Delivery Partner -</strong>{' '}
+
+                                    {deliveryPartners.map((partner, index) => (
+                                      (order.delivery_partner === partner.userid) ? <span>{'  '}{partner.name}</span> : <span>{' '}</span>
+                                    ))
+                                    }
+                                  </p>
+                                  <p>
+                                    <strong >Cost Amount -</strong>{' '}
+                                    <span>₹{order.costamount}</span>
+                                  </p>
+                                  <p>
+                                    <strong>Payment Mode -</strong>{' '}
+                                    {order.paymentmode}
+                                  </p>
+                                </div>
                               </div>
-
-                              <button
-                                  className='view-details-btn'
-                                  onClick={() =>
-                                    handleOrderClick(order.order_id)
-                                  }>
-                                  View Details
-                              </button>
                             </div>
-                            <div className='text-end'></div>
-                            <p>
-                              <strong>Customer Name - </strong> {order.name}
-                            </p>
-                            <p>
-                              <strong>Order ID - </strong> {order.order_id}
-                            </p>
-                            <p>
-                              <strong>Placed on - </strong> {order.order_date},{' '}
-                              {order.order_time.substring(0, 4) + ' ' + order.order_time.substring(8, 12).toUpperCase()}
-                            </p>
-                            <p>
-                              <strong>Order Status -</strong>{' '}
-                              {order.order_status}
-                            </p>
-                            <p>
-                              <strong>Delivery Status -</strong>{' '}
-                              {order.delivery_status}
-                            </p>
-                            < p >
-                              <strong>Delivery Partner -</strong>{' '}
-
-                              {deliveryPartners.map((partner, index) => (
-                                (order.delivery_partner === partner.userid) ? <span>{'  '}{partner.name}</span> : <span>{' '}</span>
-                              ))
-                              }
-                            </p>
-                            <p>
-                              <strong >Cost Amount -</strong>{' '}
-                              <span>₹{order.costamount}</span>
-                            </p>
-                            <p>
-                              <strong>Payment Mode -</strong>{' '}
-                              {order.paymentmode}
-                            </p>
                           </div>
-                        </div>
-                      </div>
+                        ))
+                      ) : (
+                        <p>No orders found.</p>
+                      )}
                     </div>
-                  ))
-                ) : (
-                  <p>No orders found.</p>
+                  </section>
                 )}
-                </div>
-                </section>
-              )}
               </div>
             </div>
           </div>

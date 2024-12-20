@@ -5913,7 +5913,27 @@ table .ticket-row:hover {
   padding: 0.3rem 1.6rem 0.3rem 1.6rem;
 }
 
+.sidebar {
+  margin-top: 0.5rem !important;
+}
+
+.sidebar-sub-category {
+  background-color: #eeeeee;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.sidebar-sub-category-selected {
+  background-color: #34a853;
+  color: white;
+}
+
 @media (max-width: 575px) {
+  .sidebar {
+    margin-top: -1.5rem !important;
+  }
+
   .sidebar-section.box-shadows {
     padding: 1rem 2rem;
   }
@@ -5921,7 +5941,7 @@ table .ticket-row:hover {
     text-align: center;
   }
   .sidebar-section .sidebar-wrapper .wrapper-heading {
-    margin-bottom: 2px;
+    margin-bottom: 1rem;
   }
   .sidebar-section .sidebar-wrapper .sidebar-item .sidebar-list {
     gap: 0.5rem;
@@ -5940,5 +5960,20 @@ table .ticket-row:hover {
 
   .login-section .review-form {
     padding: 1rem;
+  }
+
+  .sidebar-sub-category {
+    background-color: #eeeeee;
+    padding: 0.25rem 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+
+  .sidebar-sub-category-selected {
+    background-color: #34a853;
+    color: white;
   }
 }

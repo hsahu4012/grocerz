@@ -78,7 +78,7 @@ function App() {
   // }
 
   // useEffect(() => {
-  //   setInterval(() => callApiQsList(), 100000)
+  //   setInterval(() => callApiQsList(), 10000)
   // }, [])
 
 

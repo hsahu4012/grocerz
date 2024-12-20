@@ -55,7 +55,7 @@ const OrderDetailsPrint = () => {
   const downloadInvoice = () => {
    try {
     if(invoice === "invoice"){
-      const capture = document.querySelector(".card");
+      const capture = document.querySelector(".order-print");
       setTimeout(() => {
           html2canvas(capture, { scale: 4 })
               .then((canvas) => {
@@ -107,7 +107,7 @@ const OrderDetailsPrint = () => {
         <div className='container'>
           <div className='user-profile-section box-shadows'>
             <div className='user-dashboard'>
-              <div className='container mt-5'>
+              <div className='container mt-5 order-print'>
                 <h2 className='mb-4 main-heading-custom-font-1'>
                   Grocji Order Summary - {order && order.srno}
                 </h2>
@@ -207,10 +207,11 @@ const OrderDetailsPrint = () => {
                                   <strong>{item.quantity}</strong>
                                 </td>
                                 <td>
-                                  <strong>&#8377;&nbsp;{item.original_mrp}</strong>
+                                  <strong>&#8377;&nbsp;{item.price * item.quantity}</strong>
                                 </td>
                                 <td>
-                                  <strong>{item.original_mrp - item.price_final}</strong>
+                                  {/* <strong>{item.original_mrp - item.price_final}</strong> */}
+                                  <strong>{item.price * item.quantity - item.price_final}</strong>
                                 </td>
                                 {usertype !== 'vendor' && (
                                   <td>

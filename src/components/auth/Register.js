@@ -5,8 +5,7 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-//import loaderGif from 'src/assets/images/loader.gif';
+import { ToastContainer, toast } from 'react-toastify';
 import loaderGif from '../../assets/images/loader.gif';
 
 const Register = () => {
@@ -75,8 +74,9 @@ const Register = () => {
 
       if (response.status === 201) {
         setSuccessMessage('Registration successful! Redirecting to login...');
-        navigate('/login');
-        // setTimeout(() => navigate('/login'), 2000);
+        toast.success('User regiistered successfully!');
+        // navigate('/login');
+        setTimeout(() => navigate('/login'), 2000);
       }
     } catch (error) {
       console.error('Registration failed:', error);
@@ -118,6 +118,7 @@ const Register = () => {
       margin-top: 5px;
     }
   `}</style>
+        <ToastContainer />
       <section className='login product footer-padding'>
         <div className='container'>
           <Formik
