@@ -934,7 +934,43 @@ const OrderDetail = () => {
 
                     </div>
                   ) : (
-                    <p>No order found.</p>
+                    <div className='row '>
+                    <div className='col-sm-12'>
+                      <div className='heading-custom-font-1'>
+                        Bill Details
+                      </div>
+                      <ul className='list-group text-custom-font-1'>
+                        <li className='list-group-item text-success'>
+                          <strong>
+                            Original Price - &#8377; 0
+                          </strong>
+                        </li>
+                        <li className='list-group-item text-success'>
+                          <strong>
+                            Discount - &#8377;{' '}
+                            0
+                          </strong>
+                        </li>
+                        {usertype === 'admin' && (
+                          <li className='list-group-item text-success'>
+                            <strong>
+                              Cost Price - &#8377; 0
+                            </strong>
+                          </li>
+                        )}
+                        <li className='list-group-item text-success'>
+                          <strong>
+                            Final Payment Amount - 0
+                          </strong>
+                        </li>
+                        <li className='list-group-item text-success'>
+                          <strong>
+                            Payment Mode - N/A
+                          </strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                   )}
                 </div>
 
