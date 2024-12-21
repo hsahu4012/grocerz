@@ -48,6 +48,14 @@ const Contact = () => {
     const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
     window.open(whatsappLink, '_blank').focus();
   };
+
+  const connectwhatsappGrievance = () => {
+    const phoneNumber = '+918757499255';
+    const message = `Hi. I have some issues with my order.`;
+    const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    window.open(whatsappLink, '_blank').focus();
+  };
+
   const [currentPhoneIndex, setCurrentPhoneIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const phoneNumbers = ['+918757499345', '+918757499344'];
@@ -376,7 +384,7 @@ const Contact = () => {
                                   onClick={connectwhatsapp}
                                   class='shop-btn'
                                 >
-                                  Conect on WhatsApp - 8757499345
+                                  Connect on WhatsApp for Orders - 8757499345
                                 </button>
                               </div>
                             </div>
@@ -424,13 +432,19 @@ const Contact = () => {
                       </span>
                     </div>
                     <div className="address-content">
-                      <h5 className="wrapper-heading">Send SMS</h5>
+                      <h5 className="wrapper-heading">Grievance</h5>
                       <button
+                                  onClick={connectwhatsappGrievance}
+                                  class='shop-btn'
+                                >
+                                  Connect on WhatsApp for Complain - 8757499255
+                                </button>
+                      {/* <button
                         onClick={() => window.open('sms:+918757499255', '_self')}
                         className="shop-btn"
                       >
                         Send SMS to - 8757499255
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>

@@ -1439,6 +1439,9 @@ const Header = () => {
                 <Link to='/home'>
                   <button class='shop-btn me-1'>Home</button>
                 </Link>
+                <Link to='/category/grocj35599'>
+                  <button class='shop-btn me-1'>Grocji Daily</button>
+                </Link>
                 <Link to='/offers'>
                   <button class='shop-btn me-1'>Offers</button>
                 </Link>
@@ -1473,6 +1476,9 @@ const Header = () => {
               <div className='d-block d-lg-none'>
                 <Link to='/home'>
                   <button class='shop-btn me-1 shop-btn-mobile'>Home</button>
+                </Link>
+                <Link to='/category/grocj35599'>
+                  <button class='shop-btn me-1 shop-btn-mobile'>Daily</button>
                 </Link>
                 <Link to='/offers'>
                   <button class='shop-btn me-1 shop-btn-mobile'>Offers</button>

@@ -600,10 +600,10 @@ function Checkout() {
                 <div className='checkout-wrapper'>
                   <div className='account-section billing-section box-shadows'>
                     {/* discount section  */}
-                    <div className="apply-coupon-section">
+                    {/* <div className="apply-coupon-section">
                       <h5 className="wrapper-heading">Apply Coupon</h5>
                       <div className="row mb-3 text-custom-font-1">
-                        {/* <div className="col-6">
+                        <div className="col-6">
                           <input
                             type="text"
                             className="form-control"
@@ -620,7 +620,7 @@ function Checkout() {
                           >
                             Verify Code
                           </button>
-                        </div> */}
+                        </div>
                         <div className="col-12">
                           {isCouponApplied && (
                             <div className="alert alert-success mt-2" role="alert">
@@ -630,14 +630,14 @@ function Checkout() {
                               </span>
                             </div>
                           )}
-                          {/* {isCouponApplied === false && (
+                          {isCouponApplied === false && (
                             <div className="alert alert-danger mt-2" role="alert">
                               { }
                             </div>
-                          )} */}
+                          )}
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <h5 className='wrapper-heading'>Order Summary</h5>
                     <div className='order-summery'>

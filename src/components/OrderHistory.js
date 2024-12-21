@@ -16,25 +16,25 @@ const OrderHistory = () => {
   const navigate = useNavigate();
   const [deliverypartners, setDeliveryPartners] = useState([]);
 
-  const [size,setSize] = useState(10)
-  const [array, setArray] = useState(() => Array(10).fill(undefined));
-  const [start,setStart] = useState(0)
-  const [end,setEnd] = useState(10)
-  const [upper,setUpper] = useState(10)
+  // const [size,setSize] = useState(10)
+  // const [array, setArray] = useState(() => Array(10).fill(undefined));
+  // const [start,setStart] = useState(0)
+  // const [end,setEnd] = useState(10)
+  // const [upper,setUpper] = useState(10)
 
-  useEffect(() => {
-    console.log("useEffect = ",array); 
-    setArray(orders.slice(start,end))
-    setUpper(start+array.length)
-  },[start,end]) 
-  useEffect(() => {
-    setUpper(start+array.length)
-  },[array]) 
-  useEffect(() => {
-    if (orders.length > 0) {
-      setArray(orders.slice(0, 10));
-    }
-  }, [orders]);
+  // useEffect(() => {
+  //   console.log("useEffect = ",array); 
+  //   setArray(orders.slice(start,end))
+  //   setUpper(start+array.length)
+  // },[start,end]) 
+  // useEffect(() => {
+  //   setUpper(start+array.length)
+  // },[array]) 
+  // useEffect(() => {
+  //   if (orders.length > 0) {
+  //     setArray(orders.slice(0, 10));
+  //   }
+  // }, [orders]);
 
   const handleOrderClick = orderid => {
     navigate(`/orderhistory/orderdetail/${orderid}`);
@@ -123,7 +123,7 @@ const OrderHistory = () => {
         `${process.env.REACT_APP_API_URL}${url}`
       );
       setOrders(response.data);
-      setArray(orders.slice(0,10)) 
+      //setArray(orders.slice(0,10)) 
       // console.log("array in start = ",array); 
     } catch (error) {
       console.error('Error fetching cart items', error);
@@ -200,36 +200,36 @@ const OrderHistory = () => {
     return 'card-body bg-warning bg-opacity-25';
   };
 
-  async function handlePrev()
-  {
-    if(start==0 ) return
+  // async function handlePrev()
+  // {
+  //   if(start==0 ) return
 
-    setStart(start-size)
-    setEnd(end-size)
+  //   setStart(start-size)
+  //   setEnd(end-size)
 
-    console.log(array);
-  }
+  //   console.log(array);
+  // }
 
 
-  async function handleNext()
-  {
-    if(end==orders.length) return 
-    if(end+size>orders.length)
-    {
-      if(end>orders.length || end==orders.length) return 
+  // async function handleNext()
+  // {
+  //   if(end==orders.length) return 
+  //   if(end+size>orders.length)
+  //   {
+  //     if(end>orders.length || end==orders.length) return 
 
-      setEnd(end+size)
-      setStart(start+size)
-    }
-    else
-    {
-      setEnd(end+size)
-      setStart(start+size)
-    }
+  //     setEnd(end+size)
+  //     setStart(start+size)
+  //   }
+  //   else
+  //   {
+  //     setEnd(end+size)
+  //     setStart(start+size)
+  //   }
 
  
-    console.log(array);
-  }
+  //   console.log(array);
+  // }
 
   return (
     <>
@@ -257,7 +257,7 @@ const OrderHistory = () => {
                       All Orders
                     </h3>
                   </div>
-                  <div className='fs-3'> 
+                  {/* <div className='fs-3'> 
                     {start+1} - {upper}
                   </div>
                   <div className='d-flex gap-4'>
@@ -287,7 +287,7 @@ const OrderHistory = () => {
                       )
                       }
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 {loading ? (
                   <div className='loader-div'>
@@ -296,10 +296,10 @@ const OrderHistory = () => {
                       alt='Loading...' />
                   </div>
                 ) : orders.length > 0 ? (
-                  array.map((order, index) => (
+                  orders.map((order, index) => (
                     <div key={index} className='card mt-3  h-50vh overflow-y-auto'
                       style={{
-                        cursor: usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED' ? 'pointer' : 'default',
+                        cursor: usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED' ? 'pointer' : 'default'
                       }}
                       onClick={() => {
                         if (usertype === 'user' && order.order_status === 'COMPLETED' && order.delivery_status === 'DELIVERED') {
