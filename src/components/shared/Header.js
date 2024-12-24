@@ -14,7 +14,16 @@ const Header = () => {
   const { wishlistCount, updateWishlistCount } = useContext(DataAppContext);
   const { cartCount, updateCartCount } = useContext(DataAppContext);
   const [category, setCategory] = useState(marketCategory);
-
+  
+  const [modal, setModal] = useState(false);
+  const [formData, setFormData] = useState({
+    productName: "",
+    productDesc: "",
+    quantity: "",
+    username: "",
+    contact:""
+  });
+  const [alertModal, setAlertModal] = useState(false);
   const [totalOrders, setTotalOrders] = useState(0);
   const userType = localStorage.getItem('usertype');
 
@@ -151,6 +160,22 @@ const Header = () => {
       console.error('Error fetching cart items', error);
     }
   };
+
+  const fetchCustomProductData = async () => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}customProduct/add`;
+      const response = await axios.post(url, formData);
+    } catch (error) {
+      console.error("Error sending data", error)
+    }
+  }
+  const handleCustomProduct = (e) => {    
+    fetchCustomProductData();     
+    e.preventDefault();
+    setModal(!modal);
+    setAlertModal(!alertModal);
+  }
+
   useEffect(() => {
     fetchWishListItems();
   }, []);
@@ -1402,6 +1427,116 @@ const Header = () => {
                         ))}
                     </ul>
                   </div>
+                </div>
+                <div className='d-none d-lg-flex'>
+                    <button class='shop-btn me-1 shop-btn-mobile'
+                      onClick={() => {setModal(!modal)}}
+                    >
+                    Custom Product
+                    </button>
+                    {modal && (
+                        <div className='popup-overlay'>
+                          <div className='popup-content'>
+                            <h3>Custom Products</h3>
+                            
+                          <div class='question-section login-section '>
+                          <div class='review-form box-shadows'>
+                          
+                          <form onSubmit={handleCustomProduct}>
+                            <div class=' account-inner-form'>
+                              <div class='review-form-name'>                               
+                                <input
+                                  name='productName'
+                                  type='text'
+                                  id='fname'
+                                  class='form-control'
+                                  placeholder='Product Name'
+                                  value={formData.productName}
+                                  onChange={(e) => {
+                                    setFormData(previousState => {
+                                      return {...previousState, productName: e.target.value}
+                                    })
+                                  }}
+                                />
+                              </div>
+                              <div class='review-textarea my-3'>
+                              <textarea
+                                name='description'
+                                class='form-control'
+                                placeholder='Product description'
+                                id='floatingTextarea'
+                                rows='2'
+                                value={formData.message}
+                                onChange={(e) => {
+                                  setFormData(previousState => {
+                                    return {...previousState, productDesc: e.target.value}
+                                  })
+                                }}
+                              ></textarea>
+                              </div>
+                              <div class='review-form-name'>
+                                <input
+                                  name='quantity'
+                                  type='number'
+                                  class='form-control'
+                                  placeholder='Quantity'
+                                  value={formData.quantity}
+                                  onChange={(e) => {
+                                    setFormData(previousState => {
+                                      return {...previousState, quantity: e.target.value}
+                                    })
+                                  }}
+                                />
+                              </div>
+                              <div class='review-form-name'>                                
+                                <input
+                                  name='username'
+                                  type='text'
+                                  class='form-control'
+                                  placeholder='Name'
+                                  value={formData.username}
+                                  onChange={(e) => {
+                                    setFormData(previousState => {
+                                      return {...previousState, username: e.target.value}
+                                    })
+                                  }}
+                                />
+                              </div>
+                              <div class='review-form-name'>                                
+                                <input
+                                  name='contact'
+                                  type='text'
+                                  class='form-control'
+                                  placeholder='Contact No.'
+                                  value={formData.contact}
+                                  onChange={(e) => {
+                                    setFormData(previousState => {
+                                      return {...previousState, contact: e.target.value}
+                                    })
+                                  }}
+                                />
+                              </div>
+                            </div>
+                            <button type='submit' className='shop-btn login-btn btn-success text-white'>
+                              Submit request
+                            </button>
+                          </form>
+                        </div>
+                            </div> 
+                            <button className='btn-warning' onClick={() => setModal(!modal)}>Close</button>
+	                        </div>                          
+	                      </div>                                               
+	                    )
+                    } 
+                    { alertModal && (
+                      <div className='popup-overlay'>
+                        <div className='popup-content'>
+                          <h3>Request Submitted !</h3>
+                          <button className='btn-warning' onClick={() => setAlertModal(!alertModal)}>OK</button>
+                        </div>                        
+                      </div>
+                      )
+                    }
                 </div>
                 <div class='header-nav-menu d-none d-lg-flex'>
                   <ul class='menu-list'>
