@@ -528,7 +528,6 @@
   clip-path: polygon(0 0, 100% 0, 100% 100%, 83% 89%, 64% 100%, 40% 90%, 18% 100%, 0 90%);
   z-index: 1;
 }
-<<<<<<< HEAD
 .quantity-input {
   border: 2px solid #000;
   width:100%;
@@ -536,7 +535,6 @@
   padding:10px;
   font-size: 2rem;
   
-=======
 .loader-div {
   display: flex;
   justify-content: center;
@@ -583,5 +581,5 @@
   color: #236cad;
   text-align: center;
   padding: 10px;
->>>>>>> 8bd57152513dffa8ee001edbd5e70472de52c5e8
+
 }
