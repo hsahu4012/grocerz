@@ -332,19 +332,12 @@ const removeFromCart = async (productid) => {
               <h3 className='p-3'>Cart is Empty</h3>
             </div>
           }
-           {localStorage.getItem('usertype') === 'admin' && cartItems.length === 0 && (
-            <div className="cart-section">
-              <img 
-                className="rounded mx-auto d-block"
-                src="assets/images/homepage-one/empty-cart.webp" width={150} height={150} alt="" 
-              />
-              <h4 className="text-center">Cart is Empty</h4>
-            </div>
-          )}
+           
               <div className='wishlist-btn cart-btn mt-4'>
                 <button
                 className='clean-btn shop-btn'
                 onClick={() => setIsModalOpen(true)}
+                disabled={cartItems.length===0}
               >
                   Clear Cart
                 </button>
