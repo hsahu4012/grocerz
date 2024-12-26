@@ -266,9 +266,11 @@ const OrderDetail = () => {
   // Handle removing product from order
   const removeItemFromOrder = async productid => {
     try {
+      setLoading(true)
       const url = `${process.env.REACT_APP_API_URL}orderdetails/removeOrderProduct/${orderid}/${productid}`;
       await axios.put(url);
       fetchOrderDetails(); // Refresh order details after removing product
+      setLoading(false)
     } catch (error) {
       console.error('Error removing product from order:', error);
       toast.error('Something Went wrong please try again !');
@@ -370,23 +372,24 @@ const OrderDetail = () => {
                 <h2 className='mb-4 main-heading-custom-font-1'>
                   Order Summary - {order && order.srno}
                 </h2>
+                {/* order summary card */}
                 <div className='card'>
                   {loading ? (
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: '50vh',
-                      }}
-                    >
-                      <img
-                        src={loaderGif}
-                        alt='Loading...'
-                        style={{ width: '80px', height: '80px' }}
-                      />
-                    </div>
-                  ) : order ? (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '50vh',
+                    }}
+                  >
+                    <img
+                      src={loaderGif}
+                      alt='Loading...'
+                      style={{ width: '80px', height: '80px' }}
+                    />
+                  </div>
+                ) : order ? (
                     <div className='card-body'>
                       <p>
                         <strong>Order Date & Time :</strong>
@@ -931,33 +934,69 @@ const OrderDetail = () => {
 
                     </div>
                   ) : (
-                    <p>No order found.</p>
+                    <div className='row '>
+                    <div className='col-sm-12'>
+                      <div className='heading-custom-font-1'>
+                        Bill Details
+                      </div>
+                      <ul className='list-group text-custom-font-1'>
+                        <li className='list-group-item text-success'>
+                          <strong>
+                            Original Price - &#8377; 0
+                          </strong>
+                        </li>
+                        <li className='list-group-item text-success'>
+                          <strong>
+                            Discount - &#8377;{' '}
+                            0
+                          </strong>
+                        </li>
+                        {usertype === 'admin' && (
+                          <li className='list-group-item text-success'>
+                            <strong>
+                              Cost Price - &#8377; 0
+                            </strong>
+                          </li>
+                        )}
+                        <li className='list-group-item text-success'>
+                          <strong>
+                            Final Payment Amount - 0
+                          </strong>
+                        </li>
+                        <li className='list-group-item text-success'>
+                          <strong>
+                            Payment Mode - N/A
+                          </strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                   )}
                 </div>
 
-                {usertype === 'admin' && (
-                  <section className="mt-5 old-orders-section">
-                    <h2 className='mb-2 main-heading-custom-font-1'>
-                      Old Orders - {/*{order && order.srno}*/}
-                    </h2>
-                    <div className='card p-3'>
-                      {loading ? (
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: '50vh',
-                          }}
-                        >
-                          <img
-                            src={loaderGif}
-                            alt='Loading...'
-                            style={{ width: '80px', height: '80px' }}
-                          />
-                        </div>
-                      ) : oldOrders.length > 0 ? (
-                        oldOrders.map((order, index) => (
+            {usertype === 'admin' && (
+              <section className="mt-5 old-orders-section">
+                <h2 className='mb-2 main-heading-custom-font-1'>
+                  Old Orders - {/*{order && order.srno}*/}
+                </h2>
+                <div className='card p-3'>
+                {loading ? (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '50vh',
+                    }}
+                  >
+                    <img
+                      src={loaderGif}
+                      alt='Loading...'
+                      style={{ width: '80px', height: '80px' }}
+                    />
+                  </div>
+                ) : oldOrders.length > 0 ? (
+                  oldOrders.map((order, index) => (
 
                           <div key={index} className='card mb-3'>
                             <div className={findClassNames(order.order_status, order.delivery_status)}>
