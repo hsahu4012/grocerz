@@ -575,3 +575,19 @@
   text-align: center;
   padding: 10px;
 }
+
+.star {
+  transition: color 0.2s;
+  transform: scale(3);
+  cursor: pointer;
+  margin-left: 17px;
+  cursor: pointer;
+}
+
+.star-active {
+  color: #f39c12;
+}
+
+.star-inactive {
+  color: #6c757d;
+}
