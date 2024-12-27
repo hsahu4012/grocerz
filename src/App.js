@@ -65,6 +65,7 @@ import AboutUs from './components/AboutUs';
 import PrivacyPolicy from './components/static/PrivacyPolicy.js';
 import TermsandCondition from './components/TermsandCondititon';
 import DeleteAccount from './components/auth/DeleteAccount.js';
+import QuickFeedback from './components/QuickFeedback';
 
 
 function App() {
@@ -130,6 +131,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/forgetpassword' element={<Forgetpassword />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path='/quickfeedback' element={<QuickFeedback/>}/>
           <Route path='/contact' element={<Contact />} />
           <Route path='/complainform' element={<Complainform />} />
           <Route path='/customproduct' element={<CustomProduct />} />
