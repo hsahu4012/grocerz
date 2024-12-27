@@ -575,3 +575,7 @@
   text-align: center;
   padding: 10px;
 }
+
+.product-wrapper img.img-fluid {
+  max-height: 18rem;
+}
