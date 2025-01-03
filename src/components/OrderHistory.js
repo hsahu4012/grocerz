@@ -472,6 +472,9 @@ const OrderHistory = () => {
                               <strong>Customer Name - </strong> {order.name}
                             </p>
                             <p>
+                              <strong>Customer Mobile - </strong> {order.mobile}
+                            </p>
+                            <p>
                               <strong>Order ID - </strong> {order.order_id}
                             </p>
                             <p>
