@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { ToastContainer, toast } from 'react-toastify';
 
 import axios from 'axios';
 
@@ -6,8 +9,10 @@ const QuickFeedback = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [mobile, setMobile] = useState('');
-  const [message, setMessage] = useState('');
+  const [subject, setSubject] = useState('');
   const stars = [1, 2, 3, 4, 5];
+
+  const navigate = useNavigate()
 
   function handleRating(star) {
     setRating(star);
@@ -15,11 +20,33 @@ const QuickFeedback = () => {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    // console.log(`mobile = ${mobile}, message = ${message}, rating = ${rating}`);
+    // console.log(`mobile = ${mobile}, subject = ${subject}, rating = ${rating}`);
+    if(rating==0)
+    {
+      toast.error("Rating can not be zero.")
+      return 
+    }
+    try
+    {
+      let res = await axios.post(`${process.env.REACT_APP_API_URL}quickfeedback/addfeedback`,{
+        rating,
+        mobile,
+        subject
+      })
+      // console.log(res);
+      navigate('/')
+    }
+    catch(err)
+    {
+      // console.log(err);
+      toast.error("Error in submitting quick feedback!")
+      return
+    }
   }
 
   return (
     <>
+    <ToastContainer />
       <section class='blog about-blog'>
         <div class='container'>
           <div class='blog-heading about-heading'>
@@ -27,11 +54,11 @@ const QuickFeedback = () => {
           </div>
         </div>
       </section>
-
+      {/* d-flex justify-content-center align-items-center w-100 */}
       <section class='contact product footer-padding'>
         <div class='container'>
           <div class='contact-section'>
-            <div class='row'>
+            <div class='row d-flex justify-content-center align-items-center'>
               <div class='col-lg-6'>
                 <div class='question-section login-section'>
                   <div class='review-form box-shadows'>
@@ -40,10 +67,10 @@ const QuickFeedback = () => {
                     </div>
                     <form onSubmit={handleSubmit} className='d-flex flex-column gap-4'>
                     <div className='d-flex w-100 justify-content-evenly px-2 align-items-center'>
-                        <div className='fs-3'>
+                        <div className='fs-1'>
                           Rating :
                         </div>
-                        <div className='d-flex justify-content-center align-items-center'>
+                        <div className='d-flex fs-2 gap-4 justify-content-center align-items-center'>
                         {stars.map((star, index) => (
                           <span
                             key={index}
@@ -62,6 +89,7 @@ const QuickFeedback = () => {
                       <div class='account-inner-form'>
                         <div class='review-form-name'>
                           <input
+                          required
                             name='mobile'
                             type='tel'
                             id='mobile'
@@ -81,8 +109,8 @@ const QuickFeedback = () => {
                           placeholder='Write Your Feedback...........'
                           id='floatingTextarea'
                           rows='3'
-                          value={message}
-                          onChange={e => setMessage(e.target.value)}
+                          value={subject}
+                          onChange={e => setSubject(e.target.value)}
                         ></textarea>
                       </div>
                       <button type='submit' className='shop-btn login-btn'>
