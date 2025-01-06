@@ -239,8 +239,8 @@ function Checkout() {
         // console.log("soldProductCount,",soldProductCount)
         setLoader(false);
         localStorage.removeItem('cart');
-        // navigate(`/orderplaced/${orderId}`);
-        navigate("/quickfeedback") 
+        navigate(`/orderplaced/${orderId}`);
+        //navigate("/quickfeedback")
       }
     } catch (error) {
       setLoader(false);
