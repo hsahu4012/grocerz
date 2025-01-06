@@ -18,3 +18,6 @@ Misc Changes - Oct-Nov 2024
 
 Version 12 - 21st Dec 2024 ------------------
 Misc Changes - Dec 2024 & Daily
+
+Version 13 - 6th Jan 2024 ------------------
+Misc Changes - Order Detail, Success & History

@@ -154,6 +154,11 @@ button {
   background-color: #fe0600;
 }
 
+.shop-btn-yellow {
+  background-color: #ffbb38;
+  color: #1d1d1d;
+}
+
 /* .shop-btn-red {
   padding: 1.2rem 3.4rem;
   margin: 4rem 4rem;

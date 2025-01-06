@@ -375,21 +375,21 @@ const OrderDetail = () => {
                 {/* order summary card */}
                 <div className='card'>
                   {loading ? (
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      height: '50vh',
-                    }}
-                  >
-                    <img
-                      src={loaderGif}
-                      alt='Loading...'
-                      style={{ width: '80px', height: '80px' }}
-                    />
-                  </div>
-                ) : order ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '50vh',
+                      }}
+                    >
+                      <img
+                        src={loaderGif}
+                        alt='Loading...'
+                        style={{ width: '80px', height: '80px' }}
+                      />
+                    </div>
+                  ) : order ? (
                     <div className='card-body'>
                       <p>
                         <strong>Order Date & Time :</strong>
@@ -738,7 +738,7 @@ const OrderDetail = () => {
                               <div className='col-12 col-md-auto my-2'>
                                 <Link
                                   to={`/orderhistory/orderdetailsprint/${orderid}/customer/invoice`}
-                                  className='shop-btn w-100'
+                                  className='shop-btn w-100 my-4'
                                 >
                                   Download Invoice
                                 </Link>
@@ -750,7 +750,7 @@ const OrderDetail = () => {
                             <div className='col-12 col-md-auto my-2'>
                               <Link
                                 to={`/orderhistory/orderdetailsprint/${orderid}/customer`}
-                                className='shop-btn w-100'
+                                className='shop-btn w-100 my-4'
                               >
                                 Print Invoice
                               </Link>
@@ -759,7 +759,7 @@ const OrderDetail = () => {
                             {/* Assign Delivery Staff Button */}
                             <div className='col-12 col-md-auto my-2'>
                               <button
-                                className='btn shop-btn w-100'
+                                className='btn shop-btn w-100 my-4'
                                 onClick={handleDeliveryStaff}
                               >
                                 Assign Delivery Staff
@@ -769,7 +769,7 @@ const OrderDetail = () => {
                             {/* Add Cost Price */}
                             <div className='col-12 col-md-auto my-2'>
                               <div
-                                className='btn shop-btn w-100'
+                                className='btn shop-btn w-100 my-4'
                                 onClick={() => setCostPriceModal(true)}
                               >
                                 Add Cost Price
@@ -778,33 +778,76 @@ const OrderDetail = () => {
 
 
                             {/* Chat with Customer button */}
-                            <div className='col-12 col-md-auto my-2'>
+                            {/* <div className='col-12 col-md-auto my-2'>
                               <div className='btn shop-btn w-100'>
                                 Chat with Customer
                               </div>
-                            </div>
+                            </div> */}
 
                             {/* Back Button */}
                             <div className='col-12 col-md-auto my-2'>
-                              <Link to='/OrderHistory' className='shop-btn w-100'>
-                                Back
-                              </Link>
+
                             </div>
                           </div>
                         </div>
                       )}
 
 
-                      {usertype === 'user' && (
+                      {/* {usertype === 'user' && (
                         <div className='text-center my-3'>
                           <div className='d-flex justify-content-center'>
-                            {/* Back Button */}
                             <Link to='/OrderHistory' className='shop-btn mx-1'>
                               Back
                             </Link>
                           </div>
                         </div>
+                      )} */}
+
+
+
+                      {usertype === 'admin' && (
+                        <>
+                          <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center mt-4'>
+                            <Link to='/orderhistory' className='shop-btn shop-btn-yellow px-4 my-4'>
+                              Back to Orders
+                            </Link>
+                          </div>
+                          <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center mt-4'>
+                            <a className='shop-btn shop-btn-red px-4 my-4' rel='noreferrer' target='_blank' href={`https://api.whatsapp.com/send?phone=91${order.contact}&text=Hi, I am Grocji. I want to discuss about your order.`}>
+                              Chat with Customer
+                            </a>
+                          </div>
+                        </>
                       )}
+
+                      {usertype === 'user' && (
+                        <>
+                          <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center mt-4'>
+                            <Link to="/orderhistory" className="shop-btn btn-success px-4 my-4">Back to My Orders</Link>
+                            <button
+                              className='shop-btn btn btn-success px-4 my-4'
+                              onClick={() => navigate('/feedback')}
+                            >
+                              Submit Feedback
+                            </button>
+                          </div>
+
+                          <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center'>
+                            <Link className="shop-btn shop-btn-yellow px-4 my-4">Call Customer Support - 8757499345</Link>
+                            <a className='shop-btn shop-btn-red px-4 my-4' rel='noreferrer' target='_blank' href="https://api.whatsapp.com/send?phone=918757499345&text=Hi, I want to discuss about my order.">
+                              Chat with Customer Support
+                            </a>
+                          </div>
+
+                          <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center'>
+                            <Link className="shop-btn shop-btn-yellow px-4 my-4">Call Delivery Partner - 8757499344</Link>
+                            <a className='shop-btn shop-btn-red px-4 my-4' rel='noreferrer' target='_blank' href="https://api.whatsapp.com/send?phone=918757499344&text=Hi, I have placed an order now.">
+                              Chat with Delivery Partner
+                            </a>
+                          </div>
+                        </>
+                      )}
+
                       {modal && (
                         <div className='popup-overlay'>
                           <div className='popup-content'>
@@ -935,68 +978,68 @@ const OrderDetail = () => {
                     </div>
                   ) : (
                     <div className='row '>
-                    <div className='col-sm-12'>
-                      <div className='heading-custom-font-1'>
-                        Bill Details
-                      </div>
-                      <ul className='list-group text-custom-font-1'>
-                        <li className='list-group-item text-success'>
-                          <strong>
-                            Original Price - &#8377; 0
-                          </strong>
-                        </li>
-                        <li className='list-group-item text-success'>
-                          <strong>
-                            Discount - &#8377;{' '}
-                            0
-                          </strong>
-                        </li>
-                        {usertype === 'admin' && (
+                      <div className='col-sm-12'>
+                        <div className='heading-custom-font-1'>
+                          Bill Details
+                        </div>
+                        <ul className='list-group text-custom-font-1'>
                           <li className='list-group-item text-success'>
                             <strong>
-                              Cost Price - &#8377; 0
+                              Original Price - &#8377; 0
                             </strong>
                           </li>
-                        )}
-                        <li className='list-group-item text-success'>
-                          <strong>
-                            Final Payment Amount - 0
-                          </strong>
-                        </li>
-                        <li className='list-group-item text-success'>
-                          <strong>
-                            Payment Mode - N/A
-                          </strong>
-                        </li>
-                      </ul>
+                          <li className='list-group-item text-success'>
+                            <strong>
+                              Discount - &#8377;{' '}
+                              0
+                            </strong>
+                          </li>
+                          {usertype === 'admin' && (
+                            <li className='list-group-item text-success'>
+                              <strong>
+                                Cost Price - &#8377; 0
+                              </strong>
+                            </li>
+                          )}
+                          <li className='list-group-item text-success'>
+                            <strong>
+                              Final Payment Amount - 0
+                            </strong>
+                          </li>
+                          <li className='list-group-item text-success'>
+                            <strong>
+                              Payment Mode - N/A
+                            </strong>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
                   )}
                 </div>
 
-            {usertype === 'admin' && (
-              <section className="mt-5 old-orders-section">
-                <h2 className='mb-2 main-heading-custom-font-1'>
-                  Old Orders - {/*{order && order.srno}*/}
-                </h2>
-                <div className='card p-3'>
-                {loading ? (
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      height: '50vh',
-                    }}
-                  >
-                    <img
-                      src={loaderGif}
-                      alt='Loading...'
-                      style={{ width: '80px', height: '80px' }}
-                    />
-                  </div>
-                ) : oldOrders.length > 0 ? (
-                  oldOrders.map((order, index) => (
+                {usertype === 'admin' && (
+                  <section className="mt-5 old-orders-section">
+                    <h2 className='mb-2 main-heading-custom-font-1'>
+                      Old Orders - {/*{order && order.srno}*/}
+                    </h2>
+                    <div className='card p-3'>
+                      {loading ? (
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: '50vh',
+                          }}
+                        >
+                          <img
+                            src={loaderGif}
+                            alt='Loading...'
+                            style={{ width: '80px', height: '80px' }}
+                          />
+                        </div>
+                      ) : oldOrders.length > 0 ? (
+                        oldOrders.map((order, index) => (
 
                           <div key={index} className='card mb-3'>
                             <div className={findClassNames(order.order_status, order.delivery_status)}>

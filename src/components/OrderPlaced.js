@@ -111,6 +111,15 @@ const OrderPlaced = () => {
                         <tbody>
                           <tr className='fs-3'>
                             <th className=''>
+                              Order Number
+                            </th>
+                            <td className=''>
+                              {order.srno || 'N/A'}
+                            </td>
+                          </tr>
+
+                          <tr className='fs-3'>
+                            <th className=''>
                               Order Id
                             </th>
                             <td className=''>
@@ -120,8 +129,8 @@ const OrderPlaced = () => {
 
                           <tr className='fs-3'>
                             <th className=''>
-                                Total Amount
-    
+                              Total Amount
+
                             </th>
                             <td className=''>
                               {order?.paymentamount || 'N/A'}
@@ -130,21 +139,21 @@ const OrderPlaced = () => {
 
                           <tr className='fs-3'>
                             <th className=''>
-                            
-                                Placed On
-                              
+
+                              Placed On
+
                             </th>
                             <td className=''>
                               {order.order_date}{' | '}
-                                {order.order_time}
+                              {order.order_time}
                             </td>
                           </tr>
 
                           <tr className='fs-3'>
                             <th className=''>
-                              
-                                 Delivery Status
-                              
+
+                              Delivery Status
+
                             </th>
                             <td className=''>
                               {order.delivery_status || 'N/A'}
@@ -155,23 +164,41 @@ const OrderPlaced = () => {
 
 
                       <p className="fw-semibold text-center mt-4">
-
-                        Thank you for shopping with us. Your order details will be emailed to you shortly.
-
+                        Thank you for shopping with us. Your order will be delivered to you shortly.
                       </p>
-                      <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center mt-4'style={{height:'150px'}}>
-
-                        <div className=''style={{height:'70px'}}>
-                          <Link to="/orderhistory" className="shop-btn btn-success px-4">View Order History</Link>
-                        </div>
                       
+                      <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center mt-4'>
 
-                      <div className=''style={{height:'70px'}}>
-                        <a className='shop-btn px-4' rel='noreferrer' target='_blank' href="https://api.whatsapp.com/send?phone=918757499345&text=I would like to request login credentials">
+                        <Link to="/orderhistory" className="shop-btn btn-success px-4 my-4">View Order History</Link>
+
+                        <button
+                          className='shop-btn btn btn-success px-4 my-4'
+                          onClick={() => navigate('/feedback')}
+                        >
+                          Submit Feedback
+                        </button>
+
+                        <a className='shop-btn px-4 my-4' rel='noreferrer' target='_blank' href="https://api.whatsapp.com/send?phone=918757499345&text=I would like to request login credentials">
                           Get Login Credential From Whatsapp
                         </a>
                       </div>
+
+                      <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center'>
+
+                        <Link className="shop-btn shop-btn-yellow px-4 my-4">Call Customer Support - 8757499345</Link>
+
+                        <a className='shop-btn shop-btn-red px-4 my-4' rel='noreferrer' target='_blank' href="https://api.whatsapp.com/send?phone=918757499345&text=Hi, I want to discuss about my order.">
+                          Chat with Customer Support
+                        </a>
+
+                        <Link className="shop-btn shop-btn-yellow px-4 my-4">Call Delivery Partner - 8757499344</Link>
+
+                        <a className='shop-btn shop-btn-red px-4 my-4' rel='noreferrer' target='_blank' href="https://api.whatsapp.com/send?phone=918757499344&text=Hi, I have placed an order now.">
+                        Chat with Delivery Partner
+                        </a>
                       </div>
+
+
                     </div>
                   </div>
                 </div>

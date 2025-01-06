@@ -342,15 +342,15 @@ const OrderHistory = () => {
                             <div className='order-card'>
                               <div className='order-details'>
                                 <h5 className='card-title'>
-                                  <strong
+                                  {/* <strong
                                     style={{ cursor: 'pointer' }}
                                     onClick={() =>
                                       handleOrderClick(order.order_id)
                                     }
-                                  >
-                                    Order NO - {order.srno}. Total ₹
+                                  > */}
+                                    Order No {order.srno} - Total ₹
                                     {order.paymentamount}
-                                  </strong>
+                                  {/* </strong> */}
                                 </h5>
                               </div>
 
@@ -469,10 +469,7 @@ const OrderHistory = () => {
                             </div>
                             <div className='text-end'></div>
                             <p>
-                              <strong>Customer Name - </strong> {order.name}
-                            </p>
-                            <p>
-                              <strong>Customer Mobile - </strong> {order.mobile}
+                              <strong>Customer Name - </strong> {order.name} - {order.mobile}
                             </p>
                             <p>
                               <strong>Order ID - </strong> {order.order_id}
@@ -497,10 +494,12 @@ const OrderHistory = () => {
                               ))
                               }
                             </p>
+                            {usertype === 'admin' && (
                             <p>
                               <strong >Cost Amount -</strong>{' '}
                               <span>₹{order.costamount}</span>
                             </p>
+                            )}
                             <p>
                               <strong>Payment Mode -</strong>{' '}
                               {order.paymentmode}
