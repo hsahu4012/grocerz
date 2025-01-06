@@ -41,12 +41,13 @@ const AddressListData = () => {
 
     const modalAction = () => {
         setIsModalOpen(!isModalOpen);
-        if(document.body.style.overflow === ''){
-          document.body.style.overflow = 'hidden';
-          document.body.style.height = '100vh';
-        }
-        else
-            document.body.style.overflow = '';
+        // if(document.body.style.overflow === ''){
+        //   document.body.style.overflow = 'hidden';
+        //   document.body.style.height = '100vh';
+        // }
+        // else
+        //     document.body.style.overflow = '';
+        //     document.body.style.height = '';
         if(!isModalOpen){
             setId(0);
             setFormData({
@@ -310,10 +311,19 @@ const AddressListData = () => {
                 {
                     addresses.map((address, index) => (
                         <>
-                            <div className="col-lg-6" onClick={() => { modalAction(); setId(address.addressid); getDetails(address.addressid)}}>
+                            <div className="col-lg-6">
                                 <div class="services__item bg-secondary bg-opacity-10 mb-3 seller-info">
                                     {/* <i class="fa fa-car"></i> */}
+                                    <div className='d-flex justify-content-between align-items-center'>
                                     <h4 className="heading-custom-font-1">Address - {index + 1}</h4>
+                                    <button className='fs-4 btn btn-warning' onClick={()=>{
+                                        modalAction()
+                                        setId(address.addressid)
+                                        getDetails(address.addressid)
+                                    }}>
+                                        Edit
+                                    </button>
+                                    </div>
                                     <p>Name - {address.name}</p>
                                     <p>Address - {address.line1}</p>
                                     <p>City - {address.city}, {address.state}, {address.country}, {address.pin},</p>
