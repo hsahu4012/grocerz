@@ -372,16 +372,6 @@
   font-size: 16px;
 }
 
-.form-submit-buttonf{
-  width: 100%;
-  padding: 10px;
-  background-color: #28a745;
-  border: none;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
 .form-submit-button:hover {
   background-color: #218860;
 }
