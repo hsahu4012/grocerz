@@ -188,7 +188,7 @@ const OrderDetail = () => {
       setLoading(true);
 
       const response = await axios.put(`${process.env.REACT_APP_API_URL}orders/updateDiscount/${orderid}`, {
-        totaldiscount: discountAmount,
+        additionaldiscount: discountAmount,
       });
 
       if (response.status === 200) {
@@ -406,7 +406,7 @@ const OrderDetail = () => {
                         <span className='text-success'>{order.srno}</span>
                       </p>
                       <div className="row my-2">
-                        <div className="col-lg-8 col-md-7 col-sm-12"
+                         <div className="col-lg-8 col-md-7 col-sm-12"
                         >
                           <div className='heading-custom-font-1'>
                             Shipping Address
@@ -454,8 +454,21 @@ const OrderDetail = () => {
                             </li>
                             <li className='list-group-item text-success'>
                               <strong>
-                                Discount - &#8377;{' '}
-                                {totalPrice - order.paymentamount}
+                              Coupon Discount - &#8377;{' '}
+                                {order.coupondiscount}
+                              </strong>
+                            </li>
+                            <li className='list-group-item text-success'>
+                              <strong>
+                                Additional Discount - &#8377;{' '}
+                                {order.additionaldiscount}
+                              </strong>
+                            </li>
+                            <li className='list-group-item text-success'>
+                              <strong>
+                                Total Discount - &#8377;{' '}
+                                {order.coupondiscount + order.additionaldiscount}
+                                {/* {totalPrice - order.paymentamount} */}
                               </strong>
                             </li>
                             {usertype === 'admin' && (
