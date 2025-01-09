@@ -166,7 +166,13 @@ const OrderDetailsPrint = () => {
                               <strong>Original Price - &#8377; {totalPrice}</strong>
                             </li>
                             <li className='list-group-item text-success'>
-                              <strong>Discount - &#8377; {totalPrice - order.paymentamount}</strong>
+                              <strong>Coupon Discount - &#8377; {order.coupondiscount}</strong>
+                            </li>
+                            <li className='list-group-item text-success'>
+                              <strong>Additional Discount - &#8377; {order.additionaldiscount}</strong>
+                            </li>
+                            <li className='list-group-item text-success'>
+                              <strong>Total Discount - &#8377; {order.coupondiscount + order.additionaldiscount}</strong>
                             </li>
                             <li className='list-group-item text-success'>
                               <strong>Final Payment Amount - &#8377; {order.paymentamount}</strong>
@@ -182,7 +188,7 @@ const OrderDetailsPrint = () => {
                         <table className='table table-striped table-bordered'>
                           <thead className='bg-light'>
                             <tr>
-                              <th>#</th>
+                              <th>S.no</th>
                               <th>Product Name</th>
                               <th>Quantity</th>
                               <th>Original MRP</th>
