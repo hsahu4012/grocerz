@@ -216,7 +216,7 @@ const Feedback = () => {
         </div>
       </section> */}
 
-<section class="contact product footer-padding spad pt-0 pb-0 ">
+<section class="contact product footer-padding spad pt-5 pb-0 ">
   <div class="container-fluid">
     <div class="contact-section">
       <div class="row p-0 m-0 justify-content-center">
@@ -229,18 +229,18 @@ const Feedback = () => {
               <form onSubmit={handleSubmit}  >
                 <div class="account-inner-form">
                   <div class="form-group form-control-custom">
-                    <input name="name" type="text" id="fname" class="form-control mx-auto w-50"  placeholder="Name"
+                    <input name="name" type="text" id="fname" class="form-control"  placeholder="Name"
                       value={formData.name} onChange={handleChange} />
                   </div>
                         <div className="form-group">
                                 {orderIds.length > 0 ? (
                                   <select
                                     name="orderid"
-                                    className="form-control w-50 mx-auto"
+                                    className="form-control"
                                     value={formData.orderid}
                                     onChange={handleChange}
                                   >
-                                   <option value="">Select Order ID</option>
+                                   <option value="">Select Order ID (Optional) </option>
                                     {loading ? (
                                       <option>Loading...</option>
                                     ) : error ? (
@@ -257,38 +257,38 @@ const Feedback = () => {
                                   <input
                                     name="orderid"
                                     type="text"
-                                    className="form-control w-50 mx-auto"
-                                    placeholder="Enter your Order ID"
+                                    className="form-control"
+                                    placeholder="Enter your Order ID  (Optional)"
                                     value={formData.orderid}
                                     onChange={handleChange}
                                   />
                                  )}
                          </div>
                   <div class="form-group">
-                    <input name="email" type="email" id="email" class="form-control w-50 mx-auto"
+                    <input name="email" type="email" id="email" class="form-control"
                       placeholder="Email" value={formData.email} onChange={handleChange} />
                   </div>
                   <div class="form-group">
-                    <input name="mobile" type="tel" id="mobile" class="form-control w-50 mx-auto" 
+                    <input name="mobile" type="tel" id="mobile" class="form-control" 
                       placeholder="Mobile" value={formData.mobile} onChange={handleChange} />
                   </div>
                   <div class="form-group">
-                    <input name="address" type="text" id="address" class="form-control w-50 mx-auto" 
+                    <input name="address" type="text" id="address" class="form-control" 
                       placeholder="Address" value={formData.address} onChange={handleChange} />
                   </div>
 
                   <div class="form-group">
-                    <input name="subject" type="text" id="subject" class="form-control w-50 mx-auto" placeholder="Subject"
+                    <input name="subject" type="text" id="subject" class="form-control" placeholder="Subject"
                       value={formData.subject} onChange={handleChange} />
                   </div>
                 </div>
                 <div class="form-group">
-                  <textarea name="complain_desc" type="textarea" class="form-control w-50 mx-auto" placeholder="Write Your Feedback..........."
+                  <textarea name="complain_desc" type="textarea" class="form-control" placeholder="Write Your Feedback..........."
                     id="floatingTextarea" rows="3" value={formData.complain_desc} onChange={handleChange}>
                   </textarea>
                 </div>
                 <div className="text-center">
-                <button type="submit" class="btn btn-primary btn-lg w-25 mt-3 p-4 mx-auto ">
+                <button type="submit" class="shop-btn login-btn">
                   Send Feedback
                 </button>
                 </div>
