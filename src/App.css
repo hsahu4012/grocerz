@@ -604,3 +604,17 @@
 .product-wrapper img.img-fluid {
   max-height: 18rem;
 }
+
+.shop-btn.active {
+  background-color: #ffbb38;
+  color: #fff; 
+  border: 1px solid #e0a800;
+}
+.scrollable-content::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollable-content {
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+}

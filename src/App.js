@@ -66,6 +66,7 @@ import PrivacyPolicy from './components/static/PrivacyPolicy.js';
 import TermsandCondition from './components/TermsandCondititon';
 import DeleteAccount from './components/auth/DeleteAccount.js';
 import QuickFeedback from './components/QuickFeedback';
+import AllOrders from './components/AllOrders.js';
 
 
 function App() {
@@ -126,6 +127,7 @@ function App() {
           <Route path='/ordersuccess/:orderid' element={<OrderSuccess />} />
           <Route path='/orderplaced/:orderid' element={<OrderPlaced />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/allorders' element={<AllOrders />} />
 
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
