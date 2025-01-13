@@ -617,3 +617,10 @@
   scrollbar-width: none;
   -ms-overflow-style: none; 
 }
+
+.imageicon{
+  height: 65px;
+    width: 65px;
+    margin-left: 20px;
+    margin-right: 20px;
+}

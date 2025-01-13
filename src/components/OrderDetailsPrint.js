@@ -5,6 +5,9 @@ import DashboardRoutes from './DashboardRoutes'; // Assuming you have this compo
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import hashedbitqr from '../assets/images/hashedbitqr.jpg';
+import iconImg from '../assets/images/logo.png'
+import '../App.css'
+//C:\Users\ASUS\OneDrive\Desktop\hashedBit\grocerz\assets\icon-foreground.png
 const OrderDetailsPrint = () => {
   const { orderid, usertype ,invoice} = useParams();
   const [orderDetails, setOrderDetails] = useState([]);
@@ -77,7 +80,7 @@ const OrderDetailsPrint = () => {
                   }
       
                   pdf.addImage(imgData, "JPEG", 10, 10, imgWidth, imgHeight);
-                  pdf.save("Invoice.pdf");
+                  pdf.save(`Grocerz_${orderid}.pdf`);
                   navigate(`/orderhistory/orderdetail/${orderid}`);
                 });
               }, 2000);
@@ -108,9 +111,12 @@ const OrderDetailsPrint = () => {
           <div className='user-profile-section box-shadows'>
             <div className='user-dashboard'>
               <div className='container mt-5 order-print'>
-                <h2 className='mb-4 main-heading-custom-font-1'>
+                <div className='d-flex flex-row '>
+                <img className='imageicon rounded' src={iconImg} />
+                <h2 className='mb-4 pt-4 main-heading-custom-font-1'>
                   Grocji Order Summary - {order && order.srno}
                 </h2>
+                </div>
                 <div className='card'>
                   {order ? (
                     <div className='card-body'>
@@ -237,12 +243,15 @@ const OrderDetailsPrint = () => {
                 </div>
               </div>
 
-              <Link
+              
+            </div>
+            <div className='d-flex justify-content-center'>
+            <Link
                 to={`/orderhistory/orderdetail/${orderid}`}
                 className='shop-btn'
               >
                 Back
-              </Link>
+              </Link> 
             </div>
           </div>
         </div>
