@@ -445,7 +445,7 @@ const Productlist = () => {
                                   )}
                                 </div>
                               </div>
-                              <Link to="/checkout">
+                              <Link to="/checkout" state={{product}}>
                                 <button
                                   className='product-btn mb-2'
                                   type='button'

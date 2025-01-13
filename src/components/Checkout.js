@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import qr from '../assets/images/hashedbitqr.jpg';
 import axios from 'axios';
 import GuestAddess from './GuestAddess';
 // import Loader from './loader/Loader';
 import loaderGif from '../assets/images/loader.gif';
+//import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 
 function Checkout() {
@@ -146,6 +147,11 @@ function Checkout() {
     setLoading(false);
   };
 
+  const location = useLocation(); // Access the location object
+  //const navigate = useNavigate();
+  // Extract the product from the state
+  const { product } = location.state || {};
+
   const calculateTotal = () => {
     if (cartItems.length > 0) {
       let total = cartItems.reduce(
@@ -162,9 +168,15 @@ function Checkout() {
   };
 
   useEffect(() => {
-    calculateTotal();
+    if (product) {
+      let total = (Number(product.price) * (((product.quantity === undefined) ? 1 : product.quantity) )-
+      Number(product.discount) * ((product.quantity === undefined) ? 1 : product.quantity));
+      setTotalAmount(total);
+    } else {
+      calculateTotal();
+    }
+  }, [cartItems]);  
 
-  }, [cartItems]);
 
   const fetchAddresses = async () => {
     if (userId) {
@@ -183,22 +195,37 @@ function Checkout() {
   };
 
   useEffect(() => {
-    fetchCartItems();
+    if (product) {
+      setCartItems([product]);
+    } else {
+      fetchCartItems();
+    }
     fetchAddresses();
-  }, []);
+  }, [product]);
 
   const placeOrder = async () => {
     setIsPlacingOrder(true);
     let userData = {};
     let orderData = {};
-    const cartData = cartItems.map(item => ({
-      productid: item.productid,
-      quantity: item.quantity,
-      original_mrp: Number(item.price) * item.quantity,
-      price_final:
-        Number(item.price) * item.quantity -
-        Number(item.discount) * item.quantity,
-    }));
+    let cartData;
+    if(product){
+      cartData = [{
+        productid: product.productid,
+        quantity: (product.quantity === undefined) ? 1 : product.quantity,
+        original_mrp: Number(product.price) * ((product.quantity === undefined) ? 1 : product.quantity),
+        price_final: Number(product.price) * ((product.quantity === undefined) ? 1 : product.quantity) -
+        Number(product.discount) * ((product.quantity === undefined) ? 1 : product.quantity),
+      }]
+    }else{
+      cartData = cartItems.map(item => ({
+        productid: item.productid,
+        quantity: item.quantity ,
+        original_mrp: Number(item.price) * item.quantity,
+        price_final:
+          Number(item.price) * item.quantity -
+          Number(item.discount) * item.quantity,
+      }));
+    }
     try {
       if (userId) {
         orderData = {
