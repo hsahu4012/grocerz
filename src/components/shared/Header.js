@@ -1429,11 +1429,11 @@ const Header = () => {
                   </div>
                 </div>
                 <div className='d-none d-lg-flex'>
-                    <button class='shop-btn me-1 shop-btn-mobile'
+                    {/* <button class='shop-btn me-1 shop-btn-mobile'
                       onClick={() => {setModal(!modal)}}
                     >
                     Custom Product
-                    </button>
+                    </button> */}
                     {modal && (
                         <div className='popup-overlay'>
                           <div className='popup-content'>

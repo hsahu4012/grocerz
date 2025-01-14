@@ -118,6 +118,7 @@ const AllOrders = () => {
         [orderId]: true,
       }));
 
+      fetchOrders();
     } catch (error) {
       console.error('Error updating payment mode', error);
     }
@@ -136,6 +137,7 @@ const AllOrders = () => {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchOrders();
     fetchDeliveryPartnerName();
   }, []);
 
@@ -209,14 +211,14 @@ const AllOrders = () => {
               <div className='container'>
                 <div className="d-flex align-items-center justify-content-between mt-3">
                   <button
-                    className="shop-btn mx-1"
+                    className="shop-btn my-1"
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                   >
                     &laquo; Previous
                   </button>
 
-                  <div className="d-flex justify-content-center">
+                  {/* <div className="d-flex justify-content-center">
                     <button
                       className={`shop-btn mx-1 ${clickedButton === 'ALL' ? 'active' : ''}`}
                       onClick={() => handleFilterChange('ALL')}
@@ -241,7 +243,7 @@ const AllOrders = () => {
                     >
                       Cancelled
                     </button>
-                  </div>
+                  </div> */}
                   <span className="mx-3">
                     <span className="badge bg-light text-dark p-2 d-flex align-items-center fs-4">
                       <strong className="text-primary me-1">Page {currentPage}</strong>
@@ -249,10 +251,8 @@ const AllOrders = () => {
                     </span>
                   </span>
 
-
-
                   <button
-                    className="shop-btn mx-1"
+                    className="shop-btn my-1"
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                   >
