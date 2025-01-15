@@ -1,14 +1,14 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.grocji.app',
-  appName: 'grocji',
+  appId: 'com.grocjimobileapp.app',
+  appName: 'Grocji',
   webDir: 'build',
   plugins: {
     SplashScreen: {
       launchShowDuration: 1000,
-      backgroundColor: "#ff0000",
-      showSpinner: false,
+      backgroundColor: "#dddddd",
+      showSpinner: true,
       androidSpinnerStyle: "large",
       iosSpinnerStyle: "small",
       splashFullScreen: true,

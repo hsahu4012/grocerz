@@ -21,4 +21,15 @@ npx cap sync
 https://capacitorjs.com/
 https://ionicframework.com/
 https://ionic.io/
+
+How to create capacitor app
 https://www.youtube.com/watch?v=IwHt_QpIa8A&list=PLNPSRIjTB5Scq1_7yL-FMaxLnSv_D5AH2&index=6
+
+
+
+https://capacitorjs.com/docs/apis/splash-screen
+https://capacitorjs.com/docs/guides/splash-screens-and-icons
+
+
+Signed aab file Help - https://www.youtube.com/shorts/TNvwmFBNSiA
+Version Issue - https://stackoverflow.com/questions/72382146/the-project-is-using-an-incompatible-version-agp-7-3-0-alpha07-of-the-android
