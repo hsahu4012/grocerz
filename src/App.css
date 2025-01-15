@@ -48,7 +48,8 @@
 
 * {
   font-family: 'Courier New', Courier, monospace !important;
-  font-family: 'Kanit' !important;
+  font-family:  'Roboto', 'Times New Roman', Arial, sans-serif !important;
+  font-family: 'Kanit', 'Inter', sans-serif !important;
 }
 
 .logo-image {

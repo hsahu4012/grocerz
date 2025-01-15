@@ -312,9 +312,9 @@ const removeFromCart = async (productid) => {
                       >
                         <button onClick={() => removeFromCart} className='shop-btn remove clean-btn' >Remove Now</button>
                         <div>
-                          <Link to='/checkout' className='shop-btn'>
-                            Buy Now
-                          </Link>
+                        <Link to='/checkout' state={{ product : item }} className='shop-btn'>
+                              Buy Now
+                        </Link>
                         </div>
                       </div>
                     </td>

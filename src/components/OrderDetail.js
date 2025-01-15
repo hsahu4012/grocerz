@@ -821,8 +821,8 @@ const OrderDetail = () => {
                       {usertype === 'admin' && (
                         <>
                           <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center mt-4'>
-                            <Link to='/orderhistory' className='shop-btn shop-btn-yellow px-4 my-4'>
-                              Back to Orders
+                            <Link to='/allorders' className='shop-btn shop-btn-yellow px-4 my-4'>
+                              Back to All Orders
                             </Link>
                           </div>
                           <div className='d-flex flex-wrap gap-3 align-items-center justify-content-center mt-4'>

@@ -85,26 +85,26 @@ const ProductCard = ({ product, isInCart }) => {
           (<Discount price={product.price} discount={product.discount} />)
         }
         <Link to={`/product/${product.productid}`} className="d-block">
-      <div
-        className="p-3 rounded mt-2 mb-2 mx-2 d-flex justify-content-center align-items-center custom-card"
-      >
-        {product.image ? (
-          <img
-            src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`}
-            alt={product.prod_name}
-            className="img-fluid"
-          />
-        ) : (
           <div
-            className="no-image-box d-flex justify-content-center align-items-center shadow-sm rounded"
+            className="p-3 rounded mt-2 mb-2 mx-2 d-flex justify-content-center align-items-center custom-card"
           >
-            <span className="text-muted text-center">
-              {product.prod_name}
-            </span>
+            {product.image ? (
+              <img
+                src={`${process.env.REACT_APP_IMAGE_URL}${product.image}`}
+                alt={product.prod_name}
+                className="img-fluid"
+              />
+            ) : (
+              <div
+                className="no-image-box d-flex justify-content-center align-items-center shadow-sm rounded"
+              >
+                <span className="text-muted text-center">
+                  {product.prod_name}
+                </span>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </Link>
+        </Link>
         <div className='product-info'>
           <div className='product-description'>
             <div className='product-details'>
@@ -127,7 +127,7 @@ const ProductCard = ({ product, isInCart }) => {
           {product.stock_quantity > 0 && (
             <div className='product-cart-btn'>
               <div className='row'>
-                <div className='col-6 w-75'>
+                <div className={userid ? 'col-6 w-75' : 'col-12'}>
                   {isInCart(product.productid) ? (
                     <Link
                       to={'/cart'}
@@ -175,14 +175,14 @@ const ProductCard = ({ product, isInCart }) => {
                   )}
                 </div>
               </div>
-              <Link to="/checkout">
+              {/* <Link to="/checkout">
                 <button
                   className='product-btn mb-2'
                   type='button'
                 >
                   Buy Now
                 </button>
-              </Link>
+              </Link> */}
               {usertype === 'admin' && (
                 <button
                   className='product-btn pending-add-btn'

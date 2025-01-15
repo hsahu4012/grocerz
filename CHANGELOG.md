@@ -21,3 +21,6 @@ Misc Changes - Dec 2024 & Daily
 
 Version 13 - 6th Jan 2024 ------------------
 Misc Changes - Order Detail, Success & History
+
+Release Version 14 - 14th Jan 2024 ------------------
+Misc Changes - Pagination, Add Cart Buttons, BackUp Font
