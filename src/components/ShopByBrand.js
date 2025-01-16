@@ -58,7 +58,7 @@ const ShopByBrand = () => {
         response.data.sort((a, b) => a.brand_name.localeCompare(b.brand_name))
       );
       if (response.data.length > 0) {
-        const firstbrand_id = response.data[0].brand_id;
+        const firstbrand_id = response.data[1].brand_id;
         setSelectedBrand(firstbrand_id);
         fetchProducts(firstbrand_id);
       } else {
@@ -74,7 +74,7 @@ const ShopByBrand = () => {
     setLoading(true);
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}products/brand/${brand_id}`);
-      setProducts(response.data);
+      setProducts(prev => response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
     }
@@ -187,13 +187,6 @@ const ShopByBrand = () => {
       <ToastContainer />
       <section className='shop spad product product-sidebar footer-padding'>
         <div className='container'>
-          {loading &&
-            <div className='loader-div'>
-              <img className='loader-img'
-                src={loaderGif}
-                alt='Loading...' />
-            </div>
-          }
           <div className='row'>
             <div className='col-lg-3'>
               <div className='sidebar' data-aos='fade-right'>
@@ -204,26 +197,28 @@ const ShopByBrand = () => {
                       <h3 className='wrapper-heading'>Brands</h3>
                       <div className='sidebar-item'>
                         <ul className='sidebar-list'>
-                          {brands.map(brand => (
-                            <li
-                              key={brand.brand_id}
-                              className={`brand-item ${brand.brand_id === selectedBrand ? 'active' : ''}`}
-                            >
-                              <input
-                                type='radio'
-                                id={`brand-${brand.brand_id}`}
-                                name='brand'
-                                checked={brand.brand_id === selectedBrand}
-                                onChange={() => {
-                                  setSelectedBrand(brand.brand_id);
-                                  fetchProducts(brand.brand_id);
-                                }}
-                              />
-                              <label htmlFor={`brand-${brand.brand_id}`}>
-                                {brand.brand_name}
-                              </label>
-                            </li>
-                          ))}
+                          {brands.map((brand, index) => {
+                            return index != 0 ? (
+                              <li
+                                key={brand.brand_id}
+                                className={`brand-item ${brand.brand_id === selectedBrand ? 'active' : ''}`}
+                              >
+                                <input
+                                  type='radio'
+                                  id={`brand-${brand.brand_id}`}
+                                  name='brand'
+                                  checked={brand.brand_id === selectedBrand}
+                                  onChange={() => {
+                                    setSelectedBrand(brand.brand_id);
+                                    fetchProducts(brand.brand_id);
+                                  }}
+                                />
+                                <label htmlFor={`brand-${brand.brand_id}`}>
+                                  {brand.brand_name}
+                                </label>
+                              </li>
+                            ) : null
+                          })}
                         </ul>
                       </div>
                     </div>
@@ -245,8 +240,8 @@ const ShopByBrand = () => {
             </div>
 
             <div className='col-lg-9 col-md-9'>
-              <div className='row'>
-                {products.length > 0 ? (
+              <div className='row h-75'>
+                {(!loading && products.length > 0) ? (
                   products.map(product => (
                     <div className='col-xl-4 col-sm-6' key={product.productid}>
                       <div className='product-wrapper m-2' data-aos='fade-up'>
@@ -406,11 +401,18 @@ const ShopByBrand = () => {
                       </div>
                     </div>
                   ))
-                ) : (
+                ) : !loading && products.length == 0 ? (
                   <div className='col-lg-12'>
                     <p>No products available for this brand</p>
                   </div>
-                )}
+                ) : loading && (
+                  <div className='loader-div d-flex justify-content-center align-items-center'>
+                    <img className='loader-img'
+                      src={loaderGif}
+                      alt='Loading...' />
+                  </div>
+                )
+                }
               </div>
             </div>
           </div>
