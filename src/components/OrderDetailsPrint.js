@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes'; // Assuming you have this component
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
@@ -14,7 +14,7 @@ const OrderDetailsPrint = () => {
   const [totalOriginalPrice,settotalOriginalPrice] = useState(0);
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
-  
+
   const fetchOrderDetails = async () => {
     try {
       const response = await axios.get(
@@ -31,7 +31,6 @@ const OrderDetailsPrint = () => {
       const orderDetails = response.data;
       const totalOriginalMrp = orderDetails.reduce((total, item) => total + item.original_mrp, 0);
       settotalOriginalPrice(totalOriginalMrp)
-      
 
       // console.log('orderdeatilspage');
     } catch (error) {
@@ -40,8 +39,13 @@ const OrderDetailsPrint = () => {
   };
 
   useEffect(() => {
+    if (orderDetails.length > 0) {
+      downloadInvoice();
+    }
+  }, [orderDetails]);
+  useEffect(() => {
     fetchOrderDetails();
-    downloadInvoice();
+    //downloadInvoice();
     console.log(orderid, usertype);
   }, [orderid]);
 
@@ -54,7 +58,6 @@ const OrderDetailsPrint = () => {
   }, []);
 
   const order = orderDetails.length > 0 ? orderDetails[0] : null;
-
   const downloadInvoice = () => {
    try {
     if(invoice === "invoice"){
@@ -69,7 +72,7 @@ const OrderDetailsPrint = () => {
                   const pdfHeight = pdf.internal.pageSize.getHeight() -20 ;
                   const canvasAspectRatio = canvas.width / canvas.height;
                   const pdfAspectRatio = pdfWidth / pdfHeight;
-      
+                  
                   let imgWidth, imgHeight;
                   if (canvasAspectRatio > pdfAspectRatio) {
                       imgWidth = pdfWidth;
@@ -80,7 +83,8 @@ const OrderDetailsPrint = () => {
                   }
       
                   pdf.addImage(imgData, "JPEG", 10, 10, imgWidth, imgHeight);
-                  pdf.save(`Grocerz_${orderid}.pdf`);
+                  
+                  pdf.save(`Grocerz_${order.srno}.pdf`);
                   navigate(`/orderhistory/orderdetail/${orderid}`);
                 });
               }, 2000);
@@ -114,7 +118,7 @@ const OrderDetailsPrint = () => {
                 <div className='d-flex flex-row '>
                 <img className='imageicon rounded' src={iconImg} />
                 <h2 className='mb-4 pt-4 main-heading-custom-font-1'>
-                  Grocji Order Summary - {order && order.srno}
+                  Grocji Order Summary - {order && order.srno }
                 </h2>
                 </div>
                 <div className='card'>
