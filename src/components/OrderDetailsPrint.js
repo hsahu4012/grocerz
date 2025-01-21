@@ -84,7 +84,7 @@ const OrderDetailsPrint = () => {
       
                   pdf.addImage(imgData, "JPEG", 10, 10, imgWidth, imgHeight);
                   
-                  pdf.save(`Grocerz_${order.srno}.pdf`);
+                  pdf.save(`Grocji_${order.srno}.pdf`);
                   navigate(`/orderhistory/orderdetail/${orderid}`);
                 });
               }, 2000);
