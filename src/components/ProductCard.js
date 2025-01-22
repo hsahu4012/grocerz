@@ -46,7 +46,6 @@ const ProductCard = ({ product, isInCart }) => {
         } else {
           cart.push({ productid, prod_name, price, image, discount, quantity });
         }
-        // Save the updated cart back to localStorage
         localStorage.setItem('cart', JSON.stringify(cart));
         toast.success('Product added to cart successfully');
       }
@@ -175,15 +174,7 @@ const ProductCard = ({ product, isInCart }) => {
                   )}
                 </div>
               </div>
-              {/* <Link to="/checkout">
-                <button
-                  className='product-btn mb-2'
-                  type='button'
-                >
-                  Buy Now
-                </button>
-              </Link> */}
-              {usertype === 'admin' && (
+              {usertype == 'admin' && (
                 <button
                   className='product-btn pending-add-btn'
                   type='button'
@@ -195,6 +186,9 @@ const ProductCard = ({ product, isInCart }) => {
                   Add to Pending Orders
                 </button>
               )}
+              <Link to='/checkout' state={{ product: product }} className='shop-btn w-100 mt-2'>
+                Buy Now
+              </Link>
               {showPopup === true && singleProduct && <AddToPendingOrders singleProduct={singleProduct} setShowPopup={setShowPopup} />}
             </div>
           )}
