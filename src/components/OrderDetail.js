@@ -335,7 +335,13 @@ const OrderDetail = () => {
 
 
   // const totalOriginalPrice = productPrices.reduce((acc, curr) => acc + curr, 0);
-  const order = orderDetails.length > 0 ? orderDetails[0] : null;
+  let order = {
+    srno: '',
+    order_date: '',
+    order_time: '',
+    name: ''
+  }
+  order = orderDetails.length > 0 ? orderDetails[0] : order;
 
   // Handle add cost price 
   const handleCostPriceAdd = async () => {
@@ -389,7 +395,7 @@ const OrderDetail = () => {
                         style={{ width: '80px', height: '80px' }}
                       />
                     </div>
-                  ) : order ? (
+                  ) : (
                     <div className='card-body'>
                       <p>
                         <strong>Order Date & Time :</strong>
@@ -988,44 +994,6 @@ const OrderDetail = () => {
                         </div>
                       )}
 
-                    </div>
-                  ) : (
-                    <div className='row '>
-                      <div className='col-sm-12'>
-                        <div className='heading-custom-font-1'>
-                          Bill Details
-                        </div>
-                        <ul className='list-group text-custom-font-1'>
-                          <li className='list-group-item text-success'>
-                            <strong>
-                              Original Price - &#8377; 0
-                            </strong>
-                          </li>
-                          <li className='list-group-item text-success'>
-                            <strong>
-                              Discount - &#8377;{' '}
-                              0
-                            </strong>
-                          </li>
-                          {usertype === 'admin' && (
-                            <li className='list-group-item text-success'>
-                              <strong>
-                                Cost Price - &#8377; 0
-                              </strong>
-                            </li>
-                          )}
-                          <li className='list-group-item text-success'>
-                            <strong>
-                              Final Payment Amount - 0
-                            </strong>
-                          </li>
-                          <li className='list-group-item text-success'>
-                            <strong>
-                              Payment Mode - N/A
-                            </strong>
-                          </li>
-                        </ul>
-                      </div>
                     </div>
                   )}
                 </div>
