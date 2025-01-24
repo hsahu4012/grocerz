@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../../assets/images/logo.png';
 
-
+const scrollToTop = () => {
+  window.scrollTo({top : 0, behavior : "smooth"});
+};
 const Footer = () => {
   const [categories, setCategories] = useState([]);
 
@@ -85,19 +87,19 @@ const Footer = () => {
                     <div class='footer-link about-link'>
                       <ul>
                         <li>
-                          <Link to='/aboutus'>About Us</Link>
+                          <Link to='/aboutus' onClick={scrollToTop}>About Us</Link>
                         </li>
                         <li>
-                          <Link to='/contact'>Contact</Link>
+                          <Link to='/contact' onClick={scrollToTop}>Contact</Link>
                         </li>
                         <li>
-                          <Link to='/complainform'>Complains</Link>
+                          <Link to='/complainform' onClick={scrollToTop}>Complains</Link>
                         </li>
                         <li>
-                          <Link>Career</Link>
+                          <Link onClick={scrollToTop}>Career</Link>
                         </li>
                         <li>
-                          <Link to='/ourteam'>Our Team</Link>
+                          <Link to='/ourteam' onClick={scrollToTop}>Our Team</Link>
                         </li>
                       </ul>
                     </div>
@@ -109,16 +111,16 @@ const Footer = () => {
                     <div class='footer-link useful-link'>
                       <ul>
                         <li>
-                          <Link to='/privacypolicy'>Privacy Policy</Link>
+                          <Link to='/privacypolicy' onClick={scrollToTop}>Privacy Policy</Link>
                         </li>
                         <li>
-                          <Link to='/Refund'>Refund & Return Policy</Link>
+                          <Link to='/Refund' onClick={scrollToTop}>Refund & Return Policy</Link>
                         </li>
                         <li>
-                          <Link to='/termsandcondition'>Terms & Conditions</Link>
+                          <Link to='/termsandcondition' onClick={scrollToTop}>Terms & Conditions</Link>
                         </li>
                         <li>
-                          <Link to='/Faq'>FAQ</Link>
+                          <Link to='/Faq' onClick={scrollToTop}>FAQ</Link>
                         </li>
                       </ul>
                     </div>
