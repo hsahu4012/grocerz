@@ -48,7 +48,7 @@
 
 * {
   font-family: 'Courier New', Courier, monospace !important;
-  font-family:  'Roboto', 'Times New Roman', Arial, sans-serif !important;
+  font-family: 'Roboto', 'Times New Roman', Arial, sans-serif !important;
   font-family: 'Kanit', 'Inter', sans-serif !important;
 }
 
@@ -109,6 +109,7 @@
 }
 
 @media print {
+
   .header,
   .footer,
   .nav,
@@ -455,6 +456,7 @@
 .width-100 {
   width: 100%;
 }
+
 /* css for cart bage and wishlist badge */
 .cartbadge {
   position: absolute;
@@ -489,13 +491,14 @@
 }
 
 /* Privacy Policy wrapper-heading */
-.ppwrapper-heading{
+.ppwrapper-heading {
   font-family: Arial, Helvetica, sans-serif;
   font-style: normal;
   font-size: 20px;
 
 }
-.privacy-policy-page{
+
+.privacy-policy-page {
   padding: 10px 50px 0px 50px;
   background-color: #eef0f3;
 }
@@ -506,7 +509,7 @@
   text-align: center;
   border-radius: 0.4rem;
   display: inline-block;
-  background: #c4342a; 
+  background: #c4342a;
   font-size: 1.4rem;
   font-weight: 500;
   position: relative;
@@ -528,28 +531,31 @@
   clip-path: polygon(0 0, 100% 0, 100% 100%, 83% 89%, 64% 100%, 40% 90%, 18% 100%, 0 90%);
   z-index: 1;
 }
+
 .quantity-input {
   border: 2px solid #000;
-  width:100%;
-  height:40px;
-  padding:10px;
+  width: 100%;
+  height: 40px;
+  padding: 10px;
   font-size: 2rem;
 }
-  
+
 .loader-div {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50vh,
 }
+
 .loader-img {
   width: 80px;
   height: 80px,
 }
+
 .qr-image {
   max-width: 175px;
   max-height: 175px;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
@@ -567,7 +573,7 @@
 
 .no-image-box {
   width: 100%;
-  height: 200px; 
+  height: 200px;
   background-color: #f0f0f0;
   display: flex;
   justify-content: center;
@@ -607,21 +613,41 @@
 
 .shop-btn.active {
   background-color: #ffbb38;
-  color: #fff; 
+  color: #fff;
   border: 1px solid #e0a800;
 }
+
 .scrollable-content::-webkit-scrollbar {
   display: none;
 }
 
 .scrollable-content {
   scrollbar-width: none;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
 }
 
-.imageicon{
+.imageicon {
   height: 65px;
-    width: 65px;
-    margin-left: 20px;
-    margin-right: 20px;
+  width: 65px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.new-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* Ensure full height */
+}
+
+.new-section {
+  height: 450px;
+  /* Adjust height as needed */
+  overflow-y: auto;
+  /* Enable scrolling */
+}
+
+.height-ins {
+  margin-top: 10px;
+  height: 150px;
 }
